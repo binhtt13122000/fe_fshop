@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import {ROOT_API_URL} from '../constants/api.constants'
+// import {ROOT_API_URL} from '../constants/api.constants'
 export const defaultHeader = {
     "Content-Type" : "application/json",
 }
@@ -7,7 +7,7 @@ export const defaultHeader = {
 export const request = (endpoint, method, headers, body, params) => {
     return Axios(
         {
-            url: ROOT_API_URL + endpoint,
+            url: "http://localhost:8082/v1/api" + endpoint,
             method: method,
             headers: {...defaultHeader, ...headers},
             data: body,
@@ -15,6 +15,11 @@ export const request = (endpoint, method, headers, body, params) => {
             withCredentials: true,
         }
     )
+}
+
+export const body = {
+    username: null,
+    password: null
 }
 
 export const get = (endpoint, headers = {}, params = {}) => {
