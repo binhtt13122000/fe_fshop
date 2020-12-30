@@ -1,12 +1,15 @@
-import { post } from "../utils/apiCaller";
+import  api  from "../utils/apiCaller";
 
 class AuthenticationService {
-    login(body){
-        return post("/users/login", {}, body, {})
+    login(){
+        // return api("/users/login", {}, {
+        
+        // }, {})
+        return api().post('/users/login')
     }
 
-    register(data){
-        return post("/users/register", {}, data, {})
+    register(){
+        return api().post('/users/register')
     }
 }
 

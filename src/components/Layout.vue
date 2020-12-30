@@ -68,7 +68,7 @@
           <v-app-bar-nav-icon
             @click.stop="drawer = !drawer"
           ></v-app-bar-nav-icon>
-          <v-toolbar-title style="width: 300px" class="hidden-md-and-down">
+          <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
             <img
               class="img-responsive"
               src="https://4menshop.com/logo.png"

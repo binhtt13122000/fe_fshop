@@ -66,7 +66,7 @@
                 </v-card-text>
                   <v-form class="btnLoginCancel" align="right">
                     <v-spacer></v-spacer>
-                    <v-btn gradient="gray" rounded class="z-depth-1a" @click="isHidden = !isHidden" :disabled="!isValid"
+                    <v-btn gradient="gray" rounded class="z-depth-1a" v-on:click="register" :disabled="!isValid"
                       >Register</v-btn>
                   </v-form>
                     <br />
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import Auth from '../utils/AuthenticationService'
+
 export default {
   props: {
     source: String,
@@ -115,28 +115,11 @@ export default {
             v => /(?=.*[A-Z])/.test(v) || 'Must have one uppercase character', 
             v => /(?=.*\d)/.test(v) || 'Must have one number', 
         ],
-        auth: null,
-        created() {
-            this.auth =  new Auth();
-        },
     }),
     method: {
 
       reigster()  {
-        const credentials = {
-            fullname: this.fullname,
-            username: this.username,
-            email: this.email,
-            password: this.password
-        };
-        this.isValid = false,
-        this.$router.push({name: 'home'})
-        this.auth.register(credentials).then(() => {
-            //  if(response.status === 200){ 
-                this.$router.push({ name: 'login', query: { redirect: '/' } })
-            //}
-            
-        })
+        
       }
     }
 };

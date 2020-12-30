@@ -12,17 +12,17 @@
             <img
               class="header-main-logo-js"
               src="https://4menshop.com/logo.png"
-              alt="NewChic"
+              alt="4men"
             />
             <span class="hidden-sm-and-down">2$</span>
           </v-toolbar-title>
   
           <v-spacer></v-spacer>
-          <v-list-item-action  class="right" style="width: 300px">
-            <v-btn icon to="/signuppage">Register</v-btn>
+          <v-list-item-action  class="right" style="width: 150px">
+            <v-btn to="/signuppage">Sign up</v-btn>
           </v-list-item-action>
           <v-list-item-action class="left">
-            <v-btn icon to="/"><v-icon>mdi-exit-to-app</v-icon></v-btn>
+            <v-btn to="/"><v-icon>mdi-exit-to-app</v-icon></v-btn>
           </v-list-item-action>
         </v-app-bar>
 
@@ -33,10 +33,10 @@
                 <h1 class="black--text" align="center">Sign in</h1>
                 <v-spacer></v-spacer>
                 <v-card-text>
-                  <v-form v-model="isValid">
+                  <v-form >
                     <v-text-field
                       label="Login"
-                      v-model="person.username"
+                      v-model="username"
                       :rules="[(v) => !!v || 'username is required']"
                       required
                       name="login"
@@ -47,7 +47,7 @@
                     <v-text-field
                       id="password"
                       label="Password"
-                      v-model="person.password"
+                      v-model="password"
                       :rules="[(v) => !!v || 'Password is required']"
                       required
                       name="password"
@@ -72,7 +72,7 @@
                     rounded
                     class="z-depth-1a"
                     :disabled="!isValid"
-                    @click="isHidden = !isHidden"
+                    v-on:click="login"
                     >Login
                   </v-btn>
                 </v-form>
@@ -88,10 +88,10 @@
                   >
                 </v-form>
                 <br />
-                <v-alert v-if="!isHidden" dense text type="error">
+                <!-- <v-alert v-if="!isHidden" dense text type="error">
                   Login fail. Please check your <strong>username</strong> or
                   <strong>password</strong>
-                </v-alert>
+                </v-alert> -->
               </v-col>
             </v-row>
           </v-container>
@@ -102,51 +102,18 @@
 </template>
 
 <script>
-import Auth from "../utils/AuthenticationService";
 export default {
   data: () => ({
     isValid: true,
     isHidden: true,
-    person: {
-      username: null,
-      password: null,
-    },
+    username: '',
+    password: '',
   }),
-  auth: null,
-  created() {
-    this.auth = new Auth();
-  },
+
   method: {
-    // login() {
-    //   <v-alert dense border="left" type="warning">
-    //     I'm a dense alert with the of warning
-    //   </v-alert>;
-    //   const credentials = {
-    //     username: this.username,
-    //     password: this.password,
-    //   };
-    // const response = auth.login(credentials);
-    // this.msg = response.msg;
-    //   this.auth.login(credentials).then((response) => {
-    //     if (response.status === 200) {
-    //         this.$toast.add({
-    //           severity: "success",
-    //           summary: "Success Message",
-    //           detail: "Order submitted",
-    //           life: 3000,
-    //         });
-    //       this.$router.push("/about");
-    //     } else {
-    //         this.$toast.add({
-    //           severity: "error",
-    //           summary: "Error Message",
-    //           detail: "Order submitted",
-    //           life: 3000,
-    //         });
-    //     }
-    //   });
-    // },
-    redict() {},
+    login() {
+      console.log("login fuc.......");
+    }
   },
 };
 </script>
