@@ -22,7 +22,7 @@
                   dark
                   flat
                 >
-                  <v-toolbar-title>Login form</v-toolbar-title>
+                  <v-toolbar-title>Reset password</v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -54,7 +54,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="primary">Reset password</v-btn>
-                  <v-btn color="primary" to="/">Cancel</v-btn>
+                  <v-btn color="primary" to="/loginpage">Cancel</v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>

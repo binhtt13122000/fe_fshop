@@ -16,7 +16,10 @@
             />
             <span class="hidden-sm-and-down">2$</span>
           </v-toolbar-title>
+
           <v-spacer></v-spacer>
+
+          <v-btn to="/"><v-icon>mdi-exit-to-app</v-icon></v-btn>
         </v-app-bar>
 
         <v-main>
@@ -47,11 +50,28 @@
                       prepend-icon="mdi-lock"
                       type="password"
                     ></v-text-field>
-                    <h4 class="black--text" align="right">
-                      <router-link to="/forgotpasswordForm"
-                        >Forgot password ?</router-link
-                      >
-                    </h4>
+                    <div class="create-forgot">
+                      <v-list-item-action>
+                        <router-link class="right" to="/signupPage"
+                          >Create account</router-link
+                        >
+                      </v-list-item-action>
+                      <v-list-item-action>
+                        <router-link class="left" to="/forgotpasswordForm"
+                          >Forgot password ?</router-link
+                        >
+                      </v-list-item-action>
+                      <!-- <p>
+                        <router-link class="right" to="/signupPage"
+                          >Create account</router-link
+                        >
+                      </p>
+                      <p>
+                        <router-link class="left" to="/forgotpasswordForm"
+                          >Forgot password ?</router-link
+                        >
+                      </p> -->
+                    </div>
                   </v-form>
                 </v-card-text>
                 <v-form class="btnLoginCancel" align="right">
@@ -66,7 +86,7 @@
                   </v-btn>
                 </v-form>
                 <br />
-                <h3 align="left">OR LOGIN WITH</h3>
+                <h3 align="left">Or</h3>
                 <br />
 
                 <v-spacer></v-spacer>
@@ -76,11 +96,11 @@
                     ><v-icon>mdi-google</v-icon></v-btn
                   >
                 </v-form>
-                <br>
+                <br />
                 <v-alert v-if="!isHidden" dense text type="error">
-                    Login fail. Please check your <strong>username</strong> or
-                    <strong>password</strong>
-                  </v-alert>
+                  Login fail. Please check your <strong>username</strong> or
+                  <strong>password</strong>
+                </v-alert>
               </v-col>
             </v-row>
           </v-container>
@@ -110,37 +130,48 @@ export default {
     //   <v-alert dense border="left" type="warning">
     //     I'm a dense alert with the of warning
     //   </v-alert>;
-      //   const credentials = {
-      //     username: this.username,
-      //     password: this.password,
-      //   };
-      // const response = auth.login(credentials);
-      // this.msg = response.msg;
-      //   this.auth.login(credentials).then((response) => {
-      //     if (response.status === 200) {
-      //         this.$toast.add({
-      //           severity: "success",
-      //           summary: "Success Message",
-      //           detail: "Order submitted",
-      //           life: 3000,
-      //         });
-      //       this.$router.push("/about");
-      //     } else {
-      //         this.$toast.add({
-      //           severity: "error",
-      //           summary: "Error Message",
-      //           detail: "Order submitted",
-      //           life: 3000,
-      //         });
-      //     }
-      //   });
-   // },
+    //   const credentials = {
+    //     username: this.username,
+    //     password: this.password,
+    //   };
+    // const response = auth.login(credentials);
+    // this.msg = response.msg;
+    //   this.auth.login(credentials).then((response) => {
+    //     if (response.status === 200) {
+    //         this.$toast.add({
+    //           severity: "success",
+    //           summary: "Success Message",
+    //           detail: "Order submitted",
+    //           life: 3000,
+    //         });
+    //       this.$router.push("/about");
+    //     } else {
+    //         this.$toast.add({
+    //           severity: "error",
+    //           summary: "Error Message",
+    //           detail: "Order submitted",
+    //           life: 3000,
+    //         });
+    //     }
+    //   });
+    // },
     redict() {},
   },
 };
 </script>
 
 <style lang="scss">
+// .create-forgot ul li router-link {
+//   text-decoration: none;
+//   list-style: none;
+//   // display: inline;
+// }
+.create-forgot .left {
+  text-align: right;
+  text-decoration: none;
+  list-style: none;
+}
+
 @media only screen and (max-width: 850px) {
   .btnLoginCancel {
     text-align: center;

@@ -85,58 +85,20 @@
             class="hidden-xs-and-down"
           ></v-text-field>
           <v-spacer></v-spacer>
-          <!--Menu -->
-
-          <v-menu
-            v-for="([text, rounded], index) in btns"
-            :key="text"
-            :rounded="rounded"
-            offset-y
-          >
-            <template v-slot:activator="{ attrs, on }">
-              <v-btn
-                :color="colors[index]"
-                class="white--text ma-5"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-icon>{{ text }} </v-icon>
-              </v-btn>
-            </template>
-
-            <v-list>
-              <v-list-item>
-                <v-list-item-action>
-                  <v-btn to="/loginpage"><v-icon>mdi-login</v-icon></v-btn>
-                </v-list-item-action>
-                <v-list-item-title>Login</v-list-item-title>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-action>
-                  <v-btn to="/signuppage"
-                    ><v-icon>mdi-account-plus</v-icon></v-btn
-                  >
-                </v-list-item-action>
-                <v-list-item-title>Register</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-
           <v-btn icon class="hidden-sm-and-down">
             <v-icon>mdi-shopping</v-icon>
           </v-btn>
-
-          <v-btn icon class="hidden-sm-and-down">
-            <v-icon>mdi-heart</v-icon>
+          <v-btn icon to="/loginpage" class="hidden-sm-and-down">
+            <v-icon>mdi-account</v-icon>
           </v-btn>
-          <v-btn icon large>
+          <!-- <v-btn icon large>
             <v-avatar size="32px" item>
               <v-img
                 src="https://images.unsplash.com/photo-1608874973277-a34ed4aba3f8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80"
                 alt="Vuetify"
               ></v-img
             ></v-avatar>
-          </v-btn>
+          </v-btn> -->
         </v-app-bar>
 
         <v-main>
