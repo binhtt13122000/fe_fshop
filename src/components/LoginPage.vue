@@ -11,15 +11,19 @@
           <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
             <img
               class="header-main-logo-js"
-              src="//static.chiccdn.com/web/assets/images/common/logo.png"
+              src="https://4menshop.com/logo.png"
               alt="NewChic"
             />
             <span class="hidden-sm-and-down">2$</span>
           </v-toolbar-title>
-
+  
           <v-spacer></v-spacer>
-
-          <v-btn to="/"><v-icon>mdi-exit-to-app</v-icon></v-btn>
+          <v-list-item-action  class="right" style="width: 300px">
+            <v-btn icon to="/signuppage">Register</v-btn>
+          </v-list-item-action>
+          <v-list-item-action class="left">
+            <v-btn icon to="/"><v-icon>mdi-exit-to-app</v-icon></v-btn>
+          </v-list-item-action>
         </v-app-bar>
 
         <v-main>
@@ -50,27 +54,14 @@
                       prepend-icon="mdi-lock"
                       type="password"
                     ></v-text-field>
+
                     <div class="create-forgot">
-                      <v-list-item-action>
-                        <router-link class="right" to="/signupPage"
-                          >Create account</router-link
-                        >
-                      </v-list-item-action>
-                      <v-list-item-action>
-                        <router-link class="left" to="/forgotpasswordForm"
+                      
+                      <p class="right" align="right">
+                          <router-link to="/forgotpasswordForm"
                           >Forgot password ?</router-link
-                        >
-                      </v-list-item-action>
-                      <!-- <p>
-                        <router-link class="right" to="/signupPage"
-                          >Create account</router-link
                         >
                       </p>
-                      <p>
-                        <router-link class="left" to="/forgotpasswordForm"
-                          >Forgot password ?</router-link
-                        >
-                      </p> -->
                     </div>
                   </v-form>
                 </v-card-text>
@@ -86,7 +77,7 @@
                   </v-btn>
                 </v-form>
                 <br />
-                <h3 align="left">Or</h3>
+                <h3 align="center">Or</h3>
                 <br />
 
                 <v-spacer></v-spacer>
@@ -161,13 +152,8 @@ export default {
 </script>
 
 <style lang="scss">
-// .create-forgot ul li router-link {
-//   text-decoration: none;
-//   list-style: none;
-//   // display: inline;
-// }
-.create-forgot .left {
-  text-align: right;
+
+.create-forgot .right {
   text-decoration: none;
   list-style: none;
 }

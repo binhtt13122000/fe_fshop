@@ -68,11 +68,11 @@
           <v-app-bar-nav-icon
             @click.stop="drawer = !drawer"
           ></v-app-bar-nav-icon>
-          <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
+          <v-toolbar-title style="width: 300px" class="hidden-md-and-down">
             <img
-              class="hidden-xs-and-down"
-              src="//static.chiccdn.com/web/assets/images/common/logo.png"
-              alt="NewChic"
+              class="img-responsive"
+              src="https://4menshop.com/logo.png"
+              alt="4men"
             />
             <span class="hidden-sm-and-down">2$</span>
           </v-toolbar-title>
@@ -85,10 +85,10 @@
             class="hidden-xs-and-down"
           ></v-text-field>
           <v-spacer></v-spacer>
-          <v-btn icon class="hidden-sm-and-down">
+          <v-btn icon class="hidden-xs-and-down">
             <v-icon>mdi-shopping</v-icon>
           </v-btn>
-          <v-btn icon to="/loginpage" class="hidden-sm-and-down">
+          <v-btn icon to="/loginpage" class="hidden-xs-and-down">
             <v-icon>mdi-account</v-icon>
           </v-btn>
           <!-- <v-btn icon large>
