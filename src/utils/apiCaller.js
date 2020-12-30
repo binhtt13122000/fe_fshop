@@ -7,7 +7,7 @@ export const defaultHeader = {
 export const request = (endpoint, method, headers, body, params) => {
     return Axios(
         {
-            url: process.env.ROOT_API_URL + endpoint,
+            url:"http://localhost:8082/v1/api"+ endpoint,
             method: method,
             headers: {...defaultHeader, ...headers},
             data: body,

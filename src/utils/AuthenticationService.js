@@ -1,16 +1,17 @@
-import  api  from "../utils/apiCaller";
+import  {post}  from "../utils/apiCaller";
 
 class AuthenticationService {
-    login(){
-        // return api("/users/login", {}, {
-        
-        // }, {})
-        return api().post('/users/login')
+    // login(credentials){
+    //     return post("/users/login/", "POST",{}, {username: credentials.username, password: credentials.password}, {})
+    // }
+
+    login(credentials){
+        return post("/users/login/", "POST",{}, credentials, {})
     }
 
-    register(){
-        return api().post('/users/register')
-    }
+    // register(){
+    //     return api().post('/users/register')
+    // }
 }
 
 export default new AuthenticationService();

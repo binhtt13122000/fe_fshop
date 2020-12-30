@@ -27,7 +27,7 @@
                 <h1 class="black--text" align="center">Sign in</h1>
                 <v-spacer></v-spacer>
                 <v-card-text>
-                <v-form v-model="isValid">
+                <v-form >
                   <v-text-field
                       label="Fullname"
                       v-model="person.fullname"
@@ -66,7 +66,7 @@
                 </v-card-text>
                   <v-form class="btnLoginCancel" align="right">
                     <v-spacer></v-spacer>
-                    <v-btn gradient="gray" rounded class="z-depth-1a" v-on:click="register" :disabled="!isValid"
+                    <v-btn gradient="gray" rounded class="z-depth-1a" @submit.prevent="login" :disabled="!isValid"
                       >Register</v-btn>
                   </v-form>
                     <br />
@@ -119,7 +119,7 @@ export default {
     method: {
 
       reigster()  {
-        
+        console.log("Function")
       }
     }
 };
