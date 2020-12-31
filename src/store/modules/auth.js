@@ -38,6 +38,7 @@ const actions = {
     },
     async register({commit}, credentials) {
         try {
+            console.log(credentials.username)
             const response = await AuthServices.register(credentials)
             console.log(response)
             commit("DO_SOMETHING")

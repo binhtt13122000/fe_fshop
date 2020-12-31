@@ -8,8 +8,8 @@ class AuthenticationService {
     // login(credentials){
     //     return API.post("/users/login", credentials)
     // }
-    register(data) {
-        return post("/users/register",{}, data, {})
+    register(credentials) {
+        return post("/users/register",{}, credentials, {})
     }
 
 

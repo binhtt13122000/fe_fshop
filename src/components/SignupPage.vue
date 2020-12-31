@@ -31,24 +31,26 @@
               <h1 class="black--text" align="center">Sign in</h1>
               <v-spacer></v-spacer>
               <v-form @submit.prevent="register()">
+                <v-card-text>
                     <v-text-field
                       class="form_group"
-                      label="Fullname"
-                      v-model="fullname"
-                      :rules="[(v) => !!v || 'fullname is required']"
+                      label="userName"
+                      v-model="userName"
+                      :rules="[(v) => !!v || 'userName is required']"
                       required
                       error-count="3"
+                      name="userName"
                       prepend-icon="mdi-account"
                       type="text"
                     ></v-text-field>
                     <v-text-field
                       class="form_group"
-                      label="username"
-                      v-model="username"
-                      :rules="[(v) => !!v || 'username is required']"
+                      label="name"
+                      v-model="name"
+                      :rules="[(v) => !!v || 'name is required']"
                       required
                       error-count="3"
-                      name="username"
+                      name="name"
                       prepend-icon="mdi-rename-box"
                       type="text"
                     ></v-text-field>
@@ -56,7 +58,7 @@
                       class="form_group"
                       label="Email"
                       v-model="email"
-                      :rules="[(v) => !!v || 'username is required']"
+                      :rules="[(v) => !!v || 'email is required']"
                       required
                       error-count="2"
                       name="Email"
@@ -81,7 +83,9 @@
                         >Register</v-btn
                       >
                     </div>
-                  </v-form>
+                </v-card-text>
+                    
+              </v-form>
             </v-col>
           </v-row>
         </v-container>
@@ -94,12 +98,13 @@
 export default {
   data() {
     return {
-      fullname: "",
-      username: "",
+      name: "",
+      userName: "",
       email: "",
       password: "",
-      registerAt: "",
-      status: 1,
+      // roleId: "string",
+      // registerAt: new Date(),
+      // status: true,
     //   fullnameRules: [
     //   (v) => !!v || "Full name is required",
     //   (v) => (v && v.length >= 2) || "Password must have 5+ characters",
@@ -122,21 +127,27 @@ export default {
     // ],
     };
   },
-  method: {
+  methods: {
     register() {
       console.log("login fuction from components.......");
       this.$store
         .dispatch("AUTH/register", {
-          fullname: this.fullname,
-          username: this.username,
+          userName: this.userName,
+          name: this.name,
           email: this.email,
           password: this.password,
-          is_admin: "ROL_1",
-          registerAt: new Date(),
-          status: 1,
+          // userName: "nhanle16235",
+          // name: "tra my",
+          // email: "nhanle2902@gmail.com",
+          // password: "1234567",
+          // roleId: "string",
+          // registerAt: new Date(),
+          // status: true,
+          
         })
         .then(() => this.$router.push("/"))
         .catch((err) => console.log(err));
+        console.log("login fuction from components.1221......");
     },
   },
 };
