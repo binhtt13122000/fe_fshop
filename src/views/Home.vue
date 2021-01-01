@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <div class="vue-template">
-
       <Layout></Layout>
     </div>
   </div>

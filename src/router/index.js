@@ -2,18 +2,23 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Layout from '../components/Layout.vue'
-import LoginPage from '../components/LoginPage.vue'
-import SignupPage from '../components/SignupPage.vue'
-import ForgotPasswordForm from '../components/ForgotPasswordForm.vue'
-
+import LoginPage from '../components/auth/LoginPage.vue'
+import SignupPage from '../components/auth/SignupPage.vue'
+import ForgotPasswordForm from '../components/auth/ForgotPasswordForm.vue'
+import HomePage from '../components/HomePage.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
-  path: '/',
+  path: '/home',
   name: 'home',
   component: Home
   },
+  {
+    path: '/',
+    name: 'homepage',
+    component: HomePage
+    },
   {
     path: '/forgotpasswordForm',
     name: 'forgotpasswordForm',
