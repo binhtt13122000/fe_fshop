@@ -8,31 +8,47 @@
           app
           color="grey darken-3"
           dark
-          style="height: 80px"
+          style="height: 80px;"
+          class="app-bar"
         >
-            <div class="site-logo">
-                <a href="#">
-                  <img
-                    class="img-responsive"
-                    src="https://4menshop.com/logo.png"
-                    alt="4men"
-                  />
-                </a>
-            </div>    
-          <v-row justify="center">
-              <v-btn 
-                v-for="link in linkBar"
-                :key="link"
-                color="white"
-                text
-              >{{link}}</v-btn>
+          <div class="site-logo">
+            <a href="#" to="/">
+              <img
+                class="img-responsive"
+                src="https://4menshop.com/logo.png"
+                alt="4men"
+              />
+            </a>
+          </div>
+          <v-row  justify="center">
+            <v-btn v-for="link in linkBar" :key="link" color="white" text>{{
+              link
+            }}</v-btn>
           </v-row>
+          <v-spacer></v-spacer>
+          <v-btn icon class="hidden-xs-and-down">
+            <v-icon>mdi-shopping</v-icon>
+          </v-btn>
+          <v-btn icon to="/loginpage" class="hidden-xs-and-down">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
         </v-app-bar>
 
-        <v-main> 
-
-
+        <v-main>
+          <v-container fluid>
+            <v-row align="center" justify="center">
+              <div class="main-image">
+                <img :src="mainImageSrc" />
+              </div>
+              <div class="image-list">
+                <div v-for="img in images" :key="img" class="item">
+                  <img src="img.image" />
+                </div>
+              </div>
+            </v-row>
+          </v-container>
         </v-main>
+
         <v-footer color="grey darken-3" padless>
           <v-row justify="center" no-gutters>
             <v-btn
@@ -45,10 +61,7 @@
             >
               {{ link }}
             </v-btn>
-            <v-col
-              class="grey darken-1 py-4 text-center white--text"
-              cols="12"
-            >
+            <v-col class="grey darken-1 py-4 text-center white--text" cols="12">
               {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
             </v-col>
           </v-row>
@@ -64,13 +77,59 @@ export default {
     source: String,
   },
   data: () => ({
-    linkBar: ["Name", "Nữ", "Bộ sưu tập", "Blog", "khuyến mãi", "Hệ Thống cửa hàng"],
+    linkBar: [
+      "Name",
+      "Nữ",
+      "Bộ sưu tập",
+      "Blog",
+      "khuyến mãi",
+      "Hệ Thống cửa hàng",
+    ],
     links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"],
+    images: [],
+    mainImageSrc: null,
   }),
+  methods: {},
+  created() {
+    let self = this
+    this.images = [
+      {
+        id: "1",
+        image:
+          "https://ninomaxx.com.vn/wp-content/uploads/2020/12/1920x1089banner-destop-1.jpg",
+      },
+      {
+        id: "2",
+        image:
+          "https://ninomaxx.com.vn/wp-content/uploads/2020/10/BANNER-WEB-2.png",
+      },
+      {
+        id: "3",
+        image:
+          "https://ninomaxx.com.vn/wp-content/uploads/2020/10/BANNER-PC.png",
+      },
+    ];
+    setInterval(function () {
+      self.mainImageSrc =
+        self.images[Math.floor(Math.random() * self.images.length)].image;
+    }, 3000);
+  },
 };
 </script>
 
 <style lang="scss">
+.app-bar {
+    opacity: 15%;
+}
+
+.app-bar:hover {
+    opacity: 100%;
+}
+.bar-center {
+    background-color: #ffffff;
+    opacity: 60%;
+}
+
 @media only screen and (max-width: 850px) {
 }
 @media only screen and (max-width: 500px) {
