@@ -11,27 +11,39 @@
           style="height: 80px;"
           class="app-bar"
         >
-          <div class="site-logo">
-            <a href="#" to="/">
-              <img
-                class="img-responsive"
-                src="https://4menshop.com/logo.png"
-                alt="4men"
-              />
-            </a>
-          </div>
-          <v-row  justify="center">
-            <v-btn v-for="link in linkBar" :key="link" color="white" text>{{
-              link
-            }}</v-btn>
-          </v-row>
-          <v-spacer></v-spacer>
-          <v-btn icon class="hidden-xs-and-down">
-            <v-icon>mdi-shopping</v-icon>
-          </v-btn>
-          <v-btn icon to="/loginpage" class="hidden-xs-and-down">
-            <v-icon>mdi-account</v-icon>
-          </v-btn>
+            <div class="site-logo">
+                <a href="#" to="/">
+                    <img
+                        class="img-responsive"
+                        src="https://4menshop.com/logo.png"
+                        alt="4men"
+                    />
+                </a>
+            </div>
+            <v-row  justify="center">
+                <v-btn v-for="link in linkBar" :key="link" color="white" text>{{
+                link
+                }}</v-btn>
+            </v-row>
+    
+    <!-- Create right column -->
+
+            <v-text-field
+                flat
+                solo-inverted
+                hide-details
+                prepend-inner-icon="mdi-magnify"
+                label="Search"
+                class=hidden-xs-and-down
+            ></v-text-field>
+            <div class="right-column-icon">
+                <v-btn icon class="hidden-xs-and-down">
+                    <v-icon>mdi-shopping</v-icon>
+                </v-btn>
+                <v-btn icon to="/loginpage" class="hidden-xs-and-down">
+                    <v-icon>mdi-account</v-icon>
+                </v-btn>
+            </div>
         </v-app-bar>
 
         <v-main>
