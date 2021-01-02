@@ -24,26 +24,28 @@
                 <v-list-item-content>
                   <v-list-item-title>Login/Register</v-list-item-title>
                 </v-list-item-content>
+              
               </v-list-item>
               <br>
               <v-list-item link>
                 <v-list-item-content>
-                  <v-list-item-title>Name</v-list-item-title>
+                  <v-list-item-title>Name<v-icon>mdi-chevron-down</v-icon></v-list-item-title>
+                  
                 </v-list-item-content>
               </v-list-item>
               <v-list-item link>
                 <v-list-item-content>
-                  <v-list-item-title>Nữ</v-list-item-title>
+                  <v-list-item-title>Nữ<v-icon>mdi-chevron-down</v-icon></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item link>
                 <v-list-item-content>
-                  <v-list-item-title>Bộ sưu tập</v-list-item-title>
+                  <v-list-item-title>Bộ sưu tập<v-icon>mdi-chevron-down</v-icon></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item link>
                 <v-list-item-content>
-                  <v-list-item-title>Blog</v-list-item-title>
+                  <v-list-item-title>Blog<v-icon>mdi-chevron-down</v-icon></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item link>
