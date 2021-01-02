@@ -5,6 +5,7 @@
         <!-- Navigation bar -->
         <v-navigation-drawer
           v-model="drawer"
+          v-if="isValid"
           :clipped="$vuetify.breakpoint.lgAndUp"
           app
           right
@@ -18,37 +19,40 @@
             class="nav-bar-search"
           ></v-text-field>
           <v-list class="nar-bar-btn"  dense  justify="center" align="center">
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title>Name</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title>Nữ</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title>Bộ sưu tập</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title>Blog</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title>Khuyến mãi</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title>Hệ Thống cửa hàng</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
+            <!-- <v-list-group> -->
+              <v-list-item link>
+                <v-list-item-content>
+                  <v-list-item-title>Name</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item link>
+                <v-list-item-content>
+                  <v-list-item-title>Nữ</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item link>
+                <v-list-item-content>
+                  <v-list-item-title>Bộ sưu tập</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item link>
+                <v-list-item-content>
+                  <v-list-item-title>Blog</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item link>
+                <v-list-item-content>
+                  <v-list-item-title>Khuyến mãi</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item link>
+                <v-list-item-content>
+                  <v-list-item-title>Hệ Thống cửa hàng</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <!-- </v-list-group> -->
+            </v-list>
+          
         </v-navigation-drawer>
         <!--App bar -->
         <v-app-bar
@@ -68,7 +72,7 @@
               />
             </a>
           </div>
-          <v-row width="90px" justify="center">
+          <v-row class="hidden-sm-and-down" width="90px" justify="center">
             <v-btn v-for="link in linkBar" :key="link" color="white" text>{{
               link
             }}</v-btn>
@@ -83,7 +87,7 @@
             hide-details
             prepend-inner-icon="mdi-magnify"
             label="Search"
-            class="hidden-md-and-down"
+            class="hidden-sm-and-down"
           ></v-text-field>
           <div class="right-column-icon">
             <v-btn icon class="hidden-xs-and-down">
@@ -95,7 +99,7 @@
           </div>
           <v-app-bar-nav-icon
             @click.stop="drawer = !drawer"
-            v-if="!isValid"
+            v-if="isValid"
           ></v-app-bar-nav-icon>
         </v-app-bar>
 
@@ -156,7 +160,22 @@ export default {
     isValid: false,
     mainImageSrc: null,
   }),
-  methods: {},
+  // beforeDestroy () {
+  //     if (typeof window === 'undefined') return
+
+  //     window.removeEventListener('resize', this.onResize, { passive: true })
+  //   },
+  mounted () {
+      this.onResize()
+
+      window.addEventListener('resize', this.onResize, { passive: true })
+    },
+  methods: {
+      onResize() {
+      this.isValid = window.innerWidth <= 960;
+    }
+  },
+  
   created() {
     let self = this;
     this.images = [
