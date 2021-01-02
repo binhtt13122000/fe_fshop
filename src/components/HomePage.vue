@@ -19,51 +19,58 @@
             class="nav-bar-search"
             style="width: 10%"
           ></v-text-field>
-          <v-list class="nar-bar-btn"  dense  justify="center" align="center">
+          <v-list class="nar-bar-btn" dense justify="center" align="center">
             <!-- <v-list-group> -->
-              <v-list-item link v-if="isAccount">
-                <v-list-item-content>
-                  <v-list-item-title>Login/Register</v-list-item-title>
-                </v-list-item-content>
-              
-              </v-list-item>
-              <br>
-              <v-list-item link>
-                <v-list-item-content>
-                  <v-list-item-title>Name<v-icon>mdi-chevron-down</v-icon></v-list-item-title>
-                  
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item link>
-                <v-list-item-content>
-                  <v-list-item-title>Nữ<v-icon>mdi-chevron-down</v-icon></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item link>
-                <v-list-item-content>
-                  <v-list-item-title>Bộ sưu tập<v-icon>mdi-chevron-down</v-icon></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item link>
-                <v-list-item-content>
-                  <v-list-item-title>Blog<v-icon>mdi-chevron-down</v-icon></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item link>
-                <v-list-item-content>
-                  <v-list-item-title>Khuyến mãi</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item link>
-                <v-list-item-content>
-                  <v-list-item-title>Hệ Thống cửa hàng</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <!-- </v-list-group> -->
-            </v-list>
-          
+            <v-list-item link v-if="isAccount">
+              <v-list-item-content>
+                <v-list-item-title>Login/Register</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <br />
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title
+                  >Name<v-icon>mdi-chevron-down</v-icon></v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title
+                  >Nữ<v-icon>mdi-chevron-down</v-icon></v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title
+                  >Bộ sưu tập<v-icon
+                    >mdi-chevron-down</v-icon
+                  ></v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title
+                  >Blog<v-icon>mdi-chevron-down</v-icon></v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title>Khuyến mãi</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title>Hệ Thống cửa hàng</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <!-- </v-list-group> -->
+          </v-list>
         </v-navigation-drawer>
-  <!--App bar -->
+        <!--App bar -->
         <v-app-bar
           :clipped-left="$vuetify.breakpoint.lgAndUp"
           app
@@ -73,7 +80,7 @@
           class="app-bar"
         >
           <div class="site-logo">
-            <a href="/" >
+            <a href="/">
               <img
                 class="img-responsive"
                 src="https://4menshop.com/logo.png"
@@ -86,12 +93,15 @@
               link
             }}</v-btn>
           </v-row> -->
-          <v-row id="nav-bar-btn" class="hidden-md-and-down" width="90px" justify="center">
+          <v-row
+            id="nav-bar-btn"
+            class="hidden-md-and-down"
+            width="90px"
+            justify="center"
+          >
             <div class="nar-bar-btn">
               <ul class="nar-links">
-                <v-menu>
-
-                </v-menu>
+                <v-menu> </v-menu>
                 <li><a href="">Nam</a></li>
                 <li><a href="">Nữ</a></li>
                 <li><a href="">Blog</a></li>
@@ -101,40 +111,39 @@
               </ul>
             </div>
           </v-row>
-          
 
-  <!-- Create right column -->
+          <!-- Create right column -->
 
           <v-spacer></v-spacer>
           <!-- <v-col cols="12" sm="3" md="3" lg="3" xl="3"> -->
-            <v-text-field
-              flat
-              solo-inverted
-              hide-details
-              prepend-inner-icon="mdi-magnify"
-              label="Search"
-              class="hidden-sm-and-down"
-            ></v-text-field>
+          <v-text-field
+            flat
+            solo-inverted
+            hide-details
+            prepend-inner-icon="mdi-magnify"
+            label="Search"
+            class="hidden-sm-and-down"
+          ></v-text-field>
           <!-- </v-col> -->
-            <v-btn icon class="hidden-xs-and-down">
-              <v-icon>mdi-shopping</v-icon>
-            </v-btn>
-            <v-btn icon to="/loginpage" class="hidden-md-and-down">
-              <v-icon>mdi-account</v-icon>
-            </v-btn>
-          
+          <v-btn icon class="hidden-xs-and-down">
+            <v-icon>mdi-shopping</v-icon>
+          </v-btn>
+          <v-btn icon to="/loginpage" class="hidden-md-and-down">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+
           <v-app-bar-nav-icon
             class="ml-0 pl-4"
             @click.stop="drawer = !drawer"
             v-if="isValid"
           ></v-app-bar-nav-icon>
         </v-app-bar>
-  <!-- V main -->
+        <!-- V main -->
         <v-main>
           <v-container class="fill-height" fluid>
             <v-row align="center" justify="center">
               <div class="main-image">
-                <img class="img-responsive" :src="mainImageSrc" width="100%"/>
+                <img class="img-responsive" :src="mainImageSrc" width="100%" />
               </div>
               <!-- <div class="image-list">
                 <div v-for="img in images" :key="img" class="item">
@@ -164,7 +173,7 @@
             </v-column>
           </v-container>
         </v-main>
-  <!-- footer -->
+        <!-- footer -->
         <!-- <v-footer color="grey darken-3" padless>
           <v-row justify="center" no-gutters>
             <v-btn
@@ -182,31 +191,89 @@
             </v-col>
           </v-row>
         </v-footer> -->
-        <v-footer color="grey darken-3" padless>
-          <v-row class="text-center text-md-left mt-3 pb-3">
-            <v-column  md="3" lg="3" xl="3">
-              <h4 class="font-weight-bold">Thương Hiệu</h4>
-              <ul>
-                <li class=""><a href="">Giới thiệu</a></li>
-                <li class=""><a href="">Tuyển dụng</a></li>
-                <li class=""><a href="">Liên hệ</a></li>
-              </ul>
+        <v-footer color="white" padless>
+          <v-row
+            id="footer-center"
+            class="d-flex align-items-center"
+          >
+            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3" >
+              <div class="social-link">
+                <h4 class="font-weight-bold">Contact</h4>
+                <v-list>
+                  <v-list-item link>
+                    <v-list-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-phone</v-icon>
+                        HOTLINE:028 3526 7061
+                      </v-list-item-title>
+                    </v-list-content>
+                  </v-list-item>
+                  <v-list-item link>
+                    <v-list-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-store</v-icon>
+                        HỆ THỐNG CỬA HÀNG
+                      </v-list-item-title>
+                    </v-list-content>
+                  </v-list-item>
+                  <v-list-item link>
+                    <v-list-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-gift</v-icon>
+                        PHIẾU QUÀ TẶNG
+                      </v-list-item-title>
+                    </v-list-content>
+                  </v-list-item>
+                </v-list>
+              </div>
             </v-column>
-            <v-column  md="3" lg="3" xl="3">
-              <h4 class="font-weight-bold">Tin tức</h4>
-              <ul>
-                <li class=""><a href="">Giới thiệu</a></li>
-                <li class=""><a href="">Tuyển dụng</a></li>
-                <li class=""><a href="">Liên hệ</a></li>
-              </ul>
+            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <div class="thuong-hieu">
+                <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
+                <ul>
+                  <li class=""><a href="">Giới thiệu</a></li>
+                  <li class=""><a href="">Tuyển dụng</a></li>
+                  <li class=""><a href="">Liên hệ</a></li>
+                </ul>
+              </div>
             </v-column>
-            <v-column  md="3" lg="3" xl="3">
-              <h4 class="font-weight-bold">Thương Hiệu</h4>
-              <ul>
-                <li class=""><a href="">Giới thiệu</a></li>
-                <li class=""><a href="">Tuyển dụng</a></li>
-                <li class=""><a href="">Liên hệ</a></li>
-              </ul>
+            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3" >
+              <div class="tin-tuc">
+                <h4 class="font-weight-bold">TIN TỨC</h4>
+                <ul>
+                  <li class=""><a href="">Bộ sưu tập</a></li>
+                  <li class=""><a href="">Tư vấn thời trang</a></li>
+                  <li class=""><a href="">Tin tức thời trang</a></li>
+                  <li class=""><a href="">Mẹo hay</a></li>
+                  <li class=""><a href="">Khuyến mãi</a></li>
+                </ul>
+              </div>
+            </v-column>
+            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <div class="ho-tro">
+                <h4 class="font-weight-bold">HỖ TRỢ</h4>
+                <ul>
+                  <li class=""><a href="">Khách hàng thân thiết</a></li>
+                  <li class=""><a href="">Hướng dẫn mua hàng</a></li>
+                  <li class=""><a href="">Hướng dẫn thanh toán</a></li>
+                  <li class=""><a href="">Giao hàng</a></li>
+                  <li class=""><a href="">Quy định đổi hàng</a></li>
+                  <li class=""><a href="">Bảo mật thông tin</a></li>
+                </ul>
+              </div>
+            </v-column>
+            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <div class="dang-ky-nhan-tin">
+                <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
+                <v-form>
+                  <v-text-field
+                    class="form-group"
+                    label="Email"
+                    type="text"
+                  ></v-text-field>
+                  <v-btn type="submit">Dang ky</v-btn>
+                </v-form>
+              </div>
             </v-column>
           </v-row>
         </v-footer>
@@ -241,18 +308,18 @@ export default {
 
   //     window.removeEventListener('resize', this.onResize, { passive: true })
   //   },
-  mounted () {
-      this.onResize()
+  mounted() {
+    this.onResize();
 
-      window.addEventListener('resize', this.onResize, { passive: true })
-    },
+    window.addEventListener("resize", this.onResize, { passive: true });
+  },
   methods: {
-      onResize() {
+    onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
-    }
+    },
   },
-  
+
   created() {
     let self = this;
     this.images = [
@@ -293,32 +360,35 @@ export default {
   opacity: 60%;
 }
 
-
-.nar-bar-btn  {
-
+.nar-bar-btn {
   .nar-links {
     list-style-type: none;
   }
 
-  .nar-links li{
+  .nar-links li {
     display: inline;
     padding: 0px 12px 0px 12px;
   }
-  .nar-links li a{
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 15px;
-      text-transform: uppercase;
+  .nar-links li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 15px;
+    text-transform: uppercase;
   }
-// main image
+  // main image
 
+  // footer
+  #footer-center {
+    box-sizing: border-box;
+    justify-content: space-around;
 
-
-
+    v-column {
+          padding: 0px 12px 0px 12px;
+    }
+  }
 }
 
 @media only screen and (max-width: 1390px) {
-
 }
 @media only screen and (max-width: 560px) {
   // .right-column-icon v-btn {
