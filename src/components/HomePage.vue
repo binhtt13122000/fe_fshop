@@ -192,11 +192,9 @@
           </v-row>
         </v-footer> -->
         <v-footer color="white" padless>
-          <v-row
-            id="footer-center"
-            class="d-flex align-items-center"
-          >
-            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3" >
+          <v-container>
+          <v-row id="footer-center" class="d-flex align-items-center">
+            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
               <div class="social-link">
                 <h4 class="font-weight-bold">Contact</h4>
                 <v-list>
@@ -208,6 +206,10 @@
                       </v-list-item-title>
                     </v-list-content>
                   </v-list-item>
+                  <hr
+                    class="black  accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
                   <v-list-item link>
                     <v-list-content>
                       <v-list-item-title>
@@ -216,6 +218,10 @@
                       </v-list-item-title>
                     </v-list-content>
                   </v-list-item>
+                  <hr
+                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
                   <v-list-item link>
                     <v-list-content>
                       <v-list-item-title>
@@ -224,41 +230,45 @@
                       </v-list-item-title>
                     </v-list-content>
                   </v-list-item>
+                  <hr
+                    class="black  accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
                 </v-list>
               </div>
             </v-column>
             <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
               <div class="thuong-hieu">
                 <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
-                <ul>
-                  <li class=""><a href="">Giới thiệu</a></li>
-                  <li class=""><a href="">Tuyển dụng</a></li>
-                  <li class=""><a href="">Liên hệ</a></li>
+                <ul class="foo-thuong-hieu">
+                  <li><a href="">Giới thiệu</a></li>
+                  <li><a href="">Tuyển dụng</a></li>
+                  <li><a href="">Liên hệ</a></li>
                 </ul>
               </div>
             </v-column>
-            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3" >
+            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
               <div class="tin-tuc">
                 <h4 class="font-weight-bold">TIN TỨC</h4>
-                <ul>
-                  <li class=""><a href="">Bộ sưu tập</a></li>
-                  <li class=""><a href="">Tư vấn thời trang</a></li>
-                  <li class=""><a href="">Tin tức thời trang</a></li>
-                  <li class=""><a href="">Mẹo hay</a></li>
-                  <li class=""><a href="">Khuyến mãi</a></li>
+                <ul class="foo-tin-tuc">
+                  <li><a href="">Bộ sưu tập</a></li>
+                  <li><a href="">Tư vấn thời trang</a></li>
+                  <li><a href="">Tin tức thời trang</a></li>
+                  <li><a href="">Mẹo hay</a></li>
+                  <li><a href="">Khuyến mãi</a></li>
                 </ul>
               </div>
             </v-column>
             <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
               <div class="ho-tro">
                 <h4 class="font-weight-bold">HỖ TRỢ</h4>
-                <ul>
-                  <li class=""><a href="">Khách hàng thân thiết</a></li>
-                  <li class=""><a href="">Hướng dẫn mua hàng</a></li>
-                  <li class=""><a href="">Hướng dẫn thanh toán</a></li>
-                  <li class=""><a href="">Giao hàng</a></li>
-                  <li class=""><a href="">Quy định đổi hàng</a></li>
-                  <li class=""><a href="">Bảo mật thông tin</a></li>
+                <ul class="foo-ho-tro">
+                  <li><a href="">Khách hàng thân thiết</a></li>
+                  <li><a href="">Hướng dẫn mua hàng</a></li>
+                  <li><a href="">Hướng dẫn thanh toán</a></li>
+                  <li><a href="">Giao hàng</a></li>
+                  <li><a href="">Quy định đổi hàng</a></li>
+                  <li><a href="">Bảo mật thông tin</a></li>
                 </ul>
               </div>
             </v-column>
@@ -276,6 +286,10 @@
               </div>
             </v-column>
           </v-row>
+          </v-container>
+          <v-container>
+
+          </v-container>
         </v-footer>
       </v-app>
     </v-app>
@@ -378,15 +392,27 @@ export default {
   // main image
 
   // footer
-  #footer-center {
-    box-sizing: border-box;
-    justify-content: space-around;
+}
 
-    v-column {
-          padding: 0px 12px 0px 12px;
+#footer-center {
+  ul {
+    list-style-type: none;
+    li a {
+      text-decoration: none;
+      text-align: left;
+      justify-content: left;
+      color: #000000;
     }
   }
+
+  h4 {
+    text-align: center;
+  }
 }
+// .tin-tuc .foo-tin-tuc .font-weight-bold {
+//   font-size: 100px;
+//     list-style-type: none;
+//   }
 
 @media only screen and (max-width: 1390px) {
 }
