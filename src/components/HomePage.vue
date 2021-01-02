@@ -17,6 +17,7 @@
             prepend-inner-icon="mdi-magnify"
             label="Search"
             class="nav-bar-search"
+            style="width: 10%"
           ></v-text-field>
           <v-list class="nar-bar-btn"  dense  justify="center" align="center">
             <!-- <v-list-group> -->
@@ -80,11 +81,24 @@
               />
             </a>
           </div>
-          <v-row class="hidden-md-and-down" width="90px" justify="center">
+          <!-- <v-row class="hidden-md-and-down" width="90px" justify="center">
             <v-btn v-for="link in linkBar" :key="link" color="white" text>{{
               link
             }}</v-btn>
+          </v-row> -->
+          <v-row id="nav-bar-btn" class="hidden-md-and-down" width="90px" justify="center">
+            <div class="nar-bar-btn">
+              <ul class="nar-links">
+                <li><a  href="">Nam</a></li>
+                <li><a href="">Nữ</a></li>
+                <li><a href="">Blog</a></li>
+                <li><a href="">Bộ sưu tập</a></li>
+                <li><a href="">Khuyến mãi</a></li>
+                <li><a href="">Hệ thống cửa hàng</a></li>
+              </ul>
+            </div>
           </v-row>
+          
 
   <!-- Create right column -->
 
@@ -226,6 +240,25 @@ export default {
 .bar-center {
   background-color: #ffffff;
   opacity: 60%;
+}
+
+
+.nar-bar-btn  {
+
+  .nar-links {
+    list-style-type: none;
+  }
+
+  .nar-links li{
+    display: inline;
+    padding: 0px 12px 0px 12px;
+  }
+  .nar-links li a{
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 15px;
+      text-transform: uppercase;
+  }
 }
 
 @media only screen and (max-width: 1390px) {
