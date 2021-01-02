@@ -89,7 +89,8 @@
           <v-row id="nav-bar-btn" class="hidden-md-and-down" width="90px" justify="center">
             <div class="nar-bar-btn">
               <ul class="nar-links">
-                <li><a  href="">Nam</a></li>
+                <li><a href="">Nam</a></li>
+                
                 <li><a href="">Nữ</a></li>
                 <li><a href="">Blog</a></li>
                 <li><a href="">Bộ sưu tập</a></li>
@@ -139,6 +140,30 @@
                 </div>
               </div> -->
             </v-row>
+            <v-column>
+              <div class="center-item-image">
+                <a href="">
+                  <img
+                    class="img-responsive-left"
+                    src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-2.png"
+                    alt="4men"
+                    width="50%"
+                  />
+                </a>
+                <a href="">
+                  Xem Them
+                </a>
+                <a href="">
+                  <img
+                    class="img-responsive-right"
+                    src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
+                    alt="4men"
+                    width="50%"
+                  />
+                </a>
+                <v-btn>Xem Them</v-btn>
+              </div>
+            </v-column>
           </v-container>
         </v-main>
   <!-- footer -->
@@ -259,7 +284,32 @@ export default {
       font-size: 15px;
       text-transform: uppercase;
   }
+// main image
+.center-item-image {
+  position: relative;
+
+
+  .btn-img-left {
+    position: absolute;
+      transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+      color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+
+
+
+
 }
+}
+
+
 
 @media only screen and (max-width: 1390px) {
 
