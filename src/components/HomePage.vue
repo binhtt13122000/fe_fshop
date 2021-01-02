@@ -20,6 +20,12 @@
           ></v-text-field>
           <v-list class="nar-bar-btn"  dense  justify="center" align="center">
             <!-- <v-list-group> -->
+              <v-list-item link v-if="isAccount">
+                <v-list-item-content>
+                  <v-list-item-title>Login/Register</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <br>
               <v-list-item link>
                 <v-list-item-content>
                   <v-list-item-title>Name</v-list-item-title>
@@ -72,28 +78,30 @@
               />
             </a>
           </div>
-          <v-row class="hidden-sm-and-down" width="90px" justify="center">
+          <v-row class="hidden-md-and-down" width="90px" justify="center">
             <v-btn v-for="link in linkBar" :key="link" color="white" text>{{
               link
             }}</v-btn>
           </v-row>
 
-          <!-- Create right column -->
+  <!-- Create right column -->
 
           <v-spacer></v-spacer>
-          <v-text-field
-            flat
-            solo-inverted
-            hide-details
-            prepend-inner-icon="mdi-magnify"
-            label="Search"
-            class="hidden-sm-and-down"
-          ></v-text-field>
+          <v-col cols="12" sm="3" md="3" lg="3" xl="3">
+            <v-text-field
+              flat
+              solo-inverted
+              hide-details
+              prepend-inner-icon="mdi-magnify"
+              label="Search"
+              class="hidden-sm-and-down"
+            ></v-text-field>
+          </v-col>
           <div class="right-column-icon">
-            <v-btn icon class="hidden-xs-and-down">
+            <v-btn icon class="">
               <v-icon>mdi-shopping</v-icon>
             </v-btn>
-            <v-btn icon to="/loginpage" class="hidden-xs-and-down">
+            <v-btn icon to="/loginpage" class="hidden-md-and-down">
               <v-icon>mdi-account</v-icon>
             </v-btn>
           </div>
@@ -102,9 +110,9 @@
             v-if="isValid"
           ></v-app-bar-nav-icon>
         </v-app-bar>
-
+  <!-- V main -->
         <v-main>
-          <v-container fluid>
+          <v-container class="fill-height" fluid>
             <v-row align="center" justify="center">
               <div class="main-image">
                 <img class="img-responsive" :src="mainImageSrc" />
@@ -117,7 +125,7 @@
             </v-row>
           </v-container>
         </v-main>
-
+  <!-- footer -->
         <v-footer color="grey darken-3" padless>
           <v-row justify="center" no-gutters>
             <v-btn
@@ -158,6 +166,7 @@ export default {
     links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"],
     images: [],
     isValid: false,
+    isAccount: false,
     mainImageSrc: null,
   }),
   // beforeDestroy () {
@@ -172,7 +181,8 @@ export default {
     },
   methods: {
       onResize() {
-      this.isValid = window.innerWidth <= 960;
+      this.isValid = window.innerWidth <= 1040;
+      this.isAccount = window.innerWidth <= 900;
     }
   },
   
@@ -216,8 +226,12 @@ export default {
   opacity: 60%;
 }
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 1390px) {
+
 }
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 560px) {
+  // .right-column-icon v-btn {
+  //   text-align: center;
+  // }
 }
 </style>
