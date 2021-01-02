@@ -6,6 +6,7 @@ import LoginPage from '../components/auth/LoginPage.vue'
 import SignupPage from '../components/auth/SignupPage.vue'
 import ForgotPasswordForm from '../components/auth/ForgotPasswordForm.vue'
 import HomePage from '../components/HomePage.vue'
+import Footer from '../components/footer/Footer.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -38,6 +39,11 @@ const routes = [
     path: '/signupPage',
     name: 'signupPage',
     component: SignupPage
+  },
+  {
+    path: '/footer',
+    name: 'footer',
+    component: Footer
   },
   {
     path: '/about',

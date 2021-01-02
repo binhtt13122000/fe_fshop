@@ -89,8 +89,10 @@
           <v-row id="nav-bar-btn" class="hidden-md-and-down" width="90px" justify="center">
             <div class="nar-bar-btn">
               <ul class="nar-links">
+                <v-menu>
+
+                </v-menu>
                 <li><a href="">Nam</a></li>
-                
                 <li><a href="">Nữ</a></li>
                 <li><a href="">Blog</a></li>
                 <li><a href="">Bộ sưu tập</a></li>
@@ -141,7 +143,7 @@
               </div> -->
             </v-row>
             <v-column>
-              <div class="center-item-image">
+              <div class="image-center-item">
                 <a href="">
                   <img
                     class="img-responsive-left"
@@ -151,9 +153,6 @@
                   />
                 </a>
                 <a href="">
-                  Xem Them
-                </a>
-                <a href="">
                   <img
                     class="img-responsive-right"
                     src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
@@ -161,13 +160,12 @@
                     width="50%"
                   />
                 </a>
-                <v-btn>Xem Them</v-btn>
               </div>
             </v-column>
           </v-container>
         </v-main>
   <!-- footer -->
-        <v-footer color="grey darken-3" padless>
+        <!-- <v-footer color="grey darken-3" padless>
           <v-row justify="center" no-gutters>
             <v-btn
               v-for="link in links"
@@ -182,6 +180,34 @@
             <v-col class="grey darken-1 py-4 text-center white--text" cols="12">
               {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
             </v-col>
+          </v-row>
+        </v-footer> -->
+        <v-footer color="grey darken-3" padless>
+          <v-row class="text-center text-md-left mt-3 pb-3">
+            <v-column  md="3" lg="3" xl="3">
+              <h4 class="font-weight-bold">Thương Hiệu</h4>
+              <ul>
+                <li class=""><a href="">Giới thiệu</a></li>
+                <li class=""><a href="">Tuyển dụng</a></li>
+                <li class=""><a href="">Liên hệ</a></li>
+              </ul>
+            </v-column>
+            <v-column  md="3" lg="3" xl="3">
+              <h4 class="font-weight-bold">Tin tức</h4>
+              <ul>
+                <li class=""><a href="">Giới thiệu</a></li>
+                <li class=""><a href="">Tuyển dụng</a></li>
+                <li class=""><a href="">Liên hệ</a></li>
+              </ul>
+            </v-column>
+            <v-column  md="3" lg="3" xl="3">
+              <h4 class="font-weight-bold">Thương Hiệu</h4>
+              <ul>
+                <li class=""><a href="">Giới thiệu</a></li>
+                <li class=""><a href="">Tuyển dụng</a></li>
+                <li class=""><a href="">Liên hệ</a></li>
+              </ul>
+            </v-column>
           </v-row>
         </v-footer>
       </v-app>
@@ -204,7 +230,7 @@ export default {
       "khuyến mãi",
       "Hệ Thống cửa hàng",
     ],
-    links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"],
+    // links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"],
     images: [],
     isValid: false,
     isAccount: false,
@@ -285,31 +311,11 @@ export default {
       text-transform: uppercase;
   }
 // main image
-.center-item-image {
-  position: relative;
-
-
-  .btn-img-left {
-    position: absolute;
-      transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-      color: white;
-    font-size: 16px;
-    padding: 12px 24px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    text-align: center;
-  }
-
 
 
 
 
 }
-}
-
-
 
 @media only screen and (max-width: 1390px) {
 
