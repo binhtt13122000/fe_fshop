@@ -60,9 +60,9 @@
             </v-list>
           
         </v-navigation-drawer>
-        <!--App bar -->
+  <!--App bar -->
         <v-app-bar
-          :clipped-right="$vuetify.breakpoint.lgAndUp"
+          :clipped-left="$vuetify.breakpoint.lgAndUp"
           app
           color="grey darken-3"
           dark
@@ -70,7 +70,7 @@
           class="app-bar"
         >
           <div class="site-logo">
-            <a href="#" to="/">
+            <a href="/" >
               <img
                 class="img-responsive"
                 src="https://4menshop.com/logo.png"
@@ -87,7 +87,7 @@
   <!-- Create right column -->
 
           <v-spacer></v-spacer>
-          <v-col cols="12" sm="3" md="3" lg="3" xl="3">
+          <!-- <v-col cols="12" sm="3" md="3" lg="3" xl="3"> -->
             <v-text-field
               flat
               solo-inverted
@@ -96,16 +96,16 @@
               label="Search"
               class="hidden-sm-and-down"
             ></v-text-field>
-          </v-col>
-          <div class="right-column-icon">
-            <v-btn icon class="">
+          <!-- </v-col> -->
+            <v-btn icon class="hidden-xs-and-down">
               <v-icon>mdi-shopping</v-icon>
             </v-btn>
             <v-btn icon to="/loginpage" class="hidden-md-and-down">
               <v-icon>mdi-account</v-icon>
             </v-btn>
-          </div>
+          
           <v-app-bar-nav-icon
+            class="ml-0 pl-4"
             @click.stop="drawer = !drawer"
             v-if="isValid"
           ></v-app-bar-nav-icon>
@@ -115,13 +115,13 @@
           <v-container class="fill-height" fluid>
             <v-row align="center" justify="center">
               <div class="main-image">
-                <img class="img-responsive" :src="mainImageSrc" />
+                <img class="img-responsive" :src="mainImageSrc" width="100%"/>
               </div>
-              <div class="image-list">
+              <!-- <div class="image-list">
                 <div v-for="img in images" :key="img" class="item">
                   <img class="img-responsive" src="img.image" />
                 </div>
-              </div>
+              </div> -->
             </v-row>
           </v-container>
         </v-main>
