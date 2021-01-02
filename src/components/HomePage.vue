@@ -2,9 +2,28 @@
   <div id="app">
     <v-app id="inspire">
       <v-app id="inspire">
-        <!--App bar -->
+    <!-- Navigation bar -->
+        <v-navigation-drawer
+            v-model="drawer"
+            :clipped="$vuetify.breakpoint.lgAndUp"
+            app
+            right
+        >
+          <v-text-field
+            flat
+            solo-inverted
+            hide-details
+            prepend-inner-icon="mdi-magnify"
+            label="Search"
+            class="nav-bar-search"
+          ></v-text-field>
+          <v-list dense>
+
+          </v-list>
+        </v-navigation-drawer>
+    <!--App bar -->
         <v-app-bar
-          :clipped-left="$vuetify.breakpoint.lgAndUp"
+          :clipped-right="$vuetify.breakpoint.lgAndUp"
           app
           color="grey darken-3"
           dark
@@ -20,21 +39,23 @@
                     />
                 </a>
             </div>
-            <v-row  justify="center">
+            <v-row width="90px" justify="center">
                 <v-btn v-for="link in linkBar" :key="link" color="white" text>{{
                 link
                 }}</v-btn>
+                
             </v-row>
     
     <!-- Create right column -->
 
+            <v-spacer></v-spacer>
             <v-text-field
                 flat
                 solo-inverted
                 hide-details
                 prepend-inner-icon="mdi-magnify"
                 label="Search"
-                class=hidden-xs-and-down
+                class=hidden-md-and-down
             ></v-text-field>
             <div class="right-column-icon">
                 <v-btn icon class="hidden-xs-and-down">
@@ -44,6 +65,10 @@
                     <v-icon>mdi-account</v-icon>
                 </v-btn>
             </div>
+            <v-app-bar-nav-icon
+            @click.stop="drawer = !drawer"
+            v-if="!isValid"
+          ></v-app-bar-nav-icon>
         </v-app-bar>
 
         <v-main>
@@ -71,7 +96,7 @@
               rounded
               class="my-2"
             >
-              {{ link }}
+              {{ link }}    
             </v-btn>
             <v-col class="grey darken-1 py-4 text-center white--text" cols="12">
               {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
@@ -89,6 +114,7 @@ export default {
     source: String,
   },
   data: () => ({
+    drawer: null,
     linkBar: [
       "Name",
       "Nữ",
@@ -99,6 +125,7 @@ export default {
     ],
     links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"],
     images: [],
+    isValid: false,
     mainImageSrc: null,
   }),
   methods: {},

@@ -4,7 +4,7 @@
       <v-app-bar
         :clipped-left="$vuetify.breakpoint.lgAndUp"
         app
-        color="blue darken-3"
+        color="grey darken-3"
         dark
       >
         <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
@@ -17,9 +17,6 @@
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
-        <v-list-item-action class="right" style="width: 150px">
-          <v-btn to="/signuppage">Sign up</v-btn>
-        </v-list-item-action>
         <v-list-item-action class="left">
           <v-btn to="/"><v-icon>mdi-exit-to-app</v-icon></v-btn>
         </v-list-item-action>
