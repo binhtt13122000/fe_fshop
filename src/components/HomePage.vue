@@ -193,103 +193,124 @@
         </v-footer> -->
         <v-footer color="white" padless>
           <v-container>
-          <v-row id="footer-center" class="d-flex align-items-center">
-            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
-              <div class="social-link">
-                <h4 class="font-weight-bold">Contact</h4>
-                <v-list>
-                  <v-list-item link>
-                    <v-list-content>
-                      <v-list-item-title>
-                        <v-icon>mdi-phone</v-icon>
-                        HOTLINE:028 3526 7061
-                      </v-list-item-title>
-                    </v-list-content>
-                  </v-list-item>
-                  <hr
-                    class="black  accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                    style="width: 300px"
-                  />
-                  <v-list-item link>
-                    <v-list-content>
-                      <v-list-item-title>
-                        <v-icon>mdi-store</v-icon>
-                        HỆ THỐNG CỬA HÀNG
-                      </v-list-item-title>
-                    </v-list-content>
-                  </v-list-item>
-                  <hr
-                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                    style="width: 300px"
-                  />
-                  <v-list-item link>
-                    <v-list-content>
-                      <v-list-item-title>
-                        <v-icon>mdi-gift</v-icon>
-                        PHIẾU QUÀ TẶNG
-                      </v-list-item-title>
-                    </v-list-content>
-                  </v-list-item>
-                  <hr
-                    class="black  accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                    style="width: 300px"
-                  />
-                </v-list>
-              </div>
-            </v-column>
-            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
-              <div class="thuong-hieu">
-                <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
-                <ul class="foo-thuong-hieu">
-                  <li><a href="">Giới thiệu</a></li>
-                  <li><a href="">Tuyển dụng</a></li>
-                  <li><a href="">Liên hệ</a></li>
-                </ul>
-              </div>
-            </v-column>
-            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
-              <div class="tin-tuc">
-                <h4 class="font-weight-bold">TIN TỨC</h4>
-                <ul class="foo-tin-tuc">
-                  <li><a href="">Bộ sưu tập</a></li>
-                  <li><a href="">Tư vấn thời trang</a></li>
-                  <li><a href="">Tin tức thời trang</a></li>
-                  <li><a href="">Mẹo hay</a></li>
-                  <li><a href="">Khuyến mãi</a></li>
-                </ul>
-              </div>
-            </v-column>
-            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
-              <div class="ho-tro">
-                <h4 class="font-weight-bold">HỖ TRỢ</h4>
-                <ul class="foo-ho-tro">
-                  <li><a href="">Khách hàng thân thiết</a></li>
-                  <li><a href="">Hướng dẫn mua hàng</a></li>
-                  <li><a href="">Hướng dẫn thanh toán</a></li>
-                  <li><a href="">Giao hàng</a></li>
-                  <li><a href="">Quy định đổi hàng</a></li>
-                  <li><a href="">Bảo mật thông tin</a></li>
-                </ul>
-              </div>
-            </v-column>
-            <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
-              <div class="dang-ky-nhan-tin">
-                <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
-                <v-form>
-                  <v-text-field
-                    class="form-group"
-                    label="Email"
-                    type="text"
-                  ></v-text-field>
-                  <v-btn type="submit">Dang ky</v-btn>
-                </v-form>
-              </div>
-            </v-column>
-          </v-row>
+            <v-row id="footer-center" class="d-flex align-items-center">
+              <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+                <div class="social-link">
+                  <h4 class="font-weight-bold">Contact</h4>
+                  <v-list>
+                    <v-list-item link>
+                      <v-list-content>
+                        <v-list-item-title>
+                          <v-icon>mdi-phone</v-icon>
+                          HOTLINE:028 3526 7061
+                        </v-list-item-title>
+                      </v-list-content>
+                    </v-list-item>
+                    <hr
+                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                      style="width: 300px"
+                    />
+                    <v-list-item link>
+                      <v-list-content>
+                        <v-list-item-title>
+                          <v-icon>mdi-store</v-icon>
+                          HỆ THỐNG CỬA HÀNG
+                        </v-list-item-title>
+                      </v-list-content>
+                    </v-list-item>
+                    <hr
+                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                      style="width: 300px"
+                    />
+                    <v-list-item link>
+                      <v-list-content>
+                        <v-list-item-title>
+                          <v-icon>mdi-gift</v-icon>
+                          PHIẾU QUÀ TẶNG
+                        </v-list-item-title>
+                      </v-list-content>
+                    </v-list-item>
+                    <hr
+                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                      style="width: 300px"
+                    />
+                  </v-list>
+                </div>
+              </v-column>
+              <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+                <div class="thuong-hieu">
+                  <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
+                  <ul class="foo-thuong-hieu">
+                    <li><a href="">Giới thiệu</a></li>
+                    <li><a href="">Tuyển dụng</a></li>
+                    <li><a href="">Liên hệ</a></li>
+                  </ul>
+                </div>
+              </v-column>
+              <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+                <div class="tin-tuc">
+                  <h4 class="font-weight-bold">TIN TỨC</h4>
+                  <ul class="foo-tin-tuc">
+                    <li><a href="">Bộ sưu tập</a></li>
+                    <li><a href="">Tư vấn thời trang</a></li>
+                    <li><a href="">Tin tức thời trang</a></li>
+                    <li><a href="">Mẹo hay</a></li>
+                    <li><a href="">Khuyến mãi</a></li>
+                  </ul>
+                </div>
+              </v-column>
+              <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+                <div class="ho-tro">
+                  <h4 class="font-weight-bold">HỖ TRỢ</h4>
+                  <ul class="foo-ho-tro">
+                    <li><a href="">Khách hàng thân thiết</a></li>
+                    <li><a href="">Hướng dẫn mua hàng</a></li>
+                    <li><a href="">Hướng dẫn thanh toán</a></li>
+                    <li><a href="">Giao hàng</a></li>
+                    <li><a href="">Quy định đổi hàng</a></li>
+                    <li><a href="">Bảo mật thông tin</a></li>
+                  </ul>
+                </div>
+              </v-column>
+              <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+                <div class="dang-ky-nhan-tin">
+                  <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
+                  <v-form>
+                    <v-text-field
+                      class="form-group"
+                      label="Email"
+                      type="text"
+                    ></v-text-field>
+                    <v-btn type="submit">Dang ky</v-btn>
+                  </v-form>
+                </div>
+              </v-column>
+            </v-row>
           </v-container>
           <v-container>
-
+            <v-row id="socialIcon" class="d-flex align-items-center">
+              <v-column md="12" lg="12" xl="12" class="mx-auto mt-3">
+                <div class="social-items">
+                  <a href=""><v-icon size="50">mdi-google</v-icon></a>
+                  <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
+                  <a href=""><v-icon size="50">mdi-instagram</v-icon></a>
+                  <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
+                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a> 
+                </div>
+              </v-column>
+            </v-row>
           </v-container>
+          <v-col class="grey darken-1 py-4 text-center white--text" cols="12">
+            {{ new Date().getFullYear() }} — <strong>4menshop</strong>
+            <div class="footer-copyright text-center py-3">
+              <v-container fluid>
+                &copy; CÔNG TY CỔ PHẦN TMDV - TVTK THỜI TRANG VIỆT:
+                <a href="https://www.4menshop.com" style="color: red">
+                  4menshop.com
+                </a>
+              </v-container>
+            </div>
+          </v-col>
         </v-footer>
       </v-app>
     </v-app>
@@ -395,6 +416,11 @@ export default {
 }
 
 #footer-center {
+  h4 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 25px;
+    text-align: center;
+  }
   ul {
     list-style-type: none;
     li a {
@@ -403,10 +429,17 @@ export default {
       justify-content: left;
       color: #000000;
     }
+    li a:hover {
+      text-decoration: underline;
+      color: #ff0000;
+    }
   }
+}
 
-  h4 {
-    text-align: center;
+#socialIcon {
+  a {
+    text-decoration: none;
+    padding: 0px 20px 0px 20px;
   }
 }
 // .tin-tuc .foo-tin-tuc .font-weight-bold {
