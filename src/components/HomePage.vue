@@ -76,7 +76,7 @@
           app
           color="grey darken-3"
           dark
-          style="height: 65px"
+          style="height: 70px"
           class="app-bar"
         >
           <div class="site-logo">
@@ -173,24 +173,6 @@
             </v-column>
           </v-container>
         </v-main>
-        <!-- footer -->
-        <!-- <v-footer color="grey darken-3" padless>
-          <v-row justify="center" no-gutters>
-            <v-btn
-              v-for="link in links"
-              :key="link"
-              color="white"
-              text
-              rounded
-              class="my-2"
-            >
-              {{ link }}
-            </v-btn>
-            <v-col class="grey darken-1 py-4 text-center white--text" cols="12">
-              {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-            </v-col>
-          </v-row>
-        </v-footer> -->
         <v-footer color="white" padless>
           <v-container>
             <v-row id="footer-center" class="d-flex align-items-center">
@@ -281,7 +263,7 @@
                       label="Email"
                       type="text"
                     ></v-text-field>
-                    <v-btn type="submit">Dang ky</v-btn>
+                    <v-btn type="submit">Đăng ký</v-btn>
                   </v-form>
                 </div>
               </v-column>
@@ -439,7 +421,7 @@ export default {
 #socialIcon {
   a {
     text-decoration: none;
-    padding: 0px 20px 0px 20px;
+    padding: 0px 15px 0px 15px;
   }
 }
 // .tin-tuc .foo-tin-tuc .font-weight-bold {
