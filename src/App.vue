@@ -1,8 +1,7 @@
 <template>
   <div class="vue-template">
-    <div class="App">
           <router-view />
-    </div>
+
   </div>  
 </template>
 <style>

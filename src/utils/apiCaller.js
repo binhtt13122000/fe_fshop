@@ -4,22 +4,18 @@ export const defaultHeader = {
     "Content-Type" : "application/json",
 }
 
+
 export const request = (endpoint, method, headers, body, params) => {
     return Axios(
         {
-            url: "http://localhost:8082/v1/api" + endpoint,
+            url: 'http://localhost:8082/v1/api'+ endpoint,
             method: method,
             headers: {...defaultHeader, ...headers},
             data: body,
             params: Object.assign(params),
-            withCredentials: true,
+            withCredentials: false,
         }
     )
-}
-
-export const body = {
-    username: null,
-    password: null
 }
 
 export const get = (endpoint, headers = {}, params = {}) => {
