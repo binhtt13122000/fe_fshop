@@ -1,4 +1,4 @@
-import AuthServices from "../../utils/AuthenticationService"
+import AuthServices from "../../services/AuthenticationService"
 // import axios from 'axios';
 const state = {
     status: '',

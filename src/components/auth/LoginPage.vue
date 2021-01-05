@@ -13,7 +13,6 @@
             src="https://4menshop.com/logo.png"
             alt="4men"
           />
-          <span class="hidden-sm-and-down">2$</span>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
