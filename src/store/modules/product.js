@@ -1,6 +1,6 @@
 // import { reject, resolve } from "core-js/fn/promise";
 import 'es6-promise/auto'
-import ProductService from "../../services/ProductService"
+import ProductServices from "../../services/ProductService"
 
 const state = {
     products: [],
@@ -45,9 +45,12 @@ const actions = {
     // },
     getProducts({commit}) {
         return new Promise((resolve, reject) => {
-            ProductService.getProducts().then(resp => {
+            console.log("Nhanle");
+            ProductServices.getProducts().then(resp => {
                 console.log(resp)
+                console.log("Nhanle123");
                 commit("setProducts", resp.data)
+                console.log("Nhanle11");
                 resolve(resp)
             })
             .catch(err => {
@@ -59,7 +62,7 @@ const actions = {
 
     productDetails({commit}, id) {
         return new Promise((resolve, reject) => {
-            ProductService.getProductsById(id).then(resp => {
+            ProductServices.getProductsById(id).then(resp => {
                 console.log(resp)
                 commit("setProducts", resp.data[0])
                 resolve(resp)
