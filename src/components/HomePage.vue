@@ -88,11 +88,6 @@
               />
             </a>
           </div>
-          <!-- <v-row class="hidden-md-and-down" width="90px" justify="center">
-            <v-btn v-for="link in linkBar" :key="link" color="white" text>{{
-              link
-            }}</v-btn>
-          </v-row> -->
           <v-row
             id="nav-bar-btn"
             class="hidden-md-and-down"
@@ -115,7 +110,6 @@
           <!-- Create right column -->
 
           <v-spacer></v-spacer>
-          <!-- <v-col cols="12" sm="3" md="3" lg="3" xl="3"> -->
           <v-text-field
             flat
             solo-inverted
@@ -151,7 +145,7 @@
                 </div>
               </div> -->
             </v-row>
-            <v-column>
+            <v-col>
               <div class="image-center-item">
                 <a href="">
                   <img
@@ -170,47 +164,47 @@
                   />
                 </a>
               </div>
-            </v-column>
+            </v-col>
           </v-container>
         </v-main>
         <v-footer color="white" padless>
           <v-container>
             <v-row id="footer-center" class="d-flex align-items-center">
-              <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
                 <div class="social-link">
                   <h4 class="font-weight-bold">Contact</h4>
                   <v-list>
                     <v-list-item link>
-                      <v-list-content>
+                      <v-list-item-content>
                         <v-list-item-title>
                           <v-icon>mdi-phone</v-icon>
                           HOTLINE:028 3526 7061
                         </v-list-item-title>
-                      </v-list-content>
+                      </v-list-item-content>
                     </v-list-item>
                     <hr
                       class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
                       style="width: 300px"
                     />
                     <v-list-item link>
-                      <v-list-content>
+                      <v-list-item-content>
                         <v-list-item-title>
                           <v-icon>mdi-store</v-icon>
                           HỆ THỐNG CỬA HÀNG
                         </v-list-item-title>
-                      </v-list-content>
+                      </v-list-item-content>
                     </v-list-item>
                     <hr
                       class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
                       style="width: 300px"
                     />
                     <v-list-item link>
-                      <v-list-content>
+                      <v-list-item-content>
                         <v-list-item-title>
                           <v-icon>mdi-gift</v-icon>
                           PHIẾU QUÀ TẶNG
                         </v-list-item-title>
-                      </v-list-content>
+                      </v-list-item-content>
                     </v-list-item>
                     <hr
                       class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
@@ -218,8 +212,8 @@
                     />
                   </v-list>
                 </div>
-              </v-column>
-              <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+              </v-col>
+              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
                 <div class="thuong-hieu">
                   <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
                   <ul class="foo-thuong-hieu">
@@ -228,8 +222,8 @@
                     <li><a href="">Liên hệ</a></li>
                   </ul>
                 </div>
-              </v-column>
-              <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+              </v-col>
+              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
                 <div class="tin-tuc">
                   <h4 class="font-weight-bold">TIN TỨC</h4>
                   <ul class="foo-tin-tuc">
@@ -240,8 +234,8 @@
                     <li><a href="">Khuyến mãi</a></li>
                   </ul>
                 </div>
-              </v-column>
-              <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+              </v-col>
+              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
                 <div class="ho-tro">
                   <h4 class="font-weight-bold">HỖ TRỢ</h4>
                   <ul class="foo-ho-tro">
@@ -253,8 +247,8 @@
                     <li><a href="">Bảo mật thông tin</a></li>
                   </ul>
                 </div>
-              </v-column>
-              <v-column md="3" lg="3" xl="3" class="mx-auto mt-3">
+              </v-col>
+              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
                 <div class="dang-ky-nhan-tin">
                   <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
                   <v-form>
@@ -266,12 +260,12 @@
                     <v-btn type="submit">Đăng ký</v-btn>
                   </v-form>
                 </div>
-              </v-column>
+              </v-col>
             </v-row>
           </v-container>
           <v-container>
             <v-row id="socialIcon" class="d-flex align-items-center">
-              <v-column md="12" lg="12" xl="12" class="mx-auto mt-3">
+              <v-col md="12" lg="12" xl="12" class="mx-auto mt-3">
                 <div class="social-items">
                   <a href=""><v-icon size="50">mdi-google</v-icon></a>
                   <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
@@ -279,7 +273,7 @@
                   <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
                   <a href=""><v-icon size="50">mdi-linkedin</v-icon></a> 
                 </div>
-              </v-column>
+              </v-col>
             </v-row>
           </v-container>
           <v-col class="grey darken-1 py-4 text-center white--text" cols="12">
@@ -314,17 +308,11 @@ export default {
       "khuyến mãi",
       "Hệ Thống cửa hàng",
     ],
-    // links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"],
     images: [],
     isValid: false,
     isAccount: false,
     mainImageSrc: null,
   }),
-  // beforeDestroy () {
-  //     if (typeof window === 'undefined') return
-
-  //     window.removeEventListener('resize', this.onResize, { passive: true })
-  //   },
   mounted() {
     this.onResize();
 
@@ -392,9 +380,6 @@ export default {
     font-size: 15px;
     text-transform: uppercase;
   }
-  // main image
-
-  // footer
 }
 
 #footer-center {
@@ -423,17 +408,5 @@ export default {
     text-decoration: none;
     padding: 0px 15px 0px 15px;
   }
-}
-// .tin-tuc .foo-tin-tuc .font-weight-bold {
-//   font-size: 100px;
-//     list-style-type: none;
-//   }
-
-@media only screen and (max-width: 1390px) {
-}
-@media only screen and (max-width: 560px) {
-  // .right-column-icon v-btn {
-  //   text-align: center;
-  // }
 }
 </style>
