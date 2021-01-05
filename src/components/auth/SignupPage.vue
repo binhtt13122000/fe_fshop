@@ -13,7 +13,6 @@
             src="https://4menshop.com/logo.png"
             alt="4men"
           />
-          <span class="hidden-sm-and-down">2$</span>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -82,6 +81,19 @@
                   </div>
                 </v-card-text>
               </v-form>
+              <br>
+              <br>
+              <v-form align="center">
+                <v-spacer></v-spacer>
+                <hr
+                  class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                  style="width: 300px"
+                />
+                <br />
+                <a href="" class="googleIcon"
+                  ><i class="fab fa-google fa-2x"></i>Login with Google</a
+                >
+              </v-form>
             </v-col>
           </v-row>
         </v-container>
@@ -142,6 +154,24 @@ export default {
 <style lang="scss">
 .text-xs-center {
   text-align: right;
+}
+
+.fa-google {
+  background: conic-gradient(
+      from -45deg,
+      #ea4335 110deg,
+      #4285f4 90deg 180deg,
+      #34a853 180deg 270deg,
+      #fbbc05 270deg
+    )
+    73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.googleIcon {
+  text-decoration: none;
 }
 @media only screen and (max-width: 850px) {
   .text-xs-center {

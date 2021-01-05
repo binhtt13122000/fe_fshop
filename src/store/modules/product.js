@@ -1,5 +1,5 @@
 // import { reject, resolve } from "core-js/fn/promise";
-import ProServices from "../../services/ProductService"
+import ProductService from "../../services/ProductService"
 
 const state = {
     products: [],
@@ -35,7 +35,7 @@ const mutations = {
 const actions = {
     async getProducts({ commit }) {
         try {
-            const response = await ProServices.getProducts()
+            const response = await ProductService.getProducts()
             console.log(response)
             commit("setProducts", response.data)
         } catch (error) {
@@ -58,7 +58,7 @@ const actions = {
 
     async productDetails({ commit }, id) {
         try {
-            const response = await ProServices.getProductsById(id)
+            const response = await ProductService.getProductsById(id)
             console.log(response)
             commit("setProduct", response.data[0])
         } catch (error) {

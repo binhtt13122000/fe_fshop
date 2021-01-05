@@ -13,7 +13,6 @@
             src="https://4menshop.com/logo.png"
             alt="4men"
           />
-
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -68,13 +67,18 @@
                 </v-card-text>
               </v-form>
               <br />
-              <h3 align="center">Or</h3>
-              <br />
-
               <v-spacer></v-spacer>
               <v-form align="center">
                 <v-spacer></v-spacer>
-                <v-btn color="white" to="/"><v-icon>mdi-google</v-icon></v-btn>
+                <!-- <v-btn color="white" to="/"><i class="fab fa-google fa-4x"></i></v-btn>
+                <v-btn color="white" to="/"><v-icon>fa4-google</v-icon></v-btn> -->
+                <hr
+                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                      style="width: 300px"
+                  />
+                  <br>
+                <a href="" class="googleIcon"><i class="fab fa-google fa-2x"></i>Login with Google</a>
+                
               </v-form>
               <br />
             </v-col>
@@ -98,7 +102,7 @@ export default {
     login() {
       console.log("login fuction from components.......");
       this.$store
-        .dispatch("AUTH/login", {
+        .dispatch("auth/login", {
           username: this.username,
           password: this.password,
         })
@@ -126,7 +130,16 @@ export default {
 .text-xs-center {
   text-align: right;
 }
-
+.fa-google {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.googleIcon {
+  text-decoration: none;
+}
 @media only screen and (max-width: 850px) {
   .text-xs-center {
     text-align: center;
