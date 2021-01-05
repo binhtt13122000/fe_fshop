@@ -6,6 +6,7 @@ import LoginPage from '../components/auth/LoginPage.vue'
 import SignupPage from '../components/auth/SignupPage.vue'
 import ForgotPasswordForm from '../components/auth/ForgotPasswordForm.vue'
 import HomePage from '../components/HomePage.vue'
+import ProductListContainer from '../components/product/ProductListContainer.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,6 +34,11 @@ const routes = [
     path: '/loginpage',
     name: 'loginpage',
     component: LoginPage
+  },
+  {
+    path: '/productlist',
+    name: 'productlist',
+    component: ProductListContainer
   },
   {
     path: '/signupPage',
