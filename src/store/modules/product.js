@@ -1,4 +1,5 @@
 // import { reject, resolve } from "core-js/fn/promise";
+import 'es6-promise/auto'
 import ProductService from "../../services/ProductService"
 
 const state = {
@@ -33,38 +34,53 @@ const mutations = {
 };
 
 const actions = {
-    async getProducts({ commit }) {
-        try {
-            const response = await ProductService.getProducts()
-            console.log(response)
-            commit("setProducts", response.data)
-        } catch (error) {
-            console.log(error.response)
-        }
+    // async getProducts({ commit }) {
+    //     try {
+    //         const response = await ProductService.getProducts()
+    //         console.log(response)
+    //         commit("setProducts", response.data)
+    //     } catch (error) {
+    //         console.log(error.response)
+    //     }
+    // },
+    getProducts({commit}) {
+        return new Promise((resolve, reject) => {
+            ProductService.getProducts().then(resp => {
+                console.log(resp)
+                commit("setProducts", resp.data)
+                resolve(resp)
+            })
+            .catch(err => {
+                console.log(err)
+                reject(err)
+            })
+        })
     },
-    // getProducts({commit}){
-    //     return new Promise((resolve, reject) => {
-    //         ProductService.getProducts().then(resp => {
-    //             console.log(response)
-    //             commit("setProducts", response.data)
-    //             resolve(resp)
-    //         })
-    //         .catch(err => {
-    //             reject(err)
-    //         })
-    //     })
-    // }
+
+    productDetails({commit}, id) {
+        return new Promise((resolve, reject) => {
+            ProductService.getProductsById(id).then(resp => {
+                console.log(resp)
+                commit("setProducts", resp.data[0])
+                resolve(resp)
+            })
+            .catch(err => {
+                console.log(err)
+                reject(err)
+            })
+        })
+    }
     
 
-    async productDetails({ commit }, id) {
-        try {
-            const response = await ProductService.getProductsById(id)
-            console.log(response)
-            commit("setProduct", response.data[0])
-        } catch (error) {
-            console.log(error.response)
-        }
-    }
+    // async productDetails({ commit }, id) {
+    //     try {
+    //         const response = await ProductService.getProductsById(id)
+    //         console.log(response)
+    //         commit("setProduct", response.data[0])
+    //     } catch (error) {
+    //         console.log(error.response)
+    //     }
+    // }
 };
 
 export default {
