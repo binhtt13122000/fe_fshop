@@ -139,11 +139,6 @@
               <div class="main-image">
                 <img class="img-responsive" :src="mainImageSrc" width="100%" />
               </div>
-              <!-- <div class="image-list">
-                <div v-for="img in images" :key="img" class="item">
-                  <img class="img-responsive" src="img.image" />
-                </div>
-              </div> -->
             </v-row>
             <v-col>
               <div class="image-center-item">
@@ -271,7 +266,7 @@
                   <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
                   <a href=""><v-icon size="50">mdi-instagram</v-icon></a>
                   <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a> 
+                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a>
                 </div>
               </v-col>
             </v-row>
