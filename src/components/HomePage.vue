@@ -88,6 +88,7 @@
               />
             </a>
           </div>
+ 
           <v-row
             id="nav-bar-btn"
             class="hidden-md-and-down"
@@ -97,7 +98,7 @@
             <div class="nar-bar-btn">
               <ul class="nar-links">
                 <v-menu> </v-menu>
-                <li><a href="">Nam</a></li>
+                <li><a href="/productlist">Nam</a></li>
                 <li><a href="">Nữ</a></li>
                 <li><a href="">Blog</a></li>
                 <li><a href="">Bộ sưu tập</a></li>
@@ -110,6 +111,7 @@
           <!-- Create right column -->
 
           <v-spacer></v-spacer>
+          <!-- <v-col cols="12" sm="3" md="3" lg="3" xl="3"> -->
           <v-text-field
             flat
             solo-inverted
@@ -165,7 +167,7 @@
         <v-footer color="white" padless>
           <v-container>
             <v-row id="footer-center" class="d-flex align-items-center">
-              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col  class="mx-auto mt-2">
                 <div class="social-link">
                   <h4 class="font-weight-bold">Contact</h4>
                   <v-list>
@@ -208,7 +210,7 @@
                   </v-list>
                 </div>
               </v-col>
-              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col  class="mx-auto mt-2">
                 <div class="thuong-hieu">
                   <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
                   <ul class="foo-thuong-hieu">
@@ -218,7 +220,7 @@
                   </ul>
                 </div>
               </v-col>
-              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col  class="mx-auto mt-2">
                 <div class="tin-tuc">
                   <h4 class="font-weight-bold">TIN TỨC</h4>
                   <ul class="foo-tin-tuc">
@@ -230,7 +232,7 @@
                   </ul>
                 </div>
               </v-col>
-              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col  class="mx-auto mt-2">
                 <div class="ho-tro">
                   <h4 class="font-weight-bold">HỖ TRỢ</h4>
                   <ul class="foo-ho-tro">
@@ -243,7 +245,7 @@
                   </ul>
                 </div>
               </v-col>
-              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col  class="mx-auto mt-2">
                 <div class="dang-ky-nhan-tin">
                   <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
                   <v-form>
@@ -259,14 +261,14 @@
             </v-row>
           </v-container>
           <v-container>
-            <v-row id="socialIcon" class="d-flex align-items-center">
+            <v-row id="socialIcon" class="d-flex align-items-center" >
               <v-col md="12" lg="12" xl="12" class="mx-auto mt-3">
-                <div class="social-items">
+                <div class="social-items"  align="center" justify="center">
                   <a href=""><v-icon size="50">mdi-google</v-icon></a>
                   <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
                   <a href=""><v-icon size="50">mdi-instagram</v-icon></a>
                   <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a>
+                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a> 
                 </div>
               </v-col>
             </v-row>
@@ -375,6 +377,7 @@ export default {
     font-size: 15px;
     text-transform: uppercase;
   }
+
 }
 
 #footer-center {
@@ -404,4 +407,16 @@ export default {
     padding: 0px 15px 0px 15px;
   }
 }
+
+@media only screen and (max-width: 1390px) {
+}
+@media only screen and (max-width: 560px) {
+
+}
 </style>
+
+
+
+
+
+

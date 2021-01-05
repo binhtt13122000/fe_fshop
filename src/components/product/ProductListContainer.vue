@@ -147,10 +147,10 @@
         </v-main>
 
         <!-- V-footer  ------->
-        <v-footer color="white" padless>
+         <v-footer color="white" padless>
           <v-container>
             <v-row id="footer-center" class="d-flex align-items-center">
-              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col  class="mx-auto mt-2">
                 <div class="social-link">
                   <h4 class="font-weight-bold">Contact</h4>
                   <v-list>
@@ -193,7 +193,7 @@
                   </v-list>
                 </div>
               </v-col>
-              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col  class="mx-auto mt-2">
                 <div class="thuong-hieu">
                   <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
                   <ul class="foo-thuong-hieu">
@@ -203,7 +203,7 @@
                   </ul>
                 </div>
               </v-col>
-              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col  class="mx-auto mt-2">
                 <div class="tin-tuc">
                   <h4 class="font-weight-bold">TIN TỨC</h4>
                   <ul class="foo-tin-tuc">
@@ -215,7 +215,7 @@
                   </ul>
                 </div>
               </v-col>
-              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col  class="mx-auto mt-2">
                 <div class="ho-tro">
                   <h4 class="font-weight-bold">HỖ TRỢ</h4>
                   <ul class="foo-ho-tro">
@@ -228,7 +228,7 @@
                   </ul>
                 </div>
               </v-col>
-              <v-col md="3" lg="3" xl="3" class="mx-auto mt-3">
+              <v-col  class="mx-auto mt-2">
                 <div class="dang-ky-nhan-tin">
                   <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
                   <v-form>
@@ -244,14 +244,14 @@
             </v-row>
           </v-container>
           <v-container>
-            <v-row id="socialIcon" class="d-flex align-items-center">
+            <v-row id="socialIcon" class="d-flex align-items-center" >
               <v-col md="12" lg="12" xl="12" class="mx-auto mt-3">
-                <div class="social-items">
+                <div class="social-items"  align="center" justify="center">
                   <a href=""><v-icon size="50">mdi-google</v-icon></a>
                   <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
                   <a href=""><v-icon size="50">mdi-instagram</v-icon></a>
                   <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a>
+                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a> 
                 </div>
               </v-col>
             </v-row>
@@ -294,27 +294,13 @@ export default {
     isAccount: false,
   }),
 
-  // methods: {
-  //   products() {
-  //       console.log("login fuction from components.......");
-  //       this.$store.state.dispatch("PRODUCT/getProducts")
-  //   }
-
-  //   mounted() {
-
-  //   }
-  // },
   methods: {
     ...mapActions("product", ["getProducts", "productDetails"]),
   },
   computed: {
-    // ...mapGetters({
-    //   products: "PRODUCT/products",
-    // }),
     ...mapGetters("product", ["products"]),
   },
   mounted() {
-    // this.$store.dispatch("PRODUCT/getProducts");
     this.getProducts();
   },
 };

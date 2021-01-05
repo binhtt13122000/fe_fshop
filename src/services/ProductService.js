@@ -8,9 +8,6 @@ class ProductService {
     getProductsById(id){
         return get("/products/",{},id)
     }
-    // getProduction(){
-    //     return api.get("/products",{},{},{})
-    // }
 
 }
 
