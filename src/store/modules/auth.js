@@ -29,15 +29,6 @@ const mutations = {
     }
 };
 const actions = {
-    // async login({commit}, credentials) {
-    //     try {
-    //         const response = await AuthServices.login(credentials)
-    //         console.log(response)
-    //         commit("DO_SOMETHING")
-    //     } catch (error) {
-    //            console.log(error.response)
-    //     }
-    // },
     login({commit}, credentials){
         return new Promise((resolve, reject) => {
             commit('auth_request')
@@ -69,19 +60,6 @@ const actions = {
             })
         })
     }
-
-
-    // async register({commit}, credentials) {
-    //     try {
-    //         console.log(credentials.username)
-    //         const response = await AuthServices.register(credentials)
-    //         console.log(response)
-    //         commit("DO_SOMETHING")
-    //     } catch(error){
-    //         console.log(error.response)
-    //     }
-    // }
-
 
 };
 

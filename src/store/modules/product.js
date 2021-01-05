@@ -1,21 +1,22 @@
-import ProductService from "../../utils/ProductService"
+// import { reject, resolve } from "core-js/fn/promise";
+import ProServices from "../../services/ProductService"
 
 const state = {
     products: [],
     product: [],
-    cart: [],
+    // cart: [],
 };
 
 const getters = {
-    products: state => {
+    products(state) {
         return state.products
     },
-    product: state => {
+    product(state) {
         return state.product
     },
-    cart: state => {
-        return state.cart
-    }
+    // cart(state) {
+    //     return state.cart
+    // }
 };
 
 
@@ -26,25 +27,38 @@ const mutations = {
     setProduct: (state, val) => {
         return state.product = val
     },
-    setCart: (state, val) => {
-        return state.cart = val
-    }
+    // setCart: (state, val) => {
+    //     return state.cart = val
+    // }
 };
 
 const actions = {
     async getProducts({ commit }) {
         try {
-            const response = await ProductService.getProducts()
+            const response = await ProServices.getProducts()
             console.log(response)
             commit("setProducts", response.data)
         } catch (error) {
             console.log(error.response)
         }
     },
+    // getProducts({commit}){
+    //     return new Promise((resolve, reject) => {
+    //         ProductService.getProducts().then(resp => {
+    //             console.log(response)
+    //             commit("setProducts", response.data)
+    //             resolve(resp)
+    //         })
+    //         .catch(err => {
+    //             reject(err)
+    //         })
+    //     })
+    // }
+    
 
-    async prodcutDetails({ commit }, id) {
+    async productDetails({ commit }, id) {
         try {
-            const response = await ProductService.getProductsById(id)
+            const response = await ProServices.getProductsById(id)
             console.log(response)
             commit("setProduct", response.data[0])
         } catch (error) {

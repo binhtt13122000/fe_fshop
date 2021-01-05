@@ -134,7 +134,6 @@ export default {
         })
         .then(() => this.$router.push("/"))
         .catch((err) => console.log(err));
-      console.log("login fuction from components.1221......");
     },
   },
 };

@@ -7,6 +7,7 @@ import SignupPage from '../components/auth/SignupPage.vue'
 import ForgotPasswordForm from '../components/auth/ForgotPasswordForm.vue'
 import HomePage from '../components/HomePage.vue'
 import ProductListContainer from '../components/product/ProductListContainer.vue'
+import Product from '../components/product/Product.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,6 +16,11 @@ const routes = [
   name: 'home',
   component: Home
   },
+  {
+    path: '/product',
+    name: 'product',
+    component: Product
+    },
   {
     path: '/',
     name: 'homepage',
