@@ -141,8 +141,7 @@
               <div class="main-image">
                 <img class="img-responsive" :src="mainImageSrc" width="100%" />
               </div>
-            </v-row>
-            <v-col>
+              <v-col>
               <div class="image-center-item">
                 <a href="">
                   <img
@@ -162,6 +161,8 @@
                 </a>
               </div>
             </v-col>
+            </v-row>
+ 
           </v-container>
         </v-main>
         <v-footer color="white" padless>

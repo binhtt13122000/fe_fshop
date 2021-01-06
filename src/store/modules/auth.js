@@ -1,6 +1,6 @@
 // import { reject, resolve } from "core-js/fn/promise";
 // import { resolve } from 'core-js/fn/promise';
-import 'es6-promise/auto'
+// import 'es6-promise/auto'
 import AuthServices from "../../services/AuthenticationService"
 // import axios from 'axios';
 const state = {
