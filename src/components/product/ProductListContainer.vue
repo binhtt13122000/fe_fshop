@@ -88,7 +88,6 @@
               />
             </a>
           </div>
- 
           <v-row
             id="nav-bar-btn"
             class="hidden-md-and-down"
@@ -98,7 +97,7 @@
             <div class="nar-bar-btn">
               <ul class="nar-links">
                 <v-menu> </v-menu>
-                <li><a href="/productlist">Nam</a></li>
+                <li><a href="">Nam</a></li>
                 <li><a href="">Nữ</a></li>
                 <li><a href="">Blog</a></li>
                 <li><a href="">Bộ sưu tập</a></li>
@@ -136,36 +135,19 @@
         </v-app-bar>
         <!-- V main -->
         <v-main>
-          <v-container class="fill-height" fluid>
-            <v-row align="center" justify="center">
-              <div class="main-image">
-                <img class="img-responsive" :src="mainImageSrc" width="100%" />
+          <div class="hello">
+            <h1>{{ msg }}</h1>
+            <div v-for="product in products" :key="product.id">
+              <h3>Post Title: {{ product.productName }}</h3>
+              <!-- <h3>Post Body: /h3>{{post.body}}
               </div>
-              <v-col>
-              <div class="image-center-item">
-                <a href="">
-                  <img
-                    class="img-responsive-left"
-                    src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-2.png"
-                    alt="4men"
-                    width="50%"
-                  />
-                </a>
-                <a href="">
-                  <img
-                    class="img-responsive-right"
-                    src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
-                    alt="4men"
-                    width="50%"
-                  />
-                </a>
-              </div>
-            </v-col>
-            </v-row>
- 
-          </v-container>
+              <h2>Essential Links/h2> -->
+            </div>
+          </div>
         </v-main>
-        <v-footer color="white" padless>
+
+        <!-- V-footer  ------->
+         <v-footer color="white" padless>
           <v-container>
             <v-row id="footer-center" class="d-flex align-items-center">
               <v-col  class="mx-auto mt-2">
@@ -292,11 +274,13 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   props: {
     source: String,
   },
   data: () => ({
+    msg: "Welcome to my Vuex Store",
     drawer: null,
     linkBar: [
       "Name",
@@ -306,61 +290,29 @@ export default {
       "khuyến mãi",
       "Hệ Thống cửa hàng",
     ],
-    images: [],
     isValid: false,
     isAccount: false,
-    mainImageSrc: null,
   }),
-  mounted() {
-    this.onResize();
 
-    window.addEventListener("resize", this.onResize, { passive: true });
-  },
   methods: {
-    onResize() {
-      this.isValid = window.innerWidth <= 1040;
-      this.isAccount = window.innerWidth <= 900;
-    },
+    ...mapActions("product", ["getProducts", "productDetails"]),
   },
-
-  created() {
-    let self = this;
-    this.images = [
-      {
-        id: "1",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2020/12/1920x1089banner-destop-1.jpg",
-      },
-      {
-        id: "2",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2020/10/BANNER-WEB-2.png",
-      },
-      {
-        id: "3",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2020/10/BANNER-PC.png",
-      },
-    ];
-    setInterval(function () {
-      self.mainImageSrc =
-        self.images[Math.floor(Math.random() * self.images.length)].image;
-    }, 3000);
+  computed: {
+    ...mapGetters("product", ["products"]),
+  },
+  mounted() {
+    this.getProducts();
   },
 };
 </script>
 
 <style lang="scss">
-.app-bar {
-  opacity: 15%;
-}
-
-.app-bar:hover {
-  opacity: 100%;
-}
 .bar-center {
   background-color: #ffffff;
-  opacity: 60%;
+}
+
+.app-bar {
+  opacity: 100%;
 }
 
 .nar-bar-btn {
@@ -378,7 +330,9 @@ export default {
     font-size: 15px;
     text-transform: uppercase;
   }
+  // main image
 
+  // footer
 }
 
 #footer-center {
@@ -408,16 +362,16 @@ export default {
     padding: 0px 15px 0px 15px;
   }
 }
+// .tin-tuc .foo-tin-tuc .font-weight-bold {
+//   font-size: 100px;
+//     list-style-type: none;
+//   }
 
 @media only screen and (max-width: 1390px) {
 }
 @media only screen and (max-width: 560px) {
-
+  // .right-column-icon v-btn {
+  //   text-align: center;
+  // }
 }
 </style>
-
-
-
-
-
-
