@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Layout from '../components/Layout.vue'
-import LoginPage from '../components/auth/LoginPage.vue'
-import SignupPage from '../components/auth/SignupPage.vue'
-import ForgotPasswordForm from '../components/auth/ForgotPasswordForm.vue'
-import HomePage from '../components/HomePage.vue'
-import ProductListContainer from '../components/product/ProductListContainer.vue'
-import Product from '../components/product/Product.vue'
+import Layout from '../views/Layout.vue'
+import LoginPage from '../views/auth/LoginPage.vue'
+import SignupPage from '../views/auth/SignupPage.vue'
+import ForgotPasswordForm from '../views/auth/ForgotPasswordForm.vue'
+import HomePage from '../views/HomePage.vue'
+import ProductListContainer from '../views/product/ProductListContainer.vue'
+import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
 
 const routes = [

@@ -9,7 +9,7 @@
 
  <script>
 
- import Layout from '../components/Layout.vue'
+ import Layout from '../views/Layout.vue'
 // import HomePage from '../components/HomePage'
 export default {
   name: 'Home',

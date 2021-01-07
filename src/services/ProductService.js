@@ -5,9 +5,6 @@ class ProductService {
     getProducts(){
         return get("/products",{},{})
     }
-    getProductsById(id){
-        return get("/products/",{},id)
-    }
 
 }
 
