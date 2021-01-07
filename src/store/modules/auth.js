@@ -26,7 +26,17 @@ const mutations = {
     },
     DO_SOMETHING() {
         console.log("baby oi")
-    }
+    },
+    removeFromFavourite: (state, id) => {
+        state.products.forEach(el => {
+        //   if (id === el.id) {
+        //     el.isFavourite = false;
+        //   }
+          if (id) {
+            el.isFavourite = false;
+          }
+        });
+      },
 };
 const actions = {
     login({commit}, credentials){

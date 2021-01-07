@@ -16,38 +16,52 @@
   </div> -->
   <div>
     <v-card>
-      <div class="md-4 shadow-sm">
-        <a href="">
-          <img
-            class="img-responsive"
-            src="https://s3.cloud.cmctelecom.vn/vfc.website.images/2009036/2009036_WHITE_1.jpg"
-            width="100%"
-          />
+      <div
+        class="md-4 shadow-sm"
+        v-for="(productImage, i) in product.productImages"
+        :key="i"
+      >
+        <a :href="'/ProductDetail'">
+          <img class="img-responsive" :src="productImage.imgUrl" width="100%" />
         </a>
       </div>
-      <card-content>
-        <div class="meida">
-          <v-card-title>{{ product.productName }}</v-card-title>
-          <v-card-text>
-            <p>{{product.productDescription}}</p>
-            <v-rating
-              :value="4.5"
-              color="amber"
-              dense
-              half-increments
-              readonly
-              size="14"
-            ></v-rating>
-          </v-card-text>
+      <div class="media">
+        <v-card-title>{{ product.productName }}</v-card-title>
+        <v-card-text>
+          <p>{{ product.productDescription }}</p>
+          <v-rating
+            :value="4.5"
+            color="amber"
+            dense
+            half-increments
+            readonly
+            size="14"
+          ></v-rating>
+        </v-card-text>
+      </div>
 
-          <div>
-            <v-btn class="is-small">
-              <v-icon>mdi-heart</v-icon>
-            </v-btn>
-          </div>
-        </div>
-        <v-divider></v-divider>
-      </card-content>
+      <v-spacer></v-spacer>
+      <v-card-actions>
+        <v-btn>Add to card</v-btn>
+        <v-btn
+          class="is-small"
+          :title="removeToFavourite"
+          v-show="isFavourite"
+          @click="changeFavourite()"
+        >
+          <v-icon>mdi-heart</v-icon>
+          Favourite
+        </v-btn>
+        <v-btn
+          class="is-small"
+          :title="addToFavourite"
+          v-show="!isFavourite"
+          @click="changeFavourite()"
+        >
+          <v-icon>mdi-heart-outline</v-icon>
+          Favourite
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </div>
 </template>
@@ -60,10 +74,21 @@ export default {
 
   data() {
     return {
+      isFavourite: true,
       rating: 6,
       addToFavourite: "Add to favourite",
       removeToFavourite: "Remove from favourite",
     };
+  },
+
+  methods: {
+    changeFavourite() {
+      if (this.isFavourite == true) {
+        this.isFavourite = false;
+      } else if (this.isFavourite == false) {
+        this.isFavourite = true;
+      }
+    },
   },
 };
 </script>
