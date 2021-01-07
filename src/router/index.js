@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Layout from '../views/Layout.vue'
 import LoginPage from '../views/auth/LoginPage.vue'
 import SignupPage from '../views/auth/SignupPage.vue'
 import ForgotPasswordForm from '../views/auth/ForgotPasswordForm.vue'
@@ -30,11 +29,6 @@ const routes = [
     path: '/forgotpasswordForm',
     name: 'forgotpasswordForm',
     component: ForgotPasswordForm
-  },
-  {
-    path: '/layout',
-    name: 'layout',
-    component: Layout
   },
   {
     path: '/loginpage',

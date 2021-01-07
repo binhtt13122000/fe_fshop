@@ -34,15 +34,7 @@ const mutations = {
 };
 
 const actions = {
-    // async getProducts({ commit }) {
-    //     try {
-    //         const response = await ProductService.getProducts()
-    //         console.log(response)
-    //         commit("setProducts", response.data)
-    //     } catch (error) {
-    //         console.log(error.response)
-    //     }
-    // },
+
     getProducts({commit}) {
         return new Promise((resolve, reject) => {
             console.log("Nhanle");
@@ -60,30 +52,21 @@ const actions = {
         })
     },
 
-    productDetails({commit}, id) {
-        return new Promise((resolve, reject) => {
-            ProductServices.getProductsById(id).then(resp => {
-                console.log(resp)
-                commit("setProducts", resp.data[0])
-                resolve(resp)
-            })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
-        })
-    }
+    // productDetails({commit}, id) {
+    //     return new Promise((resolve, reject) => {
+    //         ProductServices.getProductsById(id).then(resp => {
+    //             console.log(resp)
+    //             commit("setProducts", resp.data[0])
+    //             resolve(resp)
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //             reject(err)
+    //         })
+    //     })
+    // }
     
 
-    // async productDetails({ commit }, id) {
-    //     try {
-    //         const response = await ProductService.getProductsById(id)
-    //         console.log(response)
-    //         commit("setProduct", response.data[0])
-    //     } catch (error) {
-    //         console.log(error.response)
-    //     }
-    // }
 };
 
 export default {
