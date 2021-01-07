@@ -135,15 +135,14 @@
         </v-app-bar>
         <!-- V main -->
         <v-main>
-          <div class="hello">
-            <h1>{{ msg }}</h1>
-            <div v-for="product in products" :key="product.id">
-              <h3>Post Title: {{ product.productName }}</h3>
-              <!-- <h3>Post Body: /h3>{{post.body}}
-              </div>
-              <h2>Essential Links/h2> -->
-            </div>
-          </div>
+          <v-container></v-container>
+          <v-container>
+            <v-row dense >
+              <v-col md="4" align-content="center" justify="center"  v-for="product in products" :key="product.productId">
+                <VmProduct :product="product"></VmProduct>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-main>
 
         <!-- V-footer  ------->
@@ -275,7 +274,9 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import VmProduct from '../../components/Product.vue';
 export default {
+  components: { VmProduct },
   props: {
     source: String,
   },

@@ -7,7 +7,7 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
     icons: {
-        iconfont: ['mdi','fa4'], // default
+        iconfont: 'mdi', // default
         values: {
           facebook: 'mdi-facebook',
           google: 'mdi-google'
