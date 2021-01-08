@@ -145,21 +145,21 @@
               <v-container>
                 <v-row class="d-flex justify-content-center">
                   <v-col col-sm="6">
-                    <div class="md-4 shadow-sm">
+                    <!-- <div class="md-4 shadow-sm">
                       <a href="#">
                         <img
                           class="img-responsive"
-                          src="https://s3.cloud.cmctelecom.vn/vfc.website.images/2009036/2009036_WHITE_1.jpg"
-                          width="75%"
+                          :src="productImage.imgUrl"
+                          width="100%"
                         />
                       </a>
-                    </div>
+                    </div> -->
                     <div
                       class="md-4 shadow-sm"
                       v-for="(productImage, i) in product.productImages"
                       :key="i"
                     >
-                      <a :href="'/productdetail/' + product.productId">
+                      <a href="#">
                         <img
                           class="img-responsive"
                           :src="productImage.imgUrl"
@@ -172,7 +172,7 @@
                     <div class="sumary-inner"></div>
                     <div class="size-inner">
                       <v-card-title>{{ product.productName }}</v-card-title>
-                      <p>{{ product.productDescription }}</p>
+                      <!-- <p>{{ product.productDescription }}</p> -->
                       <v-rating
                         :value="4.5"
                         color="amber"
@@ -514,13 +514,13 @@ export default {
     isValid: false,
     isAccount: false,
   }),
-
-  methods: {
-    ...mapActions("product", ["productDetails"]),
-  },
   computed: {
     ...mapGetters("product", ["product"]),
   },
+  methods: {
+    ...mapActions("product", ["productDetails"]),
+  },
+
   mounted() {
     this.productDetails(this.$route.params.idProduct);
   },

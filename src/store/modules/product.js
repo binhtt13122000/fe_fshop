@@ -5,6 +5,7 @@ import ProductServices from "../../services/ProductService"
 const state = {
     products: [],
     product: [],
+    productPro: [],
     cart: [],
 };
 
@@ -15,6 +16,9 @@ const getters = {
     product(state) {
         return state.product
     },
+    productPro(state) {
+        return state.productPro
+    },
     cart(state) {
         return state.cart
     }
@@ -23,49 +27,63 @@ const getters = {
 
 const mutations = {
     setProducts: (state, val) => {
-        return state.products = val
+        state.products = val
     },
     setProduct: (state, val) => {
-        return state.product = val
+        state.product = val
+    },
+    setActiveProduct(state, product) {
+        state.activeProduct = product
+        },
+    setPro: (state, val) => {
+        state.productPro = val
     },
     setCart: (state, val) => {
-        return state.cart = val
+        state.cart = val
     }
 };
 
 const actions = {
 
-    getProducts({commit}) {
+    getProducts({ commit }) {
         return new Promise((resolve, reject) => {
             console.log("Nhanle");
-            ProductServices.getProducts().then(resp => {
+            ProductServices.getProducts().then((resp) => {
                 console.log(resp)
                 console.log("Nhanle123");
                 commit("setProducts", resp.data)
                 console.log("Nhanle11");
                 resolve(resp)
             })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
         })
     },
 
-    productDetails({commit}, id) {
+    productDetails({ commit }, id) {
         return new Promise((resolve, reject) => {
-            ProductServices.getProductsByProductId({id: id}).then(resp => {
-                console.log(resp)
-                commit("setProduct", resp.data[0])
-                resolve(resp)
+            console.log(id)
+            ProductServices.getProDetails(id).then((response) => {
+                console.log(response.data[0])
+                console.log(response.data[1])
+                console.log(response.data[2])
+                console.log(response.data[3])
+                console.log(id)
+                commit("setProduct", [])
+                console.log(state.product)
+                commit("setProduct", response.data[0])
+                console.log(state.product)
+                resolve(response)
             })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
         })
     }
-    
+
 
 };
 

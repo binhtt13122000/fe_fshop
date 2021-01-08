@@ -14,6 +14,8 @@
         <v-card-title>{{ product.productName }}</v-card-title>
         <v-card-text>
           <p>{{ product.productDescription }}</p>
+          <v-row>
+            <v-col>
           <v-rating
             :value="4.5"
             color="amber"
@@ -22,36 +24,46 @@
             readonly
             size="14"
           ></v-rating>
+          </v-col>
+          <v-btn
+            class="is-small"
+            align="left"
+            justify="right"
+            :title="removeToFavourite"
+            v-show="isFavourite"
+            @click="changeFavourite()"
+          >
+            <v-icon>mdi-heart</v-icon>
+          </v-btn>
+          <v-btn
+            class="is-small"
+            align="left"
+            justify="right"
+            :title="addToFavourite"
+            v-show="!isFavourite"
+            @click="changeFavourite()"
+          >
+            <v-icon>mdi-heart-outline</v-icon>
+          </v-btn>
+          </v-row>
         </v-card-text>
       </div>
 
       <v-spacer></v-spacer>
       <v-card-actions>
-        <v-btn>Add to card</v-btn>
-        <v-btn
-          class="is-small"
-          :title="removeToFavourite"
-          v-show="isFavourite"
-          @click="changeFavourite()"
-        >
-          <v-icon>mdi-heart</v-icon>
-          Favourite
-        </v-btn>
-        <v-btn
-          class="is-small"
-          :title="addToFavourite"
-          v-show="!isFavourite"
-          @click="changeFavourite()"
-        >
-          <v-icon>mdi-heart-outline</v-icon>
-          Favourite
-        </v-btn>
-        <router-link
-          type="button"
-          class="btn btn-primary btn-lg"
-          :to="'/productdetail/' + product.productId"
-          >Details</router-link
-        >
+        <v-row>
+          <v-col>
+            <v-btn width="100%">
+              <v-icon>mdi-shopping</v-icon>
+              Add to card</v-btn>
+          </v-col>
+          <v-col>
+            <v-btn width="100%">
+              <v-icon>mdi-plus</v-icon>
+              Giỏ hàng
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-card-actions>
     </v-card>
   </div>
