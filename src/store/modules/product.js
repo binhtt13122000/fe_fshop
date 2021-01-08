@@ -65,7 +65,7 @@ const actions = {
     productDetails({ commit }, id) {
         return new Promise((resolve, reject) => {
             console.log(id)
-            ProductServices.getProDetails(id).then((response) => {
+            ProductServices.getProductsByProductId(id).then((response) => {
                 console.log(response.data[0])
                 console.log(response.data[1])
                 console.log(id)
