@@ -186,7 +186,6 @@
                               :items="items"
                               label="SIZE*"
                               hide-selected
-                              filled
                               outlined
                               small-chips
                               width="20%"
@@ -199,7 +198,6 @@
                               :items="itemSize"
                               label="SỐ LƯỢNG*"
                               hide-selected
-                              filled
                               outlined
                               small-chips
                             >
@@ -208,7 +206,7 @@
                         </v-row>
                         <v-row>
                           <v-col>
-                            <v-btn width="100%">
+                            <v-btn id="btn-addToCart" width="100%">
                               <v-icon>mdi-shopping</v-icon>
                               Đăng ký mua hàng
                             </v-btn>
@@ -220,13 +218,81 @@
                             </v-btn>
                           </v-col>
                         </v-row>
-                        <a href="">
-                          <v-icon>mdi-store</v-icon>
-                          <span>Tìm tại cửa hàng</span></a
-                        >
+                        <v-spacer></v-spacer>
                       </v-form>
                     </div>
-                    <div class="product-detail-inner"></div>
+                    <div class="product-detail-inner">
+                      <div
+                        class="shipping-rules"
+                        style="background-color: grey lighten-3"
+                      >
+                        <ul>
+                          <li>
+                            <img
+                              class="img-responsive"
+                              src="https://ninomaxx.com.vn/wp-content/themes/basel-child/icon/truck.png"
+                              width="4%"
+                            />
+                            <b> Miễn phí vận chuyển</b>
+                            <p>
+                              Khu vực TP HCM: từ 300.000đ
+                              <br />
+                              Các khu vực khác: từ 500.000đ
+                              <br />
+                              Mua thêm sản phẩm để được freeship nhé khách ơi!
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- accordion-->
+                      <div class="accordion">
+                        <v-expansion-panels focusable>
+                          <v-expansion-panel>
+                            <v-expansion-panel-header
+                              >CHẤT LIỆU</v-expansion-panel-header
+                            >
+                            <v-expansion-panel-content>
+                              100% cotton.
+                            </v-expansion-panel-content>
+                          </v-expansion-panel>
+                        </v-expansion-panels>
+                        <v-expansion-panels focusable>
+                          <v-expansion-panel>
+                            <v-expansion-panel-header
+                              >HƯỚNG DẪN SỬ DỤNG</v-expansion-panel-header
+                            >
+                            <v-expansion-panel-content>
+                              <p>
+                                Giặt máy ở nhiệt độ thường. Không sử dụng chất
+                                tẩy. Phơi trong bóng mát. Sấy khô ở nhiệt độ
+                                thấp. Là ở nhiệt độ thấp 110 độ C. Giặt với sản
+                                phẩm cùng màu. Không là lên chi tiết trang trí.
+                              </p>
+                            </v-expansion-panel-content>
+                          </v-expansion-panel>
+                        </v-expansion-panels>
+                        <v-expansion-panels focusable>
+                          <v-expansion-panel>
+                            <v-expansion-panel-header
+                              >CHÍNH SÁCH ĐỔI HÀNG</v-expansion-panel-header
+                            >
+                            <v-expansion-panel-content>
+                              100% cotton.
+                            </v-expansion-panel-content>
+                          </v-expansion-panel>
+                        </v-expansion-panels>
+                        <v-expansion-panels focusable>
+                          <v-expansion-panel>
+                            <v-expansion-panel-header
+                              >HƯỚNG DẪN ĐẶT HÀNG</v-expansion-panel-header
+                            >
+                            <v-expansion-panel-content>
+                              100% cotton.
+                            </v-expansion-panel-content>
+                          </v-expansion-panel>
+                        </v-expansion-panels>
+                      </div>
+                    </div>
                   </v-col>
                 </v-row>
               </v-container>
@@ -463,10 +529,23 @@ export default {
     padding: 0px 15px 0px 15px;
   }
 }
-// .tin-tuc .foo-tin-tuc .font-weight-bold {
-//   font-size: 100px;
-//     list-style-type: none;
-//   }
+
+.shipping-rules {
+  background-color: #f2f2f2;
+  ul {
+    list-style: none;
+  }
+}
+
+#btn-addToCart {
+  background-color: #ff0000;
+  color: #ffffff;
+
+  &#btn-addToCart:hover {
+    background-color: #000000;
+  }
+}
+
 
 @media only screen and (max-width: 1390px) {
 }

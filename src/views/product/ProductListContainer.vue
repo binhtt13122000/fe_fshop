@@ -150,6 +150,7 @@
         </v-main>
 
         <!-- V-footer  ------->
+        <v-divider></v-divider>
          <v-footer color="white" padless>
           <v-container>
             <v-row id="footer-center" class="d-flex align-items-center">
@@ -300,16 +301,6 @@ export default {
         text: "Home",
         disabled: false,
         href: "/",
-      },
-      {
-        text: "Nam",
-        disabled: false,
-        href: "/productlist",
-      },
-      {
-        text: "Ao",
-        disabled: true,
-        href: "/productDetail",
       },
     ],
     isValid: false,
