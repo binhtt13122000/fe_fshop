@@ -34,7 +34,7 @@ const mutations = {
     },
     setActiveProduct(state, product) {
         state.activeProduct = product
-        },
+    },
     setPro: (state, val) => {
         state.productPro = val
     },
@@ -68,13 +68,8 @@ const actions = {
             ProductServices.getProDetails(id).then((response) => {
                 console.log(response.data[0])
                 console.log(response.data[1])
-                console.log(response.data[2])
-                console.log(response.data[3])
                 console.log(id)
-                commit("setProduct", [])
-                console.log(state.product)
                 commit("setProduct", response.data[0])
-                console.log(state.product)
                 resolve(response)
             })
                 .catch(err => {
@@ -82,7 +77,20 @@ const actions = {
                     reject(err)
                 })
         })
-    }
+    },
+
+    // productDetails({ commit }) {
+    //     return new Promise((resolve, reject) => {
+    //         axios.get("http://localhost:8082/v1/api/products/PRO_0062").then((response) => {
+    //         console.log(response.data[0])
+    //         commit("setProduct", response.data[0])
+    //         resolve(response)
+    //     }).catch(err => {
+    //         console.log(err)
+    //         reject(err)
+    //     })
+    // })
+    //}
 
 
 };
