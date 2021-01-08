@@ -150,7 +150,26 @@
                       </a>
                     </div>
                   </v-col>
-                  <v-col col-sm="6"> </v-col>
+                  <v-col col-sm="6">
+                    <div class="sumary-inner"></div>
+                    <div class="size-inner">
+                      <h1>Ten ao</h1>
+                      <p class="price">
+                        699,999
+                        <span
+                          ><v-icon
+                            >mdi-currency-usd-circle-outline</v-icon
+                          ></span
+                        >
+                      </p>
+                      <v-form>
+                        <v-combobox>
+                          
+                        </v-combobox>
+                      </v-form>
+                    </div>
+                    <div class="product-detail-inner"></div>
+                  </v-col>
                 </v-row>
               </v-container>
             </div>
@@ -303,14 +322,9 @@ export default {
     isAccount: false,
   }),
 
-  methods: {
-
-  },
-  computed: {
-  },
-  mounted() {
-
-  },
+  methods: {},
+  computed: {},
+  mounted() {},
 };
 </script>
 
