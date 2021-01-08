@@ -133,8 +133,13 @@
             v-if="isValid"
           ></v-app-bar-nav-icon>
         </v-app-bar>
+        <!-- v-breadcrumbs -->
+
         <!-- V main -->
         <v-main>
+          <div class="breadCrumbs">
+            <v-breadcrumbs :items="itemBreadCrumbs" large></v-breadcrumbs>
+          </div>
           <div class="section">
             <div class="att_pro">
               <v-container>
@@ -154,21 +159,32 @@
                     <div class="sumary-inner"></div>
                     <div class="size-inner">
                       <h1>Ten ao</h1>
-                      <p class="price">
+                      <v-rating
+                        :value="4.5"
+                        color="amber"
+                        dense
+                        half-increments
+                        readonly
+                        size="14"
+                      ></v-rating>
+                      <span><u>Giá bán</u>:</span>
+                      <span class="price">
                         699,999
                         <span
                           ><v-icon
                             >mdi-currency-usd-circle-outline</v-icon
                           ></span
                         >
-                      </p>
+                        <v-spacer></v-spacer>
+                      </span>
+                      <v-divider></v-divider>
                       <v-form>
                         <v-row>
                           <v-col>
                             <v-combobox
                               v-model="modelSize"
                               :items="items"
-                              label="SIZE"
+                              label="SIZE*"
                               hide-selected
                               filled
                               outlined
@@ -181,7 +197,7 @@
                             <v-combobox
                               v-model="modelQuantity"
                               :items="itemSize"
-                              label="Quantity"
+                              label="SỐ LƯỢNG*"
                               hide-selected
                               filled
                               outlined
@@ -190,6 +206,24 @@
                             </v-combobox>
                           </v-col>
                         </v-row>
+                        <v-row>
+                          <v-col>
+                            <v-btn width="100%">
+                              <v-icon>mdi-shopping</v-icon>
+                              Đăng ký mua hàng
+                            </v-btn>
+                          </v-col>
+                          <v-col>
+                            <v-btn width="100%">
+                              <v-icon>mdi-plus</v-icon>
+                              Thêm vào giỏ hàng
+                            </v-btn>
+                          </v-col>
+                        </v-row>
+                        <a href="">
+                          <v-icon>mdi-store</v-icon>
+                          <span>Tìm tại cửa hàng</span></a
+                        >
                       </v-form>
                     </div>
                     <div class="product-detail-inner"></div>
@@ -337,7 +371,24 @@ export default {
     modelQuantity: "Quantity",
     drawer: null,
     items: ["28", "29", "30", "31", "32"],
-    itemSize: ["1", "2", "3", "4", "5","6", "7", "8", "9"],
+    itemSize: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    itemBreadCrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/",
+      },
+      {
+        text: "Nam",
+        disabled: false,
+        href: "/productlist",
+      },
+      {
+        text: "Ao",
+        disabled: true,
+        href: "/productDetail",
+      },
+    ],
     linkBar: [
       "Name",
       "Nữ",

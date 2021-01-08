@@ -1,19 +1,4 @@
 <template>
-  <!-- <div class="card mb-4 shadow-sm">
-    <v-img class="img-responsive" src="https://s3.cloud.cmctelecom.vn/vfc.website.images/2009036/2009036_WHITE_1.jpg" width="60%"/> -->
-  <!-- <img :src="product.productImages.imgUrl" class="card-img-top product-image" /> -->
-  <!-- <div class="card-body">
-      <h4 class="card-title text-left">{{ product.productName }}</h4>
-      <h4 class="card-title text-left">{{ product.productPrice }} đ</h4>
-      <div class="row">
-        <router-link
-          type="button"
-          class="btn btn-primary btn-lg"
-          :to="'/details/' + product.id"
-        >Details</router-link>
-      </div>
-    </div>
-  </div> -->
   <div>
     <v-card>
       <div

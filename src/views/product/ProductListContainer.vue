@@ -135,6 +135,10 @@
         </v-app-bar>
         <!-- V main -->
         <v-main>
+          <!-- v-breadcrumbs --> 
+          <div class="breadCrumbs">
+            <v-breadcrumbs :items="itemBreadCrumbs" large></v-breadcrumbs>
+          </div>
           <v-container></v-container>
           <v-container>
             <v-row dense >
@@ -290,6 +294,23 @@ export default {
       "Blog",
       "khuyến mãi",
       "Hệ Thống cửa hàng",
+    ],
+     itemBreadCrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/",
+      },
+      {
+        text: "Nam",
+        disabled: false,
+        href: "/productlist",
+      },
+      {
+        text: "Ao",
+        disabled: true,
+        href: "/productDetail",
+      },
     ],
     isValid: false,
     isAccount: false,
