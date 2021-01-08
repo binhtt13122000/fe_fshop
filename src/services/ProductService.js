@@ -6,6 +6,10 @@ class ProductService {
         return get("/products",{},{})
     }
 
+    getProductsByProductId(id){
+        return get("/products/", {}, id);
+    }
+
 }
 
 export default new ProductService();

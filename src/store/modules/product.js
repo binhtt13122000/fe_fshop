@@ -5,7 +5,7 @@ import ProductServices from "../../services/ProductService"
 const state = {
     products: [],
     product: [],
-    // cart: [],
+    cart: [],
 };
 
 const getters = {
@@ -15,9 +15,9 @@ const getters = {
     product(state) {
         return state.product
     },
-    // cart(state) {
-    //     return state.cart
-    // }
+    cart(state) {
+        return state.cart
+    }
 };
 
 
@@ -28,9 +28,9 @@ const mutations = {
     setProduct: (state, val) => {
         return state.product = val
     },
-    // setCart: (state, val) => {
-    //     return state.cart = val
-    // }
+    setCart: (state, val) => {
+        return state.cart = val
+    }
 };
 
 const actions = {
@@ -52,19 +52,19 @@ const actions = {
         })
     },
 
-    // productDetails({commit}, id) {
-    //     return new Promise((resolve, reject) => {
-    //         ProductServices.getProductsById(id).then(resp => {
-    //             console.log(resp)
-    //             commit("setProducts", resp.data[0])
-    //             resolve(resp)
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //             reject(err)
-    //         })
-    //     })
-    // }
+    productDetails({commit}, id) {
+        return new Promise((resolve, reject) => {
+            ProductServices.getProductsByProductId({id: id}).then(resp => {
+                console.log(resp)
+                commit("setProduct", resp.data[0])
+                resolve(resp)
+            })
+            .catch(err => {
+                console.log(err)
+                reject(err)
+            })
+        })
+    }
     
 
 };

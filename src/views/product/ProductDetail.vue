@@ -154,11 +154,25 @@
                         />
                       </a>
                     </div>
+                    <div
+                      class="md-4 shadow-sm"
+                      v-for="(productImage, i) in product.productImages"
+                      :key="i"
+                    >
+                      <a :href="'/productdetail/' + product.productId">
+                        <img
+                          class="img-responsive"
+                          :src="productImage.imgUrl"
+                          width="100%"
+                        />
+                      </a>
+                    </div>
                   </v-col>
                   <v-col col-sm="6">
                     <div class="sumary-inner"></div>
                     <div class="size-inner">
-                      <h1>Ten ao</h1>
+                      <v-card-title>{{ product.productName }}</v-card-title>
+                      <p>{{ product.productDescription }}</p>
                       <v-rating
                         :value="4.5"
                         color="amber"
@@ -221,6 +235,9 @@
                         <v-spacer></v-spacer>
                       </v-form>
                     </div>
+                    <v-spacer></v-spacer>
+                    <br />
+                    <br />
                     <div class="product-detail-inner">
                       <div
                         class="shipping-rules"
@@ -292,6 +309,35 @@
                           </v-expansion-panel>
                         </v-expansion-panels>
                       </div>
+                      <div class="product-share">
+                        <v-container>
+                          <v-row
+                            id="socialIcon"
+                            class="d-flex align-items-center"
+                          >
+                            <v-col md="12" lg="12" xl="12" class="mx-auto mt-3">
+                              <div class="social-items">
+                                <span>Share:</span>
+                                <a href=""
+                                  ><v-icon size="20">mdi-google</v-icon></a
+                                >
+                                <a href=""
+                                  ><v-icon size="20">mdi-facebook</v-icon></a
+                                >
+                                <a href=""
+                                  ><v-icon size="20">mdi-instagram</v-icon></a
+                                >
+                                <a href=""
+                                  ><v-icon size="20">mdi-twitter</v-icon></a
+                                >
+                                <a href=""
+                                  ><v-icon size="20">mdi-linkedin</v-icon></a
+                                >
+                              </div>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </div>
                     </div>
                   </v-col>
                 </v-row>
@@ -301,6 +347,7 @@
         </v-main>
 
         <!-- V-footer  ------->
+        <v-divider></v-divider>
         <v-footer color="white" padless>
           <v-container>
             <v-row id="footer-center" class="d-flex align-items-center">
@@ -428,6 +475,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   props: {
     source: String,
@@ -467,9 +515,15 @@ export default {
     isAccount: false,
   }),
 
-  methods: {},
-  computed: {},
-  mounted() {},
+  methods: {
+    ...mapActions("product", ["productDetails"]),
+  },
+  computed: {
+    ...mapGetters("product", ["product"]),
+  },
+  mounted() {
+    this.productDetails(this.$route.params.idProduct);
+  },
 };
 </script>
 
@@ -545,7 +599,6 @@ export default {
     background-color: #000000;
   }
 }
-
 
 @media only screen and (max-width: 1390px) {
 }

@@ -279,7 +279,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import VmProduct from '../../components/Product.vue';
+import VmProduct from './Product.vue';
 export default {
   components: { VmProduct },
   props: {

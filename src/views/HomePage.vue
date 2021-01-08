@@ -341,6 +341,11 @@ export default {
         image:
           "https://ninomaxx.com.vn/wp-content/uploads/2020/10/BANNER-PC.png",
       },
+      {
+        id: "4",
+        image:
+          "https://ninomaxx.com.vn/wp-content/uploads/2021/01/BANNER-WEB.png",
+      },
     ];
     setInterval(function () {
       self.mainImageSrc =

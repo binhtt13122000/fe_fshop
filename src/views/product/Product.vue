@@ -6,7 +6,7 @@
         v-for="(productImage, i) in product.productImages"
         :key="i"
       >
-        <a :href="'/ProductDetail'">
+        <a :href="'/productdetail/' + product.productId">
           <img class="img-responsive" :src="productImage.imgUrl" width="100%" />
         </a>
       </div>
@@ -46,6 +46,12 @@
           <v-icon>mdi-heart-outline</v-icon>
           Favourite
         </v-btn>
+        <router-link
+          type="button"
+          class="btn btn-primary btn-lg"
+          :to="'/productdetail/' + product.productId"
+          >Details</router-link
+        >
       </v-card-actions>
     </v-card>
   </div>

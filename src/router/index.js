@@ -42,8 +42,7 @@ const routes = [
     component: ProductListContainer
   },
   {
-    path: '/productDetail',
-    name: 'productDetail',
+    path: '/productDetail/:idProduct',
     component: ProductDetail
   },
   {
