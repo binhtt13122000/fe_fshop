@@ -145,7 +145,7 @@
                         <img
                           class="img-responsive"
                           src="https://s3.cloud.cmctelecom.vn/vfc.website.images/2009036/2009036_WHITE_1.jpg"
-                          width="60%"
+                          width="75%"
                         />
                       </a>
                     </div>
@@ -163,9 +163,33 @@
                         >
                       </p>
                       <v-form>
-                        <v-combobox>
-                          
-                        </v-combobox>
+                        <v-row>
+                          <v-col>
+                            <v-combobox
+                              v-model="modelSize"
+                              :items="items"
+                              label="SIZE"
+                              hide-selected
+                              filled
+                              outlined
+                              small-chips
+                              width="20%"
+                            >
+                            </v-combobox>
+                          </v-col>
+                          <v-col>
+                            <v-combobox
+                              v-model="modelQuantity"
+                              :items="itemSize"
+                              label="Quantity"
+                              hide-selected
+                              filled
+                              outlined
+                              small-chips
+                            >
+                            </v-combobox>
+                          </v-col>
+                        </v-row>
                       </v-form>
                     </div>
                     <div class="product-detail-inner"></div>
@@ -309,7 +333,11 @@ export default {
     source: String,
   },
   data: () => ({
+    modelSize: "Size",
+    modelQuantity: "Quantity",
     drawer: null,
+    items: ["28", "29", "30", "31", "32"],
+    itemSize: ["1", "2", "3", "4", "5","6", "7", "8", "9"],
     linkBar: [
       "Name",
       "Nữ",
