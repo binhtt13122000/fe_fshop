@@ -6,7 +6,7 @@ class ProductService {
     }
 
     getProductsByProductId(id){
-        return get("/products", {}, {id});
+        return get("/products/"+id, {}, {});
     }
 }
 

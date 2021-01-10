@@ -66,10 +66,10 @@ const actions = {
         return new Promise((resolve, reject) => {
             console.log(id)
             ProductServices.getProductsByProductId(id).then((response) => {
-                console.log(response.data[0])
-                console.log(response.data[1])
+                console.log(response.data)
+                console.log(response)
                 console.log(id)
-                commit("setProduct", response.data[0])
+                commit("setProduct", response.data)
                 resolve(response)
             })
                 .catch(err => {
