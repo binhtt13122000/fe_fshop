@@ -132,46 +132,23 @@
             <div class="att_pro">
               <v-container>
                 <v-row class="d-flex justify-content-center">
-                  <v-col col-sm="6">
-                    <!-- <div class="md-4 shadow-sm">
-                      <a href="#">
-                        <img
-                          class="img-responsive"
-                          :src="productImage.imgUrl"
-                          width="100%"
-                        />
-                      </a>
-                    </div> -->
+                  <v-col cols="12" md="8" xs="12" sm="12" >
                     <!-- Create carouel -->
-                    <div class="md-4 shadow-sm">
-                    <v-carousel style="width:80%;height:auto;">
-                      <v-carousel-item
-                        v-for="(productImage, i) in product.productImages"
-                        :key="i"
-                        :src="productImage.imgUrl"
-                        alt="productImage.imgUrl"
-                        reverse-transition="fade-transition"
-                        transition="fade-transition"
-                        
-                      >
-                      </v-carousel-item>
-                    </v-carousel>
-                    </div>
-                    <!-- <div
-                      class="md-4 shadow-sm"
-                      v-for="(productImage, i) in product.productImages"
-                      :key="i"
-                    >
-                      <a href="#">
-                        <img
-                          class="img-responsive"
+                    <!-- <div class="md-4 shadow-sm" > -->
+                      <v-carousel class="section-carousel" style="width: 100%; height: auto">
+                        <v-carousel-item
+                          v-for="(productImage, i) in product.productImages"
+                          :key="i"
                           :src="productImage.imgUrl"
-                          width="100%"
-                        />
-                      </a>
-                    </div> -->
+                          alt="productImage.imgUrl"
+                          reverse-transition="fade-transition"
+                          transition="fade-transition"
+                        >
+                        </v-carousel-item>
+                      </v-carousel>
+                    <!-- </div> -->
                   </v-col>
-                  <v-col col-sm="6">
+                  <v-col cols="10" md="4" align="left">
                     <div class="sumary-inner"></div>
                     <div class="size-inner">
                       <h1>{{ product.productName }}</h1>
@@ -184,83 +161,72 @@
                         readonly
                         size="14"
                       ></v-rating>
-                      <span><u>Giá bán</u>:</span>
-                      <span class="price">
+                      
+                      <h3 class="price">
+                        <span><u>Giá bán</u>:</span>
                         {{ product.productPrice }}<u>đ</u>
                         <v-spacer></v-spacer>
-                      </span>
+                      </h3>
                       <v-divider></v-divider>
                       <v-form>
-                        <!-- <v-row>
+                        <v-row>
+                          
                           <v-col>
-                            <v-combobox
-                              v-model="modelSize"
-                              :items="items"
-                              label="SIZE*"
-                              hide-selected
-                              outlined
-                              small-chips
-                              width="20%"
-                            >
-                            </v-combobox>
-                          </v-col>
-                          <v-col>
-                            <v-combobox
-                              v-model="modelQuantity"
-                              :items="itemSize"
-                              label="SỐ LƯỢNG*"
-                              hide-selected
-                              outlined
-                              small-chips
-                            >
-                            </v-combobox>
-                          </v-col>
-                        </v-row> -->
-                        <table>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <label for="pa_color">Size</label>
-                              </td>
-                              <td>
-                                <fieldset class="swatch-picker">
-                                  <p>Select Color</p>
+                          <div class="swatch-picker">
+                            <p>Size:</p>
 
-                                  <label>
-                                    <input
-                                      type="radio"
-                                      name="swatch_1234"
-                                      value="blue"
-                                    />
-                                    <span style="background-color: #9abdfe"
-                                      >Blue</span
-                                    >
-                                  </label>
-                                  <label>
-                                    <input
-                                      type="radio"
-                                      name="swatch_1234"
-                                      value="gray"
-                                    />
-                                    <span style="background-color: #aaaaaa"
-                                      >Gray</span
-                                    >
-                                  </label>
-                                  <label>
-                                    <input
-                                      type="radio"
-                                      name="swatch_1234"
-                                      value="black"
-                                    />
-                                    <span style="background-color: #222222"
-                                      >Black</span
-                                    >
-                                  </label>
-                                </fieldset>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                            <label>
+                              <input
+                                type="radio"
+                                name="swatch_1234"
+                                value="blue"
+                              />
+                              <span style="background-color: #000000">S</span>
+                            </label>
+                            <label>
+                              <input
+                                type="radio"
+                                name="swatch_1234"
+                                value="gray"
+                              />
+                              <span style="background-color: #000000">M</span>
+                            </label>
+                            <label>
+                              <input
+                                type="radio"
+                                name="swatch_1234"
+                                value="black"
+                              />
+                              <span style="background-color: #000000">L</span>
+                            </label>
+                            <label>
+                              <input
+                                type="radio"
+                                name="swatch_1234"
+                                value="black"
+                              />
+                              <span style="background-color: #000000">XL</span>
+                            </label>
+                            <label>
+                              <input
+                                type="radio"
+                                name="swatch_1234"
+                                value="black"
+                              />
+                              <span style="background-color: #000000">XXL</span>
+                            </label>
+                            <label>
+                              <input
+                                type="radio"
+                                name="swatch_1234"
+                                value="black"
+                              />
+                              <span style="background-color: #000000">3XL</span>
+                            </label>
+                          </div>
+                          </v-col>
+                          
+                        </v-row>
                         <v-row>
                           <v-col>
                             <v-btn id="btn-addToCart" width="100%">
@@ -516,6 +482,7 @@ export default {
   data: () => ({
     modelSize: "Size",
     modelQuantity: "Quantity",
+    size: 1,
     drawer: null,
     items: ["28", "29", "30", "31", "32"],
     itemSize: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
@@ -651,12 +618,11 @@ body {
 }
 
 .swatch-picker {
-  border: 3px solid #ccc;
-  display: inline-block;
-  width: auto;
-  margin: 20px auto;
-  padding: 20px;
-  text-align: center;
+  // display: inline-block;
+  // width: auto;
+  // margin: 20px auto;
+  // padding: 20px;
+  // text-align: center;
 
   label {
     display: inline-block;
@@ -665,21 +631,22 @@ body {
     position: relative;
     margin: 0 2px;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+    // -webkit-user-select: none;
+    // -moz-user-select: none;
+    // -ms-user-select: none;
+    // -o-user-select: none;
+    // user-select: none;
   }
 
   span {
     display: block;
-    text-indent: 100%;
+    color: #ffffff;
+    //  text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
     position: absolute;
-    border-radius: 3px;
-    top: 0;
+    border-radius: 50%;
+    bottom: 20px;
     left: 0;
     height: 100%;
     width: 100%;
@@ -690,14 +657,17 @@ body {
   }
 
   input:checked + span {
-    border: 1px solid rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(0, 0, 0, 0.6);
+    border: 3px solid rgb(211, 15, 15);
+    border: 3px solid rgba(236, 16, 16, 0.6);
   }
 }
 
 @media only screen and (max-width: 1390px) {
 }
 @media only screen and (max-width: 560px) {
+  // .section-carousel {
+  //   width: 120%;
+  // }
   // .right-column-icon v-btn {
   //   text-align: center;
   // }
