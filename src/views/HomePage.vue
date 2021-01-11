@@ -8,7 +8,7 @@
           v-if="isValid"
           :clipped="$vuetify.breakpoint.lgAndUp"
           app
-          right
+          left
         >
           <v-text-field
             flat
@@ -17,7 +17,7 @@
             prepend-inner-icon="mdi-magnify"
             label="Search"
             class="nav-bar-search"
-            style="width: 10%"
+            style="width: 100%"
           ></v-text-field>
           <v-list class="nar-bar-btn" dense justify="center" align="center">
             <!-- <v-list-group> -->
@@ -26,18 +26,10 @@
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <br />
             <v-list-item link>
               <v-list-item-content>
                 <v-list-item-title
-                  >Name<v-icon>mdi-chevron-down</v-icon></v-list-item-title
-                >
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title
-                  >Nữ<v-icon>mdi-chevron-down</v-icon></v-list-item-title
+                  >Name</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>
@@ -98,8 +90,7 @@
             <div class="nar-bar-btn">
               <ul class="nar-links">
                 <v-menu> </v-menu>
-                <li><a href="/productlist">Nam</a></li>
-                <li><a href="">Nữ</a></li>
+                <li><a href="/products">Nam</a></li>
                 <li><a href="">Blog</a></li>
                 <li><a href="">Bộ sưu tập</a></li>
                 <li><a href="">Khuyến mãi</a></li>
@@ -118,10 +109,10 @@
             hide-details
             prepend-inner-icon="mdi-magnify"
             label="Search"
-            class="hidden-sm-and-down"
+            class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-btn icon class="hidden-xs-and-down">
+          <v-btn icon class="hidden-xs-and-down mx-4">
             <v-icon>mdi-shopping</v-icon>
           </v-btn>
           <v-btn icon to="/loginpage" class="hidden-md-and-down">

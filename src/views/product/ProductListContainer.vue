@@ -8,7 +8,7 @@
           v-if="isValid"
           :clipped="$vuetify.breakpoint.lgAndUp"
           app
-          right
+          left
         >
           <v-text-field
             flat
@@ -17,7 +17,6 @@
             prepend-inner-icon="mdi-magnify"
             label="Search"
             class="nav-bar-search"
-            style="width: 10%"
           ></v-text-field>
           <v-list class="nar-bar-btn" dense justify="center" align="center">
             <!-- <v-list-group> -->
@@ -26,18 +25,10 @@
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <br />
             <v-list-item link>
               <v-list-item-content>
                 <v-list-item-title
-                  >Name<v-icon>mdi-chevron-down</v-icon></v-list-item-title
-                >
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title
-                  >Nữ<v-icon>mdi-chevron-down</v-icon></v-list-item-title
+                  >Name</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>
@@ -98,7 +89,6 @@
               <ul class="nar-links">
                 <v-menu> </v-menu>
                 <li><a href="">Nam</a></li>
-                <li><a href="">Nữ</a></li>
                 <li><a href="">Blog</a></li>
                 <li><a href="">Bộ sưu tập</a></li>
                 <li><a href="">Khuyến mãi</a></li>
@@ -117,10 +107,10 @@
             hide-details
             prepend-inner-icon="mdi-magnify"
             label="Search"
-            class="hidden-sm-and-down"
+            class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-btn icon class="hidden-xs-and-down">
+          <v-btn icon class="hidden-xs-and-down mx-4">
             <v-icon>mdi-shopping</v-icon>
           </v-btn>
           <v-btn icon to="/loginpage" class="hidden-md-and-down">
@@ -135,14 +125,20 @@
         </v-app-bar>
         <!-- V main -->
         <v-main>
-          <!-- v-breadcrumbs --> 
+          <!-- v-breadcrumbs -->
           <div class="breadCrumbs">
             <v-breadcrumbs :items="itemBreadCrumbs" large></v-breadcrumbs>
           </div>
           <v-container></v-container>
           <v-container>
-            <v-row dense >
-              <v-col md="4" align-content="center" justify="center"  v-for="product in products" :key="product.productId">
+            <v-row dense>
+              <v-col
+                md="4"
+                align-content="center"
+                justify="center"
+                v-for="product in products"
+                :key="product.productId"
+              >
                 <VmProduct :product="product"></VmProduct>
               </v-col>
             </v-row>
@@ -151,10 +147,10 @@
 
         <!-- V-footer  ------->
         <v-divider></v-divider>
-         <v-footer color="white" padless>
+        <v-footer color="white" padless>
           <v-container>
             <v-row id="footer-center" class="d-flex align-items-center">
-              <v-col  class="mx-auto mt-2">
+              <v-col class="mx-auto mt-2">
                 <div class="social-link">
                   <h4 class="font-weight-bold">Contact</h4>
                   <v-list>
@@ -197,7 +193,7 @@
                   </v-list>
                 </div>
               </v-col>
-              <v-col  class="mx-auto mt-2">
+              <v-col class="mx-auto mt-2">
                 <div class="thuong-hieu">
                   <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
                   <ul class="foo-thuong-hieu">
@@ -207,7 +203,7 @@
                   </ul>
                 </div>
               </v-col>
-              <v-col  class="mx-auto mt-2">
+              <v-col class="mx-auto mt-2">
                 <div class="tin-tuc">
                   <h4 class="font-weight-bold">TIN TỨC</h4>
                   <ul class="foo-tin-tuc">
@@ -219,7 +215,7 @@
                   </ul>
                 </div>
               </v-col>
-              <v-col  class="mx-auto mt-2">
+              <v-col class="mx-auto mt-2">
                 <div class="ho-tro">
                   <h4 class="font-weight-bold">HỖ TRỢ</h4>
                   <ul class="foo-ho-tro">
@@ -232,7 +228,7 @@
                   </ul>
                 </div>
               </v-col>
-              <v-col  class="mx-auto mt-2">
+              <v-col class="mx-auto mt-2">
                 <div class="dang-ky-nhan-tin">
                   <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
                   <v-form>
@@ -248,14 +244,14 @@
             </v-row>
           </v-container>
           <v-container>
-            <v-row id="socialIcon" class="d-flex align-items-center" >
+            <v-row id="socialIcon" class="d-flex align-items-center">
               <v-col md="12" lg="12" xl="12" class="mx-auto mt-3">
-                <div class="social-items"  align="center" justify="center">
+                <div class="social-items" align="center" justify="center">
                   <a href=""><v-icon size="50">mdi-google</v-icon></a>
                   <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
                   <a href=""><v-icon size="50">mdi-instagram</v-icon></a>
                   <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a> 
+                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a>
                 </div>
               </v-col>
             </v-row>
@@ -279,7 +275,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import VmProduct from './Product.vue';
+import VmProduct from "./Product.vue";
 export default {
   components: { VmProduct },
   props: {
@@ -296,7 +292,7 @@ export default {
       "khuyến mãi",
       "Hệ Thống cửa hàng",
     ],
-     itemBreadCrumbs: [
+    itemBreadCrumbs: [
       {
         text: "Home",
         disabled: false,
@@ -308,10 +304,20 @@ export default {
   }),
 
   methods: {
+    onResize() {
+      this.isValid = window.innerWidth <= 1040;
+      this.isAccount = window.innerWidth <= 900;
+    },
     ...mapActions("product", ["getProducts", "productDetails"]),
   },
   computed: {
     ...mapGetters("product", ["products"]),
+  },
+
+  created() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize, { passive: true });
+    
   },
   mounted() {
     this.getProducts();

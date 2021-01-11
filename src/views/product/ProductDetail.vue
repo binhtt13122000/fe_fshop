@@ -8,7 +8,7 @@
           v-if="isValid"
           :clipped="$vuetify.breakpoint.lgAndUp"
           app
-          right
+          left
         >
           <v-text-field
             flat
@@ -17,7 +17,6 @@
             prepend-inner-icon="mdi-magnify"
             label="Search"
             class="nav-bar-search"
-            style="width: 10%"
           ></v-text-field>
           <v-list class="nar-bar-btn" dense justify="center" align="center">
             <!-- <v-list-group> -->
@@ -26,19 +25,9 @@
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <br />
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title
-                  >Name<v-icon>mdi-chevron-down</v-icon></v-list-item-title
-                >
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title
-                  >Nữ<v-icon>mdi-chevron-down</v-icon></v-list-item-title
-                >
+                <v-list-item-title>Name</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
@@ -98,7 +87,6 @@
               <ul class="nar-links">
                 <v-menu> </v-menu>
                 <li><a href="">Nam</a></li>
-                <li><a href="">Nữ</a></li>
                 <li><a href="">Blog</a></li>
                 <li><a href="">Bộ sưu tập</a></li>
                 <li><a href="">Khuyến mãi</a></li>
@@ -117,10 +105,10 @@
             hide-details
             prepend-inner-icon="mdi-magnify"
             label="Search"
-            class="hidden-sm-and-down"
+            class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-btn icon class="hidden-xs-and-down">
+          <v-btn icon class="hidden-xs-and-down mx-4">
             <v-icon>mdi-shopping</v-icon>
           </v-btn>
           <v-btn icon to="/loginpage" class="hidden-md-and-down">
@@ -154,7 +142,22 @@
                         />
                       </a>
                     </div> -->
-                    <div
+                    <!-- Create carouel -->
+                    <div class="md-4 shadow-sm">
+                    <v-carousel style="width:80%;height:auto;">
+                      <v-carousel-item
+                        v-for="(productImage, i) in product.productImages"
+                        :key="i"
+                        :src="productImage.imgUrl"
+                        alt="productImage.imgUrl"
+                        reverse-transition="fade-transition"
+                        transition="fade-transition"
+                        
+                      >
+                      </v-carousel-item>
+                    </v-carousel>
+                    </div>
+                    <!-- <div
                       class="md-4 shadow-sm"
                       v-for="(productImage, i) in product.productImages"
                       :key="i"
@@ -166,12 +169,12 @@
                           width="100%"
                         />
                       </a>
-                    </div>
+                    </div> -->
                   </v-col>
                   <v-col col-sm="6">
                     <div class="sumary-inner"></div>
                     <div class="size-inner">
-                      <v-card-title>{{ product.productName }}</v-card-title>
+                      <h1>{{ product.productName }}</h1>
                       <!-- <p>{{ product.productDescription }}</p> -->
                       <v-rating
                         :value="4.5"
@@ -183,17 +186,12 @@
                       ></v-rating>
                       <span><u>Giá bán</u>:</span>
                       <span class="price">
-                        699,999
-                        <span
-                          ><v-icon
-                            >mdi-currency-usd-circle-outline</v-icon
-                          ></span
-                        >
+                        {{ product.productPrice }}<u>đ</u>
                         <v-spacer></v-spacer>
                       </span>
                       <v-divider></v-divider>
                       <v-form>
-                        <v-row>
+                        <!-- <v-row>
                           <v-col>
                             <v-combobox
                               v-model="modelSize"
@@ -217,7 +215,52 @@
                             >
                             </v-combobox>
                           </v-col>
-                        </v-row>
+                        </v-row> -->
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <label for="pa_color">Size</label>
+                              </td>
+                              <td>
+                                <fieldset class="swatch-picker">
+                                  <p>Select Color</p>
+
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      name="swatch_1234"
+                                      value="blue"
+                                    />
+                                    <span style="background-color: #9abdfe"
+                                      >Blue</span
+                                    >
+                                  </label>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      name="swatch_1234"
+                                      value="gray"
+                                    />
+                                    <span style="background-color: #aaaaaa"
+                                      >Gray</span
+                                    >
+                                  </label>
+                                  <label>
+                                    <input
+                                      type="radio"
+                                      name="swatch_1234"
+                                      value="black"
+                                    />
+                                    <span style="background-color: #222222"
+                                      >Black</span
+                                    >
+                                  </label>
+                                </fieldset>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                         <v-row>
                           <v-col>
                             <v-btn id="btn-addToCart" width="100%">
@@ -263,16 +306,6 @@
                       </div>
                       <!-- accordion-->
                       <div class="accordion">
-                        <v-expansion-panels focusable>
-                          <v-expansion-panel>
-                            <v-expansion-panel-header
-                              >CHẤT LIỆU</v-expansion-panel-header
-                            >
-                            <v-expansion-panel-content>
-                              100% cotton.
-                            </v-expansion-panel-content>
-                          </v-expansion-panel>
-                        </v-expansion-panels>
                         <v-expansion-panels focusable>
                           <v-expansion-panel>
                             <v-expansion-panel-header
@@ -495,12 +528,11 @@ export default {
       {
         text: "Nam",
         disabled: false,
-        href: "/productlist",
+        href: "/products",
       },
       {
         text: "Ao",
         disabled: true,
-        href: "/productDetail",
       },
     ],
     linkBar: [
@@ -518,9 +550,16 @@ export default {
     ...mapGetters("product", ["product"]),
   },
   methods: {
+    onResize() {
+      this.isValid = window.innerWidth <= 1040;
+      this.isAccount = window.innerWidth <= 900;
+    },
     ...mapActions("product", ["productDetails"]),
   },
-
+  created() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize, { passive: true });
+  },
   mounted() {
     this.productDetails(this.$route.params.idProduct);
   },
@@ -597,6 +636,62 @@ export default {
 
   &#btn-addToCart:hover {
     background-color: #000000;
+  }
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.swatch-picker {
+  border: 3px solid #ccc;
+  display: inline-block;
+  width: auto;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+
+  label {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    margin: 0 2px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+
+  span {
+    display: block;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    border-radius: 3px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  input {
+    -webkit-appearance: none;
+  }
+
+  input:checked + span {
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.6);
   }
 }
 

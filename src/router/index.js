@@ -37,12 +37,12 @@ const routes = [
     component: LoginPage
   },
   {
-    path: '/productlist',
-    name: 'productlist',
+    path: '/products',
+    name: 'products',
     component: ProductListContainer
   },
   {
-    path: '/productdetail/:idProduct',
+    path: '/products/:idProduct',
     component: ProductDetail
   },
   {
