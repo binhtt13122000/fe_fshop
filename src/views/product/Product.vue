@@ -5,12 +5,26 @@
         <div class="displayImg" v-for="(productImage, i) in product.productImages" :key="i">
           <a :href="'/products/' + product.productId">
            <img
+              v-if="i == 0"
               class="img-responsive"
               :src="productImage.imgUrl"  
               width="100%"
             />
           </a>
         </div>
+        <!-- <v-carousel class="section-carousel" style="width: 40%; height: auto">
+          <a :href="'/products/' + product.productId">
+          <v-carousel-item
+            v-for="(productImage, i) in product.productImages"
+            :key="i"
+            :src="productImage.imgUrl"
+            alt="productImage.imgUrl"
+            reverse-transition="fade-transition"
+            transition="fade-transition"
+          >
+          </v-carousel-item>
+          </a>
+        </v-carousel> -->
         <v-btn
           class="is-small"
           align="left"

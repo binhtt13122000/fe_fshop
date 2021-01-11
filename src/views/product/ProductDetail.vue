@@ -180,32 +180,32 @@
                               <label>
                                 <input
                                   type="radio"
-                                  name="swatch_1234"
-                                  value="blue"
+                                  name="sel_size"
+                                  value="S"
                                 />
                                 <span style="background-color: #000000">S</span>
                               </label>
                               <label>
                                 <input
                                   type="radio"
-                                  name="swatch_1234"
-                                  value="gray"
+                                  name="sel_size"
+                                  value="M"
                                 />
                                 <span style="background-color: #000000">M</span>
                               </label>
                               <label>
                                 <input
                                   type="radio"
-                                  name="swatch_1234"
-                                  value="black"
+                                  name="sel_size"
+                                  value="L"
                                 />
                                 <span style="background-color: #000000">L</span>
                               </label>
                               <label>
                                 <input
                                   type="radio"
-                                  name="swatch_1234"
-                                  value="black"
+                                  name="sel_size"
+                                  value="XL"
                                 />
                                 <span style="background-color: #000000"
                                   >XL</span
@@ -214,8 +214,8 @@
                               <label>
                                 <input
                                   type="radio"
-                                  name="swatch_1234"
-                                  value="black"
+                                  name="sel_size"
+                                  value="XXL"
                                 />
                                 <span style="background-color: #000000"
                                   >XXL</span
@@ -224,8 +224,8 @@
                               <label>
                                 <input
                                   type="radio"
-                                  name="swatch_1234"
-                                  value="black"
+                                  name="sel_size"
+                                  value="3XL"
                                 />
                                 <span style="background-color: #000000"
                                   >3XL</span
@@ -350,7 +350,7 @@
               </v-container>
             </div>
 
-            <!-- comment container -->
+            <!-- Comment container -->
             <div>
               <v-container>
                 <v-tabs class="comment" background-color="indigo" dark>
@@ -361,13 +361,17 @@
                     <v-container fluid>
                       <v-row>
                         <v-col v-if="n === 1">
+                          <h2 class="grey--text text--lighten-2 caption mr-2">
+                            ({{ rating }})
+                          </h2>
                           <v-rating
-                            :value="4.5"
-                            color="amber"
+                            v-model="rating"
+                            background-color="black"
+                            color="yellow accent-4"
                             dense
                             half-increments
-                            readonly
-                            size="14"
+                            hover
+                            size="36"
                           ></v-rating>
                         </v-col>
                         <v-col v-else>
@@ -552,6 +556,7 @@ export default {
     modelComment: ["Mới nhất"],
     size: 1,
     drawer: null,
+    rating: 5,
     tab: null,
     itemComments: ["Mới nhất", "Cũ"],
     itemTabs: ["Đánh giá", "Bình luận"],
@@ -686,12 +691,9 @@ body {
   font-family: sans-serif;
 }
 
+// Size-inner
 .swatch-picker {
-  // display: inline-block;
-  // width: auto;
-  // margin: 20px auto;
-  // padding: 20px;
-  // text-align: center;
+
 
   label {
     display: inline-block;
@@ -700,11 +702,11 @@ body {
     position: relative;
     margin: 0 2px;
     cursor: pointer;
-    // -webkit-user-select: none;
-    // -moz-user-select: none;
-    // -ms-user-select: none;
-    // -o-user-select: none;
-    // user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
   }
 
   span {
