@@ -132,20 +132,23 @@
             <div class="att_pro">
               <v-container>
                 <v-row class="d-flex justify-content-center">
-                  <v-col cols="12" md="8" xs="12" sm="12" >
+                  <v-col cols="12" md="8" xs="12" sm="12">
                     <!-- Create carouel -->
                     <!-- <div class="md-4 shadow-sm" > -->
-                      <v-carousel class="section-carousel" style="width: 100%; height: auto">
-                        <v-carousel-item
-                          v-for="(productImage, i) in product.productImages"
-                          :key="i"
-                          :src="productImage.imgUrl"
-                          alt="productImage.imgUrl"
-                          reverse-transition="fade-transition"
-                          transition="fade-transition"
-                        >
-                        </v-carousel-item>
-                      </v-carousel>
+                    <v-carousel
+                      class="section-carousel"
+                      style="width: 100%; height: auto"
+                    >
+                      <v-carousel-item
+                        v-for="(productImage, i) in product.productImages"
+                        :key="i"
+                        :src="productImage.imgUrl"
+                        alt="productImage.imgUrl"
+                        reverse-transition="fade-transition"
+                        transition="fade-transition"
+                      >
+                      </v-carousel-item>
+                    </v-carousel>
                     <!-- </div> -->
                   </v-col>
                   <v-col cols="10" md="4" align="left">
@@ -161,7 +164,7 @@
                         readonly
                         size="14"
                       ></v-rating>
-                      
+
                       <h3 class="price">
                         <span><u>Giá bán</u>:</span>
                         {{ product.productPrice }}<u>đ</u>
@@ -170,62 +173,66 @@
                       <v-divider></v-divider>
                       <v-form>
                         <v-row>
-                          
                           <v-col>
-                          <div class="swatch-picker">
-                            <p>Size:</p>
+                            <div class="swatch-picker">
+                              <p>Size:</p>
 
-                            <label>
-                              <input
-                                type="radio"
-                                name="swatch_1234"
-                                value="blue"
-                              />
-                              <span style="background-color: #000000">S</span>
-                            </label>
-                            <label>
-                              <input
-                                type="radio"
-                                name="swatch_1234"
-                                value="gray"
-                              />
-                              <span style="background-color: #000000">M</span>
-                            </label>
-                            <label>
-                              <input
-                                type="radio"
-                                name="swatch_1234"
-                                value="black"
-                              />
-                              <span style="background-color: #000000">L</span>
-                            </label>
-                            <label>
-                              <input
-                                type="radio"
-                                name="swatch_1234"
-                                value="black"
-                              />
-                              <span style="background-color: #000000">XL</span>
-                            </label>
-                            <label>
-                              <input
-                                type="radio"
-                                name="swatch_1234"
-                                value="black"
-                              />
-                              <span style="background-color: #000000">XXL</span>
-                            </label>
-                            <label>
-                              <input
-                                type="radio"
-                                name="swatch_1234"
-                                value="black"
-                              />
-                              <span style="background-color: #000000">3XL</span>
-                            </label>
-                          </div>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name="swatch_1234"
+                                  value="blue"
+                                />
+                                <span style="background-color: #000000">S</span>
+                              </label>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name="swatch_1234"
+                                  value="gray"
+                                />
+                                <span style="background-color: #000000">M</span>
+                              </label>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name="swatch_1234"
+                                  value="black"
+                                />
+                                <span style="background-color: #000000">L</span>
+                              </label>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name="swatch_1234"
+                                  value="black"
+                                />
+                                <span style="background-color: #000000"
+                                  >XL</span
+                                >
+                              </label>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name="swatch_1234"
+                                  value="black"
+                                />
+                                <span style="background-color: #000000"
+                                  >XXL</span
+                                >
+                              </label>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name="swatch_1234"
+                                  value="black"
+                                />
+                                <span style="background-color: #000000"
+                                  >3XL</span
+                                >
+                              </label>
+                            </div>
                           </v-col>
-                          
                         </v-row>
                         <v-row>
                           <v-col>
@@ -340,6 +347,66 @@
                     </div>
                   </v-col>
                 </v-row>
+              </v-container>
+            </div>
+
+            <!-- comment container -->
+            <div>
+              <v-container>
+                <v-tabs class="comment" background-color="indigo" dark>
+                  <v-tab>Đánh giá</v-tab>
+                  <v-tab>Bình luận</v-tab>
+
+                  <v-tab-item v-for="n in 2" :key="n">
+                    <v-container fluid>
+                      <v-row>
+                        <v-col v-if="n === 1">
+                          <v-rating
+                            :value="4.5"
+                            color="amber"
+                            dense
+                            half-increments
+                            readonly
+                            size="14"
+                          ></v-rating>
+                        </v-col>
+                        <v-col v-else>
+                          <!-- <h3>{{comment.length}}</h3> -->
+                          <div class="comment-header" align="right">
+                            <v-combobox
+                              v-model="modelComment"
+                              :items="itemComments"
+                              hide-selected
+                              dense
+                              filled
+                              label="Sắp xếp theo"
+                              style="width: 20%"
+                            ></v-combobox>
+                          </div>
+
+                          <v-container fluid>
+                            <v-row>
+                              <img
+                                src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
+                                alt="avatar"
+                                width="3%"
+                                height="3%"
+                              />
+
+                              <v-col>
+                                <v-form>
+                                  <v-text-field hint="Add your comment">
+                                  </v-text-field>
+                                </v-form>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                          <div></div>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-tab-item>
+                </v-tabs>
               </v-container>
             </div>
           </div>
@@ -482,10 +549,12 @@ export default {
   data: () => ({
     modelSize: "Size",
     modelQuantity: "Quantity",
+    modelComment: ["Mới nhất"],
     size: 1,
     drawer: null,
-    items: ["28", "29", "30", "31", "32"],
-    itemSize: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    tab: null,
+    itemComments: ["Mới nhất", "Cũ"],
+    itemTabs: ["Đánh giá", "Bình luận"],
     itemBreadCrumbs: [
       {
         text: "Home",
@@ -660,6 +729,10 @@ body {
     border: 3px solid rgb(211, 15, 15);
     border: 3px solid rgba(236, 16, 16, 0.6);
   }
+}
+
+.comment {
+  border: 1px solid rgba(192, 192, 192, 0.849);
 }
 
 @media only screen and (max-width: 1390px) {
