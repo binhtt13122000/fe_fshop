@@ -27,9 +27,7 @@
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title
-                  >Name</v-list-item-title
-                >
+                <v-list-item-title>Name</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
@@ -107,13 +105,26 @@
             hide-details
             prepend-inner-icon="mdi-magnify"
             label="Search"
+            v-model="search"
             class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-btn icon class="hidden-xs-and-down mx-4">
-            <v-icon>mdi-shopping</v-icon>
-          </v-btn>
-          <v-btn icon to="/loginpage" class="hidden-md-and-down">
+          <v-badge 
+            color="red" 
+            content="0" 
+            
+            top
+            overlap
+            
+            >
+            <!-- <v-btn icon style="background-color:green;" class="hidden-md-and-down mx-4"> -->
+              <!-- <v-icon size="30px">mdi-shopping</v-icon> -->
+            <!-- </v-btn> -->
+            <a id="shopping-cart" class="hidden-md-and-down mx-4">
+              <v-icon class="shopping-cart-icon">mdi-shopping</v-icon>
+            </a>
+          </v-badge>
+          <v-btn icon to="/loginpage" class="hidden-md-and-down mx-4">
             <v-icon>mdi-account</v-icon>
           </v-btn>
 
@@ -129,7 +140,9 @@
           <div class="breadCrumbs">
             <v-breadcrumbs :items="itemBreadCrumbs" large></v-breadcrumbs>
           </div>
-          <v-container></v-container>
+          <v-container>
+            <table></table>
+          </v-container>
           <v-container>
             <v-row dense>
               <v-col
@@ -284,6 +297,8 @@ export default {
   data: () => ({
     msg: "Welcome to my Vuex Store",
     drawer: null,
+    search: null,
+    shoppingCartBadge: 0,
     linkBar: [
       "Name",
       "Nữ",
@@ -317,7 +332,6 @@ export default {
   created() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
-    
   },
   mounted() {
     this.getProducts();
@@ -381,11 +395,12 @@ export default {
     padding: 0px 15px 0px 15px;
   }
 }
-// .tin-tuc .foo-tin-tuc .font-weight-bold {
-//   font-size: 100px;
-//     list-style-type: none;
-//   }
-
+#shopping-cart-icon {
+  background-color:rgb(77, 124, 73);
+  .shopping-cart-icon:hover{
+    background-color:rgb(136, 16, 16);
+  }
+}
 @media only screen and (max-width: 1390px) {
 }
 @media only screen and (max-width: 560px) {

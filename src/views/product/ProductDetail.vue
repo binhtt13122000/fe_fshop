@@ -144,16 +144,60 @@
                         :key="i"
                         :src="productImage.imgUrl"
                         alt="productImage.imgUrl"
-                        reverse-transition="fade-transition"
                         transition="fade-transition"
+                        reverse-transition="fade-transition"
                       >
                       </v-carousel-item>
                     </v-carousel>
+                    <br />
                     <!-- </div> -->
+                    <v-tabs class="evaluate" background-color="indigo" dark>
+                      <v-tab>Đánh giá</v-tab>
+                      <v-tab-item>
+                        <v-container fluid>
+                          <v-row>
+                            <v-container fluid>
+                              <v-row>
+                                <img
+                                  src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
+                                  alt="avatar"
+                                  width="3%"
+                                  height="3%"
+                                />
+
+                                <v-col>
+                                  <v-form>
+                                    <v-text-field hint="Add your comment">
+                                    </v-text-field>
+                                  </v-form>
+                                </v-col>
+                                <h2
+                                  class="grey--text text--lighten-2 caption mr-2"
+                                >
+                                  ({{ rating }})
+                                </h2>
+                                <v-rating
+                                  v-model="rating"
+                                  background-color="black"
+                                  color="yellow accent-4"
+                                  dense
+                                  half-increments
+                                  hover
+                                  size="20"
+                                ></v-rating>
+                              </v-row>
+                            </v-container>
+                          </v-row>
+                        </v-container>
+                      </v-tab-item>
+                    </v-tabs>
                   </v-col>
                   <v-col cols="10" md="4" align="left">
                     <div class="sumary-inner"></div>
-                    <div class="size-inner">
+                    <div
+                      class="size-inner"
+                      style="font-family: 'Open Sans', sans-serif"
+                    >
                       <h1>{{ product.productName }}</h1>
                       <!-- <p>{{ product.productDescription }}</p> -->
                       <v-rating
@@ -162,43 +206,36 @@
                         dense
                         half-increments
                         readonly
-                        size="14"
+                        size="16"
+                        ><v-spacer></v-spacer
                       ></v-rating>
 
-                      <h3 class="price">
-                        <span><u>Giá bán</u>:</span>
+                      <h4 class="price">
+                        <br />
+                        <span>Giá bán:</span>
                         {{ product.productPrice }}<u>đ</u>
                         <v-spacer></v-spacer>
-                      </h3>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                      </h4>
                       <v-divider></v-divider>
+                      <br>
                       <v-form>
                         <v-row>
                           <v-col>
                             <div class="swatch-picker">
-                              <p>Size:</p>
+                              <p style="font-family: 'Open Sans', sans-serif">Size:</p>
 
                               <label>
-                                <input
-                                  type="radio"
-                                  name="sel_size"
-                                  value="S"
-                                />
+                                <input type="radio" name="sel_size" value="S" />
                                 <span style="background-color: #000000">S</span>
                               </label>
                               <label>
-                                <input
-                                  type="radio"
-                                  name="sel_size"
-                                  value="M"
-                                />
+                                <input type="radio" name="sel_size" value="M" />
                                 <span style="background-color: #000000">M</span>
                               </label>
                               <label>
-                                <input
-                                  type="radio"
-                                  name="sel_size"
-                                  value="L"
-                                />
+                                <input type="radio" name="sel_size" value="L" />
                                 <span style="background-color: #000000">L</span>
                               </label>
                               <label>
@@ -221,17 +258,25 @@
                                   >XXL</span
                                 >
                               </label>
-                              <label>
-                                <input
-                                  type="radio"
-                                  name="sel_size"
-                                  value="3XL"
-                                />
-                                <span style="background-color: #000000"
-                                  >3XL</span
-                                >
-                              </label>
                             </div>
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-col class="btn-quantity">
+                            <span style="font-family: 'Open Sans', sans-serif">Quantity: </span>
+                            <v-btn v-on:click="decreaseValue()"
+                              ><v-icon>mdi-minus</v-icon></v-btn
+                            >
+                            <input
+                              v-model="quantity"
+                              type="number"
+                              id="number"
+                              min="0"
+                              max="100"
+                            />
+                            <!-- {{ quantity }} -->
+                            <v-btn v-on:click="increaseValue()"
+                              ><v-icon>mdi-plus</v-icon></v-btn >
                           </v-col>
                         </v-row>
                         <v-row>
@@ -349,32 +394,36 @@
                 </v-row>
               </v-container>
             </div>
-
+            <v-divider></v-divider>
+            <div>
+              <v-container>
+                <h1>SẢN PHẨM TƯƠNG TỰ</h1>
+                <v-carousel style="width: 100%; height: 350px">
+                  <a :href="'/products/' + product.productId">
+                    <v-carousel-item
+                      v-for="(productImage, i) in product.productImages"
+                      :key="i"
+                      :src="productImage.imgUrl"
+                      alt="productImage.imgUrl"
+                      cycle
+                      hide-delimiter-background
+                      show-arrows-on-hover
+                    >
+                    </v-carousel-item>
+                  </a>
+                </v-carousel>
+              </v-container>
+            </div>
             <!-- Comment container -->
             <div>
               <v-container>
                 <v-tabs class="comment" background-color="indigo" dark>
-                  <v-tab>Đánh giá</v-tab>
                   <v-tab>Bình luận</v-tab>
 
-                  <v-tab-item v-for="n in 2" :key="n">
+                  <v-tab-item>
                     <v-container fluid>
                       <v-row>
-                        <v-col v-if="n === 1">
-                          <h2 class="grey--text text--lighten-2 caption mr-2">
-                            ({{ rating }})
-                          </h2>
-                          <v-rating
-                            v-model="rating"
-                            background-color="black"
-                            color="yellow accent-4"
-                            dense
-                            half-increments
-                            hover
-                            size="36"
-                          ></v-rating>
-                        </v-col>
-                        <v-col v-else>
+                        <v-col>
                           <!-- <h3>{{comment.length}}</h3> -->
                           <div class="comment-header" align="right">
                             <v-combobox
@@ -405,7 +454,6 @@
                               </v-col>
                             </v-row>
                           </v-container>
-                          <div></div>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -554,6 +602,7 @@ export default {
     modelSize: "Size",
     modelQuantity: "Quantity",
     modelComment: ["Mới nhất"],
+    quantity: 0,
     size: 1,
     drawer: null,
     rating: 5,
@@ -591,10 +640,18 @@ export default {
     ...mapGetters("product", ["product"]),
   },
   methods: {
+    increaseValue() {
+      return this.quantity++;
+    },
+
+    decreaseValue() {
+      return this.quantity--;
+    },
     onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
+
     ...mapActions("product", ["productDetails"]),
   },
   created() {
@@ -692,15 +749,27 @@ body {
 }
 
 // Size-inner
+.size-inner {
+  .price {
+    color: #ff0000;
+  }
+
+  .price span {
+    color: #000000;
+  }
+}
+
 .swatch-picker {
-
-
+  p {
+    display: inline-block;
+  }
   label {
     display: inline-block;
     height: 40px;
     width: 40px;
     position: relative;
     margin: 0 2px;
+
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -712,13 +781,14 @@ body {
   span {
     display: block;
     color: #ffffff;
+    text-align: center;
     //  text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
     position: absolute;
     border-radius: 50%;
-    bottom: 20px;
-    left: 0;
+    bottom: 10px;
+    left: 10;
     height: 100%;
     width: 100%;
   }
@@ -729,12 +799,77 @@ body {
 
   input:checked + span {
     border: 3px solid rgb(211, 15, 15);
+    background-color: rgb(211, 15, 15);
     border: 3px solid rgba(236, 16, 16, 0.6);
   }
 }
 
 .comment {
   border: 1px solid rgba(192, 192, 192, 0.849);
+}
+
+.btn-quantity {
+  width: 300px;
+  margin: 0 auto;
+  text-align: left;
+  padding-top: 50px;
+  display: inline-block;
+  .value-button {
+    display: inline-block;
+  }
+}
+
+.value-button {
+  display: inline-block;
+  border: 1px solid #ddd;
+  margin: 0px;
+  width: 40px;
+  height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 11px 0;
+  background: #eee;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.value-button:hover {
+  cursor: pointer;
+}
+
+form #decrease {
+  margin-right: -4px;
+  border-radius: 8px 0 0 8px;
+}
+
+form #increase {
+  margin-left: -4px;
+  border-radius: 0 8px 8px 0;
+}
+
+form #input-wrap {
+  margin: 0px;
+  padding: 0px;
+}
+
+input#number {
+  text-align: center;
+  border: none;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin: 0px;
+  width: 40px;
+  height: 40px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 @media only screen and (max-width: 1390px) {

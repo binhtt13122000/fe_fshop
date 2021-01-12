@@ -8,6 +8,10 @@ class ProductService {
     getProductsByProductId(id){
         return get("/products/"+id, {}, {});
     }
+    
+    getCart(username){
+        return get("/carts/"+username,{},{});
+    }
 }
 
 export default new ProductService();

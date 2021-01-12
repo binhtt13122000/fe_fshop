@@ -138,7 +138,7 @@ export default {
     register() {
       console.log("login fuction from components.......");
       this.$store
-        .dispatch("AUTH/register", {
+        .dispatch("auth/register", {
           userName: this.userName,
           name: this.name,
           email: this.email,

@@ -16,9 +16,6 @@ const getters = {
     product(state) {
         return state.product
     },
-    productPro(state) {
-        return state.productPro
-    },
     cart(state) {
         return state.cart
     }
@@ -31,12 +28,6 @@ const mutations = {
     },
     setProduct: (state, val) => {
         state.product = val
-    },
-    setActiveProduct(state, product) {
-        state.activeProduct = product
-    },
-    setPro: (state, val) => {
-        state.productPro = val
     },
     setCart: (state, val) => {
         state.cart = val
@@ -79,18 +70,7 @@ const actions = {
         })
     },
 
-    // productDetails({ commit }) {
-    //     return new Promise((resolve, reject) => {
-    //         axios.get("http://localhost:8082/v1/api/products/PRO_0062").then((response) => {
-    //         console.log(response.data[0])
-    //         commit("setProduct", response.data[0])
-    //         resolve(response)
-    //     }).catch(err => {
-    //         console.log(err)
-    //         reject(err)
-    //     })
-    // })
-    //}
+    
 
 
 };
@@ -99,6 +79,6 @@ export default {
     namespaced: true, // giup nhan biet dispatch, phan biet den store nao
     state,
     getters,
-    mutations,
+    mutations, 
     actions
 }

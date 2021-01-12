@@ -2,31 +2,22 @@
   <div>
     <v-card class="mx-4 mb-4">
       <div class="md-4 shadow-sm" id="button-container">
-        <div class="displayImg" v-for="(productImage, i) in product.productImages" :key="i">
+        <div
+          class="displayImg"
+          v-for="(productImage, i) in product.productImages"
+          :key="i"
+        >
           <a :href="'/products/' + product.productId">
-           <img
+            <img
               v-if="i == 0"
               class="img-responsive"
-              :src="productImage.imgUrl"  
+              :src="productImage.imgUrl"
               width="100%"
             />
           </a>
         </div>
-        <!-- <v-carousel class="section-carousel" style="width: 40%; height: auto">
-          <a :href="'/products/' + product.productId">
-          <v-carousel-item
-            v-for="(productImage, i) in product.productImages"
-            :key="i"
-            :src="productImage.imgUrl"
-            alt="productImage.imgUrl"
-            reverse-transition="fade-transition"
-            transition="fade-transition"
-          >
-          </v-carousel-item>
-          </a>
-        </v-carousel> -->
         <v-btn
-          class="is-small"
+          class="is-small-a"
           align="left"
           justify="right"
           :title="removeToFavourite"
@@ -36,7 +27,7 @@
           <v-icon>mdi-heart</v-icon>
         </v-btn>
         <v-btn
-          class="is-small"
+          class="is-small-b"
           align="left"
           justify="right"
           :title="addToFavourite"
@@ -47,18 +38,25 @@
         </v-btn>
       </div>
       <div class="media">
-        <v-card-title>{{ product.productName }}</v-card-title>
+        <div class="media-info">
+          <h1 style="font-family: 'Open Sans', sans-serif;">{{ product.productName }}</h1>
+          <h3 style="font-family: 'Open Sans', sans-serif;" class="price">
+            {{ product.productPrice }}<u>đ</u>
+            <v-spacer></v-spacer>
+          </h3>
+        </div>
         <v-card-text>
-          <p>{{ product.productDescription }}</p>
+          
           <v-row>
             <v-col>
+              
               <v-rating
                 :value="4.5"
                 color="amber"
                 dense
                 half-increments
                 readonly
-                size="14"
+                size="24"
               ></v-rating>
             </v-col>
           </v-row>
@@ -69,7 +67,7 @@
       <v-card-actions>
         <v-row>
           <v-col>
-            <v-btn width="100%">
+            <v-btn id="btn-addToCart" width="100%">
               <v-icon>mdi-shopping</v-icon>
               Đăng ký mua</v-btn
             >
@@ -113,24 +111,11 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
 .title {
   color: #000000;
 }
 
-/* #container {
-  position: relative;
-}
-
-#container .img{
-  display: block;
-}
-
-#container .is-small{
-  position: absolute; 
-  bottom:0; 
-  left:0
-} */
 
 #button-container {
   position: relative;
@@ -142,41 +127,45 @@ export default {
   position: relative;
 }
 
-#button-container .is-small {
+#button-container .is-small-a {
   position: absolute;
   bottom: 2em;
   right: 2em;
   /* background-color:#8F0005; */
   border-radius: 1.5em;
-  color: red;
+  color: #ff0000;
+  border-color: #ff0000;
+  text-transform: uppercase;
+  padding: 1em 1.5em;
+}
+#button-container .is-small-b {
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+  /* background-color:#8F0005; */
+  border-radius: 1.5em;
+  color: #000000;
   border-color: #000000;
   text-transform: uppercase;
   padding: 1em 1.5em;
 }
 
-/* @media only screen and (max-width:600px) {
-
-#button-container{
-display:inline-block;
-margin-bottom:2em;
-}
-#button-container .is-small{
-position:relative;
-bottom:0em;
-right:-2em;
-background-color:#8F0005;
-color:white;
-font-size:1em;
-padding:1em 1.5em;
-text-transform:uppercase;
-border-color:#ff0000;
-border-radius:1.5em;
-}
+.media-info {
+  text-align: left;
 }
 
-.button-container .is-small:hover{
-background-color: #ff0000;
-cursor:pointer;
-color:white;
-} */
+.media-info .price {
+  color: #ff0000;
+}
+
+#btn-addToCart {
+  background-color: #ff0000;
+  color: #ffffff;
+
+  &#btn-addToCart:hover {
+    background-color: #000000;
+  }
+}
+
+
 </style>

@@ -8367,6 +8367,13 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
 
+vue-integer-plusminus@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/vue-integer-plusminus/-/vue-integer-plusminus-1.5.1.tgz#66b74f2da9fbbc5f25b6344d3a02718118cf62ba"
+  integrity sha512-MhaoTEPtfCFJKlfHx2nXYPlUR1FbM+kWWFBuWlzYa3UPf9LK9qouXOiyCQx0Ylt3vyX9lIxlSny7RL3lYhlmgw==
+  dependencies:
+    vue "^2.6.12"
+
 vue-lazyload@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/vue-lazyload/-/vue-lazyload-1.3.3.tgz#4df50a271bde9b74c3caf7a228d6e0af50d5682f"
@@ -8446,7 +8453,7 @@ vue2-perfect-scrollbar@^1.2.1:
     perfect-scrollbar "^1.5.0"
     postcss-import "^12.0.0"
 
-vue@^2.6.11:
+vue@^2.6.11, vue@^2.6.12:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
