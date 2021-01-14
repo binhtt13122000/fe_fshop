@@ -109,16 +109,9 @@
             class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-badge 
-            color="red" 
-            content="0" 
-            
-            top
-            overlap
-            
-            >
+          <v-badge color="red" content="0" top overlap>
             <!-- <v-btn icon style="background-color:green;" class="hidden-md-and-down mx-4"> -->
-              <!-- <v-icon size="30px">mdi-shopping</v-icon> -->
+            <!-- <v-icon size="30px">mdi-shopping</v-icon> -->
             <!-- </v-btn> -->
             <a id="shopping-cart" class="hidden-md-and-down mx-4">
               <v-icon class="shopping-cart-icon">mdi-shopping</v-icon>
@@ -154,6 +147,17 @@
               >
                 <VmProduct :product="product"></VmProduct>
               </v-col>
+              <!-- <v-col
+                md="4"
+                align-content="center"
+                justify="center"
+                v-for="product in products"
+                :key="product.productId"
+              >
+                <v-pagination v-model="page" class="my-4" :length="15"
+                  ><VmProduct :product="product"></VmProduct
+                ></v-pagination>
+              </v-col> -->
             </v-row>
           </v-container>
         </v-main>
@@ -396,9 +400,9 @@ export default {
   }
 }
 #shopping-cart-icon {
-  background-color:rgb(77, 124, 73);
-  .shopping-cart-icon:hover{
-    background-color:rgb(136, 16, 16);
+  background-color: rgb(77, 124, 73);
+  .shopping-cart-icon:hover {
+    background-color: rgb(136, 16, 16);
   }
 }
 @media only screen and (max-width: 1390px) {

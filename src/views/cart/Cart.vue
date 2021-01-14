@@ -125,36 +125,34 @@
         </v-app-bar>
         <!-- V main -->
         <v-main>
-          <v-container class="fill-height" fluid>
-            <v-row align="center" justify="center">
-              <div class="main-image">
-                <img class="img-responsive" :src="mainImageSrc" width="100%" />
-              </div>
-              <v-col>
-                <div class="image-center-item">
-                  <a href="">
-                    <img
-                      class="img-responsive-left"
-                      src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-2.png"
-                      alt="4men"
-                      width="50%"
-                    />
-                  </a>
-                  <a href="">
-                    <img
-                      class="img-responsive-right"
-                      src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
-                      alt="4men"
-                      width="50%"
-                    />
-                  </a>
-                </div>
-              </v-col>
-            </v-row>
-          </v-container>
+          <v-simple-table>
+            <template v-slot:default>
+              <thead>
+                <h1>Giỏ hàng</h1>
+                <tr>
+                  <th class="text-left">Sản phẩm</th>
+                  <th>Giá</th>
+                  <th class="text-left">Số lượng</th>
+                  <th class="text-left">Tổng tiền</th>
+                </tr>
+                <tbody>
+                  <!-- <tr v-for="item in user"
+                    :key="item"
+                  >
+                    <td><h1>{{item.username}}</h1></td>
+                  </tr> -->
+                  <tr v-for="item in cart"
+                    :key="item"
+                  >
+                    <td><h1>{{cart.cartDescription}}</h1></td>
+                  </tr>
+                </tbody>
+              </thead>
+            </template>
+          </v-simple-table>
         </v-main>
 
-        <!-- Footer -->
+        <!-- footer -->
         <v-footer color="white" padless>
           <v-container>
             <v-row id="footer-center" class="d-flex align-items-center">
@@ -282,14 +280,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
-  props: {
-    source: String,
-  },
+  name: 'cart',
+  // props: ['cart',"user"],
   data: () => ({
     drawer: null,
-    page: 1,
     linkBar: [
       "Name",
       "Nữ",
@@ -303,48 +299,29 @@ export default {
     isAccount: false,
     mainImageSrc: null,
   }),
-  mounted() {
+
+  created() {
     this.onResize();
-    // console.log(this.$vuetify.breakpoint)
 
     window.addEventListener("resize", this.onResize, { passive: true });
+  },
+
+    computed: {
+    ...mapGetters("product", ["cart"]),
+    ...mapGetters("auth","userData")
   },
   methods: {
     onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
-    ...mapGetters("auth", ["user"]),
+    ...mapActions("product", ["getCarts","productDetails"]),
   },
 
-  created() {
-    let self = this;
-    this.images = [
-      {
-        id: "1",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2020/12/1920x1089banner-destop-1.jpg",
-      },
-      {
-        id: "2",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2020/10/BANNER-WEB-2.png",
-      },
-      {
-        id: "3",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2020/10/BANNER-PC.png",
-      },
-      {
-        id: "4",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2021/01/BANNER-WEB.png",
-      },
-    ];
-    setInterval(function () {
-      self.mainImageSrc =
-        self.images[Math.floor(Math.random() * self.images.length)].image;
-    }, 3000);
+
+  mounted() {
+    this.getCarts(this.$store.state.user);
+    
   },
 };
 </script>
@@ -410,7 +387,6 @@ export default {
 @media only screen and (max-width: 1390px) {
 }
 @media only screen and (max-width: 560px) {
-
 }
 </style>
 

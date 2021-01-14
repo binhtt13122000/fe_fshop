@@ -1,31 +1,30 @@
 // import { reject, resolve } from "core-js/fn/promise";
 // import { resolve } from 'core-js/fn/promise';
-// import 'es6-promise/auto'
+import 'es6-promise/auto'
 import AuthServices from "../../services/AuthenticationService"
 // import axios from 'axios';
 const state = {
-    status: '',
-    token: localStorage.getItem('token') || '',
     user: {}
 };
-const getters = {};
+const getters = {
+    userData(state) {
+        console.log(state.user);
+        return state.user;
+    }
+};
 const mutations = {
     auth_request(state) {
         state.status = 'loading'
     },
-    auth_success(state, user) {
+    auth_success(state, val) {
         state.status = 'success'
-        state.user = user
+        state.user = val
     },
     auth_error(state) {
         state.status = 'error'
     },
     logout(state) {
         state.status = ''
-        state.token = ''
-    },
-    DO_SOMETHING() {
-        console.log("baby oi")
     },
     removeFromFavourite: (state, id) => {
         state.products.forEach(el => {
@@ -42,10 +41,16 @@ const actions = {
     login({commit}, credentials){
         return new Promise((resolve, reject) => {
             commit('auth_request')
+            console.log(credentials);
             AuthServices.login(credentials).then(resp => {
                 const user = resp.data.credentials
-                commit('auth_success', user)
-                console.log(resp)
+                console.log(resp);
+                commit('auth_success', resp.data);
+                console.log(user);
+                console.log(resp);
+                console.log(resp.data);
+                console.log(state.user);
+                console.log(this.state.user);
                 resolve(resp)
             })
             .catch(err => {
@@ -75,9 +80,9 @@ const actions = {
 
 export default {
     namespaced: true, // giup nhan biet dispatch, phan biet den store nao
-    state,
     getters,
     mutations,
-    actions
+    actions,
+    state,
 }
 

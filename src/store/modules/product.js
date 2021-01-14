@@ -1,4 +1,5 @@
 // import { reject, resolve } from "core-js/fn/promise";
+// import { reject } from 'core-js/fn/promise';
 import 'es6-promise/auto'
 import ProductServices from "../../services/ProductService"
 
@@ -31,7 +32,7 @@ const mutations = {
     },
     setCart: (state, val) => {
         state.cart = val
-    }
+    },
 };
 
 const actions = {
@@ -42,7 +43,7 @@ const actions = {
             ProductServices.getProducts().then((resp) => {
                 console.log(resp)
                 console.log("Nhanle123");
-                commit("setProducts", resp.data)
+                commit("setProducts", resp.data.content)
                 console.log("Nhanle11");
                 resolve(resp)
             })
@@ -61,6 +62,7 @@ const actions = {
                 console.log(response)
                 console.log(id)
                 commit("setProduct", response.data)
+                console.log(state.product);
                 resolve(response)
             })
                 .catch(err => {
@@ -69,6 +71,20 @@ const actions = {
                 })
         })
     },
+
+    getCarts({commit}, id) {
+        return new Promise((resolve, reject) => {
+            console.log(id)
+            ProductServices.getCart(id).then((response)=> {
+                console.log(response.data)
+                commit("setCart", response.data.content)
+                resolve(response)
+            }) .catch(err => {
+                console.log(err)
+                reject(err)
+            })
+        })
+    }
 
     
 

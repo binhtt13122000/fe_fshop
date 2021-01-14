@@ -86,6 +86,7 @@
 
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: "product",
   props: ["product"],
@@ -109,6 +110,7 @@ export default {
       }
     },
   },
+  ...mapActions("cart")
 };
 </script>
 <style lang="scss">

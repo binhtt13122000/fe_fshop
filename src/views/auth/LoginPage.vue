@@ -105,8 +105,9 @@ export default {
           username: this.username,
           password: this.password,
         })
-        .then(() => this.$router.push("/"))
+        .then(() => this.$router.push("/cart"))
         .catch((err) => console.log(err));
+
     },
     //  login() {
     //   Axios.post('http://localhost:8082/v1/api/users/login', {username: this.username,
