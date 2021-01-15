@@ -6,7 +6,7 @@ import ProductServices from "../../services/ProductService"
 const state = {
     products: [],
     product: [],
-    productPro: [],
+    pages: [],
     cart: [],
 };
 
@@ -19,7 +19,11 @@ const getters = {
     },
     cart(state) {
         return state.cart
+    },
+    pages(state) {
+        return state.pages
     }
+
 };
 
 
@@ -33,18 +37,24 @@ const mutations = {
     setCart: (state, val) => {
         state.cart = val
     },
+    setPages: (state, val) => {
+        state.pages = val
+    }
 };
 
 const actions = {
 
-    getProducts({ commit }) {
+    getProducts({ commit }, index) {
         return new Promise((resolve, reject) => {
             console.log("Nhanle");
-            ProductServices.getProducts().then((resp) => {
-                console.log(resp)
-                console.log("Nhanle123");
+            ProductServices.getProducts(index).then((resp) => {
+                // console.log(resp)
+                // console.log(resp.data.content)
+                console.log(resp.data)
                 commit("setProducts", resp.data.content)
-                console.log("Nhanle11");
+                commit("setPages", resp.data)
+                console.log(state.pages.totalPages);
+                // console.log(state.pages);
                 resolve(resp)
             })
                 .catch(err => {

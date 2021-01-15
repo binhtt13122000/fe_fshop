@@ -147,18 +147,13 @@
               >
                 <VmProduct :product="product"></VmProduct>
               </v-col>
-              <!-- <v-col
-                md="4"
-                align-content="center"
-                justify="center"
-                v-for="product in products"
-                :key="product.productId"
-              >
-                <v-pagination v-model="page" class="my-4" :length="15"
-                  ><VmProduct :product="product"></VmProduct
-                ></v-pagination>
-              </v-col> -->
             </v-row>
+            <v-pagination
+              v-model="currenPage"
+              v-on:click="currenPage()"
+              :length="lastPage"
+            ></v-pagination>
+            <!-- <Pagination/> -->
           </v-container>
         </v-main>
 
@@ -293,12 +288,13 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import VmProduct from "./Product.vue";
+// import Pagination from "./Pagination.vue";
 export default {
   components: { VmProduct },
-  props: {
-    source: String,
-  },
+  props: ["product", "cart", "pages"],
   data: () => ({
+    currenPage: 1,
+    lastPage: 3,
     msg: "Welcome to my Vuex Store",
     drawer: null,
     search: null,
@@ -321,6 +317,15 @@ export default {
     isValid: false,
     isAccount: false,
   }),
+  watch: {
+    // currenPage(newVal, oldVal) {
+    //   console.log("click");
+    // },
+    currenPage() {
+      console.log(this.currenPage)
+      this.getProducts(this.currenPage);
+    }
+  },
 
   methods: {
     onResize() {
@@ -330,6 +335,19 @@ export default {
     ...mapActions("product", ["getProducts", "productDetails"]),
   },
   computed: {
+    // currenPage: {
+    //   get() {
+    //     return this.$store.state.pages.number;
+    //   },
+    //   set(val) {
+
+    //   }
+    // },
+    // lastPage: {
+    //   get() {
+    //     return this.$store.state.pages.totalElements;
+    //   },
+    // },
     ...mapGetters("product", ["products"]),
   },
 
@@ -338,7 +356,7 @@ export default {
     window.addEventListener("resize", this.onResize, { passive: true });
   },
   mounted() {
-    this.getProducts();
+    this.getProducts(this.currenPage);
   },
 };
 </script>

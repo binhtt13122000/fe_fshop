@@ -130,26 +130,23 @@
               <div class="main-image">
                 <img class="img-responsive" :src="mainImageSrc" width="100%" />
               </div>
-              <v-col>
-                <div class="image-center-item">
-                  <a href="">
+              
+                <div class="image-center-item" >
                     <img
                       class="img-responsive-left"
                       src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-2.png"
                       alt="4men"
-                      width="50%"
+                      width="100%"
                     />
-                  </a>
-                  <a href="">
+
                     <img
                       class="img-responsive-right"
                       src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
                       alt="4men"
-                      width="50%"
+                      width="100%"
                     />
-                  </a>
                 </div>
-              </v-col>
+              
             </v-row>
           </v-container>
         </v-main>
@@ -289,7 +286,6 @@ export default {
   },
   data: () => ({
     drawer: null,
-    page: 1,
     linkBar: [
       "Name",
       "Nữ",
@@ -405,12 +401,16 @@ export default {
     text-decoration: none;
     padding: 0px 15px 0px 15px;
   }
-}
+} 
+
 
 @media only screen and (max-width: 1390px) {
 }
 @media only screen and (max-width: 560px) {
-
+.image-center-item {
+  display: block;
+}
+  
 }
 </style>
 
