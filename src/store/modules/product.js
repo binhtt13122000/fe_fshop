@@ -7,7 +7,7 @@ const state = {
     products: [],
     product: [],
     pages: [],
-    cart: [],
+    carts: [],
 };
 
 const getters = {
@@ -17,8 +17,8 @@ const getters = {
     product(state) {
         return state.product
     },
-    cart(state) {
-        return state.cart
+    carts(state) {
+        return state.carts
     },
     pages(state) {
         return state.pages
@@ -34,8 +34,8 @@ const mutations = {
     setProduct: (state, val) => {
         state.product = val
     },
-    setCart: (state, val) => {
-        state.cart = val
+    setCarts: (state, val) => {
+        state.carts = val
     },
     setPages: (state, val) => {
         state.pages = val
@@ -87,8 +87,10 @@ const actions = {
         return new Promise((resolve, reject) => {
             console.log(id)
             ProductServices.getCart(id).then((response)=> {
-                console.log(response.data)
-                commit("setCart", response.data.content)
+                console.log("Cart")
+                console.log(response.data.content)
+                commit("setCarts", response.data.content)
+                console.log(this.state.user);
                 resolve(response)
             }) .catch(err => {
                 console.log(err)

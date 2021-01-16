@@ -7,23 +7,22 @@ const state = {
     user: {}
 };
 const getters = {
-    userData(state) {
+    user(state) {
         console.log(state.user);
         return state.user;
     }
 };
 const mutations = {
-    auth_request(state) {
+    auth_request: (state) => {
         state.status = 'loading'
     },
-    auth_success(state, val) {
-        state.status = 'success'
+    setUser: (state, val) => {
         state.user = val
     },
-    auth_error(state) {
+    auth_error: (state) =>{
         state.status = 'error'
     },
-    logout(state) {
+    logout: (state) => {
         state.status = ''
     },
     removeFromFavourite: (state, id) => {
@@ -40,17 +39,16 @@ const mutations = {
 const actions = {
     login({commit}, credentials){
         return new Promise((resolve, reject) => {
-            commit('auth_request')
-            console.log(credentials);
+            // commit('auth_request')
             AuthServices.login(credentials).then(resp => {
-                const user = resp.data.credentials
-                console.log(resp);
-                commit('auth_success', resp.data);
-                console.log(user);
-                console.log(resp);
+                console.log("Login");
+                console.log(resp.status);
                 console.log(resp.data);
-                console.log(state.user);
-                console.log(this.state.user);
+                console.log(resp);
+                // console.log(credentials);
+                // actions.getUser(credentials.username)
+                // console.log(resp.data);
+                // console.log(state.user);
                 resolve(resp)
             })
             .catch(err => {
@@ -59,13 +57,26 @@ const actions = {
             })
         })
     },
+    getUser({commit}, username){
+        return new Promise((resolve, reject) => {
+            AuthServices.getUser(username).then(resp => {
+                console.log("get user");
+                console.log(resp.data);
+                commit('setUser', resp.data)
+                resolve(resp)
+            }). catch(err => {
+                commit('auth_error')
+                reject(err)
+            })
+        })
+    },
 
     register({commit}, user){
         return new Promise((resolve, reject) => {
-            commit('auth_request')
+            // commit('auth_request')
             AuthServices.register(user).then(resp => {
                 const user = resp.data.user
-                commit('auth_success', user)
+                commit('setUser', user)
                 console.log(resp)
                 resolve(resp)
             })

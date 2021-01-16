@@ -9,7 +9,7 @@ class ProductService {
         return get("/products/"+id, {}, {});
     }
     
-    getCart(username){
+    getCarts(username){
         return get("/carts/users/"+username,{},{});
     }
 }

@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div id="app">
     <v-app id="inspire">
       <v-app id="inspire">
@@ -20,28 +20,24 @@
           ></v-text-field>
           <v-list class="nar-bar-btn" dense justify="center" align="left">
             <!-- <v-list-group> -->
-            <v-list-item link to="/loginpage" v-if="isAccount" >
+            <v-list-item link to="/loginpage" v-if="isAccount">
               <v-list-item-content>
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link to="/products">
               <v-list-item-content>
-                  <v-list-item-title>Name</v-list-item-title>
+                <v-list-item-title>Name</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title
-                  >Bộ sưu tập</v-list-item-title
-                >
+                <v-list-item-title>Bộ sưu tập</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title
-                  >Blog</v-list-item-title
-                >
+                <v-list-item-title>Blog</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
@@ -159,99 +155,101 @@
         <v-divider></v-divider>
         <v-footer color="white" padless>
           <v-container>
-            <v-row id="footer-center" class="d-flex align-items-center">
-              <v-col class="mx-auto mt-2">
-                <div class="social-link">
-                  <h4 class="font-weight-bold">Contact</h4>
-                  <v-list>
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-phone</v-icon>
-                          HOTLINE:028 3526 7061
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-store</v-icon>
-                          HỆ THỐNG CỬA HÀNG
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-gift</v-icon>
-                          PHIẾU QUÀ TẶNG
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                  </v-list>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="thuong-hieu">
-                  <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
-                  <ul class="foo-thuong-hieu">
-                    <li><a href="">Giới thiệu</a></li>
-                    <li><a href="">Tuyển dụng</a></li>
-                    <li><a href="">Liên hệ</a></li>
-                  </ul>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="tin-tuc">
-                  <h4 class="font-weight-bold">TIN TỨC</h4>
-                  <ul class="foo-tin-tuc">
-                    <li><a href="">Bộ sưu tập</a></li>
-                    <li><a href="">Tư vấn thời trang</a></li>
-                    <li><a href="">Tin tức thời trang</a></li>
-                    <li><a href="">Mẹo hay</a></li>
-                    <li><a href="">Khuyến mãi</a></li>
-                  </ul>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="ho-tro">
-                  <h4 class="font-weight-bold">HỖ TRỢ</h4>
-                  <ul class="foo-ho-tro">
-                    <li><a href="">Khách hàng thân thiết</a></li>
-                    <li><a href="">Hướng dẫn mua hàng</a></li>
-                    <li><a href="">Hướng dẫn thanh toán</a></li>
-                    <li><a href="">Giao hàng</a></li>
-                    <li><a href="">Quy định đổi hàng</a></li>
-                    <li><a href="">Bảo mật thông tin</a></li>
-                  </ul>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="dang-ky-nhan-tin">
-                  <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
-                  <v-form>
-                    <v-text-field
-                      class="form-group"
-                      label="Email"
-                      type="text"
-                    ></v-text-field>
-                    <v-btn type="submit">Đăng ký</v-btn>
-                  </v-form>
-                </div>
-              </v-col>
-            </v-row>
+            <!-- <v-row id="footer-center" class="d-flex align-items-center"> -->
+            <div id="footer-center">
+              <!-- <v-col class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-auto">
+                <h4 class="font-weight-bold">Contact</h4>
+                <v-list>
+                  <v-list-item link>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-phone</v-icon>
+                        HOTLINE:028 3526 7061
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <hr
+                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
+                  <v-list-item link>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-store</v-icon>
+                        HỆ THỐNG CỬA HÀNG
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <hr
+                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
+                  <v-list-item link>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-gift</v-icon>
+                        PHIẾU QUÀ TẶNG
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <hr
+                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
+                </v-list>
+              </div>
+              <!-- </v-col>
+              <v-col  class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
+                <ul class="foo-thuong-hieu">
+                  <li><a href="">Giới thiệu</a></li>
+                  <li><a href="">Tuyển dụng</a></li>
+                  <li><a href="">Liên hệ</a></li>
+                </ul>
+              </div>
+              <!-- </v-col>
+              <v-col class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">TIN TỨC</h4>
+                <ul class="foo-tin-tuc">
+                  <li><a href="">Bộ sưu tập</a></li>
+                  <li><a href="">Tư vấn thời trang</a></li>
+                  <li><a href="">Tin tức thời trang</a></li>
+                  <li><a href="">Mẹo hay</a></li>
+                  <li><a href="">Khuyến mãi</a></li>
+                </ul>
+              </div>
+              <!-- </v-col>
+              <v-col class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">HỖ TRỢ</h4>
+                <ul class="foo-ho-tro">
+                  <li><a href="">Khách hàng thân thiết</a></li>
+                  <li><a href="">Hướng dẫn mua hàng</a></li>
+                  <li><a href="">Hướng dẫn thanh toán</a></li>
+                  <li><a href="">Giao hàng</a></li>
+                  <li><a href="">Quy định đổi hàng</a></li>
+                  <li><a href="">Bảo mật thông tin</a></li>
+                </ul>
+              </div>
+              <!-- </v-col>
+              <v-col class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
+                <v-form>
+                  <v-text-field
+                    class="form-group"
+                    label="Email"
+                    type="text"
+                  ></v-text-field>
+                  <v-btn type="submit">Đăng ký</v-btn>
+                </v-form>
+              </div>
+              <!-- </v-col> -->
+            </div>
+            <!-- </v-row> -->
           </v-container>
           <v-container>
             <v-row id="socialIcon" class="d-flex align-items-center">
@@ -261,7 +259,6 @@
                   <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
                   <a href=""><v-icon size="50">mdi-instagram</v-icon></a>
                   <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a>
                 </div>
               </v-col>
             </v-row>
@@ -320,9 +317,9 @@ export default {
     //   console.log("click");
     // },
     currenPage() {
-      console.log(this.currenPage)
+      console.log(this.currenPage);
       this.getProducts(this.currenPage);
-    }
+    },
   },
 
   methods: {
@@ -343,7 +340,7 @@ export default {
     // },
     lastPage: {
       get() {
-        return this.$store.state.product.pages.totalPages
+        return this.$store.state.product.pages.totalPages;
       },
     },
     ...mapGetters("product", ["products"]),
@@ -408,6 +405,11 @@ export default {
     }
   }
 }
+#footer-center .mx-auto {
+  display: inline-table;
+  align-items: center;
+  padding: 5px;
+}
 
 #socialIcon {
   a {
@@ -423,9 +425,13 @@ export default {
 }
 @media only screen and (max-width: 1390px) {
 }
-@media only screen and (max-width: 560px) {
-  // .right-column-icon v-btn {
-  //   text-align: center;
-  // }
+@media only screen and (max-width: 600px) {
+  .image-center-item {
+    display: block;
+  }
+  #footer-center .mx-auto {
+    display: block;
+    text-align: center;
+  }
 }
 </style>

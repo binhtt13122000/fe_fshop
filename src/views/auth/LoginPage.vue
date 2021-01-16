@@ -90,7 +90,9 @@
 
 <script>
 // import Axios from 'axios';
+import { mapActions, mapGetters } from "vuex";
 export default {
+  name: "login",
   data() {
     return {
       username: "",
@@ -105,18 +107,35 @@ export default {
           username: this.username,
           password: this.password,
         })
-        .then(() => this.$router.push("/cart"))
+        .then(() => {
+                console.log("login fuction from components...1.1...");
+          console.log(this.username);
+          this.$router.push("/carts");
+          // this.getUser();
+          // this.getUser(this.username);
+        })
         .catch((err) => console.log(err));
-
     },
-    //  login() {
-    //   Axios.post('http://localhost:8082/v1/api/users/login', {username: this.username,
-    //     password: this.password,}).then(response => {
-    //       console.log(response)
-    //     }).catch(()=> {
-    //       console.log("-----Errror")
+    ...mapActions("auth", ["getUser"]),
+  },
+  computed: {
+    // getUser() {
+    //   this.$store
+    //     .dispatch("auth/getUser", {
+    //       username: this.username,
     //     })
-    // }
+    //     .then((response) => {
+    //       console.log("Login in componenet");
+    //       console.log(response);
+    //     });
+    //   this.$router.push("/carts");
+    // },
+    ...mapGetters("auth", "user"),
+  },
+  mounted() {
+    console.log(this.username);
+    // this.getUser(this.username)
+    // this.$router.push("/carts");
   },
 };
 </script>

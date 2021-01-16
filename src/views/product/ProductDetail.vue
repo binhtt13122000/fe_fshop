@@ -20,28 +20,24 @@
           ></v-text-field>
           <v-list class="nar-bar-btn" dense justify="center" align="left">
             <!-- <v-list-group> -->
-            <v-list-item link to="/loginpage" v-if="isAccount" >
+            <v-list-item link to="/loginpage" v-if="isAccount">
               <v-list-item-content>
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link to="/products">
               <v-list-item-content>
-                  <v-list-item-title>Name</v-list-item-title>
+                <v-list-item-title>Name</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title
-                  >Bộ sưu tập</v-list-item-title
-                >
+                <v-list-item-title>Bộ sưu tập</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title
-                  >Blog</v-list-item-title
-                >
+                <v-list-item-title>Blog</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
@@ -106,7 +102,7 @@
             class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-btn icon class="hidden-xs-and-down mx-4" to="/cart">
+          <v-btn icon class="hidden-xs-and-down mx-4" to="/carts">
             <v-icon>mdi-shopping</v-icon>
           </v-btn>
           <v-btn icon to="/loginpage" class="hidden-md-and-down">
@@ -142,11 +138,25 @@
                         :key="i"
                         :src="productImage.imgUrl"
                         alt="productImage.imgUrl"
-                        transition="fade-transition"
-                        reverse-transition="fade-transition"
+                        cycle
+                        hide-delimiter-background
+                        show-arrows-on-hover
                       >
                       </v-carousel-item>
                     </v-carousel>
+                    <v-card
+                      v-for="(productImage, i) in product.productImages"
+                      :key="i"
+                      class="img-carouel"
+                    >
+                      <img
+                        id="img-responsive"
+                        class="mx-auto"
+                        width="25%"
+                        :src="productImage.imgUrl"
+                      />
+                    </v-card>
+
                     <br />
                     <!-- </div> -->
                     <v-tabs class="evaluate" background-color="indigo" dark>
@@ -217,24 +227,26 @@
                         <v-spacer></v-spacer>
                       </h4>
                       <v-divider></v-divider>
-                      <br>
+                      <br />
                       <v-form>
                         <v-row>
                           <v-col>
                             <div class="swatch-picker">
-                              <p style="font-family: 'Open Sans', sans-serif">Size:</p>
+                              <p style="font-family: 'Open Sans', sans-serif">
+                                Size:
+                              </p>
 
                               <label>
-                                <input type="radio" name="sel_size" value="S" />
-                                <span style="background-color: #000000">S</span>
+                                <input type="radio" name="sel_size" value="S" checked="checked" />
+                                <span class="radio-size">S</span>
                               </label>
                               <label>
                                 <input type="radio" name="sel_size" value="M" />
-                                <span style="background-color: #000000">M</span>
+                                <span class="radio-size">M</span>
                               </label>
                               <label>
                                 <input type="radio" name="sel_size" value="L" />
-                                <span style="background-color: #000000">L</span>
+                                <span class="radio-size" >L</span>
                               </label>
                               <label>
                                 <input
@@ -242,7 +254,7 @@
                                   name="sel_size"
                                   value="XL"
                                 />
-                                <span style="background-color: #000000"
+                                <span class="radio-size"
                                   >XL</span
                                 >
                               </label>
@@ -252,7 +264,7 @@
                                   name="sel_size"
                                   value="XXL"
                                 />
-                                <span style="background-color: #000000"
+                                <span class="radio-size"
                                   >XXL</span
                                 >
                               </label>
@@ -261,20 +273,25 @@
                         </v-row>
                         <v-row>
                           <v-col class="btn-quantity">
-                            <span style="font-family: 'Open Sans', sans-serif">Quantity: </span>
-                            <v-btn v-on:click="decreaseValue()"
+                            <span style="font-family: 'Open Sans', sans-serif"
+                              >Quantity:
+                            </span>
+                            <v-btn
+                              class="btn-minus"
+                              v-on:click="decreaseValue()"
                               ><v-icon>mdi-minus</v-icon></v-btn
                             >
                             <input
                               v-model="quantity"
                               type="number"
                               id="number"
-                              min="0"
-                              max="100"
+                              :min="1"
+                              :max="100"
                             />
                             <!-- {{ quantity }} -->
-                            <v-btn v-on:click="increaseValue()"
-                              ><v-icon>mdi-plus</v-icon></v-btn >
+                            <v-btn class="btn-plus" v-on:click="increaseValue()"
+                              ><v-icon>mdi-plus</v-icon></v-btn
+                            >
                           </v-col>
                         </v-row>
                         <v-row>
@@ -466,99 +483,101 @@
         <v-divider></v-divider>
         <v-footer color="white" padless>
           <v-container>
-            <v-row id="footer-center" class="d-flex align-items-center">
-              <v-col class="mx-auto mt-2">
-                <div class="social-link">
-                  <h4 class="font-weight-bold">Contact</h4>
-                  <v-list>
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-phone</v-icon>
-                          HOTLINE:028 3526 7061
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-store</v-icon>
-                          HỆ THỐNG CỬA HÀNG
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-gift</v-icon>
-                          PHIẾU QUÀ TẶNG
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                  </v-list>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="thuong-hieu">
-                  <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
-                  <ul class="foo-thuong-hieu">
-                    <li><a href="">Giới thiệu</a></li>
-                    <li><a href="">Tuyển dụng</a></li>
-                    <li><a href="">Liên hệ</a></li>
-                  </ul>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="tin-tuc">
-                  <h4 class="font-weight-bold">TIN TỨC</h4>
-                  <ul class="foo-tin-tuc">
-                    <li><a href="">Bộ sưu tập</a></li>
-                    <li><a href="">Tư vấn thời trang</a></li>
-                    <li><a href="">Tin tức thời trang</a></li>
-                    <li><a href="">Mẹo hay</a></li>
-                    <li><a href="">Khuyến mãi</a></li>
-                  </ul>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="ho-tro">
-                  <h4 class="font-weight-bold">HỖ TRỢ</h4>
-                  <ul class="foo-ho-tro">
-                    <li><a href="">Khách hàng thân thiết</a></li>
-                    <li><a href="">Hướng dẫn mua hàng</a></li>
-                    <li><a href="">Hướng dẫn thanh toán</a></li>
-                    <li><a href="">Giao hàng</a></li>
-                    <li><a href="">Quy định đổi hàng</a></li>
-                    <li><a href="">Bảo mật thông tin</a></li>
-                  </ul>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="dang-ky-nhan-tin">
-                  <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
-                  <v-form>
-                    <v-text-field
-                      class="form-group"
-                      label="Email"
-                      type="text"
-                    ></v-text-field>
-                    <v-btn type="submit">Đăng ký</v-btn>
-                  </v-form>
-                </div>
-              </v-col>
-            </v-row>
+            <!-- <v-row id="footer-center" class="d-flex align-items-center"> -->
+            <div id="footer-center">
+              <!-- <v-col class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-auto">
+                <h4 class="font-weight-bold">Contact</h4>
+                <v-list>
+                  <v-list-item link>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-phone</v-icon>
+                        HOTLINE:028 3526 7061
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <hr
+                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
+                  <v-list-item link>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-store</v-icon>
+                        HỆ THỐNG CỬA HÀNG
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <hr
+                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
+                  <v-list-item link>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-gift</v-icon>
+                        PHIẾU QUÀ TẶNG
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <hr
+                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
+                </v-list>
+              </div>
+              <!-- </v-col>
+              <v-col  class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
+                <ul class="foo-thuong-hieu">
+                  <li><a href="">Giới thiệu</a></li>
+                  <li><a href="">Tuyển dụng</a></li>
+                  <li><a href="">Liên hệ</a></li>
+                </ul>
+              </div>
+              <!-- </v-col>
+              <v-col class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">TIN TỨC</h4>
+                <ul class="foo-tin-tuc">
+                  <li><a href="">Bộ sưu tập</a></li>
+                  <li><a href="">Tư vấn thời trang</a></li>
+                  <li><a href="">Tin tức thời trang</a></li>
+                  <li><a href="">Mẹo hay</a></li>
+                  <li><a href="">Khuyến mãi</a></li>
+                </ul>
+              </div>
+              <!-- </v-col>
+              <v-col class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">HỖ TRỢ</h4>
+                <ul class="foo-ho-tro">
+                  <li><a href="">Khách hàng thân thiết</a></li>
+                  <li><a href="">Hướng dẫn mua hàng</a></li>
+                  <li><a href="">Hướng dẫn thanh toán</a></li>
+                  <li><a href="">Giao hàng</a></li>
+                  <li><a href="">Quy định đổi hàng</a></li>
+                  <li><a href="">Bảo mật thông tin</a></li>
+                </ul>
+              </div>
+              <!-- </v-col>
+              <v-col class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
+                <v-form>
+                  <v-text-field
+                    class="form-group"
+                    label="Email"
+                    type="text"
+                  ></v-text-field>
+                  <v-btn type="submit">Đăng ký</v-btn>
+                </v-form>
+              </div>
+              <!-- </v-col> -->
+            </div>
+            <!-- </v-row> -->
           </v-container>
           <v-container>
             <v-row id="socialIcon" class="d-flex align-items-center">
@@ -568,7 +587,6 @@
                   <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
                   <a href=""><v-icon size="50">mdi-instagram</v-icon></a>
                   <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a>
                 </div>
               </v-col>
             </v-row>
@@ -600,7 +618,7 @@ export default {
     modelSize: "Size",
     modelQuantity: "Quantity",
     modelComment: ["Mới nhất"],
-    quantity: 0,
+    quantity: 1,
     size: 1,
     drawer: null,
     rating: 5,
@@ -643,7 +661,11 @@ export default {
     },
 
     decreaseValue() {
-      return this.quantity--;
+      if (this.quantity <= 1) {
+        return (this.quantity = 1);
+      } else {
+        return this.quantity--;
+      }
     },
     onResize() {
       this.isValid = window.innerWidth <= 1040;
@@ -760,6 +782,8 @@ body {
 .swatch-picker {
   p {
     display: inline-block;
+    text-align: left;
+    padding-right: 20px;
   }
   label {
     display: inline-block;
@@ -775,11 +799,15 @@ body {
     -o-user-select: none;
     user-select: none;
   }
+  .radio-size {
+    background-color: #000000;
+  }
 
   span {
     display: block;
     color: #ffffff;
     text-align: center;
+    justify-content: center;
     //  text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -789,6 +817,7 @@ body {
     left: 10;
     height: 100%;
     width: 100%;
+    
   }
 
   input {
@@ -796,72 +825,14 @@ body {
   }
 
   input:checked + span {
-    border: 3px solid rgb(211, 15, 15);
-    background-color: rgb(211, 15, 15);
-    border: 3px solid rgba(236, 16, 16, 0.6);
+    border: 3px solid rgb(177, 177, 177);
+    background-color: rgb(177, 177, 177);
+    border: 3px solid rgb(177, 177, 177);
   }
 }
 
 .comment {
   border: 1px solid rgba(192, 192, 192, 0.849);
-}
-
-.btn-quantity {
-  width: 300px;
-  margin: 0 auto;
-  text-align: left;
-  padding-top: 50px;
-  display: inline-block;
-  .value-button {
-    display: inline-block;
-  }
-}
-
-.value-button {
-  display: inline-block;
-  border: 1px solid #ddd;
-  margin: 0px;
-  width: 40px;
-  height: 20px;
-  text-align: center;
-  vertical-align: middle;
-  padding: 11px 0;
-  background: #eee;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.value-button:hover {
-  cursor: pointer;
-}
-
-form #decrease {
-  margin-right: -4px;
-  border-radius: 8px 0 0 8px;
-}
-
-form #increase {
-  margin-left: -4px;
-  border-radius: 0 8px 8px 0;
-}
-
-form #input-wrap {
-  margin: 0px;
-  padding: 0px;
-}
-
-input#number {
-  text-align: center;
-  border: none;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  margin: 0px;
-  width: 40px;
-  height: 40px;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -870,14 +841,50 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+#footer-center .mx-auto {
+  display: inline-table;
+  align-items: center;
+  padding: 5px;
+}
+#number {
+  box-sizing: border-box;
+  height: 36px;
+  padding-bottom: 4px;
+  border-radius: 3px;
+  border: 2px solid #c7c7c7;
+  text-align: center;
+  box-shadow: 0 0 10px 4px 0 0 10px 30px, 30px 0 20px 30px;
+}
+
+.btn-quantity .btn-minus {
+  -moz-box-shadow: 0px 0px #666;
+  -webkit-box-shadow: 0px 0px #666;
+  box-shadow: 0px 0px #666;
+  border: 1px solid #c7c7c7;
+  // border-radius: 10px;
+}
+
+.btn-quantity .btn-plus {
+  -moz-box-shadow: 0px 0px #666;
+  -webkit-box-shadow: 0px 0px #666;
+  box-shadow: 0px 0px #666;
+  border: 1px solid #c7c7c7;
+  // border-radius: 10px;
+}
+
+.img-carouel {
+  display: inline;
+}
+
 @media only screen and (max-width: 1390px) {
 }
-@media only screen and (max-width: 560px) {
-  // .section-carousel {
-  //   width: 120%;
-  // }
-  // .right-column-icon v-btn {
-  //   text-align: center;
-  // }
+@media only screen and (max-width: 600px) {
+  .image-center-item {
+    display: block;
+  }
+  #footer-center .mx-auto {
+    display: block;
+    text-align: center;
+  }
 }
 </style>
