@@ -294,7 +294,7 @@ export default {
   props: ["product", "cart", "pages"],
   data: () => ({
     currenPage: 1,
-    lastPage: 3,
+    // lastPage: 1,
     msg: "Welcome to my Vuex Store",
     drawer: null,
     search: null,
@@ -343,11 +343,11 @@ export default {
 
     //   }
     // },
-    // lastPage: {
-    //   get() {
-    //     return this.$store.state.pages.totalElements;
-    //   },
-    // },
+    lastPage: {
+      get() {
+        return this.$store.state.product.pages.totalPages
+      },
+    },
     ...mapGetters("product", ["products"]),
   },
 
