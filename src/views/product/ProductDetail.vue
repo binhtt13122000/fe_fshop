@@ -237,7 +237,12 @@
                               </p>
 
                               <label>
-                                <input type="radio" name="sel_size" value="S" checked="checked" />
+                                <input
+                                  type="radio"
+                                  name="sel_size"
+                                  value="S"
+                                  checked="checked"
+                                />
                                 <span class="radio-size">S</span>
                               </label>
                               <label>
@@ -246,7 +251,7 @@
                               </label>
                               <label>
                                 <input type="radio" name="sel_size" value="L" />
-                                <span class="radio-size" >L</span>
+                                <span class="radio-size">L</span>
                               </label>
                               <label>
                                 <input
@@ -254,9 +259,7 @@
                                   name="sel_size"
                                   value="XL"
                                 />
-                                <span class="radio-size"
-                                  >XL</span
-                                >
+                                <span class="radio-size">XL</span>
                               </label>
                               <label>
                                 <input
@@ -264,9 +267,7 @@
                                   name="sel_size"
                                   value="XXL"
                                 />
-                                <span class="radio-size"
-                                  >XXL</span
-                                >
+                                <span class="radio-size">XXL</span>
                               </label>
                             </div>
                           </v-col>
@@ -360,7 +361,15 @@
                               >CHÍNH SÁCH ĐỔI HÀNG</v-expansion-panel-header
                             >
                             <v-expansion-panel-content>
-                              100% cotton.
+                              Quy định đổi hàng: 4MenShop hỗ trợ Quý khách đổi
+                              hàng 1 lần trong vòng 15 ngày theo biên lai giao
+                              nhận. Không áp dụng với sản phẩm đã qua sử dụng,
+                              hàng khuyến mãi, bị hư hại do tác nhân bên ngoài
+                              hoặc đã quá thời gian đổi hàng theo quy định. Sản
+                              phẩm cần đổi phải chưa qua sử dụng, còn nguyên tag
+                              giá. Có hóa đơn mua hàng (kèm theo sản phẩm). Có
+                              hóa đơn giao nhận. Sản phẩm mới phải có giá bằng
+                              hoặc cao hơn sản phẩm đổi.
                             </v-expansion-panel-content>
                           </v-expansion-panel>
                         </v-expansion-panels>
@@ -370,7 +379,8 @@
                               >HƯỚNG DẪN ĐẶT HÀNG</v-expansion-panel-header
                             >
                             <v-expansion-panel-content>
-                              100% cotton.
+                              Vui lòng chọn sản phẩm mà bạn thích. Sau đó vào
+                              giỏ hảng, chọn thanh toán.
                             </v-expansion-panel-content>
                           </v-expansion-panel>
                         </v-expansion-panels>
@@ -385,19 +395,16 @@
                               <div class="social-items">
                                 <span>Share:</span>
                                 <a href=""
-                                  ><v-icon size="20">mdi-google</v-icon></a
+                                  ><v-icon size="23">mdi-google</v-icon></a
                                 >
                                 <a href=""
-                                  ><v-icon size="20">mdi-facebook</v-icon></a
+                                  ><v-icon size="23">mdi-facebook</v-icon></a
                                 >
                                 <a href=""
-                                  ><v-icon size="20">mdi-instagram</v-icon></a
+                                  ><v-icon size="23">mdi-instagram</v-icon></a
                                 >
                                 <a href=""
-                                  ><v-icon size="20">mdi-twitter</v-icon></a
-                                >
-                                <a href=""
-                                  ><v-icon size="20">mdi-linkedin</v-icon></a
+                                  ><v-icon size="23">mdi-twitter</v-icon></a
                                 >
                               </div>
                             </v-col>
@@ -817,7 +824,6 @@ body {
     left: 10;
     height: 100%;
     width: 100%;
-    
   }
 
   input {

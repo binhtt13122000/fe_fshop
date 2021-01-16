@@ -21,14 +21,14 @@
           ></v-text-field>
           <v-list class="nar-bar-btn" dense justify="center" align="left">
             <!-- <v-list-group> -->
-            <v-list-item link to="loginpage" v-if="isAccount" >
+            <v-list-item link to="loginpage" v-if="isAccount">
               <v-list-item-content>
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link to="/products">
               <v-list-item-content>
-                  <v-list-item-title>Name</v-list-item-title>
+                <v-list-item-title>Name</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
@@ -60,7 +60,7 @@
           app
           color="grey darken-3"
           dark
-          style="height: 70px"
+          style="height: 78px"
           class="app-bar"
         >
           <div class="site-logo">
@@ -130,15 +130,18 @@
                   class="img-responsive-left"
                   src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-2.png"
                   alt="4men"
-                  width="100%"
+                  width="50%"
                 />
-
+                <h2 class="image-center-text-a">POLO</h2>
+                <v-btn class="image-center-btn-a">XEM THÊM</v-btn>
                 <img
                   class="img-responsive-right"
                   src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
                   alt="4men"
-                  width="100%"
+                  width="50%"
                 />
+                <h2 class="image-center-text-b">SHIRT</h2>
+                <v-btn class="image-center-btn-b">XEM THÊM</v-btn>
               </div>
             </v-row>
           </v-container>
@@ -148,97 +151,97 @@
         <v-footer color="white" padless>
           <v-container>
             <!-- <v-row id="footer-center" class="d-flex align-items-center"> -->
-              <div id="footer-center">
-                <!-- <v-col class="mx-auto mt-2"> -->
-                <div class="mx-auto mt-auto">
-                  <h4 class="font-weight-bold">Contact</h4>
-                  <v-list>
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-phone</v-icon>
-                          HOTLINE:028 3526 7061
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-store</v-icon>
-                          HỆ THỐNG CỬA HÀNG
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-gift</v-icon>
-                          PHIẾU QUÀ TẶNG
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                  </v-list>
-                </div>
+            <div id="footer-center">
+              <!-- <v-col class="mx-auto mt-2"> -->
+              <div class="mx-auto mt-auto">
+                <h4 class="font-weight-bold">Contact</h4>
+                <v-list>
+                  <v-list-item link>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-phone</v-icon>
+                        HOTLINE:028 3526 7061
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <hr
+                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
+                  <v-list-item link>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-store</v-icon>
+                        HỆ THỐNG CỬA HÀNG
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <hr
+                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
+                  <v-list-item link>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <v-icon>mdi-gift</v-icon>
+                        PHIẾU QUÀ TẶNG
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <hr
+                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
+                    style="width: 300px"
+                  />
+                </v-list>
+              </div>
               <!-- </v-col>
               <v-col  class="mx-auto mt-2"> -->
-                <div class="mx-auto mt-2">
-                  <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
-                  <ul class="foo-thuong-hieu">
-                    <li><a href="">Giới thiệu</a></li>
-                    <li><a href="">Tuyển dụng</a></li>
-                    <li><a href="">Liên hệ</a></li>
-                  </ul>
-                </div>
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
+                <ul class="foo-thuong-hieu">
+                  <li><a href="">Giới thiệu</a></li>
+                  <li><a href="">Tuyển dụng</a></li>
+                  <li><a href="">Liên hệ</a></li>
+                </ul>
+              </div>
               <!-- </v-col>
               <v-col class="mx-auto mt-2"> -->
-                <div class="mx-auto mt-2">
-                  <h4 class="font-weight-bold">TIN TỨC</h4>
-                  <ul class="foo-tin-tuc">
-                    <li><a href="">Bộ sưu tập</a></li>
-                    <li><a href="">Tư vấn thời trang</a></li>
-                    <li><a href="">Tin tức thời trang</a></li>
-                    <li><a href="">Mẹo hay</a></li>
-                    <li><a href="">Khuyến mãi</a></li>
-                  </ul>
-                </div>
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">TIN TỨC</h4>
+                <ul class="foo-tin-tuc">
+                  <li><a href="">Bộ sưu tập</a></li>
+                  <li><a href="">Tư vấn thời trang</a></li>
+                  <li><a href="">Tin tức thời trang</a></li>
+                  <li><a href="">Mẹo hay</a></li>
+                  <li><a href="">Khuyến mãi</a></li>
+                </ul>
+              </div>
               <!-- </v-col>
               <v-col class="mx-auto mt-2"> -->
-                <div class="mx-auto mt-2">
-                  <h4 class="font-weight-bold">HỖ TRỢ</h4>
-                  <ul class="foo-ho-tro">
-                    <li><a href="">Khách hàng thân thiết</a></li>
-                    <li><a href="">Hướng dẫn mua hàng</a></li>
-                    <li><a href="">Hướng dẫn thanh toán</a></li>
-                    <li><a href="">Giao hàng</a></li>
-                    <li><a href="">Quy định đổi hàng</a></li>
-                    <li><a href="">Bảo mật thông tin</a></li>
-                  </ul>
-                </div>
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">HỖ TRỢ</h4>
+                <ul class="foo-ho-tro">
+                  <li><a href="">Khách hàng thân thiết</a></li>
+                  <li><a href="">Hướng dẫn mua hàng</a></li>
+                  <li><a href="">Hướng dẫn thanh toán</a></li>
+                  <li><a href="">Giao hàng</a></li>
+                  <li><a href="">Quy định đổi hàng</a></li>
+                  <li><a href="">Bảo mật thông tin</a></li>
+                </ul>
+              </div>
               <!-- </v-col>
               <v-col class="mx-auto mt-2"> -->
-                <div class="mx-auto mt-2">
-                  <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
-                  <v-form>
-                    <v-text-field
-                      class="form-group"
-                      label="Email"
-                      type="text"
-                    ></v-text-field>
-                    <v-btn type="submit">Đăng ký</v-btn>
-                  </v-form>
-                </div>
+              <div class="mx-auto mt-2">
+                <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
+                <v-form>
+                  <v-text-field
+                    class="form-group"
+                    label="Email"
+                    type="text"
+                  ></v-text-field>
+                  <v-btn type="submit">Đăng ký</v-btn>
+                </v-form>
+              </div>
               <!-- </v-col> -->
             </div>
             <!-- </v-row> -->
@@ -390,11 +393,11 @@ export default {
   }
 }
 
-  #footer-center .mx-auto {
-    display: inline-table;
-    align-items: center;
-    padding: 5px;
-  }
+#footer-center .mx-auto {
+  display: inline-table;
+  align-items: center;
+  padding: 5px;
+}
 
 #socialIcon {
   a {
@@ -403,18 +406,172 @@ export default {
   }
 }
 
-@media only screen and (max-width: 1390px) {
+.image-center-item {
+  position: relative;
+  display: block;
+}
+
+.image-center-item .img {
+  position: relative;
+}
+
+.image-center-text-a {
+  position: absolute;
+  top: 0.5em;
+  left: 3.5em;
+  /* background-color:#8F0005; */
+  border-radius: 1.5em;
+  color: #000000;
+  border-color: #000000;
+  text-transform: uppercase;
+  padding: 1em 1.5em;
+}
+.image-center-text-b {
+  position: absolute;
+  top: 0.5em;
+  right: 20em;
+  /* background-color:#8F0005; */
+  border-radius: 1.5em;
+  color: #000000;
+  border-color: #000000;
+  text-transform: uppercase;
+  padding: 1em 1.5em;
+}
+
+.image-center-item .image-center-btn-a {
+  position: absolute;
+  top: 7em;
+  left: 6em;
+  /* background-color:#8F0005; */
+  border-radius: 1.5em;
+  color: #000000;
+  border-color: #000000;
+  text-transform: uppercase;
+  padding: 1em 1.5em;
+}
+.image-center-item .image-center-btn-b {
+  position: absolute;
+  top: 7em;
+  right: 35em;
+  /* background-color:#8F0005; */
+  border-radius: 1.5em;
+  color: #000000;
+  border-color: #000000;
+  text-transform: uppercase;
+  padding: 1em 1.5em;
+}
+// @media only screen and (max-width: 340px) {
+//   .image-center-item .image-center-btn-a {
+//     left: 16em;
+//   }
+//   .image-center-text-a {
+//     top: 1em;
+//     font-size: 24px;
+//     left: 5.3em;
+//   }
+//   .image-center-item .image-center-btn-b {
+//     top: 35em;
+//     left: 10em;
+//   }
+//   .image-center-text-b {
+//     top: 10em;
+//     font-size: 24px;
+//     left: 5.1em;
+//   }
+// }
+
+@media only screen and (max-width: 378px) {
+  .image-center-item .image-center-btn-a {
+    left: 10em;
+  }
+  .image-center-text-a {
+    top: 1em;
+    font-size: 24px;
+    left: 5.3em;
+  }
+  .image-center-item .image-center-btn-b {
+    top: 35em;
+    left: 10em;
+  }
+  .image-center-text-b {
+    top: 2em;
+    font-size: 24px;
+    left: 5.1em;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .image-center-item .image-center-btn-a {
+    left: 10em;
+  }
+  .image-center-text-a {
+    top: 1em;
+    font-size: 24px;
+    left: 5.3em;
+  }
+  .image-center-item .image-center-btn-b {
+    top: 37em;
+    left: 10em;
+  }
+  .image-center-text-b {
+    top: 18.2em;
+    font-size: 24px;
+    left: 5.3em;
+  }
+}
+// @media only screen and (max-width: 560px) {
+//   .image-center-item .image-center-btn-a {
+//     left: 15em;
+//   }
+//   .image-center-text-a {
+//     top: 1em;
+//     font-size: 24px;
+//     left: 8.5em;
+//   }
+//   .image-center-item .image-center-btn-b {
+//     top: 47em;
+//     left: 15em;
+//   }
+//   .image-center-text-b {
+//     top: 24em;
+//     font-size: 24px;
+//     left: 8.2em;
+//   }
+// }
+@media only screen and (min-width: 760px) {
+  .image-center-item .image-center-btn-a {
+    left: 10em;
+  }
+  .image-center-text-a {
+    top: 1em;
+    font-size: 24px;
+    left: 5.3em;
+  }
+  .image-center-item .image-center-btn-b {
+    top: 6.5em;
+    right: 10em;
+  }
+  .image-center-text-b {
+    top: 0.9em;
+    font-size: 24px;
+    right: 5.3em;
+  }
 }
 @media only screen and (max-width: 600px) {
   .image-center-item {
     display: block;
+    .img-responsive-left {
+      width: 100%;
+    }
+
+    .img-responsive-right {
+      width: 100%;
+    }
   }
   #footer-center .mx-auto {
     display: block;
     text-align: center;
   }
-
-
 }
 </style>
 
