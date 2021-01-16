@@ -18,31 +18,29 @@
             label="Search"
             class="nav-bar-search"
           ></v-text-field>
-          <v-list class="nar-bar-btn" dense justify="center" align="center">
+          <v-list class="nar-bar-btn" dense justify="center" align="left">
             <!-- <v-list-group> -->
-            <v-list-item link v-if="isAccount">
+            <v-list-item link to="/loginpage" v-if="isAccount" >
               <v-list-item-content>
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item link>
+            <v-list-item link to="/products">
               <v-list-item-content>
-                <v-list-item-title>Name</v-list-item-title>
+                  <v-list-item-title>Name</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
                 <v-list-item-title
-                  >Bộ sưu tập<v-icon
-                    >mdi-chevron-down</v-icon
-                  ></v-list-item-title
+                  >Bộ sưu tập</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
                 <v-list-item-title
-                  >Blog<v-icon>mdi-chevron-down</v-icon></v-list-item-title
+                  >Blog</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>
@@ -113,7 +111,7 @@
             <!-- <v-btn icon style="background-color:green;" class="hidden-md-and-down mx-4"> -->
             <!-- <v-icon size="30px">mdi-shopping</v-icon> -->
             <!-- </v-btn> -->
-            <a id="shopping-cart" class="hidden-md-and-down mx-4">
+            <a id="shopping-cart" class="hidden-md-and-down mx-4" href="/cart">
               <v-icon class="shopping-cart-icon">mdi-shopping</v-icon>
             </a>
           </v-badge>

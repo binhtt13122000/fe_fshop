@@ -19,32 +19,26 @@
             class="nav-bar-search"
             style="width: 100%"
           ></v-text-field>
-          <v-list class="nar-bar-btn" dense justify="center" align="center">
+          <v-list class="nar-bar-btn" dense justify="center" align="left">
             <!-- <v-list-group> -->
-            <v-list-item link v-if="isAccount">
+            <v-list-item link to="loginpage" v-if="isAccount" >
               <v-list-item-content>
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item link>
+            <v-list-item link to="/products">
               <v-list-item-content>
-                <v-list-item-title>Name</v-list-item-title>
+                  <v-list-item-title>Name</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title
-                  >Bộ sưu tập<v-icon
-                    >mdi-chevron-down</v-icon
-                  ></v-list-item-title
-                >
+                <v-list-item-title>Bộ sưu tập</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title
-                  >Blog<v-icon>mdi-chevron-down</v-icon></v-list-item-title
-                >
+                <v-list-item-title>Blog</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
@@ -110,7 +104,7 @@
             class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-btn icon class="hidden-xs-and-down mx-4">
+          <v-btn icon class="hidden-xs-and-down mx-4" to="/cart">
             <v-icon>mdi-shopping</v-icon>
           </v-btn>
           <v-btn icon to="/loginpage" class="hidden-md-and-down">
@@ -130,23 +124,22 @@
               <div class="main-image">
                 <img class="img-responsive" :src="mainImageSrc" width="100%" />
               </div>
-              
-                <div class="image-center-item" >
-                    <img
-                      class="img-responsive-left"
-                      src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-2.png"
-                      alt="4men"
-                      width="100%"
-                    />
 
-                    <img
-                      class="img-responsive-right"
-                      src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
-                      alt="4men"
-                      width="100%"
-                    />
-                </div>
-              
+              <div class="image-center-item">
+                <img
+                  class="img-responsive-left"
+                  src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-2.png"
+                  alt="4men"
+                  width="100%"
+                />
+
+                <img
+                  class="img-responsive-right"
+                  src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
+                  alt="4men"
+                  width="100%"
+                />
+              </div>
             </v-row>
           </v-container>
         </v-main>
@@ -154,9 +147,10 @@
         <!-- Footer -->
         <v-footer color="white" padless>
           <v-container>
-            <v-row id="footer-center" class="d-flex align-items-center">
-              <v-col class="mx-auto mt-2">
-                <div class="social-link">
+            <!-- <v-row id="footer-center" class="d-flex align-items-center"> -->
+              <div id="footer-center">
+                <!-- <v-col class="mx-auto mt-2"> -->
+                <div class="mx-auto mt-auto">
                   <h4 class="font-weight-bold">Contact</h4>
                   <v-list>
                     <v-list-item link>
@@ -197,9 +191,9 @@
                     />
                   </v-list>
                 </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="thuong-hieu">
+              <!-- </v-col>
+              <v-col  class="mx-auto mt-2"> -->
+                <div class="mx-auto mt-2">
                   <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
                   <ul class="foo-thuong-hieu">
                     <li><a href="">Giới thiệu</a></li>
@@ -207,9 +201,9 @@
                     <li><a href="">Liên hệ</a></li>
                   </ul>
                 </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="tin-tuc">
+              <!-- </v-col>
+              <v-col class="mx-auto mt-2"> -->
+                <div class="mx-auto mt-2">
                   <h4 class="font-weight-bold">TIN TỨC</h4>
                   <ul class="foo-tin-tuc">
                     <li><a href="">Bộ sưu tập</a></li>
@@ -219,9 +213,9 @@
                     <li><a href="">Khuyến mãi</a></li>
                   </ul>
                 </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="ho-tro">
+              <!-- </v-col>
+              <v-col class="mx-auto mt-2"> -->
+                <div class="mx-auto mt-2">
                   <h4 class="font-weight-bold">HỖ TRỢ</h4>
                   <ul class="foo-ho-tro">
                     <li><a href="">Khách hàng thân thiết</a></li>
@@ -232,9 +226,9 @@
                     <li><a href="">Bảo mật thông tin</a></li>
                   </ul>
                 </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="dang-ky-nhan-tin">
+              <!-- </v-col>
+              <v-col class="mx-auto mt-2"> -->
+                <div class="mx-auto mt-2">
                   <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
                   <v-form>
                     <v-text-field
@@ -245,8 +239,9 @@
                     <v-btn type="submit">Đăng ký</v-btn>
                   </v-form>
                 </div>
-              </v-col>
-            </v-row>
+              <!-- </v-col> -->
+            </div>
+            <!-- </v-row> -->
           </v-container>
           <v-container>
             <v-row id="socialIcon" class="d-flex align-items-center">
@@ -396,21 +391,32 @@ export default {
   }
 }
 
+  #footer-center .mx-auto {
+    display: inline-table;
+    align-items: center;
+    padding: 5px;
+  }
+
 #socialIcon {
   a {
     text-decoration: none;
     padding: 0px 15px 0px 15px;
   }
-} 
-
+}
 
 @media only screen and (max-width: 1390px) {
 }
-@media only screen and (max-width: 560px) {
-.image-center-item {
-  display: block;
-}
-  
+@media only screen and (max-width: 600px) {
+  .image-center-item {
+    display: block;
+  }
+  #footer-center .mx-auto {
+    display: block;
+    text-align: center;
+  }
+
+
+
 }
 </style>
 

@@ -18,31 +18,29 @@
             label="Search"
             class="nav-bar-search"
           ></v-text-field>
-          <v-list class="nar-bar-btn" dense justify="center" align="center">
+          <v-list class="nar-bar-btn" dense justify="center" align="left">
             <!-- <v-list-group> -->
-            <v-list-item link v-if="isAccount">
+            <v-list-item link to="/loginpage" v-if="isAccount" >
               <v-list-item-content>
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item link>
+            <v-list-item link to="/products">
               <v-list-item-content>
-                <v-list-item-title>Name</v-list-item-title>
+                  <v-list-item-title>Name</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
                 <v-list-item-title
-                  >Bộ sưu tập<v-icon
-                    >mdi-chevron-down</v-icon
-                  ></v-list-item-title
+                  >Bộ sưu tập</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
                 <v-list-item-title
-                  >Blog<v-icon>mdi-chevron-down</v-icon></v-list-item-title
+                  >Blog</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>
@@ -108,7 +106,7 @@
             class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-btn icon class="hidden-xs-and-down mx-4">
+          <v-btn icon class="hidden-xs-and-down mx-4" to="/cart">
             <v-icon>mdi-shopping</v-icon>
           </v-btn>
           <v-btn icon to="/loginpage" class="hidden-md-and-down">

@@ -19,7 +19,7 @@
             class="nav-bar-search"
             style="width: 100%"
           ></v-text-field>
-          <v-list class="nar-bar-btn" dense justify="center" align="center">
+          <v-list class="nar-bar-btn" dense justify="center" align="left">
             <!-- <v-list-group> -->
             <v-list-item link v-if="isAccount">
               <v-list-item-content>
@@ -34,8 +34,7 @@
             <v-list-item link>
               <v-list-item-content>
                 <v-list-item-title
-                  >Bộ sưu tập<v-icon
-                    >mdi-chevron-down</v-icon
+                  >Bộ sưu tập
                   ></v-list-item-title
                 >
               </v-list-item-content>
@@ -43,7 +42,7 @@
             <v-list-item link>
               <v-list-item-content>
                 <v-list-item-title
-                  >Blog<v-icon>mdi-chevron-down</v-icon></v-list-item-title
+                  >Blog</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>

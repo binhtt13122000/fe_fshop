@@ -39,7 +39,8 @@ const mutations = {
     },
     setPages: (state, val) => {
         state.pages = val
-    }
+    },
+    
 };
 
 const actions = {
