@@ -110,9 +110,9 @@ export default {
         .then(() => {
                 console.log("login fuction from components...1.1...");
           console.log(this.username);
-          this.$router.push("/carts");
+          // this.$router.push("/carts");
           // this.getUser();
-          // this.getUser(this.username);
+          this.getUser(this.username);
         })
         .catch((err) => console.log(err));
     },

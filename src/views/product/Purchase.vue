@@ -21,7 +21,7 @@
           ></v-text-field>
           <v-list class="nar-bar-btn" dense justify="center" align="left">
             <!-- <v-list-group> -->
-            <v-list-item link to="loginpage" v-if="isAccount">
+            <v-list-item link to="/loginpage" v-if="isAccount">
               <v-list-item-content>
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
@@ -33,7 +33,7 @@
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title>Bộ sưu tập</v-list-item-title>
+                <v-list-item-title>Bộ sưu tập </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
@@ -60,7 +60,7 @@
           app
           color="grey darken-3"
           dark
-          style="height: 78px"
+          style="height: 70px"
           class="app-bar"
         >
           <div class="site-logo">
@@ -104,12 +104,10 @@
             class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-badge color="red" content="0" top overlap>
-            <a id="shopping-cart" class="mx-4" href="/carts" style="text-decoration: none">
-              <v-icon class="shopping-cart-icon">mdi-shopping</v-icon>
-            </a>
-          </v-badge>
-          <v-btn icon to="/loginpage" class="hidden-md-and-down mx-4">
+          <v-btn icon class="hidden-xs-and-down mx-4">
+            <v-icon>mdi-shopping</v-icon>
+          </v-btn>
+          <v-btn icon to="/loginpage" class="hidden-md-and-down">
             <v-icon>mdi-account</v-icon>
           </v-btn>
 
@@ -121,37 +119,160 @@
         </v-app-bar>
         <!-- V main -->
         <v-main>
-          <v-container class="fill-height" fluid>
-            <v-row align="center" justify="center">
-              <div class="main-image">
-                <img class="img-responsive" :src="mainImageSrc" width="100%" />
-              </div>
-
-              <div class="image-center-item">
-                <img
-                  class="img-responsive-left"
-                  src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-2.png"
-                  alt="4men"
-                  :image-ratio="16/9"
-                  width="50%"
-                />
-                <h2 class="image-center-text-a">POLO</h2>
-                <v-btn class="image-center-btn-a">XEM THÊM</v-btn>
-                <img
-                  class="img-responsive-right"
-                  src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
-                  alt="4men"
-                  :image-ratio="16/9"
-                  width="50%"
-                />
-                <h2 class="image-center-text-b">SHIRT</h2>
-                <v-btn class="image-center-btn-b">XEM THÊM</v-btn>
-              </div>
+          <v-container>
+            <v-row dense>
+              <v-col>
+                <h1>THÔNG TIN THANH TOÁN</h1>
+                <v-form>
+                  <v-container fluid>
+                    <v-row>
+                      <v-col cols="12" sm="6">
+                        <v-text-field
+                          v-model="Name"
+                          :counter="20"
+                          :rules="nameRules"
+                          outlined
+                          dense
+                          label="Tên*"
+                          required
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-text-field
+                          v-model="Name"
+                          :counter="20"
+                          :rules="nameRules"
+                          outlined
+                          dense
+                          label="Họ*"
+                          required
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-combobox
+                          v-model="select"
+                          :items="items"
+                          label="Chọn Giới tính*"
+                          outlined
+                          dense
+                          required
+                        >
+                        </v-combobox>
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-text-field
+                          v-model="Email"
+                          :counter="20"
+                          :rules="emailRules"
+                          outlined
+                          dense
+                          label="Email"
+                          required
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-text-field
+                          v-model="Phone"
+                          :counter="20"
+                          :rules="phoneRules"
+                          outlined
+                          dense
+                          label="Số điện thoại*"
+                          required
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-select
+                          persistent-hint
+                          :items="itemCitys"
+                          label="Chọn thành phố*"
+                          outlined
+                          required
+                        >
+                          <!-- <option value="VN-44">An Giang</option>
+                          <option value="VN-43">Bà Rịa–Vũng Tàu</option>
+                          <option value="VN-54">Bắc Giang</option>
+                          <option value="VN-53">Bắc Kạn</option>
+                          <option value="VN-55">Bạc Liêu</option>
+                          <option value="VN-56">Bắc Ninh</option>
+                          <option value="VN-50">Bến Tre</option>
+                          <option value="VN-31">Bình Định</option>
+                          <option value="VN-57">Bình Dương</option>
+                          <option value="VN-58">Bình Phước</option>
+                          <option value="VN-40">Bình Thuận</option>
+                          <option value="VN-59">Cà Mau</option>
+                          <option value="VN-CT">Cần Thơ</option>
+                          <option value="VN-04">Cao Bằng</option>
+                          <option value="VN-DN">Đà Nẵng</option>
+                          <option value="VN-33">Đắk Lắk</option>
+                          <option value="VN-72">Đắk Nông</option>
+                          <option value="VN-71">Điện Biên</option>
+                          <option value="VN-39">Đồng Nai</option>
+                          <option value="VN-45">Đồng Tháp</option>
+                          <option value="VN-30">Gia Lai</option>
+                          <option value="VN-03">Hà Giang</option>
+                          <option value="VN-63">Hà Nam</option>
+                          <option value="VN-HN">Hà Nội</option>
+                          <option value="VN-23">Hà Tĩnh</option>
+                          <option value="VN-61">Hải Dương</option>
+                          <option value="VN-HP">Hải Phòng</option>
+                          <option value="VN-73">Hậu Giang</option>
+                          <option value="VN-SG">Hồ Chí Minh</option>
+                          <option value="VN-14">Hòa Bình</option>
+                          <option value="VN-66">Hưng Yên</option>
+                          <option value="VN-34">Khánh Hòa</option>
+                          <option value="VN-47">Kiên Giang</option>
+                          <option value="VN-28">Kon Tum</option>
+                          <option value="VN-01">Lai Châu</option>
+                          <option value="VN-35">Lâm Đồng</option>
+                          <option value="VN-09">Lạng Sơn</option>
+                          <option value="VN-02">Lào Cai</option>
+                          <option value="VN-41">Long An</option>
+                          <option value="VN-67">Nam Định</option>
+                          <option value="VN-22">Nghệ An</option>
+                          <option value="VN-18">Ninh Bình</option>
+                          <option value="VN-36">Ninh Thuận</option>
+                          <option value="VN-68">Phú Thọ</option>
+                          <option value="VN-32">Phú Yên</option>
+                          <option value="VN-24">Quảng Bình</option>
+                          <option value="VN-27">Quảng Nam</option>
+                          <option value="VN-29">Quảng Ngãi</option>
+                          <option value="VN-13">Quảng Ninh</option>
+                          <option value="VN-25">Quảng Trị</option>
+                          <option value="VN-52">Sóc Trăng</option>
+                          <option value="VN-05">Sơn La</option>
+                          <option value="VN-37">Tây Ninh</option>
+                          <option value="VN-20">Thái Bình</option>
+                          <option value="VN-69">Thái Nguyên</option>
+                          <option value="VN-21">Thanh Hóa</option>
+                          <option value="VN-26">Thừa Thiên–Huế</option>
+                          <option value="VN-46">Tiền Giang</option>
+                          <option value="VN-51">Trà Vinh</option>
+                          <option value="VN-07">Tuyên Quang</option>
+                          <option value="VN-49">Vĩnh Long</option>
+                          <option value="VN-70">Vĩnh Phúc</option>
+                          <option value="VN-06">Yên Bái</option> -->
+                        </v-select>
+                      </v-col>
+                      <v-col cols="12" sm="6"> </v-col>
+                    </v-row>
+                  </v-container>
+                </v-form>
+              </v-col>
+              <v-col>
+                <v-card>
+                  <v-card-title>ĐƠN HÀNG CỦA BẠN</v-card-title>
+                </v-card>
+              </v-col>
             </v-row>
           </v-container>
         </v-main>
 
-        <!-- Footer -->
+        <!-- footer -->
         <v-footer color="white" padless>
           <v-container>
             <!-- <v-row id="footer-center" class="d-flex align-items-center"> -->
@@ -280,11 +401,19 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapActions, mapGetters } from "vuex";
+
 export default {
-  props: {
-    source: String,
-  },
+  // validations: {
+  // name: { required, maxLength: maxLength(10) },
+  // email: { required, email },
+  // select: { required },
+  // checkbox: {
+  //   checked (val) {
+  //     return val
+  //   },
+  // },
+  // },
   data: () => ({
     drawer: null,
     linkBar: [
@@ -295,53 +424,91 @@ export default {
       "khuyến mãi",
       "Hệ Thống cửa hàng",
     ],
+    select: ["Giới tính"],
+    items: ["Nam", "Nữ"],
+    itemCitys: [
+      "An Giang",
+      "Bà Rịa–Vũng Tàu",
+      "Bắc Giang",
+      "Bắc Kạn",
+      "Bạc Liêu",
+      "Bắc Ninh",
+      "Bến Tre",
+      "Bình Định",
+      "Bình Dương",
+      "Bình Phước",
+      "Bình Thuận",
+      "Cà Mau",
+      "Cần Thơ",
+      "Cao Bằng",
+      "Đà Nẵng",
+      "Đắk Lắk",
+      "Đắk Nông",
+      "Điện Biên",
+      "Đồng Nai",
+      "Đồng Tháp",
+      "Gia Lai",
+      "Hà Giang",
+      "Hà Nam",
+      "Hà Nội",
+      "Hà Tĩnh",
+      "Hải Dương",
+      "Hải Phòng",
+      "Hậu Giang",
+      "Hồ Chí Minh",
+      "Hòa Bình",
+      "Hưng Yên",
+      "Khánh Hòa",
+      "Kiên Giang",
+      "Kon Tum",
+      "Lai Châu",
+      "Lâm Đồng",
+      "Lạng Sơn",
+      "Lào Cai",
+      "Long An",
+      "Nam Định",
+      "Nghệ An",
+      "Ninh Bình",
+      "Ninh Thuận",
+      "Phú Thọ",
+      "Phú Yên",
+      "Quảng Bình",
+      "Quảng Nam",
+      "Quảng Ngãi",
+      "Quảng Ninh",
+      "Quảng Trị",
+      "Sóc Trăng",
+      "Sơn La",
+      "Tây Ninh",
+      "Thái Bình",
+      "Thái Nguyên",
+      "Thanh Hóa",
+      "Thừa Thiên–Huế",
+      "Tiền Giang",
+      "Trà Vinh",
+      "Tuyên Quang",
+      "Vĩnh Long",
+      "Vĩnh Phúc",
+      "Yên Bái",
+    ],
     images: [],
     isValid: false,
     isAccount: false,
     mainImageSrc: null,
   }),
-  mounted() {
+
+  created() {
     this.onResize();
-    // console.log(this.$vuetify.breakpoint)
 
     window.addEventListener("resize", this.onResize, { passive: true });
   },
+
+  computed: {},
   methods: {
     onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
-    ...mapGetters("auth", ["user"]),
-  },
-
-  created() {
-    let self = this;
-    this.images = [
-      {
-        id: "1",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2020/12/1920x1089banner-destop-1.jpg",
-      },
-      {
-        id: "2",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2020/10/BANNER-WEB-2.png",
-      },
-      {
-        id: "3",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2020/10/BANNER-PC.png",
-      },
-      {
-        id: "4",
-        image:
-          "https://ninomaxx.com.vn/wp-content/uploads/2021/01/BANNER-WEB.png",
-      },
-    ];
-    setInterval(function () {
-      self.mainImageSrc =
-        self.images[Math.floor(Math.random() * self.images.length)].image;
-    }, 3000);
   },
 };
 </script>
@@ -410,167 +577,11 @@ export default {
   }
 }
 
-.image-center-item {
-  position: relative;
-  display: block;
-}
-
-.image-center-item .img {
-  position: relative;
-}
-
-.image-center-text-a {
-  position: absolute;
-  top: 0.5em;
-  left: 3.5em;
-  /* background-color:#8F0005; */
-  border-radius: 1.5em;
-  color: #000000;
-  border-color: #000000;
-  text-transform: uppercase;
-  padding: 1em 1.5em;
-}
-.image-center-text-b {
-  position: absolute;
-  top: 0.5em;
-  right: 20em;
-  /* background-color:#8F0005; */
-  border-radius: 1.5em;
-  color: #000000;
-  border-color: #000000;
-  text-transform: uppercase;
-  padding: 1em 1.5em;
-}
-
-.image-center-item .image-center-btn-a {
-  position: absolute;
-  top: 7em;
-  left: 6em;
-  /* background-color:#8F0005; */
-  border-radius: 1.5em;
-  color: #000000;
-  border-color: #000000;
-  text-transform: uppercase;
-  padding: 1em 1.5em;
-}
-.image-center-item .image-center-btn-b {
-  position: absolute;
-  top: 7em;
-  right: 35em;
-  /* background-color:#8F0005; */
-  border-radius: 1.5em;
-  color: #000000;
-  border-color: #000000;
-  text-transform: uppercase;
-  padding: 1em 1.5em;
-}
-// @media only screen and (max-width: 340px) {
-//   .image-center-item .image-center-btn-a {
-//     left: 16em;
-//   }
-//   .image-center-text-a {
-//     top: 1em;
-//     font-size: 24px;
-//     left: 5.3em;
-//   }
-//   .image-center-item .image-center-btn-b {
-//     top: 35em;
-//     left: 10em;
-//   }
-//   .image-center-text-b {
-//     top: 10em;
-//     font-size: 24px;
-//     left: 5.1em;
-//   }
-// }
-
-@media only screen and (max-width: 378px) {
-  .image-center-item .image-center-btn-a {
-    left: 10em;
-  }
-  .image-center-text-a {
-    top: 1em;
-    font-size: 24px;
-    left: 5.3em;
-  }
-  .image-center-item .image-center-btn-b {
-    top: 35em;
-    left: 10em;
-  }
-  .image-center-text-b {
-    top: 2em;
-    font-size: 24px;
-    left: 5.1em;
-  }
-}
-
-@media only screen and (max-width: 430px) {
-  .image-center-item .image-center-btn-a {
-    left: 10em;
-  }
-  .image-center-text-a {
-    top: 1em;
-    font-size: 24px;
-    left: 5.3em;
-  }
-  .image-center-item .image-center-btn-b {
-    top: 37em;
-    left: 10em;
-  }
-  .image-center-text-b {
-    top: 18.2em;
-    font-size: 24px;
-    left: 5.3em;
-  }
-}
-// @media only screen and (max-width: 560px) {
-//   .image-center-item .image-center-btn-a {
-//     left: 15em;
-//   }
-//   .image-center-text-a {
-//     top: 1em;
-//     font-size: 24px;
-//     left: 8.5em;
-//   }
-//   .image-center-item .image-center-btn-b {
-//     top: 47em;
-//     left: 15em;
-//   }
-//   .image-center-text-b {
-//     top: 24em;
-//     font-size: 24px;
-//     left: 8.2em;
-//   }
-// }
-@media only screen and (min-width: 610px) {
-  .image-center-item .image-center-btn-a {
-    left: 10em;
-  }
-  .image-center-text-a {
-    top: 1em;
-    font-size: 24px;
-    left: 5.3em;
-  }
-  .image-center-item .image-center-btn-b {
-    top: 6.5em;
-    right: 10em;
-  }
-  .image-center-text-b {
-    top: 0.9em;
-    font-size: 24px;
-    right: 5.3em;
-  }
+@media only screen and (max-width: 1390px) {
 }
 @media only screen and (max-width: 600px) {
   .image-center-item {
     display: block;
-    .img-responsive-left {
-      width: 100%;
-    }
-
-    .img-responsive-right {
-      width: 100%;
-    }
   }
   #footer-center .mx-auto {
     display: block;

@@ -5,6 +5,7 @@ import LoginPage from '../views/auth/LoginPage.vue'
 import SignupPage from '../views/auth/SignupPage.vue'
 import ForgotPasswordForm from '../views/auth/ForgotPasswordForm.vue'
 import HomePage from '../views/HomePage.vue'
+import Purchase from '../views/product/Purchase.vue'
 import ProductDetail from '../views/product/ProductDetail.vue'
 import CartListContainer from '../views/cart/CartListContainer.vue'
 import ProductListContainer from '../views/product/ProductListContainer.vue'
@@ -45,6 +46,11 @@ const routes = [
     path: '/carts',
     name: 'carts',
     component: CartListContainer
+  },
+  {
+    path: '/purchase',
+    name: 'purchase',
+    component: Purchase
   },
   {
     path: '/signupPage',

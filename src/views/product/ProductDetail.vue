@@ -102,10 +102,12 @@
             class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-btn icon class="hidden-xs-and-down mx-4" to="/carts">
-            <v-icon>mdi-shopping</v-icon>
-          </v-btn>
-          <v-btn icon to="/loginpage" class="hidden-md-and-down">
+          <v-badge color="red" content="0" top overlap>
+            <a id="shopping-cart" class="mx-4" href="/carts" style="text-decoration: none">
+              <v-icon class="shopping-cart-icon">mdi-shopping</v-icon>
+            </a>
+          </v-badge>
+          <v-btn icon to="/loginpage" class="hidden-md-and-down mx-4">
             <v-icon>mdi-account</v-icon>
           </v-btn>
 

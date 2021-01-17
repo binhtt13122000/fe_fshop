@@ -39,17 +39,17 @@
       </div>
       <div class="media">
         <div class="media-info">
-          <h1 style="font-family: 'Open Sans', sans-serif;">{{ product.productName }}</h1>
-          <h3 style="font-family: 'Open Sans', sans-serif;" class="price">
+          <h1 style="font-family: 'Open Sans', sans-serif">
+            {{ product.productName }}
+          </h1>
+          <h3 style="font-family: 'Open Sans', sans-serif" class="price">
             {{ product.productPrice }}<u>đ</u>
             <v-spacer></v-spacer>
           </h3>
         </div>
         <v-card-text>
-          
           <v-row>
             <v-col>
-              
               <v-rating
                 :value="4.5"
                 color="amber"
@@ -86,7 +86,7 @@
 
 
 <script>
-// import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 export default {
   name: "product",
   props: ["product"],
@@ -110,14 +110,13 @@ export default {
       }
     },
   },
-  // ...mapActions("cart")
+  ...mapActions("cart"),
 };
 </script>
 <style lang="scss">
 .title {
   color: #000000;
 }
-
 
 #button-container {
   position: relative;
@@ -168,6 +167,4 @@ export default {
     background-color: #000000;
   }
 }
-
-
 </style>
