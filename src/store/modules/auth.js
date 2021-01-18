@@ -19,7 +19,7 @@ const mutations = {
     setUser: (state, val) => {
         state.user = val
     },
-    auth_error: (state) =>{
+    auth_error: (state) => {
         state.status = 'error'
     },
     logout: (state) => {
@@ -27,51 +27,50 @@ const mutations = {
     },
     removeFromFavourite: (state, id) => {
         state.products.forEach(el => {
-        //   if (id === el.id) {
-        //     el.isFavourite = false;
-        //   }
-          if (id) {
-            el.isFavourite = false;
-          }
+            //   if (id === el.id) {
+            //     el.isFavourite = false;
+            //   }
+            if (id) {
+                el.isFavourite = false;
+            }
         });
-      },
+    },
 };
 const actions = {
-    login({commit}, credentials){
-        return new Promise((resolve, reject) => {
-            // commit('auth_request')
-            AuthServices.login(credentials).then(resp => {
-                console.log("Login");
-                console.log(resp.status);
-                console.log(resp.data);
-                console.log(resp);
-                // console.log(credentials);
-                // actions.getUser(credentials.username)
-                // console.log(resp.data);
-                // console.log(state.user);
-                resolve(resp)
+    login({ commit }, credentials) {
+        AuthServices.login(credentials)
+            .then(res => {
+                if (res.status === 200) {
+                    console.log(res)
+                    AuthServices.getUser(credentials.username)
+                        .then(response => {
+                            console.log(response);
+                            commit("a")
+                        })
+                        .catch(ex => {
+                            console.log(ex)
+                        })
+                }
             })
             .catch(err => {
-                commit('auth_error')
-                reject(err)
+                console.log(err);
             })
-        })
     },
-    getUser({commit}, username){
+    getUser({ commit }, username) {
         return new Promise((resolve, reject) => {
             AuthServices.getUser(username).then(resp => {
                 console.log("get user");
                 console.log(resp.data);
                 commit('setUser', resp.data)
                 resolve(resp)
-            }). catch(err => {
+            }).catch(err => {
                 commit('auth_error')
                 reject(err)
             })
         })
     },
 
-    register({commit}, user){
+    register({ commit }, user) {
         return new Promise((resolve, reject) => {
             // commit('auth_request')
             AuthServices.register(user).then(resp => {
@@ -80,10 +79,10 @@ const actions = {
                 console.log(resp)
                 resolve(resp)
             })
-            .catch(err => {
-                commit('auth_error')
-                reject(err)
-            })
+                .catch(err => {
+                    commit('auth_error')
+                    reject(err)
+                })
         })
     }
 

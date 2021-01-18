@@ -90,7 +90,7 @@
 
 <script>
 // import Axios from 'axios';
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "login",
   data() {
@@ -107,16 +107,8 @@ export default {
           username: this.username,
           password: this.password,
         })
-        .then(() => {
-                console.log("login fuction from components...1.1...");
-          console.log(this.username);
-          // this.$router.push("/carts");
-          // this.getUser();
-          this.getUser(this.username);
-        })
-        .catch((err) => console.log(err));
     },
-    ...mapActions("auth", ["getUser"]),
+    // ...mapActions("auth", ["getUser"]),
   },
   computed: {
     // getUser() {

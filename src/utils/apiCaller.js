@@ -13,7 +13,7 @@ export const request = (endpoint, method, headers, body, params) => {
             headers: {...defaultHeader, ...headers},
             data: body,
             params: Object.assign(params),
-            withCredentials: false,
+            withCredentials: true,
         }
     )
 }
