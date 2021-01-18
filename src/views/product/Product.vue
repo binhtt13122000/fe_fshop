@@ -39,10 +39,10 @@
       </div>
       <div class="media">
         <div class="media-info">
-          <h1 style="font-family: 'Open Sans', sans-serif">
+          <h1 style="font-family: 'Open Sans', sans-serif; margin-left: 11px;">
             {{ product.productName }}
           </h1>
-          <h3 style="font-family: 'Open Sans', sans-serif" class="price">
+          <h3 style="font-family: 'Open Sans', sans-serif; margin-left: 11px;" class="price">
             {{ product.productPrice }}<u>đ</u>
             <v-spacer></v-spacer>
           </h3>

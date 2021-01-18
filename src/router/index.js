@@ -9,6 +9,8 @@ import Purchase from '../views/product/Purchase.vue'
 import ProductDetail from '../views/product/ProductDetail.vue'
 import CartListContainer from '../views/cart/CartListContainer.vue'
 import ProductListContainer from '../views/product/ProductListContainer.vue'
+import Footer from '../components/Footer.vue'
+import Header from '../components/Header.vue'
 // import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
 
@@ -56,6 +58,16 @@ const routes = [
     path: '/signupPage',
     name: 'signupPage',
     component: SignupPage
+  },
+  {
+    path: '/footer',
+    name: 'footer',
+    component: Footer
+  },
+  {
+    path: '/header',
+    name: 'header',
+    component: Header
   },
   {
     path: '/about',

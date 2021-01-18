@@ -7,7 +7,6 @@ const state = {
     products: [],
     product: [],
     pages: [],
-    carts: [],
 };
 
 const getters = {

@@ -330,25 +330,27 @@ export default {
     ...mapActions("product", ["getProducts", "productDetails"]),
   },
   computed: {
-    // currenPage: {
-    //   get() {
-    //     return this.$store.state.pages.number;
-    //   },
-    //   set(val) {
+    currenPage1: {
+      get() {
+        return this.$store.state.product.pages;
+      },
+      // set(val, oldVal) {
 
-    //   }
-    // },
+      // }
+
+    },
     lastPage: {
       get() {
         return this.$store.state.product.pages.totalPages
       },
     },
-    ...mapGetters("product", ["products"]),
+    ...mapGetters("product", ["products",["pages"]]),
   },
 
   created() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
+    this.$store.mapGetters.product.pages
   },
   mounted() {
     this.getProducts(this.currenPage);
