@@ -3,12 +3,11 @@
     <v-container>
       <div>
         <v-row>
-            <h1>Oke ne</h1>
-            <v-col v-for="car in cars" :key="car.cartId">
-                <h1>Oke ln</h1>
-                <h1>{{cart.cartDescription}}</h1>
-                 <h1>{{cart.cartTotal}}</h1>
-            </v-col>
+          <h1>Oke ne</h1>
+          <v-col cols="12" v-for="car in cars" :key="car.cartId">
+            <h1>{{ cart.cartDescription }}</h1>
+            <h1>{{ cart.cartTotal }}</h1>
+          </v-col>
         </v-row>
       </div>
     </v-container>
@@ -18,7 +17,7 @@
 <script>
 export default {
   name: "product",
-  props: ["product","cart"],
+  // props: ["product","cart"],
 };
 </script>
 

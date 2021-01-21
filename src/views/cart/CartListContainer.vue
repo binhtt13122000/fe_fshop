@@ -266,14 +266,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapGetters } from "vuex";
 import VmCart from "./Cart.vue";
 export default {
-  name: "cart",
   components: { VmCart },
-  props: ["cart", "user"],
+  props: ["carts", "auth"],
   data: () => ({
     drawer: null,
+    
     linkBar: [
       "Name",
       "Nữ",
@@ -292,25 +292,30 @@ export default {
     this.onResize();
 
     window.addEventListener("resize", this.onResize, { passive: true });
+    this.$store.mapGetters.auth.carts
   },
 
   computed: {
-    ...mapGetters("product", ["carts"]),
-    ...mapGetters("auth", "user"),
+    ...mapGetters("auth", ["carts"]),
   },
   methods: {
     onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
-    ...mapActions("product", ["getCarts", "productDetails"]),
+    // ...mapActions("auth", ["getCarts"]),
+    
+
   },
 
+
   mounted() {
-    this.getCarts(this.$store.state.auth.user.username);
-    console.log("co nha1");
-    console.log(this.$store.state.auth.user.username);
-    console.log("co nha");
+    console.log("cart list container");
+    
+    // console.log(this.$store.state.auth.carts);
+    // this.getCarts(this.user);
+    // console.log(this.$store.state.auth.user);
+ 
   },
 };
 </script>

@@ -1,10 +1,11 @@
 <template>
   <div>
-    <v-app id="inspire">
+    <!-- <v-app id="inspire"> -->
       <v-navigation-drawer
         v-model="drawer"
         v-if="isValid"
         :clipped="$vuetify.breakpoint.lgAndUp"
+        overlay-opacity="0.3"
         app
         left
       >
@@ -122,7 +123,7 @@
           v-if="isValid"
         ></v-app-bar-nav-icon>
       </v-app-bar>
-    </v-app>
+    <!-- </v-app> -->
   </div>
 </template>
 

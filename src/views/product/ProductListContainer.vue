@@ -106,7 +106,7 @@
             class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-badge color="red" content="0" top overlap>
+          <v-badge color="red" :content="oke" top overlap>
             <a id="shopping-cart" class="mx-4" href="/carts" style="text-decoration: none">
               <v-icon class="shopping-cart-icon">mdi-shopping</v-icon>
             </a>
@@ -286,8 +286,9 @@ import VmProduct from "./Product.vue";
 // import Pagination from "./Pagination.vue";
 export default {
   components: { VmProduct },
-  props: ["product", "cart", "pages"],
+  props: ["product", "pages"],
   data: () => ({
+    oke: 2,
     currenPage: 1,
     // lastPage: 1,
     msg: "Welcome to my Vuex Store",
@@ -344,7 +345,7 @@ export default {
         return this.$store.state.product.pages.totalPages
       },
     },
-    ...mapGetters("product", ["products",["pages"]]),
+    ...mapGetters("product", ["products","pages"]),
   },
 
   created() {

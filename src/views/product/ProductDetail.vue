@@ -102,8 +102,19 @@
             class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-badge color="red" content="0" top overlap>
-            <a id="shopping-cart" class="mx-4" href="/carts" style="text-decoration: none">
+          <v-badge
+            v-model="badgeCart"
+            color="red"
+            :content="badgeCart"
+            top
+            overlap
+          >
+            <a
+              id="shopping-cart"
+              class="mx-4"
+              href="/carts"
+              style="text-decoration: none"
+            >
               <v-icon class="shopping-cart-icon">mdi-shopping</v-icon>
             </a>
           </v-badge>
@@ -299,7 +310,11 @@
                         </v-row>
                         <v-row>
                           <v-col>
-                            <v-btn id="btn-addToCart" width="100%">
+                            <v-btn
+                              id="btn-addToCart"
+                              width="100%"
+                              v-on:click="addToCard()"
+                            >
                               <v-icon>mdi-shopping</v-icon>
                               Đăng ký mua hàng
                             </v-btn>
@@ -625,6 +640,7 @@ export default {
   },
   data: () => ({
     modelSize: "Size",
+    badgeCart: 1,
     modelQuantity: "Quantity",
     modelComment: ["Mới nhất"],
     quantity: 1,
@@ -680,7 +696,20 @@ export default {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
-
+    changeFavourite() {
+      if (this.isFavourite == true) {
+        this.isFavourite = false;
+      } else if (this.isFavourite == false) {
+        this.isFavourite = true;
+      }
+    },
+    addToCart() {
+      // this.$store.commit("setCart",  productId);
+      // this.cartLengh(this.mapGetters.auth.cart.length)
+      // console.log(productId);
+      console.log(this.badgeCart);
+      return this.badgeCart++;
+    },
     ...mapActions("product", ["productDetails"]),
   },
   created() {
@@ -809,6 +838,7 @@ body {
     user-select: none;
   }
   .radio-size {
+    padding-top: 7px;
     background-color: #000000;
   }
 
@@ -833,6 +863,7 @@ body {
   }
 
   input:checked + span {
+    padding-top: 3px;
     border: 3px solid rgb(177, 177, 177);
     background-color: rgb(177, 177, 177);
     border: 3px solid rgb(177, 177, 177);

@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div id="app">
     <v-app id="inspire">
       <v-app-bar
         :clipped-left="$vuetify.breakpoint.lgAndUp"
@@ -92,7 +92,7 @@
 // import Axios from 'axios';
 import { mapGetters } from "vuex";
 export default {
-  name: "login",
+  // el: "#app",
   data() {
     return {
       username: "",
@@ -102,12 +102,13 @@ export default {
   methods: {
     login() {
       console.log("login fuction from components.......");
-      this.$store
-        .dispatch("auth/login", {
-          username: this.username,
-          password: this.password,
-        })
+      this.$store.dispatch("auth/login", {
+        username: this.username,
+        password: this.password,
+      });
+      // this.$router.push("/carts");
     },
+    
     // ...mapActions("auth", ["getUser"]),
   },
   computed: {
@@ -122,10 +123,12 @@ export default {
     //     });
     //   this.$router.push("/carts");
     // },
-    ...mapGetters("auth", "user"),
+    ...mapGetters("auth", ["user"]),
   },
   mounted() {
-    console.log(this.username);
+    // console.log(this.username);
+    // console.log("mouted login");
+    // this.getCarts(this.$store.state.auth.user.username);
     // this.getUser(this.username)
     // this.$router.push("/carts");
   },
