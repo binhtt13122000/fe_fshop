@@ -6,6 +6,10 @@ import AuthServices from "../../services/AuthenticationService"
 // import axios from 'axios';
 const state = {
     user: {},
+    userInfo: {
+        isLoggedIn: false,
+        isSignedUp: false
+    },
     cart: [],
     carts: [],
     cartDetail: []
@@ -13,6 +17,9 @@ const state = {
 const getters = {
     user(state) {
         return state.user;
+    },
+    isUserLoggedIn: state => {
+        return state.userInfo.isLoggedIn;
     },
     carts(state) {
         console.log(state.carts);
@@ -31,6 +38,12 @@ const mutations = {
     },
     setUser: (state, val) => {
         state.user = val
+    },
+    isUserLoggedIn: (state, isUserLoggedIn) => {
+        state.userInfo.isLoggedIn = isUserLoggedIn;
+    },
+    isUserSignedUp: (state, isSignedUp) => {
+        state.userInfo.isSignedUp = isSignedUp;
     },
     setCarts: (state, val) => {
         state.carts = val
@@ -105,6 +118,7 @@ const actions = {
                 console.log(responseforCart);
                 console.log("cart respon");
                 console.log(responseforCart.data.content);
+                await commit("isUserLoggedIn", true);
                 return await commit("setCarts", responseforCart.data.content);
 
                 // const responseForCartDetail = await AuthServices.getCartDetails()
@@ -119,13 +133,13 @@ const actions = {
     //     const response = await AuthServices.getCartDetails(cardId, username)
     //     if(response.status === 200){
     //         console.log(response.data.content)
-            
+
     //         response.data.content.forEach(e => {
     //             console.log(e);
     //         });
     //         return await commit("setCartDetail", response.data.content);
     //     }
-        
+
     //     throw new Error(response.status);
 
     // },
@@ -133,13 +147,13 @@ const actions = {
     //     const response = await AuthServices.getCartDetails(cardId, userName)
     //     if(response.status === 200){
     //         console.log(response.data.content)
-            
+
     //         response.data.content.forEach(e => {
     //             console.log(e);
     //         });
     //         return await commit("setCartDetail", response.data.content);
     //     }
-        
+
     //     throw new Error(response.status);
 
     // },

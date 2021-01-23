@@ -106,7 +106,7 @@
           <v-bottom-sheet v-model="sheet" inset>
             <template v-slot:activator="{ on, attrs }">
               <v-btn dark v-bind="attrs" v-on="on" icon>
-                <v-badge color="red" :content="oke" top overlap>
+                <v-badge color="red" :content="quantityInCart" top overlap>
                   <v-icon class="shopping-cart-icon">mdi-shopping</v-icon>
                 </v-badge>
               </v-btn>
@@ -134,8 +134,10 @@
                     />
                   </v-avatar>
                 </v-list-item-avatar>
-                <router-link :to="'/carts/' +cart.cartId" id="cart-item">
-                  <v-list-item-title style="font-size: 30px">{{ cart.cartId }}</v-list-item-title>
+                <router-link :to="'/carts/' + cart.cartId" id="cart-item">
+                  <v-list-item-title style="font-size: 30px">{{
+                    cart.cartId
+                  }}</v-list-item-title>
                 </router-link>
               </v-list-item>
             </v-list>
@@ -206,7 +208,7 @@ export default {
       { img: "messenger.png", title: "Messenger" },
       { img: "google.png", title: "Google+" },
     ],
-    oke: 2,
+    quantityInCart: 2,
     currenPage: 1,
     // lastPage: 1,
     msg: "Welcome to my Vuex Store",

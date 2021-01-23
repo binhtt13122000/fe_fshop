@@ -5,7 +5,7 @@
       <!-- Navigation bar -->
       <my-header></my-header>
       <!-- V main -->
-      <v-main>
+      <v-main class="purchase">
         <p>Bạn đã có tài khoản chưa? <a href="">Ấn vào đây để đăng nhập</a></p>
         <p>Bạn đã có tài khoản chưa? <a href="">Ấn vào đây để đăng nhập</a></p>
         <div>
@@ -119,39 +119,37 @@
               </v-form>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-card>
-                <v-form>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Hình</th>
-                        <th>Thông tin sản phẩm</th>
-                        <th>Size</th>
-                        <th>Đơn giá</th>
-                        <th>Tổng</th>
-                        <th>Xóa</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <img
-                            src="https://ninomaxx.com.vn/wp-content/uploads/2021/01/WEB-1.png"
-                            width="30%"
-                            alt="Thông tin sản phẩm"
-                          />
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </v-form>
-              </v-card>
+              <v-form>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Hình</th>
+                      <th>Thông tin sản phẩm</th>
+                      <th>Size</th>
+                      <th>Đơn giá</th>
+                      <th>Tổng</th>
+                      <th>Xóa</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <img
+                          src="https://ninomaxx.com.vn/wp-content/uploads/2021/01/WEB-1.png"
+                          width="30%"
+                          alt="Thông tin sản phẩm"
+                        />
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </v-form>
             </v-col>
           </v-row>
         </div>
