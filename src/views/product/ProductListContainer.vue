@@ -20,28 +20,24 @@
           ></v-text-field>
           <v-list class="nar-bar-btn" dense justify="center" align="left">
             <!-- <v-list-group> -->
-            <v-list-item link to="/loginpage" v-if="isAccount" >
+            <v-list-item link to="/loginpage" v-if="isAccount">
               <v-list-item-content>
                 <v-list-item-title>Login/Register</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link to="/products">
               <v-list-item-content>
-                  <v-list-item-title>Name</v-list-item-title>
+                <v-list-item-title>Name</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title
-                  >Bộ sưu tập</v-list-item-title
-                >
+                <v-list-item-title>Bộ sưu tập</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title
-                  >Blog</v-list-item-title
-                >
+                <v-list-item-title>Blog</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link>
@@ -57,6 +53,7 @@
             <!-- </v-list-group> -->
           </v-list>
         </v-navigation-drawer>
+
         <!--App bar -->
         <v-app-bar
           :clipped-left="$vuetify.breakpoint.lgAndUp"
@@ -106,12 +103,44 @@
             class="hidden-sm-and-down mx-4"
           ></v-text-field>
           <!-- </v-col> -->
-          <v-badge color="red" :content="oke" top overlap>
-            <a id="shopping-cart" class="mx-4" href="/carts" style="text-decoration: none">
-              <v-icon class="shopping-cart-icon">mdi-shopping</v-icon>
-            </a>
-          </v-badge>
-          <v-btn icon to="/loginpage" class="hidden-md-and-down ">
+          <v-bottom-sheet v-model="sheet" inset>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn dark v-bind="attrs" v-on="on" icon>
+                <v-badge color="red" :content="oke" top overlap>
+                  <v-icon class="shopping-cart-icon">mdi-shopping</v-icon>
+                </v-badge>
+              </v-btn>
+            </template>
+            <v-list>
+              <h1
+                style="
+                  background-color: black;
+                  color: white;
+                  padding-bottom: 10px;
+                "
+              >
+                Your cart
+              </h1>
+              <v-list-item
+                v-for="cart in carts"
+                :key="cart.cartId"
+                @click="sheet = false"
+              >
+                <v-list-item-avatar>
+                  <v-avatar size="32px">
+                    <img
+                      src="https://cdn1.vectorstock.com/i/1000x1000/60/55/shopping-cart-icon-in-flat-style-shopping-symbol-vector-20616055.jpg"
+                      alt="cart"
+                    />
+                  </v-avatar>
+                </v-list-item-avatar>
+                <router-link :to="'/carts/' +cart.cartId" id="cart-item">
+                  <v-list-item-title style="font-size: 30px">{{ cart.cartId }}</v-list-item-title>
+                </router-link>
+              </v-list-item>
+            </v-list>
+          </v-bottom-sheet>
+          <v-btn icon to="/loginpage" class="hidden-md-and-down">
             <v-icon>mdi-account</v-icon>
           </v-btn>
 
@@ -154,127 +183,7 @@
 
         <!-- V-footer  ------->
         <v-divider></v-divider>
-        <v-footer color="white" padless>
-          <v-container>
-            <v-row id="footer-center" class="d-flex align-items-center">
-              <v-col class="mx-auto mt-2">
-                <div class="social-link">
-                  <h4 class="font-weight-bold">Contact</h4>
-                  <v-list>
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-phone</v-icon>
-                          HOTLINE:028 3526 7061
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-store</v-icon>
-                          HỆ THỐNG CỬA HÀNG
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                    <v-list-item link>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          <v-icon>mdi-gift</v-icon>
-                          PHIẾU QUÀ TẶNG
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <hr
-                      class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                      style="width: 300px"
-                    />
-                  </v-list>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="thuong-hieu">
-                  <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
-                  <ul class="foo-thuong-hieu">
-                    <li><a href="">Giới thiệu</a></li>
-                    <li><a href="">Tuyển dụng</a></li>
-                    <li><a href="">Liên hệ</a></li>
-                  </ul>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="tin-tuc">
-                  <h4 class="font-weight-bold">TIN TỨC</h4>
-                  <ul class="foo-tin-tuc">
-                    <li><a href="">Bộ sưu tập</a></li>
-                    <li><a href="">Tư vấn thời trang</a></li>
-                    <li><a href="">Tin tức thời trang</a></li>
-                    <li><a href="">Mẹo hay</a></li>
-                    <li><a href="">Khuyến mãi</a></li>
-                  </ul>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="ho-tro">
-                  <h4 class="font-weight-bold">HỖ TRỢ</h4>
-                  <ul class="foo-ho-tro">
-                    <li><a href="">Khách hàng thân thiết</a></li>
-                    <li><a href="">Hướng dẫn mua hàng</a></li>
-                    <li><a href="">Hướng dẫn thanh toán</a></li>
-                    <li><a href="">Giao hàng</a></li>
-                    <li><a href="">Quy định đổi hàng</a></li>
-                    <li><a href="">Bảo mật thông tin</a></li>
-                  </ul>
-                </div>
-              </v-col>
-              <v-col class="mx-auto mt-2">
-                <div class="dang-ky-nhan-tin">
-                  <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
-                  <v-form>
-                    <v-text-field
-                      class="form-group"
-                      label="Email"
-                      type="text"
-                    ></v-text-field>
-                    <v-btn type="submit">Đăng ký</v-btn>
-                  </v-form>
-                </div>
-              </v-col>
-            </v-row>
-          </v-container>
-          <v-container>
-            <v-row id="socialIcon" class="d-flex align-items-center">
-              <v-col md="12" lg="12" xl="12" class="mx-auto mt-3">
-                <div class="social-items" align="center" justify="center">
-                  <a href=""><v-icon size="50">mdi-google</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-instagram</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-linkedin</v-icon></a>
-                </div>
-              </v-col>
-            </v-row>
-          </v-container>
-          <v-col class="grey darken-1 py-4 text-center white--text" cols="12">
-            {{ new Date().getFullYear() }} — <strong>4menshop</strong>
-            <div class="footer-copyright text-center py-3">
-              <v-container fluid>
-                &copy; CÔNG TY CỔ PHẦN TMDV - TVTK THỜI TRANG VIỆT:
-                <a href="https://www.4menshop.com" style="color: red">
-                  4menshop.com
-                </a>
-              </v-container>
-            </div>
-          </v-col>
-        </v-footer>
+        <VmFooter></VmFooter>
       </v-app>
     </v-app>
   </div>
@@ -282,17 +191,27 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import VmFooter from "../../components/Footer.vue";
 import VmProduct from "./Product.vue";
 // import Pagination from "./Pagination.vue";
 export default {
-  components: { VmProduct },
-  props: ["product", "pages"],
+  components: { VmProduct, VmFooter },
+  // props: ["product"],
   data: () => ({
+    sheet: false,
+    tiles: [
+      { img: "keep.png", title: "Keep" },
+      { img: "inbox.png", title: "Inbox" },
+      { img: "hangouts.png", title: "Hangouts" },
+      { img: "messenger.png", title: "Messenger" },
+      { img: "google.png", title: "Google+" },
+    ],
     oke: 2,
     currenPage: 1,
     // lastPage: 1,
     msg: "Welcome to my Vuex Store",
     drawer: null,
+    drawerRight: null,
     search: null,
     shoppingCartBadge: 0,
     linkBar: [
@@ -318,9 +237,9 @@ export default {
     //   console.log("click");
     // },
     currenPage() {
-      console.log(this.currenPage)
+      console.log(this.currenPage);
       this.getProducts(this.currenPage);
-    }
+    },
   },
 
   methods: {
@@ -328,33 +247,33 @@ export default {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
-    ...mapActions("product", ["getProducts", "productDetails"]),
+    ...mapActions("product", ["getProducts"]),
   },
   computed: {
     currenPage1: {
       get() {
         return this.$store.state.product.pages;
       },
-      // set(val, oldVal) {
-
-      // }
-
     },
     lastPage: {
       get() {
-        return this.$store.state.product.pages.totalPages
+        return this.$store.state.product.pages.totalPages;
       },
     },
-    ...mapGetters("product", ["products","pages"]),
+    ...mapGetters("product", ["products", "pages"]),
+    ...mapGetters("auth", ["carts", "user", "cart"]),
+    // ...mapState("auth", ["carts", "user", "cart"]),
   },
 
   created() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
-    this.$store.mapGetters.product.pages
+    this.$store.mapGetters.product.pages;
+    this.getProducts(this.currenPage);
   },
   mounted() {
-    this.getProducts(this.currenPage);
+    console.log("t laf produc list");
+    // console.log(this.$store.state.auth.user.userName);
   },
 };
 </script>
@@ -421,8 +340,13 @@ export default {
     background-color: rgb(136, 16, 16);
   }
 }
+
+#cart-item {
+  text-decoration: none;
+  size: 30px;
+  color: #000000;
+}
 @media only screen and (max-width: 730px) {
-  
 }
 @media only screen and (max-width: 560px) {
   // .right-column-icon v-btn {

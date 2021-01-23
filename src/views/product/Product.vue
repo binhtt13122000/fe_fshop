@@ -109,18 +109,12 @@ export default {
         this.isFavourite = true;
       }
     },
-    addToCart(productId) { 
-      this.$store.commit("setCart",  productId);
-      // this.cartLengh(this.mapGetters.auth.cart.length)
-      this.cartLengh++;
-    },
-      // ...mapActions("auth", [""]),
   },
   computed: {
     ...mapGetters("auth", ["cart"])
   },
   mounted() {
-    this.$store.state.auth.cart
+    // this.$store.state.auth.cart
   }
 
 };

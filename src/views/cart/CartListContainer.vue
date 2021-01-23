@@ -118,162 +118,65 @@
           ></v-app-bar-nav-icon>
         </v-app-bar>
         <!-- V main -->
-        <v-main>
+        <v-main style="background-color: #f4f4f4">
           <v-container>
             <v-row dense>
-              <!-- <v-col
-                md="4"
+              <v-col
+                cols="12"
                 align-content="center"
                 justify="center"
-                v-for="cart in carts"
-                :key="cart.userId"
-              > -->
-              <h1>Oke from cart list</h1>
-              <div v-for="cart in carts" :key="cart.userId">
-                <VmCart :cart="cart"></VmCart>
-              </div>
-              <!-- </v-col> -->
+                v-for="(detail, i) in cartDetail"
+                :key="i"
+              >
+                <h1 v-if="i == 0">{{ detail.cartId }}</h1>
+              </v-col>
+
+              <v-spacer></v-spacer>
+              <v-col style="background-color: #ffffff" cols="12">
+              <v-checkbox label="SELECT ALL" v-model="checkbox"></v-checkbox>
+              </v-col>
+              <v-col
+                cols="12"
+                align-content="center"
+                justify="center"
+                v-for="detail in cartDetail"
+                :key="detail.cartId"
+              >
+                <VmCart :detail="detail" v-model="checkbox"></VmCart>
+              </v-col>
+              <v-col cols="12" style="background-color: #ffffff">
+                <p>
+                  <img
+                    src="https://bizweb.dktcdn.net/100/354/189/files/freeship-shop-dong-ho-chinh-hang.png?v=1557544614669"
+                    width="5%"
+                    alt=""
+                  />
+                  Nhấn vào mục Mã giảm giá ở cuối trang để hưởng miễn phí vận
+                  chuyển bạn nhé!
+                </p>
+              </v-col>
+              <v-col cols="12"></v-col>
             </v-row>
           </v-container>
         </v-main>
-
         <!-- footer -->
-        <v-footer color="white" padless>
-          <v-container>
-            <!-- <v-row id="footer-center" class="d-flex align-items-center"> -->
-            <div id="footer-center">
-              <!-- <v-col class="mx-auto mt-2"> -->
-              <div class="mx-auto mt-auto">
-                <h4 class="font-weight-bold">Contact</h4>
-                <v-list>
-                  <v-list-item link>
-                    <v-list-item-content>
-                      <v-list-item-title>
-                        <v-icon>mdi-phone</v-icon>
-                        HOTLINE:028 3526 7061
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <hr
-                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                    style="width: 300px"
-                  />
-                  <v-list-item link>
-                    <v-list-item-content>
-                      <v-list-item-title>
-                        <v-icon>mdi-store</v-icon>
-                        HỆ THỐNG CỬA HÀNG
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <hr
-                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                    style="width: 300px"
-                  />
-                  <v-list-item link>
-                    <v-list-item-content>
-                      <v-list-item-title>
-                        <v-icon>mdi-gift</v-icon>
-                        PHIẾU QUÀ TẶNG
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <hr
-                    class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                    style="width: 300px"
-                  />
-                </v-list>
-              </div>
-              <!-- </v-col>
-              <v-col  class="mx-auto mt-2"> -->
-              <div class="mx-auto mt-2">
-                <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
-                <ul class="foo-thuong-hieu">
-                  <li><a href="">Giới thiệu</a></li>
-                  <li><a href="">Tuyển dụng</a></li>
-                  <li><a href="">Liên hệ</a></li>
-                </ul>
-              </div>
-              <!-- </v-col>
-              <v-col class="mx-auto mt-2"> -->
-              <div class="mx-auto mt-2">
-                <h4 class="font-weight-bold">TIN TỨC</h4>
-                <ul class="foo-tin-tuc">
-                  <li><a href="">Bộ sưu tập</a></li>
-                  <li><a href="">Tư vấn thời trang</a></li>
-                  <li><a href="">Tin tức thời trang</a></li>
-                  <li><a href="">Mẹo hay</a></li>
-                  <li><a href="">Khuyến mãi</a></li>
-                </ul>
-              </div>
-              <!-- </v-col>
-              <v-col class="mx-auto mt-2"> -->
-              <div class="mx-auto mt-2">
-                <h4 class="font-weight-bold">HỖ TRỢ</h4>
-                <ul class="foo-ho-tro">
-                  <li><a href="">Khách hàng thân thiết</a></li>
-                  <li><a href="">Hướng dẫn mua hàng</a></li>
-                  <li><a href="">Hướng dẫn thanh toán</a></li>
-                  <li><a href="">Giao hàng</a></li>
-                  <li><a href="">Quy định đổi hàng</a></li>
-                  <li><a href="">Bảo mật thông tin</a></li>
-                </ul>
-              </div>
-              <!-- </v-col>
-              <v-col class="mx-auto mt-2"> -->
-              <div class="mx-auto mt-2">
-                <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN TIN</h4>
-                <v-form>
-                  <v-text-field
-                    class="form-group"
-                    label="Email"
-                    type="text"
-                  ></v-text-field>
-                  <v-btn type="submit">Đăng ký</v-btn>
-                </v-form>
-              </div>
-              <!-- </v-col> -->
-            </div>
-            <!-- </v-row> -->
-          </v-container>
-          <v-container>
-            <v-row id="socialIcon" class="d-flex align-items-center">
-              <v-col md="12" lg="12" xl="12" class="mx-auto mt-3">
-                <div class="social-items" align="center" justify="center">
-                  <a href=""><v-icon size="50">mdi-google</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-instagram</v-icon></a>
-                  <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
-                </div>
-              </v-col>
-            </v-row>
-          </v-container>
-          <v-col class="grey darken-1 py-4 text-center white--text" cols="12">
-            {{ new Date().getFullYear() }} — <strong>4menshop</strong>
-            <div class="footer-copyright text-center py-3">
-              <v-container fluid>
-                &copy; CÔNG TY CỔ PHẦN TMDV - TVTK THỜI TRANG VIỆT:
-                <a href="https://www.4menshop.com" style="color: red">
-                  4menshop.com
-                </a>
-              </v-container>
-            </div>
-          </v-col>
-        </v-footer>
+        <VmFooter></VmFooter>
       </v-app>
     </v-app>
   </div>
 </template>
 
 <script>
-import {mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
+import VmFooter from "../../components/Footer.vue";
 import VmCart from "./Cart.vue";
 export default {
-  components: { VmCart },
-  props: ["carts", "auth"],
+  components: { VmFooter, VmCart },
+
   data: () => ({
     drawer: null,
-    
+    username: "nhanltse140784",
+    checkbox: false,
     linkBar: [
       "Name",
       "Nữ",
@@ -282,6 +185,7 @@ export default {
       "khuyến mãi",
       "Hệ Thống cửa hàng",
     ],
+    userLogo: "",
     images: [],
     isValid: false,
     isAccount: false,
@@ -292,30 +196,36 @@ export default {
     this.onResize();
 
     window.addEventListener("resize", this.onResize, { passive: true });
-    this.$store.mapGetters.auth.carts
+
+    // console.log(
+    //   this.getCartDetail(this.$route.params.idCart)
+    // );
   },
 
   computed: {
-    ...mapGetters("auth", ["carts"]),
+    ...mapState("auth", {
+      user: (state) => state.user,
+      cartDetail: (state) => state.cartDetail,
+    }),
+    ...mapGetters("auth", ["carts", "user", "cart", "cartDetail"]),
   },
   methods: {
     onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
-    // ...mapActions("auth", ["getCarts"]),
-    
 
+    ...mapActions("auth", ["getCartDetail"]),
   },
 
-
   mounted() {
-    console.log("cart list container");
-    
-    // console.log(this.$store.state.auth.carts);
-    // this.getCarts(this.user);
-    // console.log(this.$store.state.auth.user);
- 
+    // console.log(this.$route.params.idCart, this.username);
+    console.log("tao cart list ne");
+    console.log(this.$route.params.idCart);
+    // let a = this.$route.params.idCart;
+    // let b = this.user.userName;
+    console.log(this.user.userName);
+    this.getCartDetail();
   },
 };
 </script>

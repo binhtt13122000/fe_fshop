@@ -704,9 +704,6 @@ export default {
       }
     },
     addToCart() {
-      // this.$store.commit("setCart",  productId);
-      // this.cartLengh(this.mapGetters.auth.cart.length)
-      // console.log(productId);
       console.log(this.badgeCart);
       return this.badgeCart++;
     },
