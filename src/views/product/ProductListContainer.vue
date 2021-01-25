@@ -168,10 +168,10 @@
                 sm="4"
                 align-content="center"
                 justify="center"
-                v-for="product in products"
-                :key="product.productId"
+                v-for="item in products"
+                :key="item.productId"
               >
-                <VmProduct :product="product"></VmProduct>
+                <VmProduct :product="item"></VmProduct>
               </v-col>
             </v-row>
             <v-pagination
@@ -195,10 +195,11 @@
 import { mapActions, mapGetters } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 import VmProduct from "./Product.vue";
+
 // import Pagination from "./Pagination.vue";
 export default {
   components: { VmProduct, VmFooter },
-  // props: ["product"],
+  props: ["product"],
   data: () => ({
     sheet: false,
     tiles: [
@@ -211,7 +212,6 @@ export default {
     quantityInCart: 2,
     currenPage: 1,
     // lastPage: 1,
-    msg: "Welcome to my Vuex Store",
     drawer: null,
     drawerRight: null,
     search: null,
@@ -235,9 +235,6 @@ export default {
     isAccount: false,
   }),
   watch: {
-    // currenPage(newVal, oldVal) {
-    //   console.log("click");
-    // },
     currenPage() {
       console.log(this.currenPage);
       this.getProducts(this.currenPage);
@@ -270,12 +267,11 @@ export default {
   created() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
-    this.$store.mapGetters.product.pages;
+    // this.$store.mapGetters.product.pages;
     this.getProducts(this.currenPage);
   },
   mounted() {
-    console.log("t laf produc list");
-    // console.log(this.$store.state.auth.user.userName);
+    console.log("From product list");
   },
 };
 </script>

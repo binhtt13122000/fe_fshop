@@ -7,7 +7,7 @@
           <v-row style="background-color: rgb(255, 237, 231)">
             <v-checkbox color="orange"></v-checkbox>
             <v-col>
-              <div v-for="(img, i) in detail.product.productImages" :key="i">
+              <div v-for="(img, i) in detail.product.productImages" :key="'A'+i">
                 <a :href="'/products/' + img.productId">
                   <img
                     v-if="i == 0"
@@ -84,7 +84,7 @@ export default {
     increaseValue() {
       return this.quantity++;
     },
-    quantity() {
+    changeQuantity() {
       this.quantity = this.detail.cartQuantity;
     },
     decreaseValue() {

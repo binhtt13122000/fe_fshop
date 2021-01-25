@@ -112,25 +112,10 @@ export default {
     // ...mapActions("auth", ["getUser"]),
   },
   computed: {
-    // getUser() {
-    //   this.$store
-    //     .dispatch("auth/getUser", {
-    //       username: this.username,
-    //     })
-    //     .then((response) => {
-    //       console.log("Login in componenet");
-    //       console.log(response);
-    //     });
-    //   this.$router.push("/carts");
-    // },
+
     ...mapGetters("auth", ["user"]),
   },
   mounted() {
-    // console.log(this.username);
-    // console.log("mouted login");
-    // this.getCarts(this.$store.state.auth.user.username);
-    // this.getUser(this.username)
-    // this.$router.push("/carts");
   },
 };
 </script>

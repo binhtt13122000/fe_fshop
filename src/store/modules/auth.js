@@ -58,13 +58,10 @@ const mutations = {
         state.status = 'error'
     },
     logout: (state) => {
-        state.status = ''
+        state.user = ''
     },
     removeFromFavourite: (state, id) => {
         state.products.forEach(el => {
-            //   if (id === el.id) {
-            //     el.isFavourite = false;
-            //   }
             if (id) {
                 el.isFavourite = false;
             }
@@ -72,103 +69,86 @@ const mutations = {
     },
 };
 const actions = {
-    // login({ commit }, credentials) {
-    //     AuthServices.login(credentials)
-    //         .then(res => {
-    //             console.log(res.status);
-    //             if (res.status === 200) {
-    //                 //get user detail
-    //                 AuthServices.getUser(credentials.username)
-    //                     .then(response => {
-    //                         console.log("Oke");
-    //                         console.log(response.data);
 
-    //                         commit('setUser', response.data)
-    //                         console.log(state.user.userName);
-    //                         // get Cart
-
-    //                         AuthServices.getCarts(credentials.username)
-    //                             .then(res1 => {
-    //                                 commit("setCarts", res1.data.content)
-    //                                 // localStorage.setItem('setCarts', res1.data.content)
-    //                                 console.log(res1.data.content);
-    //                                 console.log(state.user.userName);
-    //                             }).catch(ex => {
-    //                                 console.log(ex)
-    //                             })
-    //                     })
-    //                     .catch(ex => {
-    //                         console.log(ex)
-    //                     })
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         })
-    // },
+    async logout({commit}, username){
+        const response = await AuthServices.logout(username);
+        if(response.status === 200) {
+            console.log(response.data)
+            await commit("isUserLoggedIn", true);
+            return await commit("logout")
+        }
+        throw new Error(response.status)
+    },
 
     async login({ commit }, credential) {
         await AuthServices.login(credential);
         const response = await AuthServices.getUser(credential.username);
         if (response.status === 200) {
             console.log(response.data)
-            await commit("setUser", response.data);
-            const responseforCart = await AuthServices.getCarts(credential.username);
-            if (responseforCart.status === 200) {
-                console.log(responseforCart);
-                console.log("cart respon");
-                console.log(responseforCart.data.content);
-                await commit("isUserLoggedIn", true);
-                return await commit("setCarts", responseforCart.data.content);
+            return await commit("setUser", response.data);
+            // const responseforCart = await AuthServices.getCarts(credential.username);
+            // if (responseforCart.status === 200) {
+            //     console.log(responseforCart);
+            //     console.log("cart respon");
+            //     console.log(responseforCart.data.content);
+            //     await commit("isUserLoggedIn", true);
+            //     return await commit("setCarts", responseforCart.data.content);
 
-                // const responseForCartDetail = await AuthServices.getCartDetails()
-            }
-            throw new Error(responseforCart.status)
+            //     // const responseForCartDetail = await AuthServices.getCartDetails()
+            // }
+            // throw new Error(responseforCart.status)
         }
         throw new Error(response.status);
 
     },
-    // async getCartDetail({ commit }, cardId) {
 
-    //     const response = await AuthServices.getCartDetails(cardId, username)
-    //     if(response.status === 200){
-    //         console.log(response.data.content)
+    async getCart({commit}, username){
+        const response =  await AuthServices.getCarts(username);
+        if(response.status === 200){
+            console.log(response);
+            console.log("cart response");
+            console.log(response.data.content);
+            await commit("isUserLoggedIn", true);
+            return await commit("setCarts", response.data.content);
 
-    //         response.data.content.forEach(e => {
-    //             console.log(e);
-    //         });
-    //         return await commit("setCartDetail", response.data.content);
-    //     }
+            // const responseForCartDetail = await AuthServices.getCartDetails()
+        }
+        throw new Error(response.status)
+    },
+    async getCartDetail({ commit }, cardId, username) {
 
-    //     throw new Error(response.status);
+        const response = await AuthServices.getCartDetails(cardId, username)
+        if(response.status === 200){
+            console.log(response.data.content)
 
+            response.data.content.forEach(e => {
+                console.log(e);
+            });
+            return await commit("setCartDetail", response.data.content);
+        }
+
+        throw new Error(response.status);
+
+    },
+
+    // getCartDetail({ commit }) {
+    //     return new Promise((resolve, reject) => {
+    //         AuthServices.getCartDetails('CART_0020', 'nhanltse140784').then(resp => {
+    //             commit("setCartDetail", resp.data.content);
+    //             console.log(resp.data.content)
+    //             resolve(resp)
+    //         })
+    //             .catch(err => {
+    //                 reject(err)
+    //             })
+    //     })
     // },
-    // async getCartDetail1({ commit }, cardId, userName) {
-    //     const response = await AuthServices.getCartDetails(cardId, userName)
-    //     if(response.status === 200){
-    //         console.log(response.data.content)
 
-    //         response.data.content.forEach(e => {
-    //             console.log(e);
-    //         });
-    //         return await commit("setCartDetail", response.data.content);
-    //     }
-
-    //     throw new Error(response.status);
-
-    // },
-
-    getCartDetail({ commit }) {
-        return new Promise((resolve, reject) => {
-            AuthServices.getCartDetails('CART_0020', 'nhanltse140784').then(resp => {
-                commit("setCartDetail", resp.data.content);
-                console.log(resp.data.content)
-                resolve(resp)
-            })
-                .catch(err => {
-                    reject(err)
-                })
-        })
+    async createNewCart( username, newCart) {
+        const response = await AuthServices.createNewCart(username, newCart)
+        if(response.status === 200){
+            console.log(response);
+        }
     },
 
     register({ commit }, user) {

@@ -104,7 +104,7 @@
         ></v-text-field>
         <!-- </v-col> -->
         <!-- cart -->
-        <v-bottom-sheet v-model="sheet" inset class="mx-4">
+        <v-bottom-sheet v-model="sheet" class="mx-4" style="border-radius: 5px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn dark v-bind="attrs" v-on="on" icon>
               <v-badge color="red" :content="quantityInCart" top overlap>
@@ -141,8 +141,13 @@
                 }}</v-list-item-title>
               </router-link>
             </v-list-item>
+            <v-btn class="ma-2" color="primary" dark
+              >Add cart<v-icon large>mdi-plus</v-icon></v-btn
+            >
           </v-list>
         </v-bottom-sheet>
+
+        <!-- menu for account -->
         <v-menu
           class="mx-auto"
           bottom
@@ -164,24 +169,21 @@
                 <v-avatar color="brown">
                   <img :src="user.avatar" :alt="user.username" />
                 </v-avatar>
-                <h3>{{ user.fullName }}</h3>
+                <h3>{{ user.username }}</h3>
                 <p class="caption mt-1">
                   {{ user.email }}
                 </p>
                 <v-divider class="my-3"></v-divider>
                 <v-btn depressed rounded text> My Account </v-btn>
                 <v-divider class="my-3"></v-divider>
-                <v-btn depressed rounded text> Logout </v-btn>
+                <v-btn depressed rounded text v-on:click="logout()">
+                  Logout
+                </v-btn>
               </div>
             </v-list-item-content>
           </v-card>
         </v-menu>
-        <v-btn
-          icon
-          to="/loginpage"
-          class="hidden-md-and-down mx-auto"
-          v-if="!isLoggedIn"
-        >
+        <v-btn icon to="/loginpage" class="hidden-md-and-down mx-auto" v-else>
           <v-icon>mdi-account</v-icon>
         </v-btn>
 
@@ -196,11 +198,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 export default {
   data: () => ({
     drawer: null,
     sheet: false,
+    isLoggedIn: false,
     quantityInCart: 2,
     linkBar: [
       "Name",
@@ -214,28 +217,43 @@ export default {
     isValid: false,
     isAccount: false,
   }),
-  mounted() {
+
+  methods: {
+    logout() {
+      console.log("logou nef");
+      console.log(this.$store.state.auth.user.username);
+      this.$store.dispatch("auth/logout", "nhanltse140784").then((response) => {
+        if (response.status === 200) {
+          this.$router.push("/");
+        }
+      });
+    },
+    loggedIn: function () {
+      this.isLoggedIn = this.$store.state.auth.userInfo.isLoggedIn;
+    },
+    onResize() {
+      this.isValid = window.innerWidth <= 1040;
+      this.isAccount = window.innerWidth <= 900;
+    },
+    ...mapActions("auth", ["logout", "getCart"]),
+  },
+  computed: {
+    ...mapState("auth", {
+      user: (state) => state.user,
+      cartDetail: (state) => state.cartDetail,
+    }),
+    ...mapGetters("auth", ["carts", "user", "cart"]),
+  },
+  created() {
     this.onResize();
     // console.log(this.$vuetify.breakpoint)
 
     window.addEventListener("resize", this.onResize, { passive: true });
   },
-  methods: {
-    onResize() {
-      this.isValid = window.innerWidth <= 1040;
-      this.isAccount = window.innerWidth <= 900;
-    },
-  },
-  computed: {
-    isLoggedIn: function () {
-      return this.$store.state.auth.userInfo.isLoggedIn;
-    },
-    ...mapGetters("auth", ["carts", "user", "cart"]),
-  },
 
-  created() {
-    console.log(this.$store.state.auth.userInfo.isLoggedIn);
-    console.log(this.user.avatar);
+  mounted() {
+    console.log(this.user.userName);
+    this.getCart(this.user.userName);
   },
 };
 </script>

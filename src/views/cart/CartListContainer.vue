@@ -214,7 +214,9 @@ export default {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
-
+    userName() {
+      return  this.user.username
+    },
     ...mapActions("auth", ["getCartDetail"]),
   },
 
@@ -225,7 +227,10 @@ export default {
     // let a = this.$route.params.idCart;
     // let b = this.user.userName;
     console.log(this.user.userName);
-    this.getCartDetail();
+    const response = this.user.userName;
+    if(response.status === 200) {
+    this.getCartDetail(this.$route.params.idCart, response);
+    }
   },
 };
 </script>
