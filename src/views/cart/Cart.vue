@@ -133,7 +133,7 @@ export default {
 }
 .cart-item-right {
   #number {
-    background-color: #fff;
+    background-color: #ffffff;
   }
 }
 

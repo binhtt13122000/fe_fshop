@@ -8,150 +8,167 @@
       <v-main class="purchase">
         <p>Bạn đã có tài khoản chưa? <a href="">Ấn vào đây để đăng nhập</a></p>
         <p>Bạn đã có tài khoản chưa? <a href="">Ấn vào đây để đăng nhập</a></p>
-        <div>
-          <v-row dense>
-            <v-col cols="12" sm="6">
-              <h1>THÔNG TIN THANH TOÁN</h1>
-              <v-form>
-                <v-container fluid>
-                  <v-row>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="Name"
-                        :counter="20"
-                        :rules="nameRules"
-                        outlined
-                        dense
-                        label="Tên*"
-                        required
+        <div style="background-color: rgb(255, 247, 245)">
+          <v-container fluid>
+            <v-row dense>
+              <v-col
+                cols="12"
+                sm="6"
+                md="6"
+               
+              >
+                <v-form>
+                  <v-row style="background-color: rgb(255, 237, 231)">
+                    <v-col>
+                      <div
+                        v-for="(productImage, i) in product.productImages"
+                        :key="i"
                       >
-                      </v-text-field>
+                        <a :href="'/products/' + product.productId">
+                          <img
+                            v-if="i == 0"
+                            class="img-responsive"
+                            :src="productImage.imgUrl"
+                            width="50%"
+                          />
+                        </a>
+                      </div>
                     </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="Name"
-                        :counter="20"
-                        :rules="nameRules"
-                        outlined
-                        dense
-                        label="Họ*"
-                        required
-                      >
-                      </v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-combobox
-                        v-model="select"
-                        :items="items"
-                        label="Chọn Giới tính*"
-                        outlined
-                        dense
-                        required
-                      >
-                      </v-combobox>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="Email"
-                        :counter="20"
-                        :rules="emailRules"
-                        outlined
-                        dense
-                        label="Email"
-                        required
-                      >
-                      </v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="Phone"
-                        :counter="20"
-                        :rules="phoneRules"
-                        outlined
-                        dense
-                        label="Số điện thoại*"
-                        required
-                      >
-                      </v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        persistent-hint
-                        :items="itemCitys"
-                        label="Chọn tỉnh/thành phố*"
-                        outlined
-                        required
-                      >
-                      </v-select>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        persistent-hint
-                        :items="itemCitys"
-                        label="Chọn quận/huyện*"
-                        outlined
-                        required
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        persistent-hint
-                        :items="itemCitys"
-                        label="Chọn xã/phường*"
-                        outlined
-                        required
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="Phone"
-                        :counter="20"
-                        :rules="phoneRules"
-                        outlined
-                        dense
-                        label="Địa chỉ*"
-                        required
-                      >
-                      </v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-form>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-form>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Hình</th>
-                      <th>Thông tin sản phẩm</th>
-                      <th>Size</th>
-                      <th>Đơn giá</th>
-                      <th>Tổng</th>
-                      <th>Xóa</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
+                    <v-col>
+                      <div class="cart-item-left" align="left">
+                        <a
+                          class="proName"
+                          :href="'/products/' + product.productId"
+                        >
+                          <img
+                            src="https://gcp-img.slatic.net/lazada/id0078489-36-18.png#width=36&height=18"
+                            alt=""
+                          />
+                          {{product.productName}}
+                        </a>
+                        <p>
+                          {{product.productDescription}},Size: {{product.productName}}</p>
+                        <p class="combo-Promo-text">Enjoyed discount</p>
                         <img
-                          src="https://ninomaxx.com.vn/wp-content/uploads/2021/01/WEB-1.png"
-                          width="30%"
-                          alt="Thông tin sản phẩm"
+                          src="https://img.alicdn.com/tfs/TB1qcanWAT2gK0jSZFkXXcIQFXa-60-37.png"
+                          alt=""
                         />
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </v-form>
-            </v-col>
-          </v-row>
+                      </div>
+                    </v-col>
+                    <v-col class="cart-item-middle">
+                      <p class="current-price">đ{{product.productPrice}}</p>
+                      <p class="origin-price">đ {{ product.realPrice}}</p>
+                      <p class="promotion-ratio">-15%</p>
+                      <v-btn icon><v-icon>mdi-heart</v-icon></v-btn>
+                      <v-btn icon><v-icon>mdi-trash-can-outline</v-icon></v-btn>
+                    </v-col>
+                    <v-col class="cart-item-right"> </v-col>
+                  </v-row>
+                </v-form>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" style="background-color: #f4f4f4">
+                <v-col cols="12"><v-btn color="#ff7094">Process to payment</v-btn></v-col>
+                <h1>THÔNG TIN THANH TOÁN</h1>
+                <v-form>
+                  <v-container fluid>
+                    <v-row>
+                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                        <v-text-field
+                          v-model="firstname"
+                          :counter="20"
+                          :rules="rules.nameRules"
+                          outlined
+                          dense
+                          label="Tên*"
+                          required
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                        <v-text-field
+                          v-model="lastname"
+                          :counter="20"
+                          :rules="rules.nameRules"
+                          outlined
+                          dense
+                          label="Họ*"
+                          required
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12" style="background-color: #ffffff">
+                        <v-combobox
+                          v-model="gender"
+                          :items="items"
+                          label="Chọn Giới tính*"
+                          outlined
+                          dense
+                          required
+                        >
+                        </v-combobox>
+                      </v-col>
+                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                        <v-text-field
+                          v-model="email"
+                          :counter="20"
+                          :rules="emailRules"
+                          outlined
+                          dense
+                          label="Email"
+                          required
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                        <v-text-field
+                          v-model="phone"
+                          :counter="20"
+                          :rules="phoneRules"
+                          outlined
+                          dense
+                          label="Số điện thoại*"
+                          required
+                        >
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                        <v-select
+                          persistent-hint
+                          :items="city"
+                          label="Chọn tỉnh/thành phố*"
+                          outlined
+                          required
+                        >
+                        </v-select>
+                      </v-col>
+                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                        <v-select
+                          persistent-hint
+                          :items="district"
+                          label="Chọn quận/huyện*"
+                          outlined
+                          required
+                        ></v-select>
+                      </v-col>
+
+                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                        <v-text-field
+                          v-model="address"
+                          :counter="20"
+                          :rules="addressRules"
+                          outlined
+                          dense
+                          label="Địa chỉ*"
+                          required
+                        >
+                        </v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-form>
+              </v-col>
+            </v-row>
+          </v-container>
         </div>
       </v-main>
 
@@ -163,7 +180,7 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
 
@@ -183,6 +200,31 @@ export default {
     "my-header": VmHeader,
   },
   data: () => ({
+    firstname: '',
+    lastname: '',
+    gender: '',
+    email: '',
+    phone: '',
+    city: '',
+    district: '',
+    address: '',
+    rules: {
+        nameRules: [
+          (v) => !!v || "First name is required",
+          (v) => (v && v.length >= 2) || "First name  must have 5+ characters",
+        ],
+        phoneRules: [
+          (v) => !!v || "Phone number is required",
+          (v) => (v && v.length >= 10 && v.length < 12) || "Phone number must have 10+ or smaller than 12 ",
+        ],
+        emailRules: [
+          (v) => !!v || "E-mail is required",
+          (v) =>
+            /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+            "E-mail must be valid",
+        ],
+
+      },
     drawer: null,
     linkBar: [
       "Name",
@@ -271,12 +313,18 @@ export default {
     window.addEventListener("resize", this.onResize, { passive: true });
   },
 
-  computed: {},
+  computed: {
+    ...mapGetters("product", ["product"]),
+  },
   methods: {
     onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
+    ...mapActions("product", ["productDetails"]),
+  },
+  mounted() {
+    this.productDetails(this.$route.params.idProduct);
   },
 };
 </script>

@@ -116,7 +116,9 @@
           </template>
           <v-sheet>
             <v-list>
-              <h1 style="color: black; padding-bottom: 10px; background">Your cart</h1>
+              <h1 style="color: black; padding-bottom: 10px;">
+                Your cart
+              </h1>
               <v-list-item
                 v-for="cart in carts"
                 :key="cart.cartId"
@@ -170,17 +172,10 @@
                     <v-spacer></v-spacer>
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on }">
-                        <v-btn
-                          :href="source"
-                          icon
-                          large
-                          target="_blank"
-                          v-on="on"
-                        >
+                        <v-btn icon large target="_blank" v-on="on">
                           <v-icon>mdi-code-tags</v-icon>
                         </v-btn>
                       </template>
-                      <span>Source</span>
                     </v-tooltip>
                   </v-toolbar>
                   <v-card-text>
@@ -189,7 +184,7 @@
                         <v-col cols="12" sm="6" md="6">
                           <v-text-field
                             label="Your cart name"
-                            v-model="cartInfo.nameCart"
+                            v-model="nameCart"
                             :rules="[(v) => !!v || 'Cart name is required']"
                             required
                           ></v-text-field>
@@ -197,7 +192,7 @@
                         <v-col cols="12" sm="6" md="6">
                           <v-text-field
                             label="Description of cart"
-                            v-model="cartInfo.descriptionCart"
+                            v-model="descriptionCart"
                             :rules="[
                               (v) => !!v || 'Description of cart is required',
                             ]"
@@ -213,7 +208,12 @@
                     <v-btn color="blue darken-1" text @click="dialog = false">
                       Close
                     </v-btn>
-                    <v-btn color="blue darken-1" text @click="dialog = false">
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="dialog = false"
+                      v-on:click="createCart()"
+                    >
                       Save
                     </v-btn>
                   </v-card-actions>
@@ -292,30 +292,46 @@ export default {
     ],
     isValid: false,
     isAccount: false,
-    cartInfo: {
-      nameCart: "",
-      descriptionCart: "",
-    },
+    nameCart: "",
+    descriptionCart: "",
+    cartTotal: 0,
+    status: 1,
+    userId: ''
   }),
 
   methods: {
     logout() {
       console.log("logou nef");
       console.log(this.$store.state.auth.user.username);
-      this.$store.dispatch("auth/logout", "nhanltse140784").then((response) => {
-        if (response.status === 200) {
-          this.$router.push("/");
-        }
-      });
+      const username = this.$store.state.auth.user.username;
+      if (username === undefined) {
+        console.log(username);
+      } else {
+        this.$store.dispatch("auth/logout").then((response) => {
+          if (response.status === 200) {
+            this.$router.push("/");
+          }
+        });
+      }
     },
     loggedIn: function () {
       this.isLoggedIn = this.$store.state.auth.userInfo.isLoggedIn;
     },
     createCart() {
-      console.log("new Cart");
-      this.$store.dispatch("auth/createNewCart", {
-        cartId: this.nameCart,
+      var idUser =  this.$store.state.auth.user.userId
+      if(idUser == null){
+         idUser = this.userId
+      }
+      this.$store.dispatch("auth/createNewCart",{
+        cartDescription: "RUn",
+        cartId: "CART003",
+        cartTotal: "0",
+        createTime: new Date(),
+        status: 1,
+        userId:  idUser
       });
+      console.log(this.userId);
+      // console.log(this.nameCart);
     },
     onResize() {
       this.isValid = window.innerWidth <= 1040;

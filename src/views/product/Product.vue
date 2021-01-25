@@ -67,13 +67,13 @@
       <v-card-actions>
         <v-row>
           <v-col>
-            <v-btn id="btn-addToCart" width="100%" @click="addToCart(product.productId)">
+            <v-btn id="btn-addToCart" width="100%" :to="'/purchase/'+ product.productId">
               <v-icon>mdi-shopping</v-icon>
               Đăng ký mua</v-btn
             >
           </v-col>
           <v-col>
-            <v-btn width="100%">
+            <v-btn width="100%" @click="addToCart(product.productId)">
               <v-icon>mdi-plus</v-icon>
               Giỏ hàng
             </v-btn>

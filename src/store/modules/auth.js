@@ -148,8 +148,12 @@ const actions = {
     //     })
     // },
 
-    async createNewCart( username, newCart) {
-        const response = await AuthServices.createNewCart(username, newCart)
+    async createNewCart({state},newCart) {
+        console.log("create new cart store vuex");
+        const name = state.user.userName
+        console.log(name);
+        console.log("oke ln");
+        const response = await AuthServices.createNewCart(name, newCart)
         if(response.status === 200){
             console.log(response);
         }
