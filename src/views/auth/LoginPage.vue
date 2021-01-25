@@ -43,17 +43,18 @@
                   ></v-text-field>
 
                   <v-text-field
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                     class="form_group"
                     id="password"
                     label="Password"
                     v-model="password"
+                    :type="showPassword ? 'text' : 'password'"
                     :rules="[(v) => !!v || 'Password is required']"
                     required
                     name="password"
                     prepend-icon="mdi-lock"
-                    type="password"
+                    v-on:click:append="showPassword = !showPassword"
                   ></v-text-field>
-
                   <div class="create-forgot">
                     <p class="right" align="right">
                       <router-link to="/forgotpasswordForm"
@@ -84,6 +85,8 @@
           </v-row>
         </v-container>
       </v-main>
+      <v-divider></v-divider>
+      <VmFooter></VmFooter>
     </v-app>
   </div>
 </template>
@@ -91,10 +94,13 @@
 <script>
 // import Axios from 'axios';
 import { mapGetters } from "vuex";
+import VmFooter from "../../components/Footer.vue";
 export default {
   // el: "#app",
+  components: { VmFooter },
   data() {
     return {
+      showPassword: false,
       username: "",
       password: "",
     };
@@ -108,15 +114,13 @@ export default {
       });
       this.$router.push("/products");
     },
-    
+
     // ...mapActions("auth", ["getUser"]),
   },
   computed: {
-
     ...mapGetters("auth", ["user"]),
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 
