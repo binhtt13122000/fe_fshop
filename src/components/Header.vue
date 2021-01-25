@@ -90,10 +90,7 @@
           </div>
         </v-row>
 
-        <!-- Create right column -->
-
         <v-spacer></v-spacer>
-        <!-- <v-col cols="12" sm="3" md="3" lg="3" xl="3"> -->
         <v-text-field
           flat
           solo-inverted
@@ -102,9 +99,14 @@
           label="Search"
           class="hidden-sm-and-down mx-4"
         ></v-text-field>
-        <!-- </v-col> -->
-        <!-- cart -->
-        <v-bottom-sheet v-model="sheet" class="mx-4" style="border-radius: 5px">
+
+        <v-bottom-sheet
+          v-model="sheet"
+          persistent
+          inset
+          class="mx-4"
+          id="boottom-sheet"
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-btn dark v-bind="attrs" v-on="on" icon>
               <v-badge color="red" :content="quantityInCart" top overlap>
@@ -112,39 +114,113 @@
               </v-badge>
             </v-btn>
           </template>
-          <v-list>
-            <h1
-              style="
-                background-color: black;
-                color: white;
-                padding-bottom: 10px;
-              "
-            >
-              Your cart
-            </h1>
-            <v-list-item
-              v-for="cart in carts"
-              :key="cart.cartId"
-              @click="sheet = false"
-            >
-              <v-list-item-avatar>
-                <v-avatar size="32px">
-                  <img
-                    src="https://cdn1.vectorstock.com/i/1000x1000/60/55/shopping-cart-icon-in-flat-style-shopping-symbol-vector-20616055.jpg"
-                    alt="cart"
-                  />
-                </v-avatar>
-              </v-list-item-avatar>
-              <router-link :to="'/carts/' + cart.cartId" id="cart-item">
-                <v-list-item-title style="font-size: 30px">{{
-                  cart.cartId
-                }}</v-list-item-title>
-              </router-link>
-            </v-list-item>
-            <v-btn class="ma-2" color="primary" dark
-              >Add cart<v-icon large>mdi-plus</v-icon></v-btn
-            >
-          </v-list>
+          <v-sheet>
+            <v-list>
+              <h1 style="color: black; padding-bottom: 10px; background">Your cart</h1>
+              <v-list-item
+                v-for="cart in carts"
+                :key="cart.cartId"
+                @click="sheet = false"
+              >
+                <v-list-item-avatar>
+                  <v-avatar size="32px">
+                    <img
+                      src="https://cdn3.iconfinder.com/data/icons/shopping-and-ecommerce-28/90/add_to_basket-512.png"
+                      alt="cart"
+                    />
+                  </v-avatar>
+                </v-list-item-avatar>
+                <router-link
+                  :to="'/carts/' + cart.cartId"
+                  id="cart-item"
+                  class="combo-Promo-text"
+                >
+                  <v-list-item-title style="font-size: 30px">{{
+                    cart.cartId
+                  }}</v-list-item-title>
+                </router-link>
+                <v-spacer></v-spacer>
+                <small color="organe">* {{ cart.cartDescription }}</small>
+              </v-list-item>
+
+              <!-- Dialog create new Cart -->
+              <v-dialog persistent max-width="600px" v-model="dialog">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    class="ma-2"
+                    color="primary"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    >Add cart<v-icon large>mdi-plus</v-icon></v-btn
+                  >
+                  <v-btn
+                    class="ma-2"
+                    text
+                    background-color="pink darken-1"
+                    color="error"
+                    @click="sheet = !sheet"
+                  >
+                    close<v-icon large>mdi-close</v-icon>
+                  </v-btn>
+                </template>
+                <v-card class="elevation-12">
+                  <v-toolbar color="primary" dark flat>
+                    <v-toolbar-title>New Cart</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-btn
+                          :href="source"
+                          icon
+                          large
+                          target="_blank"
+                          v-on="on"
+                        >
+                          <v-icon>mdi-code-tags</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Source</span>
+                    </v-tooltip>
+                  </v-toolbar>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12" sm="6" md="6">
+                          <v-text-field
+                            label="Your cart name"
+                            v-model="cartInfo.nameCart"
+                            :rules="[(v) => !!v || 'Cart name is required']"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="6">
+                          <v-text-field
+                            label="Description of cart"
+                            v-model="cartInfo.descriptionCart"
+                            :rules="[
+                              (v) => !!v || 'Description of cart is required',
+                            ]"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                    <small>*indicates required field</small>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="dialog = false">
+                      Close
+                    </v-btn>
+                    <v-btn color="blue darken-1" text @click="dialog = false">
+                      Save
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-list>
+          </v-sheet>
         </v-bottom-sheet>
 
         <!-- menu for account -->
@@ -201,21 +277,25 @@
 import { mapGetters, mapActions, mapState } from "vuex";
 export default {
   data: () => ({
+    dialog: false,
     drawer: null,
     sheet: false,
     isLoggedIn: false,
     quantityInCart: 2,
     linkBar: [
-      "Name",
+      "Nam",
       "Nữ",
       "Bộ sưu tập",
       "Blog",
       "khuyến mãi",
       "Hệ Thống cửa hàng",
     ],
-    images: [],
     isValid: false,
     isAccount: false,
+    cartInfo: {
+      nameCart: "",
+      descriptionCart: "",
+    },
   }),
 
   methods: {
@@ -231,6 +311,12 @@ export default {
     loggedIn: function () {
       this.isLoggedIn = this.$store.state.auth.userInfo.isLoggedIn;
     },
+    createCart() {
+      console.log("new Cart");
+      this.$store.dispatch("auth/createNewCart", {
+        cartId: this.nameCart,
+      });
+    },
     onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
@@ -242,7 +328,7 @@ export default {
       user: (state) => state.user,
       cartDetail: (state) => state.cartDetail,
     }),
-    ...mapGetters("auth", ["carts", "user", "cart"]),
+    ...mapGetters("auth", ["carts", "user", "cart", "cartDetail"]),
   },
   created() {
     this.onResize();
@@ -286,5 +372,22 @@ export default {
     font-size: 15px;
     text-transform: uppercase;
   }
+}
+
+.combo-Promo-text {
+  margin-right: 50px;
+  padding: 0 10px;
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 17px;
+  font-size: 12px;
+  color: #fff;
+  background: linear-gradient(45deg, #ff7094, #f10653);
+}
+
+#boottom-sheet {
+  background-color: aqua;
 }
 </style>

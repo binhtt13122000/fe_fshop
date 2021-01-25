@@ -54,6 +54,9 @@ const mutations = {
     setCartDetail: (state, val) => {
         state.cartDetail = val
     },
+    delCartDetail: (state) => {
+        state.cartDetail = ''
+    },
     auth_error: (state) => {
         state.status = 'error'
     },
@@ -116,7 +119,8 @@ const actions = {
         throw new Error(response.status)
     },
     async getCartDetail({ commit }, cardId, username) {
-
+        const respons1 = await commit("delCartDetail")
+        console.log("cart detail ben auth"+ respons1);
         const response = await AuthServices.getCartDetails(cardId, username)
         if(response.status === 200){
             console.log(response.data.content)

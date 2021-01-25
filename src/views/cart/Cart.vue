@@ -95,6 +95,10 @@ export default {
       }
     },
   },
+  mounted() {
+    console.log("t ben cart me");
+    console.log(this.detail);
+  }
 };
 </script>
 

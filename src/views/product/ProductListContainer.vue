@@ -260,7 +260,7 @@ export default {
       },
     },
     ...mapGetters("product", ["products", "pages"]),
-    ...mapGetters("auth", ["carts", "user", "cart"]),
+    ...mapGetters("auth", ["carts", "user", "cart", "cartDetail"]),
     // ...mapState("auth", ["carts", "user", "cart"]),
   },
 
