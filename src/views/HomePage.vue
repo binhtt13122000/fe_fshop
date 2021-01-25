@@ -49,7 +49,6 @@ import { mapGetters } from "vuex";
 import VmFooter from "../components/Footer.vue";
 import VmHeader from "../components/Header.vue";
 export default {
-  el: "#app",
   props: {
     source: String,
   },
@@ -60,7 +59,7 @@ export default {
   data: () => ({
     drawer: null,
     linkBar: [
-      "Name",
+      "Nam",
       "Nữ",
       "Bộ sưu tập",
       "Blog",

@@ -6,17 +6,10 @@
       <my-header></my-header>
       <!-- V main -->
       <v-main class="purchase">
-        <p>Bạn đã có tài khoản chưa? <a href="">Ấn vào đây để đăng nhập</a></p>
-        <p>Bạn đã có tài khoản chưa? <a href="">Ấn vào đây để đăng nhập</a></p>
         <div style="background-color: rgb(255, 247, 245)">
           <v-container fluid>
             <v-row dense>
-              <v-col
-                cols="12"
-                sm="6"
-                md="6"
-               
-              >
+              <v-col cols="12" sm="6" md="6">
                 <v-form>
                   <v-row style="background-color: rgb(255, 237, 231)">
                     <v-col>
@@ -44,10 +37,12 @@
                             src="https://gcp-img.slatic.net/lazada/id0078489-36-18.png#width=36&height=18"
                             alt=""
                           />
-                          {{product.productName}}
+                          {{ product.productName }}
                         </a>
                         <p>
-                          {{product.productDescription}},Size: {{product.productName}}</p>
+                          {{ product.productDescription }},Size:
+                          {{ product.productName }}
+                        </p>
                         <p class="combo-Promo-text">Enjoyed discount</p>
                         <img
                           src="https://img.alicdn.com/tfs/TB1qcanWAT2gK0jSZFkXXcIQFXa-60-37.png"
@@ -56,8 +51,8 @@
                       </div>
                     </v-col>
                     <v-col class="cart-item-middle">
-                      <p class="current-price">đ{{product.productPrice}}</p>
-                      <p class="origin-price">đ {{ product.realPrice}}</p>
+                      <p class="current-price">đ{{ product.productPrice }}</p>
+                      <p class="origin-price">đ {{ product.realPrice }}</p>
                       <p class="promotion-ratio">-15%</p>
                       <v-btn icon><v-icon>mdi-heart</v-icon></v-btn>
                       <v-btn icon><v-icon>mdi-trash-can-outline</v-icon></v-btn>
@@ -65,9 +60,48 @@
                     <v-col class="cart-item-right"> </v-col>
                   </v-row>
                 </v-form>
+                <v-col cols="12">
+                  <v-card class="order" width="600px" >
+                    <h1>Order summary</h1>
+                    <v-row class="order-item">
+                      <v-col cols="12"
+                        ><p>
+                          Subtotal(item):<u>đ</u
+                          ><span>{{ product.productPrice }}</span>
+                        </p></v-col
+                      >
+                      <v-col cols="12"
+                        ><p>Shipping free:<u>đ</u><span>9.900</span></p></v-col
+                      >
+                      <v-col cols="12"
+                        ><p>
+                          Discount:<span>{{ 15 }}%</span>
+                        </p></v-col
+                      >
+                      <v-col cols="12"
+                        ><input
+                          id="voucher-code"
+                          type="text"
+                          placeholder="Enter voucher code"
+                        /><v-btn color="primary">Apply</v-btn></v-col
+                      >
+                      <v-col cols="12"
+                        ><p>
+                          Total:<u>đ</u
+                          ><span>{{ (product.productPrice * 85) / 100 }}</span>
+                        </p></v-col
+                      >
+                      <v-col cols="12"
+                        ><v-btn class="order-btn" color= "#ffa500">Place order</v-btn></v-col
+                      >
+                    </v-row>
+                  </v-card>
+                </v-col>
               </v-col>
               <v-col cols="12" sm="6" md="6" style="background-color: #f4f4f4">
-                <v-col cols="12"><v-btn color="#ff7094">Process to payment</v-btn></v-col>
+                <v-col cols="12"
+                  ><v-btn color="#ff7094">Process to payment</v-btn></v-col
+                >
                 <h1>THÔNG TIN THANH TOÁN</h1>
                 <v-form>
                   <v-container fluid>
@@ -96,10 +130,10 @@
                         >
                         </v-text-field>
                       </v-col>
-                      <v-col cols="12" style="background-color: #ffffff">
+                      <v-col cols="12" sm="6" style="background-color: #ffffff">
                         <v-combobox
                           v-model="gender"
-                          :items="items"
+                          :items="itemGender"
                           label="Chọn Giới tính*"
                           outlined
                           dense
@@ -111,7 +145,7 @@
                         <v-text-field
                           v-model="email"
                           :counter="20"
-                          :rules="emailRules"
+                          :rules="rules.emailRules"
                           outlined
                           dense
                           label="Email"
@@ -123,7 +157,7 @@
                         <v-text-field
                           v-model="phone"
                           :counter="20"
-                          :rules="phoneRules"
+                          :rules="rules.phoneRules"
                           outlined
                           dense
                           label="Số điện thoại*"
@@ -134,7 +168,7 @@
                       <v-col cols="12" sm="6" style="background-color: #ffffff">
                         <v-select
                           persistent-hint
-                          :items="city"
+                          :items="cityItem"
                           label="Chọn tỉnh/thành phố*"
                           outlined
                           required
@@ -155,7 +189,7 @@
                         <v-text-field
                           v-model="address"
                           :counter="20"
-                          :rules="addressRules"
+                          :rules="rules.addressRules"
                           outlined
                           dense
                           label="Địa chỉ*"
@@ -166,6 +200,11 @@
                     </v-row>
                   </v-container>
                 </v-form>
+                <v-spacer></v-spacer>
+                <p>
+                  Bạn đã có tài khoản chưa?
+                  <a href="">Ấn vào đây để đăng nhập</a>
+                </p>
               </v-col>
             </v-row>
           </v-container>
@@ -185,46 +224,41 @@ import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
 
 export default {
-  // validations: {
-  // name: { required, maxLength: maxLength(10) },
-  // email: { required, email },
-  // select: { required },
-  // checkbox: {
-  //   checked (val) {
-  //     return val
-  //   },
-  // },
-  // },
   components: {
     "my-footer": VmFooter,
     "my-header": VmHeader,
   },
   data: () => ({
-    firstname: '',
-    lastname: '',
-    gender: '',
-    email: '',
-    phone: '',
-    city: '',
-    district: '',
-    address: '',
+    firstname: "",
+    lastname: "",
+    gender: "",
+    email: "",
+    phone: "",
+    city: "",
+    district: "",
+    address: "",
     rules: {
-        nameRules: [
-          (v) => !!v || "First name is required",
-          (v) => (v && v.length >= 2) || "First name  must have 5+ characters",
-        ],
-        phoneRules: [
-          (v) => !!v || "Phone number is required",
-          (v) => (v && v.length >= 10 && v.length < 12) || "Phone number must have 10+ or smaller than 12 ",
-        ],
-        emailRules: [
-          (v) => !!v || "E-mail is required",
-          (v) =>
-            /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-            "E-mail must be valid",
-        ],
-
-      },
+      nameRules: [
+        (v) => !!v || "First name is required",
+        (v) => (v && v.length >= 2) || "First name  must have 5+ characters",
+      ],
+      phoneRules: [
+        (v) => !!v || "Phone number is required",
+        (v) =>
+          (v && v.length >= 10 && v.length < 12) ||
+          "Phone number must have 10+ or smaller than 12 ",
+      ],
+      emailRules: [
+        (v) => !!v || "E-mail is required",
+        (v) =>
+          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          "E-mail must be valid",
+      ],
+      addressRules: [
+        (v) => !!v || "Address is required",
+        (v) => (v && v.length >= 5) || "Address  must have 5+ characters",
+      ],
+    },
     drawer: null,
     linkBar: [
       "Name",
@@ -235,8 +269,8 @@ export default {
       "Hệ Thống cửa hàng",
     ],
     select: ["Giới tính"],
-    items: ["Nam", "Nữ"],
-    itemCitys: [
+    itemGender: ["Nam", "Nữ"],
+    cityItem: [
       "An Giang",
       "Bà Rịa–Vũng Tàu",
       "Bắc Giang",
@@ -330,6 +364,10 @@ export default {
 </script>
 
 <style lang="scss">
+.purchase {
+  font-family: "Open Sans", sans-serif;
+}
+
 .app-bar {
   opacity: 15%;
 }
@@ -393,6 +431,34 @@ export default {
   }
 }
 
+#voucher-code {
+  box-sizing: border-box;
+  height: 36px;
+  padding-bottom: 4px;
+  border-radius: 3px;
+  border: 2px solid #c7c7c7;
+  text-align: center;
+  box-shadow: 0 0 10px 4px 0 0 10px 30px, 30px 0 20px 30px;
+}
+.order {
+  font-family: Roboto-Regular, "Helvetica Neue", Helvetica, Tahoma, Arial,
+    Sans-serif;
+    padding-left: 30px;
+    h1 {
+      color: #ffa500;
+    }
+  .order-item {
+    p {
+      font-size: 26px;
+      font-weight: thin;
+      text-align: left;
+      padding-left: 10px;
+    }
+  }
+  .order-btn{
+    font-weight: 900;
+  }
+}
 @media only screen and (max-width: 1390px) {
 }
 @media only screen and (max-width: 600px) {

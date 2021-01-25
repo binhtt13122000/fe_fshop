@@ -73,8 +73,10 @@ const mutations = {
 };
 const actions = {
 
-    async logout({commit}, username){
+    async logout({commit, state}){
+        const username = state.user.userName
         const response = await AuthServices.logout(username);
+        console.log(response.status, response);
         if(response.status === 200) {
             console.log(response.data)
             await commit("isUserLoggedIn", true);
