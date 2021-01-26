@@ -384,21 +384,17 @@ export default {
   }
 }
 
-.combo-Promo-text {
-  margin-right: 50px;
-  padding: 0 10px;
-  line-height: 18px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  border-radius: 17px;
-  font-size: 12px;
-  color: #fff;
-//   background: linear-gradient(45deg, #ff7094, #f10653);
-  background: linear-gradient(45deg, #ccbcc0, #ff2b72);
-}
-
-#boottom-sheet {
-  background-color: aqua;
-}
+// .combo-Promo-text {
+//   margin-right: 50px;
+//   padding: 0 10px;
+//   line-height: 18px;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+//   border-radius: 17px;
+//   font-size: 12px;
+//   color: #fff;
+// //   background: linear-gradient(45deg, #ff7094, #f10653);
+//   background: linear-gradient(45deg, #ccbcc0, #f10653);
+// }
 </style>

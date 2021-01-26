@@ -89,7 +89,6 @@ export default {
   }),
   watch: {
     currenPage() {
-      console.log(this.currenPage);
       this.getProducts(this.currenPage);
     },
   },
@@ -114,7 +113,6 @@ export default {
     },
     ...mapGetters("product", ["products", "pages"]),
     ...mapGetters("auth", ["carts", "user", "cart", "cartDetail"]),
-    // ...mapState("auth", ["carts", "user", "cart"]),
   },
 
   created() {
@@ -124,7 +122,6 @@ export default {
     this.getProducts(this.currenPage);
   },
   mounted() {
-    console.log("From product list");
   },
 };
 </script>

@@ -1,9 +1,5 @@
-// import { reject, resolve } from "core-js/fn/promise";
-// import { resolve } from 'core-js/fn/promise';
 import 'es6-promise/auto'
 import AuthServices from "../../services/AuthenticationService"
-// import ProductServices from "../../services/ProductService"
-// import axios from 'axios';
 const state = {
     user: {},
     userInfo: {
@@ -79,9 +75,7 @@ const actions = {
     async logout({commit, state}){
         const username = state.user.userName
         const response = await AuthServices.logout(username);
-        console.log(response.status, response);
         if(response.status === 200) {
-            console.log(response.data)
             await commit("isUserLoggedIn", true);
             return await commit("logout")
         }
@@ -92,7 +86,6 @@ const actions = {
         await AuthServices.login(credential);
         const response = await AuthServices.getUser(credential.username);
         if (response.status === 200) {
-            console.log(response.data)
             return await commit("setUser", response.data);
             // const responseforCart = await AuthServices.getCarts(credential.username);
             // if (responseforCart.status === 200) {
@@ -113,25 +106,14 @@ const actions = {
     async getCart({commit}, username){
         const response =  await AuthServices.getCarts(username);
         if(response.status === 200){
-            console.log(response);
-            console.log("cart response");
-            console.log(response.data.content);
             await commit("isUserLoggedIn", true);
             return await commit("setCarts", response.data.content);
-
-            // const responseForCartDetail = await AuthServices.getCartDetails()
         }
         throw new Error(response.status)
     },
     async getCartDetail({ commit }, cardId, username) {
-        // const respons1 = await commit("delCartDetail")
-        // console.log("cart detail ben auth");
-        // console.log(cartId);
         const response = await AuthServices.getCartDetails(cardId, username)
         if(response.status === 200){
-            //console.log(response.data.content)
-            console.log("cart detail ben auth");
-        console.log(username);
             return await commit("setCartDetail", response.data.content);
         }
 
@@ -139,27 +121,11 @@ const actions = {
 
     },
 
-    // getCartDetail({ commit }) {
-    //     return new Promise((resolve, reject) => {
-    //         AuthServices.getCartDetails('CART_0020', 'nhanltse140784').then(resp => {
-    //             commit("setCartDetail", resp.data.content);
-    //             console.log(resp.data.content)
-    //             resolve(resp)
-    //         })
-    //             .catch(err => {
-    //                 reject(err)
-    //             })
-    //     })
-    // },
-
     async createNewCart({commit, state},newCart) {
         console.log("create new cart store vuex");
         const name = state.user.userName
-        console.log(name);
-        console.log("oke ln");
         const response = await AuthServices.createNewCart(name, newCart)
         if(response.status === 200){
-            console.log(response);
             return await commit("addNewCart", newCart)
         }
     },
@@ -170,7 +136,6 @@ const actions = {
             AuthServices.register(user).then(resp => {
                 const user = resp.data.user
                 commit('setUser', user)
-                console.log(resp)
                 resolve(resp)
             })
                 .catch(err => {

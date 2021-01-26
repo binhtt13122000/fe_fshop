@@ -60,7 +60,7 @@
                         >
                         </v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6">
+                      <!-- <v-col cols="12" sm="6">
                         <v-combobox
                           v-model="gender"
                           :items="itemGender"
@@ -71,7 +71,7 @@
                           background-color="#f4f2f8"
                         >
                         </v-combobox>
-                      </v-col>
+                      </v-col> -->
                       <v-col cols="12" sm="6">
                         <v-text-field
                           v-model="email"
@@ -110,7 +110,7 @@
                         >
                         </v-select>
                       </v-col>
-                      <v-col cols="12" sm="6">
+                      <!-- <v-col cols="12" sm="6">
                         <v-select
                           persistent-hint
                           :items="district"
@@ -120,7 +120,7 @@
                           background-color="#f4f2f8"
                           required
                         ></v-select>
-                      </v-col>
+                      </v-col> -->
 
                       <v-col cols="12" sm="6">
                         <v-text-field
@@ -178,12 +178,54 @@
                           /></v-col>
 
                           <v-col cols="12"><v-divider></v-divider></v-col>
-                          <v-col
-                            ><span>Mã Khuyến mãi</span></v-col
-                          >
-                          <v-col
-                            ><v-icon>mdi-sale</v-icon><a href="">Chọn hoặc nhập mã khuyến mãi</a></v-col
-                          >
+                          <v-col><span>Mã Khuyến mãi:</span></v-col>
+                          <!-- <v-col
+                            ><v-icon>mdi-sale</v-icon
+                            ><a href="">Chọn hoặc nhập mã khuyến mãi</a></v-col
+                          > -->
+                          <v-col>
+                            <v-dialog
+                              v-model="dialog"
+                              persistent
+                              max-width="600px"
+                              max-height="700px"
+                            >
+                              <template v-slot:activator="{ on, attrs }">
+                                <a
+                                  color="primary"
+                                  dark
+                                  v-bind="attrs"
+                                  v-on="on"
+                                >
+                                  <v-icon>mdi-sale</v-icon>Chọn khuyến mãi
+                                </a>
+                              </template>
+                              <v-card>
+                                <v-card-title> Mã khuyến mãi </v-card-title>
+                                <v-card-text>
+                                  <div>
+                                    <input
+                                      id="promo-dialog"
+                                      type="text"
+                                      placeholder="Nhap mã khuyến mãi"
+                                    />
+                                    <v-btn class="mx-3" color="primary"
+                                      >Áp dụng</v-btn
+                                    >
+                                  </div>
+                                </v-card-text>
+                                <v-card-actions>
+                                  <v-btn
+                                    color="primary"
+                                    text
+                                    @click="dialog = false"
+                                  >
+                                    Close
+                                  </v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+                          </v-col>
                           <v-col cols="12"><v-divider></v-divider></v-col>
                         </v-row>
                       </v-col>
@@ -222,6 +264,7 @@ export default {
     "my-header": VmHeader,
   },
   data: () => ({
+    dialog: false,
     firstname: "",
     lastname: "",
     gender: "",
@@ -429,6 +472,16 @@ export default {
 }
 
 #voucher-code {
+  box-sizing: border-box;
+  height: 36px;
+  padding-bottom: 4px;
+  border-radius: 3px;
+  border: 2px solid #c7c7c7;
+  text-align: center;
+  box-shadow: 0 0 10px 4px 0 0 10px 30px, 30px 0 20px 30px;
+}
+
+#promo-dialog {
   box-sizing: border-box;
   height: 36px;
   padding-bottom: 4px;

@@ -12,6 +12,7 @@ import Cart from '../views/cart/Cart.vue'
 import ProductListContainer from '../views/product/ProductListContainer.vue'
 import Footer from '../components/Footer.vue'
 import Header from '../components/Header.vue'
+import Main from '../components/Main.vue'
 // import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
 
@@ -26,6 +27,11 @@ const routes = [
     name: 'homepage',
     component: HomePage
     },
+    {
+      path: '/main',
+      name: 'main',
+      component: Main
+      },
   {
     path: '/forgotpasswordForm',
     name: 'forgotpasswordForm',

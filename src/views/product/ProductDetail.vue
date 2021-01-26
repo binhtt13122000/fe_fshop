@@ -461,7 +461,6 @@ export default {
       }
     },
     addToCart() {
-      console.log(this.badgeCart);
       return this.badgeCart++;
     },
     ...mapActions("product", ["productDetails"]),

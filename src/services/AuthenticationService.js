@@ -7,7 +7,6 @@ class AuthenticationService {
     login(credentials) {
         return post("/login", {}, credentials, {})
     }
-    //http://localhost:8082/v1/api/users/danhpv/logout
     logout(username){
         return post("/users/"+username+"/logout");
     }
@@ -18,14 +17,12 @@ class AuthenticationService {
 
 
     getUser(username) {
-        console.log("api: " + username);
         return get("/users/" + username, {}, {})
     }
     getCarts(username) {
         return get("/carts/users/" + username, {}, {});
     }
     // cart
-    //"http://localhost:8082/v1/api/carts/users/nhanltse140784"
     createNewCart(username, newCarts) {
         return post("/carts/users/"+username,{},newCarts,{});
     }

@@ -33,7 +33,7 @@
                 <v-card-text>
                   <v-text-field
                     class="form_group"
-                    label="username"
+                    label="User name"
                     v-model="username"
                     :rules="[(v) => !!v || 'username is required']"
                     required
@@ -43,7 +43,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     class="form_group"
                     id="password"
                     label="Password"
