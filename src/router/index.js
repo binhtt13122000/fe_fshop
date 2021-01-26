@@ -8,6 +8,7 @@ import HomePage from '../views/HomePage.vue'
 import Purchase from '../views/product/Purchase.vue'
 import ProductDetail from '../views/product/ProductDetail.vue'
 import CartListContainer from '../views/cart/CartListContainer.vue'
+import Cart from '../views/cart/Cart.vue'
 import ProductListContainer from '../views/product/ProductListContainer.vue'
 import Footer from '../components/Footer.vue'
 import Header from '../components/Header.vue'
@@ -47,6 +48,11 @@ const routes = [
   {
     path: '/carts/:idCart',
     component: CartListContainer
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: Cart
   },
   {
     path: '/purchase/:idProduct',

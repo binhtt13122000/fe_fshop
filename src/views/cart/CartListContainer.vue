@@ -119,25 +119,55 @@
               </p>
             </v-col>
             <v-container>
-            <v-col cols="12" style="background-color: #ffffff">
-              <v-row>
-              <v-col cols="12" sm="6">
-                
+              <v-col cols="12" style="background-color: #ffffff">
+                <v-row>
+                  <v-col cols="12" sm="6"> </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-card class="order" width="600px">
+                      <h1>Order summary</h1>
+                      <!-- v-for="(detail, i) in cartDetail"
+              :key="i" -->
+                      <v-row class="order-item" > 
+                        <v-col cols="12">
+                          <!-- <p>
+                            Subtotal(item):<u>đ</u
+                          ><span>{{ detail.cartItemPrice }}</span>
+                          </p> -->
+                          </v-col
+                        >
+                        <v-col cols="12"
+                          ><p>
+                            Shipping free:<u>đ</u><span>9.900</span>
+                          </p></v-col
+                        >
+                        <v-col cols="12"
+                          ><p>
+                            Discount:<span>{{ 15 }}%</span>
+                          </p></v-col
+                        >
+                        <v-col cols="12"
+                          ><input
+                            id="voucher-code"
+                            type="text"
+                            placeholder="Enter voucher code"
+                          /><v-btn color="primary">Apply</v-btn></v-col
+                        >
+                        <v-col cols="12">
+                          <!-- <p>
+                          Total:<u>đ</u
+                          ><span>{{ (detail.product.realPrice * 85) / 100 }}</span>
+                        </p> -->
+                        </v-col>
+                        <v-col cols="12"
+                          ><v-btn class="order-btn" color="#ffa500"
+                            >Place order</v-btn
+                          ></v-col
+                        >
+                      </v-row>
+                    </v-card>
+                  </v-col> </v-row
+                >f
               </v-col>
-              <v-col cols="12" sm="6">
-                <div>
-                  <ul>
-                    <li><v-icon>mdi-sale</v-icon>4men</li>
-                    <li><a href="">Chọn hoặc nhập mã khuyến mãi</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h3>Tổng tiền hàng: (sản phẩm) </h3>
-                <v-btn style="backgroundc-color: organe">Mua hàng</v-btn>
-                </div>
-              </v-col>
-              </v-row>f
-            </v-col>
             </v-container>
           </v-row>
         </v-container>
@@ -219,12 +249,7 @@ export default {
   },
 
   mounted() {
-    // console.log(this.$route.params.idCart, this.username);
     console.log("tao cart list ne");
-    console.log(this.$route.params.idCart);
-    // let a = this.$route.params.idCart;
-    // let b = this.user.userName;
-    console.log(this.user.userName);
     const response = this.user.userName;
     if (response.status === 200) {
       this.getCartDetail(this.$route.params.idCart, response);

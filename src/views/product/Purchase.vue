@@ -6,107 +6,35 @@
       <my-header></my-header>
       <!-- V main -->
       <v-main class="purchase">
+        <section class="top-discount-area d-md-flex align-items-center">
+          <!-- Single Discount Area -->
+          <div class="single-discount-area" id="area-a">
+            <h5>Free Shipping &amp; Returns</h5>
+            <h6><a href="/products">BUY NOW</a></h6>
+          </div>
+          <!-- Single Discount Area -->
+          <div class="single-discount-area" id="area-b">
+            <h5>20% Discount for all shirt</h5>
+            <h6>CODE: 4menshirt</h6>
+          </div>
+          <!-- Single Discount Area -->
+          <div class="single-discount-area" id="area-c">
+            <h5>10% Discount for students</h5>
+            <h6>CODE: Colorlib</h6>
+          </div>
+        </section>
+        <br />
+        <br />
         <div style="background-color: rgb(255, 247, 245)">
-          <v-container fluid>
-            <v-row dense>
-              <v-col cols="12" sm="6" md="6">
-                <v-form>
-                  <v-row style="background-color: rgb(255, 237, 231)">
-                    <v-col>
-                      <div
-                        v-for="(productImage, i) in product.productImages"
-                        :key="i"
-                      >
-                        <a :href="'/products/' + product.productId">
-                          <img
-                            v-if="i == 0"
-                            class="img-responsive"
-                            :src="productImage.imgUrl"
-                            width="50%"
-                          />
-                        </a>
-                      </div>
-                    </v-col>
-                    <v-col>
-                      <div class="cart-item-left" align="left">
-                        <a
-                          class="proName"
-                          :href="'/products/' + product.productId"
-                        >
-                          <img
-                            src="https://gcp-img.slatic.net/lazada/id0078489-36-18.png#width=36&height=18"
-                            alt=""
-                          />
-                          {{ product.productName }}
-                        </a>
-                        <p>
-                          {{ product.productDescription }},Size:
-                          {{ product.productName }}
-                        </p>
-                        <p class="combo-Promo-text">Enjoyed discount</p>
-                        <img
-                          src="https://img.alicdn.com/tfs/TB1qcanWAT2gK0jSZFkXXcIQFXa-60-37.png"
-                          alt=""
-                        />
-                      </div>
-                    </v-col>
-                    <v-col class="cart-item-middle">
-                      <p class="current-price">đ{{ product.productPrice }}</p>
-                      <p class="origin-price">đ {{ product.realPrice }}</p>
-                      <p class="promotion-ratio">-15%</p>
-                      <v-btn icon><v-icon>mdi-heart</v-icon></v-btn>
-                      <v-btn icon><v-icon>mdi-trash-can-outline</v-icon></v-btn>
-                    </v-col>
-                    <v-col class="cart-item-right"> </v-col>
-                  </v-row>
-                </v-form>
-                <v-col cols="12">
-                  <v-card class="order" width="600px" >
-                    <h1>Order summary</h1>
-                    <v-row class="order-item">
-                      <v-col cols="12"
-                        ><p>
-                          Subtotal(item):<u>đ</u
-                          ><span>{{ product.productPrice }}</span>
-                        </p></v-col
-                      >
-                      <v-col cols="12"
-                        ><p>Shipping free:<u>đ</u><span>9.900</span></p></v-col
-                      >
-                      <v-col cols="12"
-                        ><p>
-                          Discount:<span>{{ 15 }}%</span>
-                        </p></v-col
-                      >
-                      <v-col cols="12"
-                        ><input
-                          id="voucher-code"
-                          type="text"
-                          placeholder="Enter voucher code"
-                        /><v-btn color="primary">Apply</v-btn></v-col
-                      >
-                      <v-col cols="12"
-                        ><p>
-                          Total:<u>đ</u
-                          ><span>{{ (product.productPrice * 85) / 100 }}</span>
-                        </p></v-col
-                      >
-                      <v-col cols="12"
-                        ><v-btn class="order-btn" color= "#ffa500">Place order</v-btn></v-col
-                      >
-                    </v-row>
-                  </v-card>
-                </v-col>
-              </v-col>
-              <v-col cols="12" sm="6" md="6" style="background-color: #f4f4f4">
-                <v-col cols="12"
-                  ><v-btn color="#ff7094">Process to payment</v-btn></v-col
-                >
+          <v-container fluid align="center" justify-center>
+            <v-row>
+              <v-col cols="12" sm="7" md="7" class="order-info">
                 <h1>THÔNG TIN THANH TOÁN</h1>
+
                 <v-form>
                   <v-container fluid>
                     <v-row>
-                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                      <v-col cols="12" sm="6">
                         <v-text-field
                           v-model="firstname"
                           :counter="20"
@@ -114,11 +42,12 @@
                           outlined
                           dense
                           label="Tên*"
+                          background-color="#f4f2f8"
                           required
                         >
                         </v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                      <v-col cols="12" sm="6">
                         <v-text-field
                           v-model="lastname"
                           :counter="20"
@@ -127,10 +56,11 @@
                           dense
                           label="Họ*"
                           required
+                          background-color="#f4f2f8"
                         >
                         </v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                      <v-col cols="12" sm="6">
                         <v-combobox
                           v-model="gender"
                           :items="itemGender"
@@ -138,10 +68,11 @@
                           outlined
                           dense
                           required
+                          background-color="#f4f2f8"
                         >
                         </v-combobox>
                       </v-col>
-                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                      <v-col cols="12" sm="6">
                         <v-text-field
                           v-model="email"
                           :counter="20"
@@ -150,10 +81,11 @@
                           dense
                           label="Email"
                           required
+                          background-color="#f4f2f8"
                         >
                         </v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                      <v-col cols="12" sm="6">
                         <v-text-field
                           v-model="phone"
                           :counter="20"
@@ -161,31 +93,36 @@
                           outlined
                           dense
                           label="Số điện thoại*"
+                          background-color="#f4f2f8"
                           required
                         >
                         </v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                      <v-col cols="12" sm="6">
                         <v-select
                           persistent-hint
                           :items="cityItem"
                           label="Chọn tỉnh/thành phố*"
                           outlined
+                          background-color="#f4f2f8"
+                          dense
                           required
                         >
                         </v-select>
                       </v-col>
-                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                      <v-col cols="12" sm="6">
                         <v-select
                           persistent-hint
                           :items="district"
                           label="Chọn quận/huyện*"
                           outlined
+                          dense
+                          background-color="#f4f2f8"
                           required
                         ></v-select>
                       </v-col>
 
-                      <v-col cols="12" sm="6" style="background-color: #ffffff">
+                      <v-col cols="12" sm="6">
                         <v-text-field
                           v-model="address"
                           :counter="20"
@@ -194,23 +131,79 @@
                           dense
                           label="Địa chỉ*"
                           required
+                          background-color="#f4f2f8"
                         >
                         </v-text-field>
                       </v-col>
                     </v-row>
                   </v-container>
                 </v-form>
+
                 <v-spacer></v-spacer>
                 <p>
                   Bạn đã có tài khoản chưa?
                   <a href="">Ấn vào đây để đăng nhập</a>
                 </p>
               </v-col>
+              <!-- <v-col cols="12" sm="1" md="1"></v-col> -->
+              <v-col class="order-table" sm="5" md="5">
+                <h1>Your order</h1>
+                <div class="order-item-detail">
+                  <v-form>
+                    <v-row class="order-item" dense>
+                      <v-col>
+                        <v-row>
+                          <v-col><span>Product:</span></v-col>
+                          <v-col><span>Total</span></v-col>
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col
+                            ><span>{{ product.productName }}</span></v-col
+                          >
+                          <v-col
+                            ><span
+                              ><u>đ</u>{{ product.productPrice }}</span
+                            ></v-col
+                          >
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col><span>Shipping: </span></v-col>
+                          <v-col><span>Free</span></v-col>
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col><span>Discount:</span></v-col>
+
+                          <v-col
+                            ><input
+                              id="voucher-code"
+                              type="text"
+                              placeholder="Enter voucher code"
+                          /></v-col>
+
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col
+                            ><span>Mã Khuyến mãi</span></v-col
+                          >
+                          <v-col
+                            ><v-icon>mdi-sale</v-icon><a href="">Chọn hoặc nhập mã khuyến mãi</a></v-col
+                          >
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                        </v-row>
+                      </v-col>
+                      <v-col cols="12"
+                        ><v-btn class="order-btn" color="rgb(255, 66, 78)"
+                          >Checkout</v-btn
+                        >
+                        <v-btn class="mx-4" color="primary">Payal</v-btn></v-col
+                      >
+                      <v-col cols="12"></v-col>
+                    </v-row>
+                  </v-form>
+                  <v-spacer></v-spacer>
+                </div>
+              </v-col>
             </v-row>
           </v-container>
         </div>
       </v-main>
-
+      <v-divider></v-divider>
       <!-- footer -->
       <my-footer></my-footer>
       <!-- </v-app> -->
@@ -365,7 +358,11 @@ export default {
 
 <style lang="scss">
 .purchase {
-  font-family: "Open Sans", sans-serif;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
 .app-bar {
@@ -440,25 +437,50 @@ export default {
   text-align: center;
   box-shadow: 0 0 10px 4px 0 0 10px 30px, 30px 0 20px 30px;
 }
-.order {
-  font-family: Roboto-Regular, "Helvetica Neue", Helvetica, Tahoma, Arial,
-    Sans-serif;
-    padding-left: 30px;
-    h1 {
-      color: #ffa500;
-    }
-  .order-item {
-    p {
-      font-size: 26px;
-      font-weight: thin;
-      text-align: left;
-      padding-left: 10px;
-    }
-  }
-  .order-btn{
-    font-weight: 900;
-  }
+
+.order-table {
+  padding-right: 2em;
+  margin-right: 0px;
 }
+
+.order-item-detail {
+  background-color: #ffffff;
+  border: solid #b3b3b3;
+}
+
+.order-info {
+  padding-left: 10px;
+}
+
+.top-discount-area .single-discount-area {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 33.333333%;
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+  padding: 40px 15px;
+  background-color: #b8b8b8;
+  text-align: center;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+}
+.top-discount-area .single-discount-area:nth-child(2) {
+  background-color: #ff084e;
+}
+.top-discount-area .single-discount-area:last-child {
+  background-color: #3a3a3a;
+}
+
+.top-discount-area .single-discount-area h5 {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 15px;
+}
+.top-discount-area .single-discount-area h6 {
+  font-size: 10px;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
 @media only screen and (max-width: 1390px) {
 }
 @media only screen and (max-width: 600px) {

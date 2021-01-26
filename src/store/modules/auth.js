@@ -36,6 +36,9 @@ const mutations = {
     auth_request: (state) => {
         state.status = 'loading'
     },
+    addNewCart: (state, val) => {
+        state.carts.push(val)
+    },
     setUser: (state, val) => {
         state.user = val
     },
@@ -121,15 +124,14 @@ const actions = {
         throw new Error(response.status)
     },
     async getCartDetail({ commit }, cardId, username) {
-        const respons1 = await commit("delCartDetail")
-        console.log("cart detail ben auth"+ respons1);
+        // const respons1 = await commit("delCartDetail")
+        // console.log("cart detail ben auth");
+        // console.log(cartId);
         const response = await AuthServices.getCartDetails(cardId, username)
         if(response.status === 200){
-            console.log(response.data.content)
-
-            response.data.content.forEach(e => {
-                console.log(e);
-            });
+            //console.log(response.data.content)
+            console.log("cart detail ben auth");
+        console.log(username);
             return await commit("setCartDetail", response.data.content);
         }
 
@@ -150,7 +152,7 @@ const actions = {
     //     })
     // },
 
-    async createNewCart({state},newCart) {
+    async createNewCart({commit, state},newCart) {
         console.log("create new cart store vuex");
         const name = state.user.userName
         console.log(name);
@@ -158,6 +160,7 @@ const actions = {
         const response = await AuthServices.createNewCart(name, newCart)
         if(response.status === 200){
             console.log(response);
+            return await commit("addNewCart", newCart)
         }
     },
 

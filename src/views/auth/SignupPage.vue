@@ -81,8 +81,8 @@
                   </div>
                 </v-card-text>
               </v-form>
-              <br>
-              <br>
+              <br />
+              <br />
               <v-form align="center">
                 <v-spacer></v-spacer>
                 <hr
@@ -98,12 +98,16 @@
           </v-row>
         </v-container>
       </v-main>
+      <v-divider></v-divider>
+      <VmFooter></VmFooter>
     </v-app>
   </div>
 </template>
 
 <script>
+import VmFooter from "../../components/Footer.vue";
 export default {
+  components: { VmFooter },
   data() {
     return {
       name: "",

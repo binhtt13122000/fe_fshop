@@ -136,7 +136,7 @@
                 class="combo-Promo-text"
               >
                 <v-list-item-title style="font-size: 30px">{{
-                  cart.cartId
+                  cart.cartDescription 
                 }}</v-list-item-title>
               </router-link>
               <v-spacer></v-spacer>
@@ -347,11 +347,12 @@ export default {
   },
 
   mounted() {
-    if (this.isLoggedIn === true) {
-      console.log(this.user.userName);
-      console.log("User avatar: " + this.loggedIn());
+    // if (this.isLoggedIn === true) {
+      console.log("get cart in header");
+      // console.log(this.user.userName);
+      // console.log("User avatar: " + this.loggedIn());
       this.getCart(this.user.userName);
-    }
+    //}
   },
 };
 </script>

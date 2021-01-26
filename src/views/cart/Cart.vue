@@ -1,84 +1,85 @@
 <template>
-  <div class="cart">
-    <v-container fluid style="background-color: white">
-      <!-- <h1>{{detail.product.productImages}}</h1> -->
-      <v-row>
-        <v-col style="background-color: rgb(255, 247, 245)">
-          <v-row style="background-color: rgb(255, 237, 231)">
-            <v-checkbox color="orange"></v-checkbox>
-            <v-col>
-              <div v-for="(img, i) in detail.product.productImages" :key="'A'+i">
-                <a :href="'/products/' + img.productId">
-                  <img
-                    v-if="i == 0"
-                    class="img-responsive"
-                    :src="img.imgUrl"
-                    width="50%"
-                  />
-                </a>
-              </div>
-            </v-col>
-            <v-col>
-              <div class="cart-item-left" align="left">
-                <a
-                  class="proName"
-                  :href="'/products/' + detail.product.productId"
+  <div id="app">
+    <v-app id="inspire">
+      <VmHeader></VmHeader>
+      <div>
+        <v-main>
+          <v-container>
+          <v-form>
+            <div id="app">
+              <v-app id="inspire">
+                <v-data-table
+                  :headers="headers"
+                  :items="desserts"
+                  sort-by="calories"
+                  class="elevation-1"
                 >
-                  <img
-                    src="https://gcp-img.slatic.net/lazada/id0078489-36-18.png#width=36&height=18"
-                    alt=""
-                  />
-                  {{ detail.product.productName }}
-                </a>
-                <p>
-                  {{ detail.product.productDescription }},Size:
-                  {{ detail.cartSize }}
-                </p>
-                <p class="combo-Promo-text">Enjoyed discount</p>
-                <img
-                  src="https://img.alicdn.com/tfs/TB1qcanWAT2gK0jSZFkXXcIQFXa-60-37.png"
-                  alt=""
-                />
-              </div>
-            </v-col>
-            <v-col class="cart-item-middle">
-              <p class="current-price">đ {{ detail.cartItemPrice }}</p>
-              <p class="origin-price">
-                đ {{ detail.product.realPrice + 20000 }}
-              </p>
-              <p class="promotion-ratio">-15%</p>
-              <v-btn icon><v-icon>mdi-heart</v-icon></v-btn>
-              <v-btn icon><v-icon>mdi-trash-can-outline</v-icon></v-btn>
-            </v-col>
-            <v-col class="cart-item-right">
-              <v-btn class="btn-minus" v-on:click="decreaseValue()"
-                ><v-icon>mdi-minus</v-icon></v-btn
-              >
-              <input
-                v-model="quantity"
-                type="number"
-                id="number"
-                :min="1"
-                :max="100"
-              />
-              <!-- {{ quantity }} -->
-              <v-btn class="btn-plus" v-on:click="increaseValue()"
-                ><v-icon>mdi-plus</v-icon></v-btn
-              >
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-    </v-container>
+                  <template v-slot:top>
+                    <v-toolbar flat>
+                      <v-toolbar-title>My CRUD</v-toolbar-title>
+                      <v-divider class="mx-4" inset vertical></v-divider>
+                      <v-spacer></v-spacer>
+                    </v-toolbar>
+                  </template>
+                  
+                  <!-- <template v-slot:item.actions="{ item }">
+                    <v-icon small class="mr-2" @click="editItem(item)">
+                      mdi-pencil
+                    </v-icon>
+                    <v-icon small @click="deleteItem(item)">
+                      mdi-delete
+                    </v-icon>
+                  </template> -->
+                </v-data-table>
+              </v-app>
+            </div>
+          </v-form>
+          </v-container>
+        </v-main>
+      </div>
+      <VmFooter></VmFooter>
+    </v-app>
   </div>
 </template>
 
 <script>
+import VmFooter from "../../components/Footer.vue";
+import VmHeader from "../../components/Header.vue";
 export default {
   name: "detail",
   props: ["detail"],
+  components: { VmFooter, VmHeader },
   data: () => ({
-    quantity: 1,
+    dialog: false,
+    dialogDelete: false,
+    headers: [
+      {
+        text: "IMAGE",
+        align: "start",
+        sortable: false,
+        value: "name",
+      },
+      { text: "PRODUCT NAME", value: "productName" },
+      { text: "UNTIL PRICE", value: "price" },
+      { text: "QUANTITY", value: "quantity" },
+      { text: "Actions", value: "actions", sortable: false },
+    ],
+    desserts: [],
+    editedIndex: -1,
+    editedItem: {
+      name: "",
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
+    defaultItem: {
+      name: "",
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
   }),
   methods: {
     increaseValue() {
@@ -98,7 +99,7 @@ export default {
   mounted() {
     console.log("t ben cart me");
     console.log(this.detail);
-  }
+  },
 };
 </script>
 
@@ -119,7 +120,6 @@ export default {
   }
 }
 .combo-Promo-text {
-
   margin-right: 50px;
   padding: 0 10px;
   line-height: 18px;
