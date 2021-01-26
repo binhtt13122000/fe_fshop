@@ -101,7 +101,14 @@
         class="hidden-sm-and-down mx-5"
       ></v-text-field>
 
-      <v-menu class="mx-4" bottom min-width="100px" rounded offset-y style="padding-right: 20px">
+      <v-menu
+        class="menu-cart mx-4"
+        bottom
+        min-width="100px"
+        rounded
+        offset-y
+        style="padding-right: 20px"
+      >
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
             <v-badge color="red" :content="quantityInCart" top overlap>
@@ -111,7 +118,14 @@
         </template>
         <v-card>
           <div>
-            <v-col><h1>Shopping cart <v-icon class="mb-6" @click="sheet = !sheet">mdi-close-circle</v-icon></h1></v-col>
+            <v-col
+              ><h1>
+                Shopping cart
+                <v-icon class="mb-6" @click="sheet = !sheet"
+                  >mdi-close-circle</v-icon
+                >
+              </h1></v-col
+            >
             <v-divider></v-divider>
             <v-list-item
               v-for="cart in carts"
@@ -144,8 +158,10 @@
                     dark
                     v-bind="attrs"
                     v-on="on"
-                    width="150px"
-                    >Card<v-icon large>mdi-plus</v-icon></v-btn
+                    size="30px"
+                    width="200px"
+                    ><h3>CART</h3>
+                    <v-icon large>mdi-plus</v-icon></v-btn
                   >
                 </v-col>
                 <!-- <v-col cols="12">
@@ -396,6 +412,9 @@ export default {
   background: #808080;
 }
 
+.menu-cart {
+  font-family: "Roboto", sans-serif;
+}
 #boottom-sheet {
   background-color: aqua;
 }

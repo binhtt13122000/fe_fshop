@@ -147,8 +147,8 @@
               </v-col>
               <!-- <v-col cols="12" sm="1" md="1"></v-col> -->
               <v-col class="order-table" sm="5" md="5">
-                <h1>Your order</h1>
-                <div class="order-item-detail">
+                <h1>YOUR ORDER</h1>
+                <div class="order-item-detail mt-3">
                   <v-form>
                     <v-row class="order-item" dense>
                       <v-col>
