@@ -1,13 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Layout from '../components/Layout.vue'
-import LoginPage from '../components/auth/LoginPage.vue'
-import SignupPage from '../components/auth/SignupPage.vue'
-import ForgotPasswordForm from '../components/auth/ForgotPasswordForm.vue'
-import HomePage from '../components/HomePage.vue'
-import ProductListContainer from '../components/product/ProductListContainer.vue'
-import Product from '../components/product/Product.vue'
+import LoginPage from '../views/auth/LoginPage.vue'
+import SignupPage from '../views/auth/SignupPage.vue'
+import ForgotPasswordForm from '../views/auth/ForgotPasswordForm.vue'
+import HomePage from '../views/HomePage.vue'
+import Purchase from '../views/product/Purchase.vue'
+import ProductDetail from '../views/product/ProductDetail.vue'
+import CartListContainer from '../views/cart/CartListContainer.vue'
+import Cart from '../views/cart/Cart.vue'
+import ProductListContainer from '../views/product/ProductListContainer.vue'
+import Footer from '../components/Footer.vue'
+import Header from '../components/Header.vue'
+import Main from '../components/Main.vue'
+// import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -17,24 +23,19 @@ const routes = [
   component: Home
   },
   {
-    path: '/product',
-    name: 'product',
-    component: Product
-    },
-  {
     path: '/',
     name: 'homepage',
     component: HomePage
     },
+    {
+      path: '/main',
+      name: 'main',
+      component: Main
+      },
   {
     path: '/forgotpasswordForm',
     name: 'forgotpasswordForm',
     component: ForgotPasswordForm
-  },
-  {
-    path: '/layout',
-    name: 'layout',
-    component: Layout
   },
   {
     path: '/loginpage',
@@ -42,14 +43,41 @@ const routes = [
     component: LoginPage
   },
   {
-    path: '/productlist',
-    name: 'productlist',
+    path: '/products',
+    name: 'products',
     component: ProductListContainer
+  },
+  {
+    path: '/products/:idProduct',
+    component: ProductDetail
+  },
+  {
+    path: '/carts/:idCart',
+    component: CartListContainer
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: Cart
+  },
+  {
+    path: '/purchase/:idProduct',
+    component: Purchase
   },
   {
     path: '/signupPage',
     name: 'signupPage',
     component: SignupPage
+  },
+  {
+    path: '/footer',
+    name: 'footer',
+    component: Footer
+  },
+  {
+    path: '/header',
+    name: 'header',
+    component: Header
   },
   {
     path: '/about',

@@ -16,9 +16,6 @@
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
-        <v-list-item-action class="right" style="width: 150px">
-          <v-btn to="/signuppage">Sign up</v-btn>
-        </v-list-item-action>
         <v-list-item-action class="left">
           <v-btn to="/"><v-icon>mdi-exit-to-app</v-icon></v-btn>
         </v-list-item-action>
@@ -29,16 +26,39 @@
             <v-col cols="12" sm="8" md="4">
               <h1 class="black--text" align="center">Sign in</h1>
               <v-spacer></v-spacer>
-              <v-form @submit.prevent="login()">
+              <v-form @submit.prevent="register()">
                 <v-card-text>
                   <v-text-field
                     class="form_group"
-                    label="username"
-                    v-model="username"
-                    :rules="[(v) => !!v || 'username is required']"
+                    label="userName"
+                    v-model="userName"
+                    :rules="rules.usernameRules"
                     required
-                    name="username"
+                    error-count="3"
+                    name="userName"
                     prepend-icon="mdi-account"
+                    type="text"
+                  ></v-text-field>
+                  <v-text-field
+                    class="form_group"
+                    label="name"
+                    v-model="name"
+                    :rules="rules.nameRules"
+                    required
+                    error-count="3"
+                    name="name"
+                    prepend-icon="mdi-rename-box"
+                    type="text"
+                  ></v-text-field>
+                  <v-text-field
+                    class="form_group"
+                    label="Email"
+                    v-model="email"
+                    :rules="rules.emailRules"
+                    required
+                    error-count="2"
+                    name="Email"
+                    prepend-icon="mdi-email"
                     type="text"
                   ></v-text-field>
 
@@ -47,27 +67,22 @@
                     id="password"
                     label="Password"
                     v-model="password"
-                    :rules="[(v) => !!v || 'Password is required']"
-                    required
                     name="password"
+                    :rules="rules.passwordRules"
+                    required
+                    error-count="5"
                     prepend-icon="mdi-lock"
                     type="password"
                   ></v-text-field>
-
-                  <div class="create-forgot">
-                    <p class="right" align="right">
-                      <router-link to="/forgotpasswordForm"
-                        >Forgot password ?</router-link
-                      >
-                    </p>
-                  </div>
                   <div class="text-xs-center">
-                    <v-btn class="" type="submit" color="success">Login</v-btn>
+                    <v-btn class="" type="submit" color="success"
+                      >Register</v-btn
+                    >
                   </div>
                 </v-card-text>
               </v-form>
               <br />
-              <v-spacer></v-spacer>
+              <br />
               <v-form align="center">
                 <v-spacer></v-spacer>
                 <hr
@@ -79,56 +94,72 @@
                   ><i class="fab fa-google fa-2x"></i>Login with Google</a
                 >
               </v-form>
-              <br />
             </v-col>
           </v-row>
         </v-container>
       </v-main>
+      <v-divider></v-divider>
+      <VmFooter></VmFooter>
     </v-app>
   </div>
 </template>
 
 <script>
-// import Axios from 'axios';
+import VmFooter from "../../components/Footer.vue";
 export default {
+  components: { VmFooter },
   data() {
     return {
-      username: "",
+      name: "",
+      userName: "",
+      email: "",
       password: "",
+      rules: {
+        usernameRules: [
+          (v) => !!v || "Full name is required",
+          (v) => (v && v.length >= 2) || "User name  must have 5+ characters",
+        ],
+        nameRules: [
+          (v) => !!v || "Full name is required",
+          (v) => (v && v.length >= 2) || "Full name  must have 5+ characters",
+        ],
+        emailRules: [
+          (v) => !!v || "E-mail is required",
+          (v) =>
+            /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+            "E-mail must be valid",
+        ],
+        passwordRules: [
+          (v) => !!v || "Password is required",
+          (v) => (v && v.length >= 5) || "Password must have 5+ characters",
+          (v) => /(?=.*[A-Z])/.test(v) || "Must have one uppercase character",
+          (v) => /(?=.*\d)/.test(v) || "Must have one number",
+        ],
+      },
     };
   },
   methods: {
-    login() {
+    register() {
       console.log("login fuction from components.......");
       this.$store
-        .dispatch("auth/login", {
-          username: this.username,
+        .dispatch("auth/register", {
+          userName: this.userName,
+          name: this.name,
+          email: this.email,
           password: this.password,
         })
         .then(() => this.$router.push("/"))
         .catch((err) => console.log(err));
     },
-    //  login() {
-    //   Axios.post('http://localhost:8082/v1/api/users/login', {username: this.username,
-    //     password: this.password,}).then(response => {
-    //       console.log(response)
-    //     }).catch(()=> {
-    //       console.log("-----Errror")
-    //     })
-    // }
   },
 };
 </script>
 
 <style lang="scss">
-.create-forgot .right {
-  text-decoration: none;
-  list-style: none;
-}
-
 .text-xs-center {
   text-align: right;
 }
+
 .fa-google {
   background: conic-gradient(
       from -45deg,

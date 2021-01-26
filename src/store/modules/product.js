@@ -1,11 +1,13 @@
 // import { reject, resolve } from "core-js/fn/promise";
+// import { reject } from 'core-js/fn/promise';
 import 'es6-promise/auto'
 import ProductServices from "../../services/ProductService"
 
 const state = {
     products: [],
     product: [],
-    // cart: [],
+    pages: [],
+    page: [],
 };
 
 const getters = {
@@ -15,81 +17,67 @@ const getters = {
     product(state) {
         return state.product
     },
-    // cart(state) {
-    //     return state.cart
-    // }
+    pages(state) {
+        return state.pages
+    },
+    page(state) {
+        return state.page
+    }
+
 };
 
 
 const mutations = {
     setProducts: (state, val) => {
-        return state.products = val
+        state.products = val
     },
     setProduct: (state, val) => {
-        return state.product = val
+        state.product = val
     },
-    // setCart: (state, val) => {
-    //     return state.cart = val
-    // }
+    setPages: (state, val) => {
+        state.pages = val
+    },
+
+    setpage: (state, val) => {
+        state.page = val
+    }
+    
 };
 
 const actions = {
-    // async getProducts({ commit }) {
-    //     try {
-    //         const response = await ProductService.getProducts()
-    //         console.log(response)
-    //         commit("setProducts", response.data)
-    //     } catch (error) {
-    //         console.log(error.response)
-    //     }
-    // },
-    getProducts({commit}) {
+
+    getProducts({ commit }, index) {
         return new Promise((resolve, reject) => {
-            console.log("Nhanle");
-            ProductServices.getProducts().then(resp => {
-                console.log(resp)
-                console.log("Nhanle123");
-                commit("setProducts", resp.data)
-                console.log("Nhanle11");
+            ProductServices.getProducts(index).then((resp) => {
+                commit("setProducts", resp.data.content)
+                commit("setPages", resp.data)
                 resolve(resp)
             })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
         })
     },
 
-    productDetails({commit}, id) {
+    productDetails({ commit }, id) {
         return new Promise((resolve, reject) => {
-            ProductServices.getProductsById(id).then(resp => {
-                console.log(resp)
-                commit("setProducts", resp.data[0])
-                resolve(resp)
+            ProductServices.getProductsByProductId(id).then((response) => {
+                commit("setProduct", response.data)
+                resolve(response)
             })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
         })
-    }
-    
-
-    // async productDetails({ commit }, id) {
-    //     try {
-    //         const response = await ProductService.getProductsById(id)
-    //         console.log(response)
-    //         commit("setProduct", response.data[0])
-    //     } catch (error) {
-    //         console.log(error.response)
-    //     }
-    // }
+    },
 };
 
 export default {
     namespaced: true, // giup nhan biet dispatch, phan biet den store nao
     state,
     getters,
-    mutations,
+    mutations, 
     actions
 }

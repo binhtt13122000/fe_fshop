@@ -6,13 +6,13 @@ import Vuex from 'vuex'
 // import ProStore from "./modules/auth"
 import auth from "./modules/auth"
 import product from "./modules/product"
-
-
+import createPersistedState from 'vuex-persistedstate';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
       auth,
-      product
+      product,
   },
+  plugins: [createPersistedState()]
 })

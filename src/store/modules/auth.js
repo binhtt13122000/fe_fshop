@@ -1,63 +1,147 @@
-// import { reject, resolve } from "core-js/fn/promise";
-// import { resolve } from 'core-js/fn/promise';
-// import 'es6-promise/auto'
+import 'es6-promise/auto'
 import AuthServices from "../../services/AuthenticationService"
-// import axios from 'axios';
 const state = {
-    status: '',
-    token: localStorage.getItem('token') || '',
-    user: {}
+    user: {},
+    userInfo: {
+        isLoggedIn: false,
+        isSignedUp: false
+    },
+    cart: [],
+    carts: [],
+    cartDetail: []
 };
-const getters = {};
-const mutations = {
-    auth_request(state) {
-        state.status = 'loading'
+const getters = {
+    user(state) {
+        return state.user;
     },
-    auth_success(state, user) {
-        state.status = 'success'
-        state.user = user
+    isUserLoggedIn: state => {
+        return state.userInfo.isLoggedIn;
     },
-    auth_error(state) {
-        state.status = 'error'
+    carts(state) {
+        console.log(state.carts);
+        return state.carts
     },
-    logout(state) {
-        state.status = ''
-        state.token = ''
+    cart(state) {
+        return state.cart
     },
-    DO_SOMETHING() {
-        console.log("baby oi")
+    cartDetail(state) {
+        return state.cartDetail
     }
 };
+const mutations = {
+    auth_request: (state) => {
+        state.status = 'loading'
+    },
+    addNewCart: (state, val) => {
+        state.carts.push(val)
+    },
+    setUser: (state, val) => {
+        state.user = val
+    },
+    isUserLoggedIn: (state, isUserLoggedIn) => {
+        state.userInfo.isLoggedIn = isUserLoggedIn;
+    },
+    isUserSignedUp: (state, isSignedUp) => {
+        state.userInfo.isSignedUp = isSignedUp;
+    },
+    setCarts: (state, val) => {
+        state.carts = val
+    },
+    setCart: (state, val) => {
+        state.cart = val
+    },
+    setCartDetail: (state, val) => {
+        state.cartDetail = val
+    },
+    delCartDetail: (state) => {
+        state.cartDetail = ''
+    },
+    auth_error: (state) => {
+        state.status = 'error'
+    },
+    logout: (state) => {
+        state.user = ''
+    },
+    removeFromFavourite: (state, id) => {
+        state.products.forEach(el => {
+            if (id) {
+                el.isFavourite = false;
+            }
+        });
+    },
+};
 const actions = {
-    login({commit}, credentials){
-        return new Promise((resolve, reject) => {
-            commit('auth_request')
-            AuthServices.login(credentials).then(resp => {
-                const user = resp.data.credentials
-                commit('auth_success', user)
-                console.log(resp)
-                resolve(resp)
-            })
-            .catch(err => {
-                commit('auth_error')
-                reject(err)
-            })
-        })
+
+    async logout({commit, state}){
+        const username = state.user.userName
+        const response = await AuthServices.logout(username);
+        if(response.status === 200) {
+            await commit("isUserLoggedIn", true);
+            return await commit("logout")
+        }
+        throw new Error(response.status)
     },
 
-    register({commit}, user){
+    async login({ commit }, credential) {
+        await AuthServices.login(credential);
+        const response = await AuthServices.getUser(credential.username);
+        if (response.status === 200) {
+            return await commit("setUser", response.data);
+            // const responseforCart = await AuthServices.getCarts(credential.username);
+            // if (responseforCart.status === 200) {
+            //     console.log(responseforCart);
+            //     console.log("cart respon");
+            //     console.log(responseforCart.data.content);
+            //     await commit("isUserLoggedIn", true);
+            //     return await commit("setCarts", responseforCart.data.content);
+
+            //     // const responseForCartDetail = await AuthServices.getCartDetails()
+            // }
+            // throw new Error(responseforCart.status)
+        }
+        throw new Error(response.status);
+
+    },
+
+    async getCart({commit}, username){
+        const response =  await AuthServices.getCarts(username);
+        if(response.status === 200){
+            await commit("isUserLoggedIn", true);
+            return await commit("setCarts", response.data.content);
+        }
+        throw new Error(response.status)
+    },
+    async getCartDetail({ commit }, cardId, username) {
+        const response = await AuthServices.getCartDetails(cardId, username)
+        if(response.status === 200){
+            return await commit("setCartDetail", response.data.content);
+        }
+
+        throw new Error(response.status);
+
+    },
+
+    async createNewCart({commit, state},newCart) {
+        console.log("create new cart store vuex");
+        const name = state.user.userName
+        const response = await AuthServices.createNewCart(name, newCart)
+        if(response.status === 200){
+            return await commit("addNewCart", newCart)
+        }
+    },
+
+    register({ commit }, user) {
         return new Promise((resolve, reject) => {
-            commit('auth_request')
+            // commit('auth_request')
             AuthServices.register(user).then(resp => {
                 const user = resp.data.user
-                commit('auth_success', user)
-                console.log(resp)
+                commit('setUser', user)
                 resolve(resp)
             })
-            .catch(err => {
-                commit('auth_error')
-                reject(err)
-            })
+                .catch(err => {
+                    commit('auth_error')
+                    reject(err)
+                })
         })
     }
 
@@ -65,9 +149,9 @@ const actions = {
 
 export default {
     namespaced: true, // giup nhan biet dispatch, phan biet den store nao
-    state,
     getters,
     mutations,
-    actions
+    actions,
+    state,
 }
 
