@@ -164,18 +164,7 @@
                     <v-icon large>mdi-plus</v-icon></v-btn
                   >
                 </v-col>
-                <!-- <v-col cols="12">
-                  <v-btn
-                    width="150px"
-                    class="ma-2"
-                    dark
-                    color="#404040"
-                    style="font-color: #ffffff"
-                    @click="sheet = !sheet"
-                  >
-                    Close<v-icon large>mdi-close</v-icon>
-                  </v-btn>
-                </v-col> -->
+
               </template>
               <v-card class="elevation-12">
                 <v-toolbar color="black" dark flat>

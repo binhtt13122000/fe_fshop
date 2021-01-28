@@ -5,14 +5,16 @@ import LoginPage from '../views/auth/LoginPage.vue'
 import SignupPage from '../views/auth/SignupPage.vue'
 import ForgotPasswordForm from '../views/auth/ForgotPasswordForm.vue'
 import HomePage from '../views/HomePage.vue'
+import Layout from '../views/Layout.vue'
 import Purchase from '../views/product/Purchase.vue'
 import ProductDetail from '../views/product/ProductDetail.vue'
 import CartListContainer from '../views/cart/CartListContainer.vue'
 import Cart from '../views/cart/Cart.vue'
 import ProductListContainer from '../views/product/ProductListContainer.vue'
 import Footer from '../components/Footer.vue'
+import HeaderAdmin from '../components/HeaderAdmin.vue'
 import Header from '../components/Header.vue'
-import Main from '../components/Main.vue'
+import CrudProduct from '../views/Admin/CrudProduct.vue'
 // import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
 
@@ -27,11 +29,6 @@ const routes = [
     name: 'homepage',
     component: HomePage
     },
-    {
-      path: '/main',
-      name: 'main',
-      component: Main
-      },
   {
     path: '/forgotpasswordForm',
     name: 'forgotpasswordForm',
@@ -70,6 +67,11 @@ const routes = [
     component: SignupPage
   },
   {
+    path: '/main-product',
+    name: 'main-product',
+    component: CrudProduct
+  },
+  {
     path: '/footer',
     name: 'footer',
     component: Footer
@@ -78,6 +80,16 @@ const routes = [
     path: '/header',
     name: 'header',
     component: Header
+  },
+  {
+    path: '/headerAdmin',
+    name: 'headerAdmin',
+    component: HeaderAdmin
+  },
+  {
+    path: '/layout',
+    name: 'layout',
+    component: Layout
   },
   {
     path: '/about',

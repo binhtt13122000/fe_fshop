@@ -20,10 +20,10 @@
                 sm="4"
                 align-content="center"
                 justify="center"
-                v-for="item in products"
-                :key="item.productId"
+                v-for="product in products"
+                :key="product.productId"
               >
-                <VmProduct :product="item"></VmProduct>
+                <VmProduct :product="product"></VmProduct>
               </v-col>
             </v-row>
             <v-pagination
