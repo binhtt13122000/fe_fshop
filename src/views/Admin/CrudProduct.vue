@@ -15,7 +15,7 @@
                   solo-inverted
                   hide-details
                   prepend-inner-icon="mdi-magnify"
-                  label="Search"
+                  label="Theo tên, mã hàng"
                   class="hidden-md-and-down mx-3"
                   style="width: 50px"
                 ></v-text-field>
@@ -55,7 +55,7 @@
                 <v-dialog v-model="dialogAdd" width="800px">
                   <v-card>
                     <v-card-title class="blue darken-1">
-                      Thêm hàng hóa
+                      Chinh sua hang hoa hàng hóa
                     </v-card-title>
                     <v-tabs v-model="addTab">
                       <v-tab>Thông tin</v-tab>
@@ -186,7 +186,7 @@
                       ></v-switch>
                       <v-divider class="mx-4" inset vertical></v-divider>
                       <v-spacer></v-spacer>
-                      <v-dialog v-model="dialog" max-width="500px">
+                      <v-dialog v-model="dialog" width="800px">
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
                             color="success"
@@ -200,66 +200,94 @@
                           </v-btn>
                         </template>
                         <v-card>
-                          <v-card-title>
-                            <span class="headline">{{ title }}</span>
+                          <v-card-title class="blue darken-1">
+                            {{ title }}
                           </v-card-title>
-
-                          <v-card-text>
-                            <v-container>
-                              <v-row>
-                                <v-col cols="12" sm="6" md="4">
-                                  <v-text-field
-                                    v-model="editedItem.proName"
-                                    label="Tên hàng"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                  <v-text-field
-                                    v-model="editedItem.imgUrl"
-                                    label="Hình ảnh"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                  <v-text-field
-                                    v-model="editedItem.proSize"
-                                    label="Giá bán"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                  <v-text-field
-                                    v-model="editedItem.realPrice"
-                                    label="Giá vốn"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                  <v-text-field
-                                    v-model="editedItem.status"
-                                    label="Trạng thái"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                  <v-text-field
-                                    v-model="editedItem.supplierId"
-                                    label="Supplier"
-                                  ></v-text-field>
-                                </v-col>
-                              </v-row>
-                            </v-container>
-                          </v-card-text>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" text @click="close">
-                              Cancel
-                            </v-btn>
-                            <v-btn color="blue darken-1" text @click="save">
-                              Save
-                            </v-btn>
-                          </v-card-actions>
+                          <v-tabs v-model="addTab">
+                            <v-tab>Thông tin</v-tab>
+                            <v-tab>Mô tả chi tiết</v-tab>
+                          </v-tabs>
+                          <v-tabs-items v-model="addTab">
+                            <v-tab-item v-for="n in 2" :key="n">
+                              <v-container v-if="n === 1">
+                                <v-row class="mx-2">
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      v-model="editedItem.proType"
+                                      label="Loại hàng"
+                                      append-outer-icon="mdi-information"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      v-model="editedItem.realPrice"
+                                      label="Giá vốn"
+                                      append-outer-icon="mdi-information"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      v-model="editedItem.proPrice"
+                                      label="Giá bán"
+                                      append-outer-icon="mdi-information"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      v-model="editedItem.proName"
+                                      label="Tên hàng"
+                                      append-outer-icon="mdi-information"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      v-model="editedItem.supplierId"
+                                      label="Nhà sản xuất"
+                                      append-outer-icon="mdi-information"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      v-model="editedItem.status"
+                                      label="Trạng thái"
+                                      append-outer-icon="mdi-information"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-file-input
+                                      :rules="imgUrlRules"
+                                      accept="image/png, image/jpg, image/jpeg"
+                                      placeholder="Pick image"
+                                      append-outer-icon="mdi-camera"
+                                      label="Image"
+                                    >
+                                    </v-file-input>
+                                  </v-col>
+                                </v-row>
+                              </v-container>
+                              <v-container v-else>
+                                <h1>love you</h1>
+                              </v-container>
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                  color="blue darken-1"
+                                  text
+                                  @click="close"
+                                >
+                                  Cancel
+                                </v-btn>
+                                <v-btn color="blue darken-1" text @click="save">
+                                  Save
+                                </v-btn>
+                              </v-card-actions>
+                            </v-tab-item>
+                          </v-tabs-items>
                         </v-card>
                       </v-dialog>
                       <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
-                          <v-card-title class="headline"
+                          <v-card-title class="headline blue darken-1"
                             >Are you sure you want to delete
                             product?</v-card-title
                           >
@@ -326,6 +354,7 @@ export default {
     desTab: null,
     upHere: false,
     singleSelect: false,
+    dialogEdit: false,
     dialog: false,
     dialogAdd: false,
     dialogDelete: false,
@@ -376,7 +405,7 @@ export default {
   },
   computed: {
     title() {
-      return this.editedIndex === -1 ? "New product" : "Edit product";
+      return this.editedIndex === -1 ? "Thêm sản phẩm" : "Chỉnh sửa sản phẩm";
     },
   },
   methods: {
