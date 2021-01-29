@@ -54,7 +54,7 @@
                 </v-menu>
                 <v-dialog v-model="dialogAdd" width="800px">
                   <v-card>
-                    <v-card-title class="grey darken-0">
+                    <v-card-title class="blue darken-1">
                       Thêm hàng hóa
                     </v-card-title>
                     <v-tabs v-model="addTab">
@@ -76,19 +76,7 @@
                             </v-col>
                             <v-col cols="6">
                               <v-text-field
-                                label="Tên hàng"
-                                append-outer-icon="mdi-information"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="6">
-                              <v-text-field
                                 label="Loại hàng"
-                                append-outer-icon="mdi-information"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="6">
-                              <v-text-field
-                                label="Giá bán"
                                 append-outer-icon="mdi-information"
                               ></v-text-field>
                             </v-col>
@@ -100,25 +88,45 @@
                             </v-col>
                             <v-col cols="6">
                               <v-text-field
+                                label="Giá bán"
+                                append-outer-icon="mdi-information"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="6">
+                              <v-text-field
+                                label="Tên hàng"
+                                append-outer-icon="mdi-information"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="6">
+                              <v-text-field
                                 label="Nhà sản xuất"
                                 append-outer-icon="mdi-information"
                               ></v-text-field>
                             </v-col>
                             <v-col cols="6">
                               <v-text-field
-                                type="tel"
-                                prepend-icon="mdi-phone"
-                                placeholder="(000) 000 - 0000"
+                                label="Trạng thái"
+                                append-outer-icon="mdi-information"
                               ></v-text-field>
                             </v-col>
-                            <v-col cols="12">
-                              <v-row>
-                                <ul v-for="n in 5" :key="n">
+                            <v-col cols="6">
+                              <v-file-input
+                                :rules="imgUrlRules"
+                                accept="image/png, image/jpg, image/jpeg"
+                                placeholder="Pick image"
+                                append-outer-icon="mdi-camera"
+                                label="Image"
+                              >
+                              </v-file-input>
+                              <v-row class="file-image">
+                                <!-- <span class="img-span">Thêm</span> -->
+                                <ul v-for="n in 1" :key="n">
                                   <li>
-                                    <span>Thêm</span>
                                     <img
+                                      id="imgUrl"
                                       src="https://ceygate.com/content/themes/arkahost/assets/images/default.png"
-                                      width="20%"
+                                      width="15%"
                                       alt=""
                                     />
                                   </li>
@@ -238,7 +246,6 @@
                               </v-row>
                             </v-container>
                           </v-card-text>
-
                           <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" text @click="close">
@@ -309,6 +316,12 @@ import VmHeader from "../../components/HeaderAdmin.vue";
 export default {
   components: { VmFooter, VmHeader },
   data: () => ({
+    imgUrlRules: [
+      (value) =>
+        !value ||
+        value.size < 5000000 ||
+        "Avatar size should be less than 5MB!",
+    ],
     addTab: null,
     desTab: null,
     upHere: false,
@@ -494,7 +507,7 @@ export default {
 
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
-      this.editedIndex = Object.assign({}, item);
+      this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     deleteItem(item) {
@@ -539,3 +552,16 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.file-image {
+  display: inline-table;
+  ul {
+    display: inline-table;
+    list-style: none;
+  }
+  ul li {
+    display: inline-table;
+  }
+}
+</style>

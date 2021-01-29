@@ -94,7 +94,7 @@
               style="padding-right: 20px"
             >
               <template v-slot:activator="{ on }">
-                <v-btn v-on="on">Hàng hóa</v-btn>
+                <v-btn v-on="on"><v-icon>mdi-tshirt-crew</v-icon>Hàng hóa</v-btn>
                 <!-- <v-btn icon x-large v-on="on"> Hàng hóa </v-btn> -->
               </template>
 
@@ -290,12 +290,17 @@ export default {
       //   { icon: "mdi-keyboard", text: "Go to the old version" },
     ],
   }),
-      onResize() {
-      this.isValid = window.innerWidth <= 1040;
-    },
+
+  created() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize, { passive: true });
+  },
   methods: {
     mouseOver: function () {
       this.active = !this.active;
+    },
+    onResize() {
+      this.isValid = window.innerWidth <= 1040;
     },
   },
 };
