@@ -5,9 +5,190 @@
       <v-container class="container" fluid>
         <section class="container">
           <v-row>
-            <v-col cols="12" md="3" sm="3">
-              <h1>Hàng hóa</h1>
+            <!-- right main 
+              ---
+            -->
+            <v-col cols="12" md="3" sm="3" class="right-main-item">
+              <h1 class="hidden-md-and-down mb-6 ml-6" align="left">
+                Hàng hóa
+              </h1>
+              <v-col cols="12" class="hidden-md-and-down">
+                <v-card>
+                  <v-list-group :value="true">
+                    <template v-slot:activator>
+                      <v-list-item-content
+                        class="font-weight-medium"
+                        align="left"
+                      >
+                        <v-list-item-title style="color: black"
+                          >Loại hàng</v-list-item-title
+                        >
+                      </v-list-item-content>
+                    </template>
+                    <v-container>
+                      <v-checkbox
+                        dense
+                        label="Hàng hóa"
+                        hide-details
+                      ></v-checkbox>
+                      <v-checkbox
+                        dense
+                        label="Dịch vụ"
+                        hide-details
+                      ></v-checkbox>
+                      <v-checkbox
+                        dense
+                        label="Khuyến mãi"
+                        hide-details
+                      ></v-checkbox>
+                    </v-container>
+                  </v-list-group>
+                </v-card>
+              </v-col>
+              <v-col cols="12" class="hidden-md-and-down">
+                <v-card>
+                  <v-list-group :value="true">
+                    <template v-slot:activator>
+                      <v-list-item-content
+                        class="font-weight-medium"
+                        align="left"
+                      >
+                        <v-list-item-title style="color: black"
+                          >Nhóm hàng
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </template>
+                    <v-list-item>
+                      <v-list-item-content
+                        align="left"
+                        class="font-weight-medium"
+                      >
+                        <v-list-item-text> Tất cả </v-list-item-text>
+                      </v-list-item-content>
+                      <v-list-item-action>
+                        <v-btn icon
+                          ><v-icon>mdi-plus-circle-outline</v-icon></v-btn
+                        >
+                      </v-list-item-action>
+                    </v-list-item>
+
+                    <v-container>
+                      <v-text-field
+                        flat
+                        hide-details
+                        prepend-inner-icon="mdi-magnify"
+                        label="Tìm kiếm nhóm hàng"
+                      ></v-text-field>
+                    </v-container>
+                  </v-list-group>
+                </v-card>
+              </v-col>
+              <v-col cols="12" class="hidden-md-and-down">
+                <v-card>
+                  <v-list-group :value="true">
+                    <template v-slot:activator>
+                      <v-list-item-content
+                        class="font-weight-medium"
+                        align="left"
+                      >
+                        <v-list-item-title style="color: black"
+                          >Thương hiệu</v-list-item-title
+                        >
+                      </v-list-item-content>
+                    </template>
+                    <v-container>
+                      <v-text-field
+                        flat
+                        hide-details
+                        label="Chọn thương hiệu"
+                      ></v-text-field>
+                    </v-container>
+                  </v-list-group>
+                </v-card>
+              </v-col>
+              <v-col cols="12" class="hidden-md-and-down">
+                <v-card>
+                  <v-list-group :value="true">
+                    <template v-slot:activator>
+                      <v-list-item-content
+                        class="font-weight-medium"
+                        align="left"
+                      >
+                        <v-list-item-title style="color: black"
+                          >Bán trực tiếp</v-list-item-title
+                        >
+                      </v-list-item-content>
+                    </template>
+                    <v-container>
+                      <v-radio-group v-model="radio">
+                        <v-radio label="Tất cả" value="all"></v-radio>
+                        <v-radio label="Bán trực tiếp" value="direct"></v-radio>
+                        <v-radio
+                          label="Không bán trực tiếp"
+                          value="indiect"
+                        ></v-radio>
+                      </v-radio-group>
+                    </v-container>
+                  </v-list-group>
+                </v-card>
+              </v-col>
+              <v-col cols="12" class="hidden-md-and-down">
+                <v-card>
+                  <v-list-group :value="true">
+                    <template v-slot:activator>
+                      <v-list-item-content
+                        class="font-weight-medium"
+                        align="left"
+                      >
+                        <v-list-item-title style="color: black"
+                          >Ngày hết hàng</v-list-item-title
+                        >
+                      </v-list-item-content>
+                    </template>
+                    <v-container>
+                      <v-checkbox label="Hàng hóa" hide-details></v-checkbox>
+                      <v-checkbox label="Dịch vụ" hide-details></v-checkbox>
+                      <v-checkbox label="Khuyến mãi" hide-details></v-checkbox>
+                    </v-container>
+                  </v-list-group>
+                </v-card>
+              </v-col>
+              <v-col cols="12" class="hidden-md-and-down">
+                <v-card>
+                  <v-list-group :value="true">
+                    <template v-slot:activator>
+                      <v-list-item-content
+                        class="font-weight-medium"
+                        align="left"
+                      >
+                        <v-list-item-title style="color: black"
+                          >Lựa chọn hiển thị</v-list-item-title
+                        >
+                      </v-list-item-content>
+                    </template>
+                    <v-container>
+                      <v-radio-group v-model="radioShow" >
+                        <v-radio
+                          label="Hàng đang kinh doanh"
+                          value="isOnSale"
+                        ></v-radio>
+                        <v-radio
+                          label="Hàng ngừng kinh doanh"
+                          value="isOffSale"
+                        ></v-radio>
+                        <v-radio
+                          label="Không bán trực tiếp"
+                          value="all"
+                        ></v-radio>
+                      </v-radio-group>
+                    </v-container>
+                  </v-list-group>
+                </v-card>
+              </v-col>
             </v-col>
+            <!-- left main 
+              ---
+            -->
             <v-col>
               <v-row>
                 <v-text-field
@@ -19,13 +200,7 @@
                   class="hidden-md-and-down mx-3"
                   style="width: 50px"
                 ></v-text-field>
-                <v-menu
-                  open-on-hover
-                  bottom
-                  offset-y
-                  :key="text"
-                  :rounded="rounded"
-                >
+                <v-menu open-on-hover bottom offset-y rounded>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn color="success" v-bind="attrs" v-on="on">
                       <v-icon>mdi-plus</v-icon>Thêm mới
@@ -55,7 +230,7 @@
                 <v-dialog v-model="dialogAdd" width="800px">
                   <v-card>
                     <v-card-title class="blue darken-1">
-                      Chinh sua hang hoa hàng hóa
+                      Thêm sản phẩm
                     </v-card-title>
                     <v-tabs v-model="addTab">
                       <v-tab>Thông tin</v-tab>
@@ -119,8 +294,7 @@
                                 label="Image"
                               >
                               </v-file-input>
-                              <v-row class="file-image">
-                                <!-- <span class="img-span">Thêm</span> -->
+                              <!-- <v-row class="file-image">
                                 <ul v-for="n in 1" :key="n">
                                   <li>
                                     <img
@@ -131,7 +305,7 @@
                                     />
                                   </li>
                                 </ul>
-                              </v-row>
+                              </v-row> -->
                             </v-col>
                           </v-row>
                         </v-container>
@@ -139,7 +313,6 @@
                           <h1>love you</h1>
                         </v-container>
                         <v-card-actions>
-                          <v-btn text color="primary">More</v-btn>
                           <v-spacer></v-spacer>
                           <v-btn text color="primary" @click="dialogAdd = false"
                             >Cancel</v-btn
@@ -153,7 +326,7 @@
                 <v-btn color="success" class="mx-2"
                   ><v-icon>mdi-application-import</v-icon>Import</v-btn
                 >
-                <v-btn color="success" class="mx-2"
+                <v-btn color="success"
                   ><v-icon>mdi-file-move-outline</v-icon>Xuất File</v-btn
                 >
               </v-row>
@@ -350,6 +523,8 @@ export default {
         value.size < 5000000 ||
         "Avatar size should be less than 5MB!",
     ],
+    radio: "all",
+    radioShow: "isOnSale",
     addTab: null,
     desTab: null,
     upHere: false,
@@ -592,5 +767,9 @@ export default {
   ul li {
     display: inline-table;
   }
+}
+
+.right-main-item {
+  font-family: Arial, Helvetica, sans-serif;
 }
 </style>

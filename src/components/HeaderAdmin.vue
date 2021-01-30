@@ -75,63 +75,202 @@
       <v-row
         id="nav-bar-btn"
         class="hidden-md-and-down"
-        width="80px"
+        width="100px"
         justify="center"
       >
         <div class="nar-bar-btn">
-          <ul class="nar-links">
-            <li><a href="">Tổng quan</a></li>
-            <!-- <li @mouseover="hover = true" @mouseleave="hover = false">
-                Hàng
-              </li> -->
-            <!-- <div v-show="active"> -->
-            <v-menu
-              class="menu-cart mx-4"
-              bottom
-              min-width="100px"
-              rounded
-              offset-y
-              style="padding-right: 20px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on"><v-icon>mdi-tshirt-crew</v-icon>Hàng hóa</v-btn>
-                <!-- <v-btn icon x-large v-on="on"> Hàng hóa </v-btn> -->
-              </template>
+          <!-- <ul class="nar-links"> -->
+          <v-btn
+            class="mx-1"
+            min-width="100px"
+            offset-y
+            bottom
+            color="blue darken-2"
+            ><v-icon>mdi-eye</v-icon>Tổng quan</v-btn
+          >
+          <v-menu bottom open-on-hover min-width="100px" rounded offset-y>
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" color="blue darken-2" class="mx-1"
+                ><v-icon>mdi-tshirt-crew</v-icon>Hàng hóa</v-btn
+              >
+            </template>
 
-              <v-card color="blue darken-2">
-                <v-list-item-content class="justify-center">
-                  <div class="mx-auto text-center">
-                    <v-btn depressed rounded text color="#ffffff"
-                      ><v-icon>mdi-view-list</v-icon>Danh mục</v-btn
-                    ><v-divider class="my-3"></v-divider>
-                    <v-btn depressed rounded text color="#ffffff"
-                      ><v-icon>mdi-attachment</v-icon>Thiết lập giá</v-btn
-                    >
-                    <v-divider class="my-3"></v-divider>
-                    <v-btn depressed rounded text color="#ffffff"
-                      ><v-icon>mdi-warehouse</v-icon>Kiểm kho</v-btn
-                    >
-                  </div>
-                </v-list-item-content>
-              </v-card>
-            </v-menu>
+            <v-card color="blue darken-2">
+              <v-list-item-content class="justify-center" align="left">
+                <div class="mx-auto text-left">
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-view-list</v-icon>Danh mục</v-btn
+                  ><v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-attachment</v-icon>Thiết lập giá</v-btn
+                  >
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-warehouse</v-icon>Kiểm kho</v-btn
+                  >
+                </div>
+              </v-list-item-content>
+            </v-card>
+          </v-menu>
+          <!-- Giao dich -->
+          <v-menu
+            class="mx-2"
+            bottom
+            small
+            open-on-hover
+            min-width="100px"
+            rounded
+            offset-y
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" color="blue darken-2" class="mx-1"
+                ><v-icon>mdi-arrow-left-right-bold</v-icon>Giao dịch</v-btn
+              >
+            </template>
 
-            <li><a href="">Giao dịch</a></li>
-            <li><a href="">Đối tác</a></li>
-            <li><a href="">Nhân viên</a></li>
-            <li><a href="">Sổ quỹ</a></li>
-            <li><a href="">Báo cáo</a></li>
-          </ul>
+            <v-card color="blue darken-2">
+              <v-list-item-content class="justify-center" align="left">
+                <div class="mx-auto text-left" style="">
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-order-bool-descending-variant</v-icon> Đặt
+                    hàng</v-btn
+                  ><v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-billboard</v-icon> Hóa đơn</v-btn
+                  >
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-car-pickup</v-icon> Vận đơn</v-btn
+                  >
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-view-list</v-icon> Trả hàng</v-btn
+                  >
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-database-import</v-icon> Nhập hàng</v-btn
+                  >
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-briefcase-upload</v-icon> Trả nhập hàng</v-btn
+                  >
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-table-cancel</v-icon> Xuất hủy</v-btn
+                  >
+                </div>
+              </v-list-item-content>
+            </v-card>
+          </v-menu>
+          <!-- Đối tác -->
+          <v-menu
+            class="mx-2"
+            bottom
+            small
+            open-on-hover
+            min-width="100px"
+            rounded
+            offset-y
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" color="blue darken-2" class="mx-1"
+                ><v-icon>mdi-order-bool-descending-variant</v-icon>Đối
+                tác</v-btn
+              >
+            </template>
+
+            <v-card color="blue darken-2">
+              <v-list-item-content class="justify-center" align="left">
+                <div class="mx-auto text-left" style="">
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-account</v-icon> Khách hàng</v-btn
+                  ><v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-account-supervisor-circle</v-icon> Nhà cung
+                    cấp</v-btn
+                  >
+                </div>
+              </v-list-item-content>
+            </v-card>
+          </v-menu>
+
+          <!-- Nhân viên -->
+          <v-menu
+            class="mx-2"
+            bottom
+            small
+            open-on-hover
+            min-width="100px"
+            rounded
+            offset-y
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" color="blue darken-2" class="mx-1"
+                ><v-icon>mdi-account-supervisor</v-icon>Nhân viên</v-btn
+              >
+            </template>
+
+            <v-card color="blue darken-2">
+              <v-list-item-content class="justify-center" align="left">
+                <div class="mx-auto text-left" style="">
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-account-group</v-icon>Nhân viên</v-btn
+                  ><v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-table-edit</v-icon> Chấm công</v-btn
+                  >
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-table-account</v-icon> Bảng tính lương</v-btn
+                  >
+                </div>
+              </v-list-item-content>
+            </v-card>
+          </v-menu>
+          <!-- Báo cáo -->
+          <v-menu
+            class="mx-2"
+            bottom
+            small
+            open-on-hover
+            min-width="100px"
+            rounded
+            offset-y
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" color="blue darken-2" class="mx-1"
+                ><v-icon>mdi-account-supervisor</v-icon>Báo cáo</v-btn
+              >
+            </template>
+
+            <v-card color="blue darken-2">
+              <v-list-item-content class="justify-center" align="left">
+                <div class="mx-auto text-left">
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-storefront</v-icon>Kênh bán hàng</v-btn
+                  ><v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-notebook</v-icon> Ghi chú</v-btn
+                  >
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text color="#ffffff"
+                    ><v-icon>mdi-finance</v-icon> Tài chính</v-btn
+                  >
+                </div>
+              </v-list-item-content>
+            </v-card>
+          </v-menu>
+          <!-- </ul> -->
         </div>
       </v-row>
-      <v-text-field
+      <!-- <v-text-field
         flat
         solo-inverted
         hide-details
         prepend-inner-icon="mdi-magnify"
         label="Search"
         class="hidden-sm-and-down"
-      ></v-text-field>
+      ></v-text-field> -->
       <v-spacer></v-spacer>
       <v-btn icon>
         <v-icon>mdi-apps</v-icon>
@@ -213,7 +352,6 @@
 
 <script>
 export default {
-  el: "#app",
   props: {
     source: String,
   },
@@ -267,7 +405,11 @@ export default {
         "icon-alt": "mdi-account-supervisor",
         text: "Nhân viên",
         model: true,
-        children: [{ icon: "mdi-plus", text: "Create label" }],
+        children: [
+          { icon: "mdi-account-group", text: "Nhân viên" },
+          { icon: "mdi-table-edit", text: "Chấm công" },
+          { icon: "mdi-table-account", text: "Bảng tính lương" },
+        ],
       },
       {
         icon: "mdi-minus",
