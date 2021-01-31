@@ -21,9 +21,12 @@
                         align="left"
                       >
                         <v-list-item-title style="color: black"
-                          >Loại hàng</v-list-item-title
+                          >Nhóm</v-list-item-title
                         >
                       </v-list-item-content>
+                      <v-list>
+                        <v-list-item></v-list-item>
+                      </v-list>
                     </template>
                     <v-container>
                       <v-checkbox
@@ -54,7 +57,7 @@
                         align="left"
                       >
                         <v-list-item-title style="color: black"
-                          >Nhóm hàng
+                          >Loại hàng
                         </v-list-item-title>
                       </v-list-item-content>
                     </template>
@@ -66,9 +69,35 @@
                         <v-list-item-subtitle> Tất cả </v-list-item-subtitle>
                       </v-list-item-content>
                       <v-list-item-action>
-                        <v-btn icon
+                        <v-btn icon @click="dialogType = !dialogType"
                           ><v-icon>mdi-plus-circle-outline</v-icon></v-btn
                         >
+                        <v-dialog v-model="dialogType" width="300px">
+                          <v-card>
+                            <v-card-title class="blue darken-1">
+                              Thêm loại hàng
+                            </v-card-title>
+                            <v-container>
+                              <v-col cols="12">
+                                <v-text-field
+                                  label="Tên loại hàng"
+                                ></v-text-field>
+                              </v-col>
+                            </v-container>
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                text
+                                color="primary"
+                                @click="dialogType = false"
+                                >Cancel</v-btn
+                              >
+                              <v-btn text @click="dialogType = false"
+                                >Save</v-btn
+                              >
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
                       </v-list-item-action>
                     </v-list-item>
 
@@ -77,7 +106,7 @@
                         flat
                         hide-details
                         prepend-inner-icon="mdi-magnify"
-                        label="Tìm kiếm nhóm hàng"
+                        label="Tìm kiếm loại hàng"
                       ></v-text-field>
                     </v-container>
                   </v-list-group>
@@ -92,15 +121,54 @@
                         align="left"
                       >
                         <v-list-item-title style="color: black"
-                          >Thương hiệu</v-list-item-title
-                        >
+                          >Nhà sản xuất
+                        </v-list-item-title>
                       </v-list-item-content>
                     </template>
+                    <v-list-item>
+                      <v-list-item-content
+                        align="left"
+                        class="font-weight-medium"
+                      >
+                        <v-list-item-subtitle> Tất cả </v-list-item-subtitle>
+                      </v-list-item-content>
+                      <v-list-item-action>
+                        <v-btn icon @click="dialogSupplier = !dialogSupplier"
+                          ><v-icon>mdi-plus-circle-outline</v-icon></v-btn
+                        >
+                        <v-dialog v-model="dialogSupplier" width="300px">
+                          <v-card>
+                            <v-card-title class="blue darken-1">
+                              Thêm nhà sản xuất
+                            </v-card-title>
+                            <v-container>
+                              <v-col cols="12">
+                                <v-text-field
+                                  label="Tên nhà sản xuất"
+                                ></v-text-field>
+                              </v-col>
+                            </v-container>
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                text
+                                color="primary"
+                                @click="dialogSupplier = false"
+                                >Cancel</v-btn
+                              >
+                              <v-btn text @click="dialogSupplier = false"
+                                >Save</v-btn
+                              >
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
+                      </v-list-item-action>
+                    </v-list-item>
                     <v-container>
                       <v-text-field
                         flat
                         hide-details
-                        label="Chọn thương hiệu"
+                        label="Chọn nhà sản xuất"
                       ></v-text-field>
                     </v-container>
                   </v-list-group>
@@ -218,7 +286,7 @@
                         >Thêm hàng hóa</v-list-item-title
                       >
                     </v-list-item>
-                    <v-list-item link>
+                    <v-list-item link @click="dialogPromo = !dialogPromo">
                       <v-list-item-action>
                         <v-icon>mdi-plus</v-icon>
                       </v-list-item-action>
@@ -228,6 +296,34 @@
                     </v-list-item>
                   </v-list>
                 </v-menu>
+
+                <!-- Dialog them khuyen mai, them san pham -->
+                <v-dialog v-model="dialogPromo" width="500px">
+                  <v-card>
+                    <v-card-title class="blue darken-1">
+                      Thêm khuyến mãi
+                    </v-card-title>
+                    <v-container>
+                      <v-col cols="12">
+                        <v-text-field label="Tên Khuyến mãi"> </v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          label="Promotion(%)"
+                          append-outer-icon="mdi-sale"
+                        >
+                        </v-text-field>
+                      </v-col>
+                    </v-container>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="dialogPromo = false"
+                        >Cancel</v-btn
+                      >
+                      <v-btn text @click="dialogPromo = false">Save</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
                 <v-dialog v-model="dialogAdd" width="800px">
                   <v-card>
                     <v-card-title class="blue darken-1">
@@ -241,7 +337,7 @@
                       <v-tab-item v-for="n in 2" :key="n">
                         <v-container v-if="n === 1">
                           <v-row class="mx-2">
-                            <v-col
+                            <!-- <v-col
                               class="align-center justify-space-between"
                               cols="6"
                             >
@@ -249,7 +345,7 @@
                                 append-outer-icon="mdi-information"
                                 label="Mã hàng"
                               ></v-text-field>
-                            </v-col>
+                            </v-col> -->
                             <v-col cols="6">
                               <v-text-field
                                 label="Loại hàng"
@@ -271,6 +367,12 @@
                             <v-col cols="6">
                               <v-text-field
                                 label="Tên hàng"
+                                append-outer-icon="mdi-information"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="6">
+                              <v-text-field
+                                label="Số lượng"
                                 append-outer-icon="mdi-information"
                               ></v-text-field>
                             </v-col>
@@ -311,7 +413,14 @@
                           </v-row>
                         </v-container>
                         <v-container v-else>
-                          <h1>love you</h1>
+                          <v-textarea
+                            label="Mô tả"
+                            auto-grow
+                            outlined
+                            rows="3"
+                            row-height="30"
+                            shaped
+                          ></v-textarea>
                         </v-container>
                         <v-card-actions>
                           <v-spacer></v-spacer>
@@ -352,7 +461,7 @@
                 >
                   <template v-slot:top>
                     <v-toolbar>
-                      <v-toolbar-title>4menShop</v-toolbar-title>
+                      <v-toolbar-title>Sản phẩm</v-toolbar-title>
                       <v-switch
                         v-model="singleSelect"
                         label=""
@@ -389,6 +498,13 @@
                                     <v-text-field
                                       v-model="editedItem.proType"
                                       label="Loại hàng"
+                                      append-outer-icon="mdi-information"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      label="Số lượng"
+                                      v-model="editedItem.proQuantity"
                                       append-outer-icon="mdi-information"
                                     ></v-text-field>
                                   </v-col>
@@ -440,7 +556,14 @@
                                 </v-row>
                               </v-container>
                               <v-container v-else>
-                                <h1>love you</h1>
+                                <v-textarea
+                                  label="Mô tả"
+                                  auto-grow
+                                  outlined
+                                  rows="3"
+                                  row-height="30"
+                                  shaped
+                                ></v-textarea>
                               </v-container>
                               <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -530,8 +653,11 @@ export default {
     desTab: null,
     upHere: false,
     singleSelect: false,
+    dialogSupplier: false,
+    dialogType: false,
     dialogEdit: false,
     dialog: false,
+    dialogPromo: false,
     dialogAdd: false,
     dialogDelete: false,
     editedIndex: -1,
@@ -561,6 +687,7 @@ export default {
       { text: "Tên hàng", value: "proName" },
       { text: "Hình Ảnh", value: "imgUrl" },
       { text: "Size", value: "proSize" },
+      { text: "Số lượng", value: "proQuantity" },
       { text: "Loại Hàng", value: "proType" },
       { text: "Giá bán", value: "proPrice" },
       { text: "Giá vốn", value: "realPrice" },
@@ -592,6 +719,7 @@ export default {
           proName: "Ao",
           imgUrl: "String",
           proSize: "M",
+          proQuantity: 12,
           proType: "123",
           proPrice: 1230,
           realPrice: 1230,
@@ -604,6 +732,7 @@ export default {
           proName: "Ao",
           imgUrl: "String",
           proSize: "M",
+          proQuantity: 12,
           proType: "123",
           proPrice: 1230,
           realPrice: 1230,
@@ -616,7 +745,8 @@ export default {
           proName: "Ao",
           imgUrl: "String",
           proSize: "M",
-          proType: "123",
+          proQuantity: 20,
+          proType: "vl",
           proPrice: 1230,
           realPrice: 1230,
           status: 1,
@@ -628,7 +758,8 @@ export default {
           proName: "Ao",
           imgUrl: "String",
           proSize: "M",
-          proType: "123",
+          proQuantity: 20,
+          proType: "mn",
           proPrice: 1230,
           realPrice: 1230,
           status: 1,
@@ -640,7 +771,8 @@ export default {
           proName: "Ao",
           imgUrl: "String",
           proSize: "M",
-          proType: "123",
+          proQuantity: 20,
+          proType: "321",
           proPrice: 1230,
           realPrice: 1230,
           status: 1,
@@ -652,7 +784,8 @@ export default {
           proName: "Ao",
           imgUrl: "String",
           proSize: "M",
-          proType: "123",
+          proQuantity: 20,
+          proType: "ktm",
           proPrice: 1230,
           realPrice: 1230,
           status: 1,
@@ -664,6 +797,7 @@ export default {
           proName: "Ao",
           imgUrl: "String",
           proSize: "M",
+          proQuantity: 20,
           proType: "123",
           proPrice: 1230,
           realPrice: 1230,
@@ -676,6 +810,7 @@ export default {
           proName: "Ao",
           imgUrl: "String",
           proSize: "M",
+          proQuantity: 20,
           proType: "123",
           proPrice: 1230,
           realPrice: 1230,
@@ -688,6 +823,7 @@ export default {
           proName: "Ao",
           imgUrl: "String",
           proSize: "M",
+          proQuantity: 20,
           proType: "123",
           proPrice: 1230,
           realPrice: 1230,
@@ -700,6 +836,7 @@ export default {
           proName: "Ao",
           imgUrl: "String",
           proSize: "M",
+          proQuantity: 20,
           proType: "123",
           proPrice: 1230,
           realPrice: 1230,
@@ -773,5 +910,4 @@ export default {
 .right-main-item {
   font-family: Arial, Helvetica, sans-serif;
 }
-
 </style>
