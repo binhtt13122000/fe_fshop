@@ -253,6 +253,8 @@
               <v-divider class="my-3"></v-divider>
               <v-btn depressed rounded text> My Account </v-btn>
               <v-divider class="my-3"></v-divider>
+              <v-btn depressed rounded text to="/loginpage" v-show="isLoggedIn"> Login </v-btn>
+              <v-divider class="my-3"></v-divider>
               <v-btn depressed rounded text v-on:click="logout()">
                 Logout
               </v-btn>

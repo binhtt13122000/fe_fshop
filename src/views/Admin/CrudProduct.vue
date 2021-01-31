@@ -63,7 +63,7 @@
                         align="left"
                         class="font-weight-medium"
                       >
-                        <v-list-item-text> Tất cả </v-list-item-text>
+                        <v-list-item-subtitle> Tất cả </v-list-item-subtitle>
                       </v-list-item-content>
                       <v-list-item-action>
                         <v-btn icon
@@ -145,6 +145,7 @@
                         >
                       </v-list-item-content>
                     </template>
+                    ""
                     <v-container>
                       <v-checkbox label="Hàng hóa" hide-details></v-checkbox>
                       <v-checkbox label="Dịch vụ" hide-details></v-checkbox>
@@ -167,7 +168,7 @@
                       </v-list-item-content>
                     </template>
                     <v-container>
-                      <v-radio-group v-model="radioShow" >
+                      <v-radio-group v-model="radioShow">
                         <v-radio
                           label="Hàng đang kinh doanh"
                           value="isOnSale"
@@ -190,7 +191,7 @@
               ---
             -->
             <v-col>
-              <v-row>
+              <v-row class="left-main-item">
                 <v-text-field
                   flat
                   solo-inverted
@@ -772,4 +773,5 @@ export default {
 .right-main-item {
   font-family: Arial, Helvetica, sans-serif;
 }
+
 </style>

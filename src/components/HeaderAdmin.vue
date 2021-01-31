@@ -70,7 +70,13 @@
         v-if="isValid"
       ></v-app-bar-nav-icon>
       <v-toolbar-title style="width: 150px" class="ml-0 pl-4">
-        <span class="hidden-sm-and-down">4MENSHOP</span>
+        <a href="/main-product">
+          <img
+            class="img-responsive"
+            src="https://4menshop.com/logo.png"
+            alt="4men"
+          />
+        </a>
       </v-toolbar-title>
       <v-row
         id="nav-bar-btn"
