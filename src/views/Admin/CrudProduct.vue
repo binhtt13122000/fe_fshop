@@ -200,7 +200,7 @@
                   </v-list-group>
                 </v-card>
               </v-col>
-              <v-col cols="12" class="hidden-md-and-down">
+              <!-- <v-col cols="12" class="hidden-md-and-down">
                 <v-card>
                   <v-list-group :value="true">
                     <template v-slot:activator>
@@ -221,7 +221,7 @@
                     </v-container>
                   </v-list-group>
                 </v-card>
-              </v-col>
+              </v-col> -->
               <v-col cols="12" class="hidden-md-and-down">
                 <v-card>
                   <v-list-group :value="true">
@@ -447,10 +447,8 @@
                   :headers="headers"
                   :items="desserts"
                   :items-per-page="5"
-                  :single-select="singleSelect"
                   item-key="name"
                   class="elevation-1"
-                  show-select
                   :footer-props="{
                     showFirstLastPage: true,
                     firstIcon: 'mdi-arrow-collapse-left',
@@ -462,11 +460,11 @@
                   <template v-slot:top>
                     <v-toolbar>
                       <v-toolbar-title>Sản phẩm</v-toolbar-title>
-                      <v-switch
+                      <!-- <v-switch
                         v-model="singleSelect"
                         label=""
                         class="pa-3"
-                      ></v-switch>
+                      ></v-switch> -->
                       <v-divider class="mx-4" inset vertical></v-divider>
                       <v-spacer></v-spacer>
                       <v-dialog v-model="dialog" width="800px">
