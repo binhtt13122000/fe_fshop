@@ -1,5 +1,5 @@
-import ProductServices from "../../services/ProductService"
-import { SET_PAGE, SET_PAGES, SET_PRODUCT, SET_PRODUCTS } from './product/mutation-type'
+import ProductServices from "../../../services/ProductService"
+import { SET_PAGE, SET_PAGES, SET_PRODUCT, SET_PRODUCTS, UPDATE_PRODUCT, ADD_PRODUCT, REMOVE_PRODUCT } from './mutation-type'
 
 const state = {
     products: [],
@@ -38,6 +38,27 @@ const mutations = {
 
     [SET_PAGE]: (state, val) => {
         state.page = val
+    },
+
+    [ADD_PRODUCT]: (state, product) => {
+        state.products.push(product)
+    },
+
+    [REMOVE_PRODUCT]: (state, id) => {
+        const products = [...state.products];
+        const deletedProducts = products.filter(product => {
+            return product.productId !== id; 
+        })
+        state.products = deletedProducts;
+    },
+
+    [UPDATE_PRODUCT]: (state, newProduct) => {
+        const products = [...state.products];
+        const index = products.findIndex(product => {
+            return product.productId === newProduct.productId; 
+        })
+        state.products[index] = newProduct;
+        
     }
 
 };
@@ -80,6 +101,30 @@ const actions = {
         //             reject(err)
         //         })
         // })
+    },
+
+    async addProductToList({commit}, newProduct){
+        const response = await ProductServices.addProduct(newProduct);
+        if(response.status === 200){
+            commit(ADD_PRODUCT, newProduct);
+        }
+        throw new Error(response.status)
+    },
+
+    async deleteProductFromList({commit}, id){
+        const response = await ProductServices.deleteProduct(id);
+        if(response.status === 200){
+            commit(REMOVE_PRODUCT, id);
+        }
+        throw new Error(response.status)
+    },
+
+    async updateProductOfList({commit}, newProduct){
+        const response = await ProductServices.updateProduct(newProduct);
+        if(response.status === 200){
+            commit(UPDATE_PRODUCT, newProduct);
+        }
+        throw new Error(response.status)
     },
 };
 
