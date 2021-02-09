@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 // import AuthStore from "./modules/auth"
 // import ProStore from "./modules/auth"
 import auth from "./modules/auth"
-import product from "./modules/product"
+import product from "./modules/product/product"
 import createPersistedState from 'vuex-persistedstate';
 Vue.use(Vuex)
 
