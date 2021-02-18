@@ -93,7 +93,7 @@
 
 <script>
 // import Axios from 'axios';
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 export default {
   // el: "#app",
@@ -107,17 +107,24 @@ export default {
   },
   methods: {
     login() {
-      console.log("login fuction from components.......");
       this.$store.dispatch("auth/login", {
         username: this.username,
         password: this.password,
       });
-      this.$router.push("/products");
+      console.log(this.user.roleId);
+      const role = this.user.roleId;
+      if (role === "ROL_3") {
+        this.$router.push("/main-product");
+      } else if (role === "ROL_1") {
+        this.$router.push("/products");
+      }
     },
-
     // ...mapActions("auth", ["getUser"]),
   },
   computed: {
+    ...mapState("auth", {
+      user: (state) => state.user,
+    }),
     ...mapGetters("auth", ["user"]),
   },
   mounted() {},

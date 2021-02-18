@@ -1,4 +1,5 @@
 import 'es6-promise/auto'
+// import router from '../../router/index.js';
 import AuthServices from "../../services/AuthenticationService"
 const state = {
     user: {},
@@ -72,10 +73,10 @@ const mutations = {
 };
 const actions = {
 
-    async logout({commit, state}){
+    async logout({ commit, state }) {
         const username = state.user.userName
         const response = await AuthServices.logout(username);
-        if(response.status === 200) {
+        if (response.status === 200) {
             await commit("isUserLoggedIn", true);
             return await commit("logout")
         }
@@ -87,25 +88,26 @@ const actions = {
         const response = await AuthServices.getUser(credential.username);
         if (response.status === 200) {
             return await commit("setUser", response.data);
-            // const responseforCart = await AuthServices.getCarts(credential.username);
-            // if (responseforCart.status === 200) {
-            //     console.log(responseforCart);
-            //     console.log("cart respon");
-            //     console.log(responseforCart.data.content);
-            //     await commit("isUserLoggedIn", true);
-            //     return await commit("setCarts", responseforCart.data.content);
-
-            //     // const responseForCartDetail = await AuthServices.getCartDetails()
-            // }
-            // throw new Error(responseforCart.status)
         }
         throw new Error(response.status);
 
     },
 
-    async getCart({commit}, username){
-        const response =  await AuthServices.getCarts(username);
-        if(response.status === 200){
+    // const responseforCart = await AuthServices.getCarts(credential.username);
+    // if (responseforCart.status === 200) {
+    //     console.log(responseforCart);
+    //     console.log("cart respon");
+    //     console.log(responseforCart.data.content);
+    //     await commit("isUserLoggedIn", true);
+    //     return await commit("setCarts", responseforCart.data.content);
+
+    //     // const responseForCartDetail = await AuthServices.getCartDetails()
+    // }
+    // throw new Error(responseforCart.status)
+
+    async getCart({ commit }, username) {
+        const response = await AuthServices.getCarts(username);
+        if (response.status === 200) {
             await commit("isUserLoggedIn", true);
             return await commit("setCarts", response.data.content);
         }
@@ -113,7 +115,7 @@ const actions = {
     },
     async getCartDetail({ commit }, cardId, username) {
         const response = await AuthServices.getCartDetails(cardId, username)
-        if(response.status === 200){
+        if (response.status === 200) {
             return await commit("setCartDetail", response.data.content);
         }
 
@@ -121,11 +123,11 @@ const actions = {
 
     },
 
-    async createNewCart({commit, state},newCart) {
+    async createNewCart({ commit, state }, newCart) {
         console.log("create new cart store vuex");
         const name = state.user.userName
         const response = await AuthServices.createNewCart(name, newCart)
-        if(response.status === 200){
+        if (response.status === 200) {
             return await commit("addNewCart", newCart)
         }
     },
