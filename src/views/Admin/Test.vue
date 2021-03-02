@@ -8,7 +8,7 @@
             <!-- right main 
               ---
             -->
-            <v-col  md="3" sm="3" class="right-main-item">
+            <v-col cols="12" md="3" sm="3" class="right-main-item">
               <h1 class="hidden-md-and-down mb-6 ml-6" align="left">
                 Hàng hóa
               </h1>
@@ -200,6 +200,28 @@
                   </v-list-group>
                 </v-card>
               </v-col>
+              <!-- <v-col cols="12" class="hidden-md-and-down">
+                <v-card>
+                  <v-list-group :value="true">
+                    <template v-slot:activator>
+                      <v-list-item-content
+                        class="font-weight-medium"
+                        align="left"
+                      >
+                        <v-list-item-title style="color: black"
+                          >Ngày hết hàng</v-list-item-title
+                        >
+                      </v-list-item-content>
+                    </template>
+                    ""
+                    <v-container>
+                      <v-checkbox label="Hàng hóa" hide-details></v-checkbox>
+                      <v-checkbox label="Dịch vụ" hide-details></v-checkbox>
+                      <v-checkbox label="Khuyến mãi" hide-details></v-checkbox>
+                    </v-container>
+                  </v-list-group>
+                </v-card>
+              </v-col> -->
               <v-col cols="12" class="hidden-md-and-down">
                 <v-card>
                   <v-list-group :value="true">
@@ -307,108 +329,124 @@
                     <v-card-title class="blue darken-1">
                       Thêm sản phẩm
                     </v-card-title>
-                    <v-tabs v-model="addTab">
-                      <v-tab>Thông tin</v-tab>
-                      <v-tab>Mô tả chi tiết</v-tab>
-                    </v-tabs>
-                    <v-tabs-items v-model="addTab">
-                      <v-tab-item v-for="n in 2" :key="n">
-                        <v-container v-if="n === 1">
-                          <v-row class="mx-2">
-                            <!-- <v-col
-                              class="align-center justify-space-between"
-                              cols="6"
-                            >
-                              <v-text-field
-                                append-outer-icon="mdi-information"
-                                label="Mã hàng"
-                              ></v-text-field>
-                            </v-col> -->
-                            <v-col cols="6">
-                              <v-text-field
-                                label="Loại hàng"
-                                append-outer-icon="mdi-information"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="6">
-                              <v-text-field
-                                label="Giá vốn"
-                                append-outer-icon="mdi-information"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="6">
-                              <v-text-field
-                                label="Giá bán"
-                                append-outer-icon="mdi-information"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="6">
-                              <v-text-field
-                                label="Tên hàng"
-                                append-outer-icon="mdi-information"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="6">
-                              <v-text-field
-                                label="Số lượng"
-                                append-outer-icon="mdi-information"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="6">
-                              <v-text-field
-                                label="Nhà sản xuất"
-                                append-outer-icon="mdi-information"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="6">
-                              <v-text-field
-                                label="Trạng thái"
-                                append-outer-icon="mdi-information"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="6">
-                              <v-file-input
-                                :rules="imgUrlRules"
-                                accept="image/png, image/jpg, image/jpeg"
-                                placeholder="Pick image"
-                                append-outer-icon="mdi-camera"
-                                label="Image"
-                              >
-                              </v-file-input>
-                              <!-- <v-row class="file-image">
-                                <ul v-for="n in 1" :key="n">
-                                  <li>
-                                    <img
-                                      id="imgUrl"
-                                      src="https://ceygate.com/content/themes/arkahost/assets/images/default.png"
-                                      width="15%"
-                                      alt=""
-                                    />
-                                  </li>
-                                </ul>
-                              </v-row> -->
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                        <v-container v-else>
-                          <v-textarea
-                            label="Mô tả"
-                            auto-grow
-                            outlined
-                            rows="3"
-                            row-height="30"
-                            shaped
-                          ></v-textarea>
-                        </v-container>
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn text color="primary" @click="dialogAdd = false"
-                            >Cancel</v-btn
+                    <v-stepper v-model="e1" alt-labels>
+                      <v-stepper-header>
+                        <!-- <v-stepper-step :complete="e1 > 1" :step="1">
+                          Điền thông tin
+                        </v-stepper-step>
+                        <v-stepper-step :complete="e1 > 2" :step="2">
+                          Thêm hình
+                        </v-stepper-step>
+                        <v-stepper-step :complete="e1 > 3" :step="3">
+                          Số lượng & discount
+                        </v-stepper-step>
+                        <v-stepper-step :complete="e1 > 4" :step="4">
+                          Thông tin của sản phẩm
+                        </v-stepper-step> -->
+                        <v-stepper-step
+                          v-for="(step, n) in steps"
+                          :key="n"
+                          :complete="stepComplete(n + 1)"
+                          :step="n + 1"
+                          :rules="[(value) => !!step.valid]"
+                          :color="stepStatus(n + 1)"
+                          >{{ step.name }}</v-stepper-step
+                        >
+                      </v-stepper-header>
+                      <v-stepper-items>
+                        <v-stepper-content step="1">
+                          <v-card
+                            color="grey lighten-1"
+                            class="mb-12"
+                            height="300px"
                           >
-                          <v-btn text @click="dialogAdd = false">Save</v-btn>
-                        </v-card-actions>
-                      </v-tab-item>
-                    </v-tabs-items>
+                            <v-container>
+                              <v-form
+                                :ref="'stepForm'"
+                                v-model="steps.valid"
+                                lazy-validation
+                              >
+                                <v-row class="mx-2">
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      label="Loại hàng"
+                                      append-outer-icon="mdi-information"
+                                      :rules="steps.rules"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      label="Giá vốn"
+                                      append-outer-icon="mdi-information"
+                                      :rules="steps.rules"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      label="Giá bán"
+                                      append-outer-icon="mdi-information"
+                                      :rules="steps.rules"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      label="Tên hàng"
+                                      append-outer-icon="mdi-information"
+                                      :rules="steps.rules"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      label="Nhà sản xuất"
+                                      append-outer-icon="mdi-information"
+                                      :rules="steps.rules"
+                                    ></v-text-field>
+                                  </v-col>
+                                  <v-col cols="6">
+                                    <v-text-field
+                                      label="Trạng thái"
+                                      append-outer-icon="mdi-information"
+                                      :rules="steps.rules"
+                                    ></v-text-field>
+                                  </v-col>
+                                </v-row>
+                              </v-form>
+                            </v-container>
+                          </v-card>
+                          <v-btn color="primary" @click="e1 = 2">
+                            Continue
+                          </v-btn>
+                          <!-- <v-btn color="primary" @click="validate(n)" 
+                            >Continue</v-btn
+                          > -->
+                          <v-btn text @click="dialogAdd = false">Cancel</v-btn>
+                        </v-stepper-content>
+                        <v-stepper-content step="2">
+                          <v-card> </v-card>
+
+                          <v-btn color="primary" @click="e1 = 3"
+                            >Continue</v-btn
+                          >
+                          <v-btn text @click="e1 = 1">Back</v-btn>
+                        </v-stepper-content>
+                        <v-stepper-content step="3">
+                          <v-card> </v-card>
+
+                          <v-btn color="primary" @click="e1 = 4"
+                            >Continue</v-btn
+                          >
+                          <v-btn text @click="e1 = 2">Back</v-btn>
+                        </v-stepper-content>
+                        <v-stepper-content step="4">
+                          <v-card> </v-card>
+
+                          <v-btn color="primary" 
+                            >Continue</v-btn
+                          >
+                          <v-btn text @click="e1 = 3">Back</v-btn>
+                        </v-stepper-content>
+                      </v-stepper-items>
+                    </v-stepper>
                   </v-card>
                 </v-dialog>
                 <v-btn color="success" class="mx-2"
@@ -617,7 +655,9 @@ import VmHeader from "../../components/HeaderAdmin.vue";
 export default {
   components: { VmFooter, VmHeader },
   data: () => ({
-    el: 1,
+    e1: 1,
+    curr: 1,
+    lastStep: 4,
     imgUrlRules: [
       (value) =>
         !value ||
@@ -674,6 +714,28 @@ export default {
       { text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [],
+    steps: [
+      {
+        name: "Điền thông tin",
+        rules: [(v) => !!v || "Required."],
+        valid: true,
+      },
+      {
+        name: "Thêm hình",
+        rules: [(v) => !!v || "Required."],
+        valid: true,
+      },
+      {
+        name: "Số lượng & discount",
+        rules: [(v) => !!v || "Required."],
+        valid: true,
+      },
+      {
+        name: "Hoàn thành",
+        rules: [(v) => !!v || "Required."],
+        valid: true,
+      },
+    ],
   }),
   watch: {
     dialog(val) {
@@ -689,6 +751,24 @@ export default {
     },
   },
   methods: {
+    stepComplete(step) {
+      return this.curr > step;
+    },
+    stepStatus(step) {
+      return this.curr > step ? "green" : "blue";
+    },
+    validate(n) {
+      this.steps[n].valid = false;
+      let v = this.$$refs.stepForm[n].validate();
+      if (v) {
+        this.steps[n].valid = true;
+        // continue
+        this.curr = n + 2;
+      }
+    },
+    done() {
+      this.curr = 5;
+    },
     loadItems() {
       this.desserts = [
         {

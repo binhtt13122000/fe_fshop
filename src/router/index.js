@@ -15,6 +15,8 @@ import Footer from '../components/Footer.vue'
 import HeaderAdmin from '../components/HeaderAdmin.vue'
 import Header from '../components/Header.vue'
 import CrudProduct from '../views/Admin/CrudProduct.vue'
+import User from '../views/Admin/User.vue'
+import Test from '../views/Admin/Test.vue'
 // import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
 
@@ -90,6 +92,16 @@ const routes = [
     path: '/layout',
     name: 'layout',
     component: Layout
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: User
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: Test
   },
   {
     path: '/about',
