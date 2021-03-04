@@ -1,5 +1,5 @@
 <template>
-  <v-app id="insprice">
+  <v-app id="app">
     <VmHeader></VmHeader>
     <v-main>
       <v-container class="container" fluid>
@@ -422,7 +422,9 @@
                           <v-btn text @click="dialogAdd = false">Cancel</v-btn>
                         </v-stepper-content>
                         <v-stepper-content step="2">
-                          <v-card> </v-card>
+                          <v-card>
+                            <!-- them hinh o day -->
+                          </v-card>
 
                           <v-btn color="primary" @click="e1 = 3"
                             >Continue</v-btn
@@ -430,7 +432,55 @@
                           <v-btn text @click="e1 = 1">Back</v-btn>
                         </v-stepper-content>
                         <v-stepper-content step="3">
-                          <v-card> </v-card>
+                          <v-card>
+                            <div
+                              class="form-group"
+                              v-for="(input, k) in inputs"
+                              :key="k"
+                            >
+                              <!-- <input
+                                type="text"
+                                class="form-control"
+                                v-model="input.name"
+                              /> -->
+                              <v-row>
+                                <v-col cols="3">
+                                  <v-text-field
+                                    v-model="input.name"
+                                    label="Size"
+                                    outlined
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="3">
+                                  <v-text-field
+                                    v-model="input.quantity"
+                                    label="Quantity"
+                                    outlined
+                                  ></v-text-field> </v-col
+                                ><v-col cols="3">
+                                  <v-text-field
+                                    v-model="input.discount"
+                                    label="Discount"
+                                    outlined
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="3">
+                                  <span>
+                                    <v-icon
+                                      @click="remove(k)"
+                                      v-show="k || (!k && inputs.length > 1)"
+                                      >mdi-minus-circle</v-icon
+                                    >
+                                    <v-icon
+                                      @click="add(k)"
+                                      v-show="k == inputs.length - 1"
+                                      >mdi-plus-circle</v-icon
+                                    >
+                                  </span>
+                                </v-col>
+                              </v-row>
+                            </div>
+                          </v-card>
 
                           <v-btn color="primary" @click="e1 = 4"
                             >Continue</v-btn
@@ -440,9 +490,7 @@
                         <v-stepper-content step="4">
                           <v-card> </v-card>
 
-                          <v-btn color="primary" 
-                            >Continue</v-btn
-                          >
+                          <v-btn color="primary">Continue</v-btn>
                           <v-btn text @click="e1 = 3">Back</v-btn>
                         </v-stepper-content>
                       </v-stepper-items>
@@ -655,6 +703,13 @@ import VmHeader from "../../components/HeaderAdmin.vue";
 export default {
   components: { VmFooter, VmHeader },
   data: () => ({
+    inputs: [
+      {
+        name: "",
+        quantity: 0,
+        discount: 0,
+      },
+    ],
     e1: 1,
     curr: 1,
     lastStep: 4,
@@ -726,7 +781,7 @@ export default {
         valid: true,
       },
       {
-        name: "Số lượng & discount",
+        name: "Số lượng",
         rules: [(v) => !!v || "Required."],
         valid: true,
       },
@@ -751,6 +806,12 @@ export default {
     },
   },
   methods: {
+    add(index) {
+      this.inputs.push({ name: "", quantity: 0, discount: 0 }, index);
+    },
+    remove(index) {
+      this.inputs.splice(index, 1);
+    },
     stepComplete(step) {
       return this.curr > step;
     },

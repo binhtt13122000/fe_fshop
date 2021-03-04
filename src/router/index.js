@@ -17,6 +17,7 @@ import Header from '../components/Header.vue'
 import CrudProduct from '../views/Admin/CrudProduct.vue'
 import User from '../views/Admin/User.vue'
 import Test from '../views/Admin/Test.vue'
+import Order from '../views/Admin/Order.vue'
 // import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
 
@@ -35,6 +36,11 @@ const routes = [
     path: '/forgotpasswordForm',
     name: 'forgotpasswordForm',
     component: ForgotPasswordForm
+  },
+  {
+    path: '/manage-order',
+    name: 'manage-order',
+    component: Order
   },
   {
     path: '/loginpage',
