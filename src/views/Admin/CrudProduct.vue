@@ -445,6 +445,7 @@
                       ></v-switch> -->
                       <v-divider class="mx-4" inset vertical></v-divider>
                       <v-spacer></v-spacer>
+                      
                       <v-dialog v-model="dialog" width="800px">
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
@@ -558,6 +559,7 @@
                           </v-tabs-items>
                         </v-card>
                       </v-dialog>
+                      <!-- delete -->
                       <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
                           <v-card-title class="headline blue darken-1"
