@@ -4,4 +4,6 @@ export const SET_PAGES = "setPages";
 export const SET_PAGE = "setPage";
 export const ADD_PRODUCT = "addProduct";
 export const REMOVE_PRODUCT = "removeProduct";
+export const ACTIVE_PRODUCT = "activeProduct";
 export const UPDATE_PRODUCT = "updateProduct";
+

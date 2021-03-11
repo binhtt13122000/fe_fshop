@@ -23,15 +23,15 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-  path: '/home',
-  name: 'home',
-  component: Home
+    path: '/home',
+    name: 'home',
+    component: Home
   },
   {
     path: '/',
     name: 'homepage',
     component: HomePage
-    },
+  },
   {
     path: '/forgotpasswordForm',
     name: 'forgotpasswordForm',

@@ -1,25 +1,35 @@
 import 'es6-promise/auto'
 // import router from '../../router/index.js';
 import AuthServices from "../../services/AuthenticationService"
+import {
+    AUTH_REQUEST, ADD_NEW_CART, SET_USER, SET_USERS, IS_LOGGED_IN, IS_SIGNED_UP,
+    SET_CARTS, SET_CART, SET_CART_DETAIL, DELETE_CART_DETAIL, AUTH_ERROR, LOGOUT, REMOVE_FAVORITE, SET_PAGES, SET_PAGE,
+    BAN_USER, ACTIVE_USER
+} from './mutation-type';
 const state = {
     user: {},
     userInfo: {
         isLoggedIn: false,
         isSignedUp: false
     },
+    users: [],
     cart: [],
     carts: [],
-    cartDetail: []
+    cartDetail: [],
+    pages: [],
+    page: [],
 };
 const getters = {
     user(state) {
         return state.user;
     },
+    users(state) {
+        return state.users;
+    },
     isUserLoggedIn: state => {
         return state.userInfo.isLoggedIn;
     },
     carts(state) {
-        console.log(state.carts);
         return state.carts
     },
     cart(state) {
@@ -27,49 +37,77 @@ const getters = {
     },
     cartDetail(state) {
         return state.cartDetail
-    }
+    },
+    pages(state) {
+        return state.pages
+    },
+    page(state) {
+        return state.page
+    },
 };
 const mutations = {
-    auth_request: (state) => {
+    [AUTH_REQUEST]: (state) => {
         state.status = 'loading'
     },
-    addNewCart: (state, val) => {
+    [ADD_NEW_CART]: (state, val) => {
         state.carts.push(val)
     },
-    setUser: (state, val) => {
+    [SET_USER]: (state, val) => {
         state.user = val
     },
-    isUserLoggedIn: (state, isUserLoggedIn) => {
+    [SET_USERS]: (state, val) => {
+        console.log(val)
+        state.users = val
+    },
+    [IS_LOGGED_IN]: (state, isUserLoggedIn) => {
         state.userInfo.isLoggedIn = isUserLoggedIn;
     },
-    isUserSignedUp: (state, isSignedUp) => {
+    [IS_SIGNED_UP]: (state, isSignedUp) => {
         state.userInfo.isSignedUp = isSignedUp;
     },
-    setCarts: (state, val) => {
+
+    [SET_CARTS]: (state, val) => {
         state.carts = val
     },
-    setCart: (state, val) => {
+    [SET_CART]: (state, val) => {
         state.cart = val
     },
-    setCartDetail: (state, val) => {
+    [SET_CART_DETAIL]: (state, val) => {
         state.cartDetail = val
     },
-    delCartDetail: (state) => {
+    [DELETE_CART_DETAIL]: (state) => {
         state.cartDetail = ''
     },
-    auth_error: (state) => {
+    [AUTH_ERROR]: (state) => {
         state.status = 'error'
     },
-    logout: (state) => {
+    [LOGOUT]: (state) => {
         state.user = ''
     },
-    removeFromFavourite: (state, id) => {
+    [REMOVE_FAVORITE]: (state, id) => {
         state.products.forEach(el => {
             if (id) {
                 el.isFavourite = false;
             }
         });
     },
+    [SET_PAGES]: (state, val) => {
+        state.pages = val
+    },
+
+    [SET_PAGE]: (state, val) => {
+        state.page = val
+    },
+    [BAN_USER]: (state, response) => {
+        const users = state.users;
+        const index = users.findIndex(user => user.userId === response.userId);
+        users[index].status = 0;
+    },
+    [ACTIVE_USER]: (state, response) => {
+        const users = state.users;
+        const index = users.findIndex(user => user.userId === response.userId);
+        users[index].status = 1;
+    }
 };
 const actions = {
 
@@ -77,8 +115,8 @@ const actions = {
         const username = state.user.userName
         const response = await AuthServices.logout(username);
         if (response.status === 200) {
-            await commit("isUserLoggedIn", true);
-            return await commit("logout")
+            await commit(IS_LOGGED_IN, true);
+            return await commit(LOGOUT)
         }
         throw new Error(response.status)
     },
@@ -87,10 +125,65 @@ const actions = {
         await AuthServices.login(credential);
         const response = await AuthServices.getUser(credential.username);
         if (response.status === 200) {
-            return await commit("setUser", response.data);
+            return await commit(SET_USER, response.data);
         }
         throw new Error(response.status);
 
+    },
+
+    async banAccount({ commit }, credential) {
+        const response = await AuthServices.banAccount(credential);
+        if (response.status === 200) {
+            return await commit(BAN_USER, response.data);
+        }
+        throw new Error(response.status);
+    },
+
+    async activeAccount({ commit }, credential) {
+        const response = await AuthServices.activeAccount(credential);
+        if (response.status === 200) {
+            return await commit(ACTIVE_USER, response.data);
+        }
+        throw new Error(response.status);
+    },
+
+    async getUsers({ commit }, index = 1) {
+        try {
+            const response = await AuthServices.getUsers(index);
+            if (response.status === 200) {
+                await commit(SET_PAGES, response.data);
+                return await commit(SET_USERS, response.data.content);
+            }
+        } catch (error) {
+            await commit(SET_USERS, []);
+            await commit(SET_PAGES, []);
+        }
+    },
+
+    async searchUserByQ({ commit }, credentail) {
+        try {
+            const response = await AuthServices.searchAccountByQ(credentail.txtSearchAccount, credentail.currentPage);
+            if (response.status === 200) {
+                await commit(SET_PAGES, response.data);
+                return await commit(SET_USERS, response.data.content);
+            }
+        } catch (error) {
+            await commit(SET_USERS, []);
+            await commit(SET_PAGES, []);
+        }
+
+    },
+    async searchUserByStatus({ commit }, credential) {
+        try {
+            const response = await AuthServices.searchAccountByStatus(credential.status, credential.currentPage);
+            if (response.status === 200) {
+                await commit(SET_PAGES, response.data);
+                return await commit(SET_USERS, response.data.content);
+            }
+        } catch (error) {
+            await commit(SET_USERS, []);
+            await commit(SET_PAGES, []);
+        }
     },
 
     // const responseforCart = await AuthServices.getCarts(credential.username);
@@ -108,15 +201,15 @@ const actions = {
     async getCart({ commit }, username) {
         const response = await AuthServices.getCarts(username);
         if (response.status === 200) {
-            await commit("isUserLoggedIn", true);
-            return await commit("setCarts", response.data.content);
+            await commit(IS_LOGGED_IN, true);
+            return await commit(SET_CARTS, response.data.content);
         }
         throw new Error(response.status)
     },
     async getCartDetail({ commit }, cardId, username) {
         const response = await AuthServices.getCartDetails(cardId, username)
         if (response.status === 200) {
-            return await commit("setCartDetail", response.data.content);
+            return await commit(SET_CART_DETAIL, response.data.content);
         }
 
         throw new Error(response.status);
@@ -124,24 +217,24 @@ const actions = {
     },
 
     async createNewCart({ commit, state }, newCart) {
-        console.log("create new cart store vuex");
         const name = state.user.userName
         const response = await AuthServices.createNewCart(name, newCart)
         if (response.status === 200) {
-            return await commit("addNewCart", newCart)
+            return await commit(ADD_NEW_CART, newCart)
         }
     },
+
 
     register({ commit }, user) {
         return new Promise((resolve, reject) => {
             // commit('auth_request')
             AuthServices.register(user).then(resp => {
                 const user = resp.data.user
-                commit('setUser', user)
+                commit(SET_USER, user)
                 resolve(resp)
             })
                 .catch(err => {
-                    commit('auth_error')
+                    commit(AUTH_ERROR)
                     reject(err)
                 })
         })

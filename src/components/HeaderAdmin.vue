@@ -188,7 +188,7 @@
             <v-card color="blue darken-2">
               <v-list-item-content class="justify-center" align="left">
                 <div class="mx-auto text-left" style="">
-                  <v-btn depressed rounded text color="#ffffff"
+                  <v-btn depressed rounded text color="#ffffff" :to="'/user'"
                     ><v-icon>mdi-account</v-icon> Khách hàng</v-btn
                   ><v-divider class="my-3"></v-divider>
                   <v-btn depressed rounded text color="#ffffff"

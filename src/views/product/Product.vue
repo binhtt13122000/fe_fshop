@@ -39,10 +39,13 @@
       </div>
       <div class="media">
         <div class="media-info">
-          <h1 style="font-family: 'Open Sans', sans-serif; margin-left: 11px;">
+          <h1 style="font-family: 'Open Sans', sans-serif; margin-left: 11px">
             {{ product.productName }}
           </h1>
-          <h3 style="font-family: 'Open Sans', sans-serif; margin-left: 11px;" class="price">
+          <h3
+            style="font-family: 'Open Sans', sans-serif; margin-left: 11px"
+            class="price"
+          >
             {{ product.productPrice }}<u>đ</u>
             <v-spacer></v-spacer>
           </h3>
@@ -67,7 +70,11 @@
       <v-card-actions>
         <v-row>
           <v-col>
-            <v-btn id="btn-addToCart" width="100%" :to="'/purchase/'+ product.productId">
+            <v-btn
+              id="btn-addToCart"
+              width="100%"
+              :to="'/purchase/' + product.productId"
+            >
               <v-icon>mdi-shopping</v-icon>
               Đăng ký mua</v-btn
             >
@@ -86,7 +93,7 @@
 
 
 <script>
-import {mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "product",
   props: ["product"],
@@ -111,12 +118,11 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["cart"])
+    ...mapGetters("auth", ["cart"]),
   },
   mounted() {
     // this.$store.state.auth.cart
-  }
-
+  },
 };
 </script>
 <style lang="scss">

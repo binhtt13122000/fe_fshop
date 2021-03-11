@@ -8,7 +8,7 @@
             <!-- right main 
               ---
             -->
-            <v-col  md="3" sm="3" class="right-main-item">
+            <v-col md="3" sm="3" class="right-main-item">
               <h1 class="hidden-md-and-down mb-6 ml-6" align="left">
                 Hàng hóa
               </h1>
@@ -423,17 +423,10 @@
                 <v-data-table
                   v-model="selected"
                   :headers="headers"
-                  :items="desserts"
-                  :items-per-page="5"
-                  item-key="name"
+                  :items="this.products"
+                  item-key="products"
                   class="elevation-1"
-                  :footer-props="{
-                    showFirstLastPage: true,
-                    firstIcon: 'mdi-arrow-collapse-left',
-                    lastIcon: 'mdi-arrow-collapse-right',
-                    prevIcon: 'mdi-minus',
-                    nextIcon: 'mdi-plus',
-                  }"
+                  hide-default-footer
                 >
                   <template v-slot:top>
                     <v-toolbar>
@@ -445,7 +438,7 @@
                       ></v-switch> -->
                       <v-divider class="mx-4" inset vertical></v-divider>
                       <v-spacer></v-spacer>
-                      
+
                       <v-dialog v-model="dialog" width="800px">
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
@@ -473,49 +466,50 @@
                                 <v-row class="mx-2">
                                   <v-col cols="6">
                                     <v-text-field
-                                      v-model="editedItem.proType"
+                                      v-model="itemSelected.categoryId"
                                       label="Loại hàng"
+                                      value="itemSelected"
+                                      readonly
                                       append-outer-icon="mdi-information"
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="6">
                                     <v-text-field
                                       label="Số lượng"
-                                      v-model="editedItem.proQuantity"
                                       append-outer-icon="mdi-information"
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="6">
                                     <v-text-field
-                                      v-model="editedItem.realPrice"
+                                      v-model="itemSelected.realPrice"
                                       label="Giá vốn"
                                       append-outer-icon="mdi-information"
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="6">
                                     <v-text-field
-                                      v-model="editedItem.proPrice"
+                                      v-model="itemSelected.productPrice"
                                       label="Giá bán"
                                       append-outer-icon="mdi-information"
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="6">
                                     <v-text-field
-                                      v-model="editedItem.proName"
+                                      v-model="itemSelected.productName"
                                       label="Tên hàng"
                                       append-outer-icon="mdi-information"
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="6">
                                     <v-text-field
-                                      v-model="editedItem.supplierId"
+                                      v-model="itemSelected.supplierId"
                                       label="Nhà sản xuất"
                                       append-outer-icon="mdi-information"
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="6">
                                     <v-text-field
-                                      v-model="editedItem.status"
+                                      v-model="itemSelected.status"
                                       label="Trạng thái"
                                       append-outer-icon="mdi-information"
                                     ></v-text-field>
@@ -584,24 +578,89 @@
                           </v-card-actions>
                         </v-card>
                       </v-dialog>
+                      <v-dialog v-model="dialogActive" max-width="500px">
+                        <v-card>
+                          <v-card-title class="headline blue darken-1"
+                            >Are you sure you want to active
+                            product?</v-card-title
+                          >
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                              color="blue darken-1"
+                              text
+                              @click="closeDialogActive"
+                              >Cancel</v-btn
+                            >
+                            <v-btn
+                              color="blue darken-1"
+                              text
+                              @click="activeItemConfirm"
+                              >OK</v-btn
+                            >
+                            <v-spacer></v-spacer>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
                     </v-toolbar>
+                  </template>
+                  <template v-slot:[`item.categoryName`]="{ item }">
+                    {{ item.category.proTypeName }}
+                  </template>
+                  <template v-slot:[`item.supplierName`]="{ item }">
+                    {{ item.supplier.supplierName }}
+                  </template>
+                  <template v-slot:[`item.productPrice`]="{ item }">
+                    {{ formatPrice(item.productPrice) }}
+                  </template>
+                  <template v-slot:[`item.realPrice`]="{ item }">
+                    {{ formatPrice(item.realPrice) }}
+                  </template>
+                  <template v-slot:[`item.status`]="{ item }">
+                    {{ checkStatusProduct(item.status) }}
+                  </template>
+                  <template v-slot:[`item.createAt`]="{ item }">
+                    {{ formatDate(item.createAt) }}
                   </template>
 
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-icon small class="mr-2" @click="editItem(item)">
                       mdi-pencil
                     </v-icon>
-                    <v-icon small class="mr-2" @click="deleteItem(item)">
+                    <v-icon
+                      small
+                      v-if="item.status !== -1"
+                      class="mr-2"
+                      @click="deleteItem(item)"
+                    >
                       mdi-delete
+                    </v-icon>
+                    <v-icon
+                      small
+                      v-if="item.status === -1"
+                      class="mr-2"
+                      @click="activeItem(item)"
+                    >
+                      mdi-account-check-outline
                     </v-icon>
                     <v-icon small class="mr-2" @click="infoItem(item)"
                       >mdi-information-outline</v-icon
                     >
                   </template>
+                  <template>
+                    <my-component v-if="renderComponent" />
+                  </template>
                   <template v-slot:no-data>
                     <v-btn color="error" @click="initialize"> Reset </v-btn>
                   </template>
                 </v-data-table>
+                <div class="text-center pt-2">
+                  <v-pagination
+                    v-model="currentPage"
+                    :length="pageCount"
+                    v-on:click="currentPage()"
+                  ></v-pagination>
+                </div>
               </v-row>
             </v-col>
           </v-row>
@@ -616,6 +675,8 @@
 <script>
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/HeaderAdmin.vue";
+import moment from "moment";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: { VmFooter, VmHeader },
   data: () => ({
@@ -639,20 +700,13 @@ export default {
     dialogPromo: false,
     dialogAdd: false,
     dialogDelete: false,
+    dialogActive: false,
+    renderComponent: true,
     editedIndex: -1,
-    editedItem: {
-      proId: "",
-      proName: "",
-      imgUrl: "",
-      proSize: "",
-      proType: "",
-      proPrice: 0,
-      realPrice: 0,
-      status: 1,
-      supplierId: "",
-      createTime: "",
-    },
+    currentPage: 1,
+    pageCount: 0,
     selected: [],
+    itemSelected: [],
     itemAdd: [
       { icon: "mdi-plus", text: "Thêm hàng hóa" },
       { icon: "mdi-plus", text: "Thêm khuyến mãi" },
@@ -661,21 +715,17 @@ export default {
       {
         text: "Mã hàng",
         align: "start",
-        value: "proId",
+        value: "productId",
       },
-      { text: "Tên hàng", value: "proName" },
-      { text: "Hình Ảnh", value: "imgUrl" },
-      { text: "Size", value: "proSize" },
-      { text: "Số lượng", value: "proQuantity" },
-      { text: "Loại Hàng", value: "proType" },
-      { text: "Giá bán", value: "proPrice" },
-      { text: "Giá vốn", value: "realPrice" },
+      { text: "Tên hàng", value: "productName" },
+      { text: "Loại Hàng", value: "categoryName" },
+      { text: "Giá bán", value: "realPrice" },
+      { text: "Giá vốn", value: "productPrice" },
       { text: "Trạng thái", value: "status" },
-      { text: "Nhà sản xuất", value: "supplierId" },
-      { text: "Ngày đặt hàng", value: "createTime" },
+      { text: "Nhà sản xuất", value: "supplierName" },
+      { text: "Ngày đặt hàng", value: "createAt" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-    desserts: [],
   }),
   watch: {
     dialog(val) {
@@ -684,192 +734,109 @@ export default {
     dialogDelete(val) {
       val || this.closeDelete();
     },
+    dialogActive(val) {
+      val || this.closeDialogActive();
+    },
+    currentPage() {
+      this.getProducts(this.currentPage);
+      this.pageCount = this.pages.totalPages;
+    },
   },
   computed: {
+    ...mapGetters("product", ["products", "pages"]),
     title() {
       return this.editedIndex === -1 ? "Thêm sản phẩm" : "Chỉnh sửa sản phẩm";
     },
   },
   methods: {
-    loadItems() {
-      this.desserts = [
-        {
-          proId: "1",
-          proName: "Ao",
-          imgUrl: "String",
-          proSize: "M",
-          proQuantity: 12,
-          proType: "123",
-          proPrice: 1230,
-          realPrice: 1230,
-          status: 1,
-          supplierId: "123",
-          createTime: "09/09/2020",
-        },
-        {
-          proId: "2",
-          proName: "Ao",
-          imgUrl: "String",
-          proSize: "M",
-          proQuantity: 12,
-          proType: "123",
-          proPrice: 1230,
-          realPrice: 1230,
-          status: 1,
-          supplierId: "123",
-          createTime: "09/09/2020",
-        },
-        {
-          proId: "3",
-          proName: "Ao",
-          imgUrl: "String",
-          proSize: "M",
-          proQuantity: 20,
-          proType: "vl",
-          proPrice: 1230,
-          realPrice: 1230,
-          status: 1,
-          supplierId: "123",
-          createTime: "09/09/2020",
-        },
-        {
-          proId: "4",
-          proName: "Ao",
-          imgUrl: "String",
-          proSize: "M",
-          proQuantity: 20,
-          proType: "mn",
-          proPrice: 1230,
-          realPrice: 1230,
-          status: 1,
-          supplierId: "123",
-          createTime: "09/09/2020",
-        },
-        {
-          proId: "5",
-          proName: "Ao",
-          imgUrl: "String",
-          proSize: "M",
-          proQuantity: 20,
-          proType: "321",
-          proPrice: 1230,
-          realPrice: 1230,
-          status: 1,
-          supplierId: "123",
-          createTime: "09/09/2020",
-        },
-        {
-          proId: "6",
-          proName: "Ao",
-          imgUrl: "String",
-          proSize: "M",
-          proQuantity: 20,
-          proType: "ktm",
-          proPrice: 1230,
-          realPrice: 1230,
-          status: 1,
-          supplierId: "123",
-          createTime: "09/09/2020",
-        },
-        {
-          proId: "7",
-          proName: "Ao",
-          imgUrl: "String",
-          proSize: "M",
-          proQuantity: 20,
-          proType: "123",
-          proPrice: 1230,
-          realPrice: 1230,
-          status: 1,
-          supplierId: "123",
-          createTime: "09/09/2020",
-        },
-        {
-          proId: "8",
-          proName: "Ao",
-          imgUrl: "String",
-          proSize: "M",
-          proQuantity: 20,
-          proType: "123",
-          proPrice: 1230,
-          realPrice: 1230,
-          status: 1,
-          supplierId: "123",
-          createTime: "09/09/2020",
-        },
-        {
-          proId: "9",
-          proName: "Ao",
-          imgUrl: "String",
-          proSize: "M",
-          proQuantity: 20,
-          proType: "123",
-          proPrice: 1230,
-          realPrice: 1230,
-          status: 1,
-          supplierId: "123",
-          createTime: "09/09/2020",
-        },
-        {
-          proId: "10",
-          proName: "Ao",
-          imgUrl: "String",
-          proSize: "M",
-          proQuantity: 20,
-          proType: "123",
-          proPrice: 1230,
-          realPrice: 1230,
-          status: 1,
-          supplierId: "123",
-          createTime: "09/09/2020",
-        },
-      ];
-    },
-
+    ...mapActions("product", [
+      "getProducts",
+      "productDetails",
+      "addProductToList",
+      "deleteProductFromList",
+      "updateProductOfList",
+      "activeProductFromList",
+    ]),
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.itemSelected = item;
       this.dialog = true;
     },
+
+    //Dialog delete item
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.itemSelected = item;
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
+      this.deleteProductFromList(this.itemSelected.productId);
       this.closeDelete();
     },
 
+    closeDelete() {
+      this.itemSelected = "";
+      this.renderComponent = false;
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedIndex = -1;
+        this.renderComponent = true;
+      });
+    },
+    /////////////////////
+
+    //Dialog Active Item
+    activeItem(item) {
+      this.itemSelected = item;
+      this.dialogActive = true;
+    },
+
+    activeItemConfirm() {
+      this.activeProductFromList(this.itemSelected.productId);
+      this.closeDialogActive();
+    },
+
+    closeDialogActive() {
+      this.dialogActive = false;
+      this.itemSelected = "";
+      this.renderComponent = false;
+      this.$nextTick(() => {
+        this.editedIndex = -1;
+        this.renderComponent = true;
+      });
+    },
+    ////////////////////
+    formatDate(value) {
+      return moment(value).format("MM/DD/YYYY");
+    },
+    formatPrice(value) {
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    checkStatusProduct(value) {
+      if (value === 1) return "Active";
+      if (value === -1) return "Delete";
+      if (value === 0) return "Out of stock";
+    },
     close() {
       this.dialog = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
-      });
-    },
-
-    closeDelete() {
-      this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
+        this.renderComponent = true;
       });
     },
 
     save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
-      }
+      // if (this.editedIndex > -1) {
+      //   Object.assign(this.desserts[this.editedIndex], this.editedItem);
+      // } else {
+      //   this.desserts.push(this.editedItem);
+      // }
       this.close();
     },
   },
 
   created() {
-    this.loadItems();
+    this.getProducts(this.currentPage);
+    this.pageCount = this.pages.totalPages;
   },
 };
 </script>
