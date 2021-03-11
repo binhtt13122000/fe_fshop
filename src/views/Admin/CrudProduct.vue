@@ -224,7 +224,7 @@
                           value="isOffSale"
                         ></v-radio>
                         <v-radio
-                          label="Không bán trực tiếp"
+                          label="Hàng hết số lượng"
                           value="all"
                         ></v-radio>
                       </v-radio-group>
@@ -243,7 +243,10 @@
                   solo-inverted
                   hide-details
                   prepend-inner-icon="mdi-magnify"
-                  label="Theo tên, mã hàng"
+                  :value="txtSearchProduct"
+                  @change="txtSearchProduct = $event"
+                  @keydown.enter="onEnterClick()"
+                  label="Theo tên, mã hàng, tên loại hàng"
                   class="hidden-md-and-down mx-3"
                   style="width: 50px"
                 ></v-text-field>
@@ -650,14 +653,14 @@
                   <template>
                     <my-component v-if="renderComponent" />
                   </template>
-                  <template v-slot:no-data>
+                  <!-- <template v-slot:no-data>
                     <v-btn color="error" @click="initialize"> Reset </v-btn>
-                  </template>
+                  </template> -->
                 </v-data-table>
                 <div class="text-center pt-2">
                   <v-pagination
                     v-model="currentPage"
-                    :length="pageCount"
+                    :length="this.pages.totalPages"
                     v-on:click="currentPage()"
                   ></v-pagination>
                 </div>
@@ -701,12 +704,14 @@ export default {
     dialogAdd: false,
     dialogDelete: false,
     dialogActive: false,
+    txtSearchProduct: "",
     renderComponent: true,
     editedIndex: -1,
     currentPage: 1,
     pageCount: 0,
     selected: [],
     itemSelected: [],
+    credential: {},
     itemAdd: [
       { icon: "mdi-plus", text: "Thêm hàng hóa" },
       { icon: "mdi-plus", text: "Thêm khuyến mãi" },
@@ -738,7 +743,19 @@ export default {
       val || this.closeDialogActive();
     },
     currentPage() {
-      this.getProducts(this.currentPage);
+      if (this.txtSearchProduct != null && this.txtSearchProduct.length != 0) {
+        this.onEnterClick();
+      } else {
+        this.getProducts(this.currentPage);
+        this.pageCount = this.pages.totalPages;
+      }
+    },
+    onEnterClick() {
+      this.credential = {
+        txtSearch: this.txtSearchProduct,
+        currentPage: this.currentPage,
+      };
+      this.searchProductsByQ(this.credential);
       this.pageCount = this.pages.totalPages;
     },
   },
@@ -756,7 +773,16 @@ export default {
       "deleteProductFromList",
       "updateProductOfList",
       "activeProductFromList",
+      "searchProductsByQ",
     ]),
+    onEnterClick() {
+      this.credential = {
+        txtSearch: this.txtSearchProduct,
+        currentPage: this.currentPage,
+      };
+      this.searchProductsByQ(this.credential);
+      this.pageCount = this.pages.totalPages;
+    },
     editItem(item) {
       this.itemSelected = item;
       this.dialog = true;

@@ -54,7 +54,7 @@
                     <v-container>
                       <v-radio-group
                         v-model="radioShow"
-                        @change="searchUserByStatus"
+                        @change="searchUserWithStatus"
                       >
                         <v-radio label="Tất cả" value="all"></v-radio>
                         <v-radio
@@ -329,41 +329,32 @@ export default {
       "searchUserByQ",
       "searchUserByStatus",
     ]),
-    searchUserByStatus() {
-      console.log(this.radioShow);
-      this.credentials = {
-        status: "1",
-        currentPage: this.currentPage,
-      };
-      this.searchUserByStatus(this.credentials);
-      this.pageCount = this.pages.totalPages;
-
-      // console.log(this.radioShow);
-      // if (this.radioShow === "all") {
-      //   this.credential = {
-      //     txtSearchAccount: "",
-      //     currentPage: this.currentPage,
-      //   };
-      //   this.searchUserByQ(this.credential);
-      //   this.pageCount = this.pages.totalPages;
-      // } else {
-      //   if (this.radioShow === "active") {
-      //     this.credentials = {
-      //       status: "1",
-      //       currentPage: this.currentPage,
-      //     };
-      //     this.searchUserByStatus(this.credentials);
-      //     this.pageCount = this.pages.totalPages;
-      //   } else {
-      //     this.credentials = {
-      //       status: "0",
-      //       currentPage: this.currentPage,
-      //     };
-      //     this.searchUserByStatus(this.credentials);
-      //     this.pageCount = this.pages.totalPages;
-      //   }
-      //   console.log(this.credentials);
-      // }
+    searchUserWithStatus() {
+      if (this.radioShow === "all") {
+        this.credential = {
+          txtSearchAccount: "",
+          currentPage: this.currentPage,
+        };
+        this.searchUserByQ(this.credential);
+        this.pageCount = this.pages.totalPages;
+      } else {
+        if (this.radioShow === "active") {
+          this.credentials = {
+            status: 1,
+            currentPage: this.currentPage,
+          };
+          this.searchUserByStatus(this.credentials);
+          this.pageCount = this.pages.totalPages;
+        } else if (this.radioShow === "block") {
+          this.credentials = {
+            status: 0,
+            currentPage: this.currentPage,
+          };
+          this.searchUserByStatus(this.credentials);
+          this.pageCount = this.pages.totalPages;
+        }
+        console.log(this.credentials);
+      }
     },
     onChangeSelectedRadio(event) {
       console.log(event);

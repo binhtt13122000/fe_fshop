@@ -173,9 +173,9 @@ const actions = {
         }
 
     },
-    async searchUserByStatus({ commit }, credential) {
+    async searchUserByStatus({ commit }, credentials) {
         try {
-            const response = await AuthServices.searchAccountByStatus(credential.status, credential.currentPage);
+            const response = await AuthServices.searchAccountByStatus(credentials.status, credentials.currentPage);
             if (response.status === 200) {
                 await commit(SET_PAGES, response.data);
                 return await commit(SET_USERS, response.data.content);
