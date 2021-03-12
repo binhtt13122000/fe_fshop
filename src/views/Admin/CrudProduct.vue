@@ -21,42 +21,6 @@
                         align="left"
                       >
                         <v-list-item-title style="color: black"
-                          >Nhóm</v-list-item-title
-                        >
-                      </v-list-item-content>
-                      <v-list>
-                        <v-list-item></v-list-item>
-                      </v-list>
-                    </template>
-                    <v-container>
-                      <v-checkbox
-                        dense
-                        label="Hàng hóa"
-                        hide-details
-                      ></v-checkbox>
-                      <v-checkbox
-                        dense
-                        label="Dịch vụ"
-                        hide-details
-                      ></v-checkbox>
-                      <v-checkbox
-                        dense
-                        label="Khuyến mãi"
-                        hide-details
-                      ></v-checkbox>
-                    </v-container>
-                  </v-list-group>
-                </v-card>
-              </v-col>
-              <v-col cols="12" class="hidden-md-and-down">
-                <v-card>
-                  <v-list-group :value="true">
-                    <template v-slot:activator>
-                      <v-list-item-content
-                        class="font-weight-medium"
-                        align="left"
-                      >
-                        <v-list-item-title style="color: black"
                           >Loại hàng
                         </v-list-item-title>
                       </v-list-item-content>
@@ -81,6 +45,8 @@
                               <v-col cols="12">
                                 <v-text-field
                                   label="Tên loại hàng"
+                                  :value="productTypeName"
+                                  @change="productTypeName = $event"
                                 ></v-text-field>
                               </v-col>
                             </v-container>
@@ -92,7 +58,7 @@
                                 @click="dialogType = false"
                                 >Cancel</v-btn
                               >
-                              <v-btn text @click="dialogType = false"
+                              <v-btn text @click="onAddNewCategory()"
                                 >Save</v-btn
                               >
                             </v-card-actions>
@@ -145,6 +111,8 @@
                               <v-col cols="12">
                                 <v-text-field
                                   label="Tên nhà sản xuất"
+                                  :value="supplierName"
+                                  @change="supplierName = $event"
                                 ></v-text-field>
                               </v-col>
                             </v-container>
@@ -156,7 +124,7 @@
                                 @click="dialogSupplier = false"
                                 >Cancel</v-btn
                               >
-                              <v-btn text @click="dialogSupplier = false"
+                              <v-btn text @click="onAddNewSupplier()"
                                 >Save</v-btn
                               >
                             </v-card-actions>
@@ -168,38 +136,14 @@
                       <v-text-field
                         flat
                         hide-details
-                        label="Chọn nhà sản xuất"
+                        label="Thêm nhà sản xuất"
+                        v-model="this.supplierName"
                       ></v-text-field>
                     </v-container>
                   </v-list-group>
                 </v-card>
               </v-col>
-              <v-col cols="12" class="hidden-md-and-down">
-                <v-card>
-                  <v-list-group :value="true">
-                    <template v-slot:activator>
-                      <v-list-item-content
-                        class="font-weight-medium"
-                        align="left"
-                      >
-                        <v-list-item-title style="color: black"
-                          >Bán trực tiếp</v-list-item-title
-                        >
-                      </v-list-item-content>
-                    </template>
-                    <v-container>
-                      <v-radio-group v-model="radio">
-                        <v-radio label="Tất cả" value="all"></v-radio>
-                        <v-radio label="Bán trực tiếp" value="direct"></v-radio>
-                        <v-radio
-                          label="Không bán trực tiếp"
-                          value="indiect"
-                        ></v-radio>
-                      </v-radio-group>
-                    </v-container>
-                  </v-list-group>
-                </v-card>
-              </v-col>
+              <v-col cols="12" class="hidden-md-and-down"> </v-col>
               <v-col cols="12" class="hidden-md-and-down">
                 <v-card>
                   <v-list-group :value="true">
@@ -214,7 +158,11 @@
                       </v-list-item-content>
                     </template>
                     <v-container>
-                      <v-radio-group v-model="radioShow">
+                      <v-radio-group
+                        v-model="radioShow"
+                        @change="searchProductsWithStatus"
+                      >
+                        <v-radio label="Tất cả" value="all"></v-radio>
                         <v-radio
                           label="Hàng đang kinh doanh"
                           value="isOnSale"
@@ -222,10 +170,6 @@
                         <v-radio
                           label="Hàng ngừng kinh doanh"
                           value="isOffSale"
-                        ></v-radio>
-                        <v-radio
-                          label="Hàng hết số lượng"
-                          value="all"
                         ></v-radio>
                       </v-radio-group>
                     </v-container>
@@ -318,15 +262,6 @@
                       <v-tab-item v-for="n in 2" :key="n">
                         <v-container v-if="n === 1">
                           <v-row class="mx-2">
-                            <!-- <v-col
-                              class="align-center justify-space-between"
-                              cols="6"
-                            >
-                              <v-text-field
-                                append-outer-icon="mdi-information"
-                                label="Mã hàng"
-                              ></v-text-field>
-                            </v-col> -->
                             <v-col cols="6">
                               <v-text-field
                                 label="Loại hàng"
@@ -691,7 +626,7 @@ export default {
         "Avatar size should be less than 5MB!",
     ],
     radio: "all",
-    radioShow: "isOnSale",
+    radioShow: "all",
     addTab: null,
     desTab: null,
     upHere: false,
@@ -709,9 +644,14 @@ export default {
     editedIndex: -1,
     currentPage: 1,
     pageCount: 0,
+    searchStatus: false,
+    searchName: false,
     selected: [],
     itemSelected: [],
     credential: {},
+    credentials: {},
+    supplierName: "",
+    productTypeName: "",
     itemAdd: [
       { icon: "mdi-plus", text: "Thêm hàng hóa" },
       { icon: "mdi-plus", text: "Thêm khuyến mãi" },
@@ -743,11 +683,47 @@ export default {
       val || this.closeDialogActive();
     },
     currentPage() {
-      if (this.txtSearchProduct != null && this.txtSearchProduct.length != 0) {
+      if (this.searchName) {
         this.onEnterClick();
+      } else if (this.searchStatus) {
+        if (this.radioShow === "all") {
+          this.credential = {
+            txtSearch: "",
+            currentPage: this.currentPage,
+          };
+          this.searchProductsByQ(this.credential);
+          this.pageCount = this.pages.totalPages;
+        } else {
+          if (this.radioShow === "isOnSale") {
+            this.credentials = {
+              status: 1,
+              currentPage: this.currentPage,
+            };
+            this.searchProductsByStatus(this.credentials);
+            this.pageCount = this.pages.totalPages;
+          } else if (this.radioShow === "isOffSale") {
+            this.credentials = {
+              status: -1,
+              currentPage: this.currentPage,
+            };
+            this.searchProductsByStatus(this.credentials);
+            this.pageCount = this.pages.totalPages;
+          }
+          this.searchName = false;
+          this.searchStatus = true;
+        }
       } else {
-        this.getProducts(this.currentPage);
-        this.pageCount = this.pages.totalPages;
+        if (
+          this.txtSearchProduct != null &&
+          this.txtSearchProduct.length != 0
+        ) {
+          this.onEnterClick();
+        } else {
+          this.searchStatus = false;
+          this.searchName = false;
+          this.getProducts(this.currentPage);
+          this.pageCount = this.pages.totalPages;
+        }
       }
     },
     onEnterClick() {
@@ -755,12 +731,15 @@ export default {
         txtSearch: this.txtSearchProduct,
         currentPage: this.currentPage,
       };
+      this.searchStatus = false;
+      this.searchName = true;
       this.searchProductsByQ(this.credential);
       this.pageCount = this.pages.totalPages;
     },
   },
   computed: {
     ...mapGetters("product", ["products", "pages"]),
+    // ...mapGetters("supplier", ["products", "pages"]),
     title() {
       return this.editedIndex === -1 ? "Thêm sản phẩm" : "Chỉnh sửa sản phẩm";
     },
@@ -774,12 +753,56 @@ export default {
       "updateProductOfList",
       "activeProductFromList",
       "searchProductsByQ",
+      "searchProductsByStatus",
     ]),
+    ...mapActions("supplier", ["createNewSupplier"]),
+    ...mapActions("category", ["createNewCategory"]),
+    onAddNewCategory() {
+      this.createNewCategory({ proTypeName: this.productTypeName });
+      this.productTypeName = "";
+      this.dialogType = false;
+    },
+    onAddNewSupplier() {
+      this.createNewSupplier({ supplierName: this.supplierName });
+      this.supplierName = "";
+      this.dialogSupplier = false;
+    },
+    searchProductsWithStatus() {
+      if (this.radioShow === "all") {
+        this.credential = {
+          txtSearch: "",
+          currentPage: this.currentPage,
+        };
+        this.searchProductsByQ(this.credential);
+        this.pageCount = this.pages.totalPages;
+      } else {
+        if (this.radioShow === "isOnSale") {
+          this.credentials = {
+            status: 1,
+            currentPage: this.currentPage,
+          };
+          this.searchProductsByStatus(this.credentials);
+          this.pageCount = this.pages.totalPages;
+        } else if (this.radioShow === "isOffSale") {
+          this.credentials = {
+            status: -1,
+            currentPage: this.currentPage,
+          };
+          this.searchProductsByStatus(this.credentials);
+          this.pageCount = this.pages.totalPages;
+        }
+        this.searchName = false;
+        this.searchStatus = true;
+      }
+    },
+
     onEnterClick() {
       this.credential = {
         txtSearch: this.txtSearchProduct,
         currentPage: this.currentPage,
       };
+      this.searchName = true;
+      this.searchStatus = false;
       this.searchProductsByQ(this.credential);
       this.pageCount = this.pages.totalPages;
     },

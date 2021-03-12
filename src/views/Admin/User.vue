@@ -353,7 +353,6 @@ export default {
           this.searchUserByStatus(this.credentials);
           this.pageCount = this.pages.totalPages;
         }
-        console.log(this.credentials);
       }
     },
     onChangeSelectedRadio(event) {

@@ -21,8 +21,14 @@ class ProductService {
     //     return put();
     // }
 
+
+
     searchProductsByQ(txtSearch, index, pageSize = 5) {
         return get(`/products?q=${txtSearch}&pageSize=${pageSize}&pageIndex=${index}`, {}, {});
+    }
+
+    searchProductsByStatus(status, index, pageSize = 5) {
+        return get(`/products?status=${status}&pageSize=${pageSize}&pageIndex=${index}`, {}, {});
     }
 
     deleteProduct(productId) {

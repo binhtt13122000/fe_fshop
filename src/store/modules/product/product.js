@@ -129,7 +129,21 @@ const actions = {
             await commit(SET_PAGES, []);
             await commit(SET_PRODUCTS, []);
         }
+    },
+    async searchProductsByStatus({ commit }, credential) {
+        try {
+            const response = await ProductServices.searchProductsByStatus(credential.status, credential.currentPage);
+            if (response.status === 200) {
+                await commit(SET_PRODUCTS, response.data.content);
+                console.log(state.products);
+                return await commit(SET_PAGES, response.data)
+            }
+        } catch (error) {
+            await commit(SET_PAGES, []);
+            await commit(SET_PRODUCTS, []);
+        }
     }
+
 };
 
 export default {
