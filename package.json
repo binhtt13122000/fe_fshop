@@ -14,6 +14,7 @@
     "font-awesome": "4.7.0",
     "install": "^0.13.0",
     "mdbvue": "^6.7.2",
+    "read-excel-file": "^5.0.0",
     "validate": "^5.1.0",
     "vue": "^2.6.11",
     "vue-integer-plusminus": "^1.5.1",

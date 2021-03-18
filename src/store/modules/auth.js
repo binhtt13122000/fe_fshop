@@ -56,8 +56,8 @@ const mutations = {
         state.user = val
     },
     [SET_USERS]: (state, val) => {
-        console.log(val)
         state.users = val
+        console.log(state.users)
     },
     [IS_LOGGED_IN]: (state, isUserLoggedIn) => {
         state.userInfo.isLoggedIn = isUserLoggedIn;
@@ -150,6 +150,7 @@ const actions = {
     async getUsers({ commit }, index = 1) {
         try {
             const response = await AuthServices.getUsers(index);
+            console.log(response.data)
             if (response.status === 200) {
                 await commit(SET_PAGES, response.data);
                 return await commit(SET_USERS, response.data.content);

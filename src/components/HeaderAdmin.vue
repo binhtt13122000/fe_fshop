@@ -96,7 +96,11 @@
           >
           <v-menu bottom open-on-hover min-width="100px" rounded offset-y>
             <template v-slot:activator="{ on }">
-              <v-btn v-on="on" color="blue darken-2" class="mx-1"
+              <v-btn
+                v-on="on"
+                color="blue darken-2"
+                class="mx-1"
+                :to="'/main-product'"
                 ><v-icon>mdi-tshirt-crew</v-icon>Hàng hóa</v-btn
               >
             </template>

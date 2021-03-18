@@ -11,7 +11,7 @@ const getters = {
     categories(state) {
         return state.categories
     },
-    pages(state) {
+    pagesCategory(state) {
         return state.pages
     },
     page(state) {
@@ -43,10 +43,23 @@ const actions = {
     async createNewCategory({ commit }, credential) {
         const response = await CategoryService.createNewCategory(credential);
         if (response.status === 200) {
-            await commit([ADD_CATEGORY], response.data.content);
-            // return await commit([SET_PAGES], response.data);
+            await commit(ADD_CATEGORY, response.data.content);
+            return await commit(SET_PAGES, response.data);
         }
         throw new Error(response);
+    },
+
+    async getCategories({ commit }, credential) {
+        try {
+            const response = await CategoryService.getCategories(credential.txtSearchCategory, credential.currentPage);
+            if (response.status === 200) {
+                await commit(SET_CATEGORIES, response.data.content);
+                return await commit(SET_PAGES, response.data);
+            }
+        } catch (error) {
+            await commit(SET_CATEGORIES, []);
+            await commit(SET_PAGES, []);
+        }
     }
 };
 

@@ -11,7 +11,7 @@ const getters = {
     suppliers(state) {
         return state.suppliers
     },
-    pages(state) {
+    pagesSupplier(state) {
         return state.pages
     },
     page(state) {
@@ -44,11 +44,23 @@ const actions = {
         console.log("abc")
         const response = await SupplierService.createNewSupplier(credential);
         if (response.status === 200) {
-            await commit([ADD_SUPPLIER], response.data.content);
-            return await commit([SET_PAGES], response.data);
+            await commit(ADD_SUPPLIER, response.data.content);
+            return await commit(SET_PAGES, response.data);
         }
-        throw new Error(response);
-    }
+        throw new Error(response.status);
+    },
+    async getSuppliers({ commit }, credential) {
+        try {
+            const response = await SupplierService.getSuppliers(credential.txtSearchSupplier, credential.currentPage);
+            if (response.status === 200) {
+                await commit(SET_SUPPLIERS, response.data.content);
+                return await commit(SET_PAGES, response.data);
+            }
+        } catch (error) {
+            await commit(SET_SUPPLIERS, []);
+            await commit(SET_PAGES, []);
+        }
+    },
 };
 
 export default {

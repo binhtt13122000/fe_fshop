@@ -10,33 +10,8 @@
             -->
             <v-col md="3" sm="3" class="right-main-item">
               <h1 class="hidden-md-and-down mb-6 ml-6" align="left">
-                Hàng hóa
+                Người dùng
               </h1>
-              <v-col cols="12" class="hidden-md-and-down">
-                <v-card>
-                  <v-list-group :value="true">
-                    <template v-slot:activator>
-                      <v-list-item-content
-                        class="font-weight-medium"
-                        align="left"
-                      >
-                        <v-list-item-title style="color: black"
-                          >Nhóm khách hàng
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </template>
-
-                    <v-container>
-                      <v-text-field
-                        flat
-                        hide-details
-                        prepend-inner-icon="mdi-magnify"
-                        label="Tìm kiếm loại hàng"
-                      ></v-text-field>
-                    </v-container>
-                  </v-list-group>
-                </v-card>
-              </v-col>
 
               <v-col cols="12" class="hidden-md-and-down">
                 <v-card>
@@ -89,9 +64,10 @@
                   style="width: 50px"
                 ></v-text-field>
 
-                <v-btn color="success" class="mx-2"
+                <!-- <v-btn color="success" class="mx-2"
                   ><v-icon>mdi-application-import</v-icon>Import</v-btn
-                >
+                > -->
+                <input type="file" @change="onFileChange" />
                 <v-btn color="success"
                   ><v-icon>mdi-file-move-outline</v-icon>Xuất File</v-btn
                 >
@@ -108,6 +84,7 @@
                   item-key="12"
                   width="800px"
                   class="elevation-1"
+                  disable-pagination
                 >
                   <template v-slot:top>
                     <v-toolbar>
@@ -177,7 +154,9 @@
                     {{ diffenceDateTime(item.lastLogin) }}
                   </template>
                   <template v-slot:[`item.status`]="{ item }">
-                    {{ checkStatusUser(item.status) }}
+                    <v-chip :color="getColor(item.status)" dark
+                      >{{ checkStatusUser(item.status) }}
+                    </v-chip>
                   </template>
                   <template>
                     <my-component v-if="renderComponent" />
@@ -204,7 +183,7 @@
                     >
                   </template>
                 </v-data-table>
-                <div class="text-center pt-2" v-if="this.users.length != 0">
+                <div class="text-center pt-2" v-if="!this.isFileSelected">
                   <v-pagination
                     v-model="currentPage"
                     :length="this.pages.totalPages"
@@ -225,8 +204,9 @@
 <script>
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/HeaderAdmin.vue";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import moment from "moment";
+import readXlsxFile from "read-excel-file";
 
 export default {
   components: { VmFooter, VmHeader },
@@ -260,6 +240,7 @@ export default {
     myloadingvariable: true,
     txtSearchAccount: "",
     isSelectedStatus: "",
+    isFileSelected: false,
     renderComponent: true,
     credential: {},
     credentials: {},
@@ -285,14 +266,48 @@ export default {
       { text: "Trạng thái", value: "status" },
       { text: "Actions", value: "actions", sortable: false },
     ],
+    user: {},
+    listUsers: [],
   }),
   watch: {
     currentPage() {
-      if (this.txtSearchAccount != null && this.txtSearchAccount.length != 0) {
-        this.onEnterClick();
+      if (this.radioShow === "isOnSale") {
+        if (
+          this.txtSearchAccount != null &&
+          this.txtSearchAccount.length != 0
+        ) {
+          this.onEnterClick();
+        } else {
+          this.getUsers(this.currentPage);
+          this.pageCount = this.pages.totalPages;
+        }
       } else {
-        this.getUsers(this.currentPage);
-        this.pageCount = this.pages.totalPages;
+        this.isFileSelected = false;
+        console.log(this.radioShow);
+        if (this.radioShow === "all") {
+          this.credential = {
+            txtSearchAccount: "",
+            currentPage: this.currentPage,
+          };
+          this.searchUserByQ(this.credential);
+          this.pageCount = this.pages.totalPages;
+        } else {
+          if (this.radioShow === "active") {
+            this.credentials = {
+              status: 1,
+              currentPage: this.currentPage,
+            };
+            this.searchUserByStatus(this.credentials);
+            this.pageCount = this.pages.totalPages;
+          } else if (this.radioShow === "block") {
+            this.credentials = {
+              status: 0,
+              currentPage: this.currentPage,
+            };
+            this.searchUserByStatus(this.credentials);
+            this.pageCount = this.pages.totalPages;
+          }
+        }
       }
     },
     dialog(val) {
@@ -329,8 +344,13 @@ export default {
       "searchUserByQ",
       "searchUserByStatus",
     ]),
+    ...mapMutations("auth", ["setUsers", "setPages"]),
     searchUserWithStatus() {
+      this.isFileSelected = false;
+
+      console.log(this.radioShow);
       if (this.radioShow === "all") {
+        this.currentPage = 1;
         this.credential = {
           txtSearchAccount: "",
           currentPage: this.currentPage,
@@ -339,6 +359,7 @@ export default {
         this.pageCount = this.pages.totalPages;
       } else {
         if (this.radioShow === "active") {
+          this.currentPage = 1;
           this.credentials = {
             status: 1,
             currentPage: this.currentPage,
@@ -346,6 +367,7 @@ export default {
           this.searchUserByStatus(this.credentials);
           this.pageCount = this.pages.totalPages;
         } else if (this.radioShow === "block") {
+          this.currentPage = 1;
           this.credentials = {
             status: 0,
             currentPage: this.currentPage,
@@ -354,14 +376,6 @@ export default {
           this.pageCount = this.pages.totalPages;
         }
       }
-    },
-    onChangeSelectedRadio(event) {
-      console.log(event);
-      // if(event.target.value == "all") {
-
-      // }else {
-
-      // }
     },
     deleteItem(item) {
       this.editedIndex = this.users.indexOf(item);
@@ -450,12 +464,50 @@ export default {
       this.close();
     },
     onEnterClick() {
+      this.radioShow = "isOnSale";
+      this.currentPage = 1;
+      this.isFileSelected = false;
       this.credential = {
         txtSearchAccount: this.txtSearchAccount,
         currentPage: this.currentPage,
       };
       this.searchUserByQ(this.credential);
       this.pageCount = this.pages.totalPages;
+    },
+    onFileChange(event) {
+      this.currentPage = 1;
+      let xlsxfile = event.target.files ? event.target.files[0] : null;
+      readXlsxFile(xlsxfile).then((rows) => {
+        this.isFileSelected = true;
+        console.log("rows:");
+        rows.forEach((element) => {
+          this.user = {
+            userId: element[0],
+            userName: element[1],
+            roleId: element[2],
+            name: element[3],
+            birthDate: element[4],
+            phoneNumber: element[5],
+            gender: element[6],
+            email: element[7],
+            country: element[8],
+            address: element[9],
+            registeredAt: element[10],
+            lastLogin: element[11],
+            avatar: element[12],
+            status: element[13],
+          };
+          this.listUsers.push(this.user);
+        });
+        console.log(this.listUsers.length);
+        this.setPages([]);
+        this.setUsers(this.listUsers);
+        this.listUsers = [];
+      });
+    },
+    getColor(status) {
+      if (status) return "green";
+      else return "red";
     },
   },
 

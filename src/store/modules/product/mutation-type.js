@@ -6,4 +6,7 @@ export const ADD_PRODUCT = "addProduct";
 export const REMOVE_PRODUCT = "removeProduct";
 export const ACTIVE_PRODUCT = "activeProduct";
 export const UPDATE_PRODUCT = "updateProduct";
-
+export const REMOVE_PRODUCT_DETAILS = "removeProductDetails";
+export const ACTIVE_PRODUCT_DETAILS = "activeProductDetails";
+export const ADD_QUANTITY_PRODUCT_DETAILS = "addQuantityProductDetails";
+export const CREATE_PRODUCT_DETAILS = "createProductDetails";
