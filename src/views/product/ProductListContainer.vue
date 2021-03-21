@@ -20,7 +20,7 @@
               sm="4"
               align-content="center"
               justify="center"
-              v-for="product in products"
+              v-for="product in this.products"
               :key="product.productId"
             >
               <VmProduct :product="product"></VmProduct>

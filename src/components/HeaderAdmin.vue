@@ -141,8 +141,8 @@
             <v-card color="blue darken-2">
               <v-list-item-content class="justify-center" align="left">
                 <div class="mx-auto text-left" style="">
-                  <v-btn depressed rounded text color="#ffffff"
-                    ><v-icon>mdi-order-bool-descending-variant</v-icon> Đặt
+                  <v-btn depressed rounded text color="#ffffff" :to="'/order'"
+                    ><v-icon>mdi-order-bool-descending-variant</v-icon> Đơn
                     hàng</v-btn
                   ><v-divider class="my-3"></v-divider>
                   <v-btn depressed rounded text color="#ffffff"

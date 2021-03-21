@@ -138,9 +138,16 @@
                           <v-col>
                             <v-select
                               v-model="productDetailSize"
-                              :items="itemsSize"
+                              :items="product.productDetails"
                               label="Chọn kích thước:"
-                            ></v-select>
+                            >
+                              <template v-slot:item="{ item }">
+                                {{ item.proSize }}
+                              </template>
+                              <template v-slot:selection="{ item }">
+                                {{ item.proSize }}
+                              </template>
+                            </v-select>
                           </v-col>
                           <v-col cols="12"><v-divider></v-divider></v-col>
                           <v-col><span>Price:</span></v-col>
@@ -440,15 +447,6 @@ export default {
     isValid: false,
     isAccount: false,
     mainImageSrc: null,
-    itemsSize: [
-      { text: "S", value: "S" },
-      { text: "M", value: "M" },
-      { text: "L", value: "L" },
-      { text: "XL", value: "XL" },
-      { text: "2XL", value: "2XL" },
-      { text: "3XL", value: "3XL" },
-      { text: "4XL", value: "4XL" },
-    ],
     productDetailSize: "",
     quantity: 0,
     alert: false,
@@ -511,6 +509,7 @@ export default {
   },
   mounted() {
     this.productDetails(this.$route.params.idProduct);
+    console.log(this.product);
   },
 };
 </script>

@@ -155,8 +155,8 @@
                   <v-btn
                     class="ma-2"
                     color="#404040"
-                    v-if="this.carts.length < 10"
                     dark
+                    v-if="carts.length < 10"
                     v-bind="attrs"
                     v-on="on"
                     size="30px"
@@ -205,7 +205,7 @@
                   <v-btn
                     color="#404040"
                     text
-                    v-if="this.carts.length < 10"
+                    v-if="carts.length < 10"
                     @click="dialog = false"
                     v-on:click="createCart()"
                   >

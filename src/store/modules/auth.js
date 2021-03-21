@@ -200,6 +200,7 @@ const actions = {
 
     async getCart({ commit }, username) {
         const response = await AuthServices.getCarts(username);
+        console.log(response);
         if (response.status === 200) {
             await commit(IS_LOGGED_IN, true);
             return await commit(SET_CARTS, response.data.content);
@@ -207,14 +208,16 @@ const actions = {
         throw new Error(response.status)
     },
     async getCartDetail({ commit }, credential) {
-        const response = await AuthServices.getCartDetails(credential.idCart, credential.userName)
-        console.log(response);
-        if (response.status === 200) {
-            return await commit(SET_CART_DETAIL, response.data);
+        try {
+            const response = await AuthServices.getCartDetails(credential.idCart, credential.userName)
+            console.log(response);
+            if (response.status === 200) {
+                return await commit(SET_CART_DETAIL, response.data);
+            }
         }
-
-        throw new Error(response.status);
-
+        catch (error) {
+            return await commit(SET_CART_DETAIL, []);
+        }
     },
 
     async createNewCart({ commit, state }, newCart) {

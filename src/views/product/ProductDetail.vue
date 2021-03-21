@@ -123,32 +123,32 @@
                             <p style="font-family: 'Open Sans', sans-serif">
                               Size:
                             </p>
-
-                            <label>
-                              <input
-                                type="radio"
-                                name="sel_size"
-                                value="S"
-                                checked="checked"
-                              />
-                              <span class="radio-size">S</span>
-                            </label>
-                            <label>
-                              <input type="radio" name="sel_size" value="M" />
-                              <span class="radio-size">M</span>
-                            </label>
-                            <label>
-                              <input type="radio" name="sel_size" value="L" />
-                              <span class="radio-size">L</span>
-                            </label>
-                            <label>
-                              <input type="radio" name="sel_size" value="XL" />
-                              <span class="radio-size">XL</span>
-                            </label>
-                            <label>
-                              <input type="radio" name="sel_size" value="XXL" />
-                              <span class="radio-size">XXL</span>
-                            </label>
+                            <div
+                              v-for="(product, i) in product.productDetails"
+                              :key="i"
+                            >
+                              <label v-if="i == 0">
+                                <input
+                                  type="radio"
+                                  name="sel_size"
+                                  :value="product.proSize"
+                                  checked="checked"
+                                />
+                                <span class="radio-size">{{
+                                  product.proSize
+                                }}</span>
+                              </label>
+                              <label v-else>
+                                <input
+                                  type="radio"
+                                  name="sel_size"
+                                  :value="product.proSize"
+                                />
+                                <span class="radio-size">{{
+                                  product.proSize
+                                }}</span>
+                              </label>
+                            </div>
                           </div>
                         </v-col>
                       </v-row>
@@ -187,7 +187,7 @@
                           <v-btn
                             id="btn-addToCart"
                             width="100%"
-                            v-on:click="addToCard()"
+                            v-on:click="addToCartDialog(product)"
                           >
                             <v-icon>mdi-plus</v-icon>
                             Thêm vào giỏ hàng
@@ -198,6 +198,77 @@
                     </v-form>
                   </div>
                   <v-spacer></v-spacer>
+                  <v-dialog v-model="dialogCart" max-width="500px">
+                    <v-card>
+                      <v-card-title class="headline blue darken-1"
+                        >Add product to cart:</v-card-title
+                      >
+                      <v-card-actions>
+                        <v-form>
+                          <v-col>
+                            <v-text-field
+                              readonly
+                              :value="productSelected.productName"
+                              label="Product Name:"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col>
+                            <v-select
+                              v-model="productDetailSize"
+                              :items="this.productSelected.productDetails"
+                              label="Chọn kích thước:"
+                            >
+                              <template v-slot:item="{ item }">
+                                {{ item.proSize }}
+                              </template>
+                              <template v-slot:selection="{ item }">
+                                {{ item.proSize }}
+                              </template>
+                            </v-select>
+                          </v-col>
+                          <v-col>
+                            <v-select
+                              v-model="productCart"
+                              :items="carts"
+                              item-text="cartId"
+                              label="Chọn cart:"
+                            >
+                              <template v-slot:item="{ item }">
+                                {{ item.cartDescription }}
+                              </template>
+                              <template v-slot:selection="{ item }">
+                                {{ item.cartDescription }}
+                              </template>
+                            </v-select>
+                          </v-col>
+                          <v-col>
+                            <v-text-field
+                              type="number"
+                              :rules="[numberRule]"
+                              v-model="quantity"
+                              label="Số lượng"
+                              append-outer-icon="mdi-information"
+                              @change="quantity = $event"
+                            ></v-text-field>
+                          </v-col>
+                        </v-form>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="closeCartDialog()"
+                          >Cancel</v-btn
+                        >
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="addToCartDialogConfirm()"
+                          >OK</v-btn
+                        >
+                        <v-spacer></v-spacer>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
                   <br />
                   <br />
                   <div class="product-detail-inner">
@@ -393,13 +464,21 @@ export default {
     badgeCart: 1,
     modelQuantity: "Quantity",
     modelComment: ["Mới nhất"],
-    quantity: 1,
+    quantity: 0,
     size: 1,
     drawer: null,
     rating: 5,
     tab: null,
     itemComments: ["Mới nhất", "Cũ"],
     itemTabs: ["Đánh giá", "Bình luận"],
+    productSelected: {},
+    dialogCart: false,
+    productDetailSize: "",
+    productCart: {},
+    numberRule: (v) => {
+      if (!isNaN(parseFloat(v)) && v > 0) return true;
+      return "Number must be greater than 0!";
+    },
     itemBreadCrumbs: [
       {
         text: "Home",
@@ -428,6 +507,7 @@ export default {
     isAccount: false,
   }),
   computed: {
+    ...mapGetters("auth", ["user", "carts"]),
     ...mapGetters("product", ["product"]),
   },
   methods: {
@@ -456,6 +536,29 @@ export default {
     addToCart() {
       return this.badgeCart++;
     },
+    addToCartDialog(product) {
+      this.dialogCart = true;
+      console.log(product);
+      this.productSelected = product;
+    },
+
+    addToCartDialogConfirm() {
+      const credential = {
+        cartId: this.productCart,
+        username: this.user.userName,
+        productId: this.productSelected.productId,
+        cartSize: this.productDetailSize.proSize,
+        cartQuantity: this.quantity,
+      };
+      console.log(credential);
+      this.addProductInCartDetail(credential);
+    },
+
+    closeCartDialog() {
+      this.dialogCart = false;
+      this.productSelected = "";
+    },
+    ...mapActions("auth", ["addProductInCartDetail"]),
     ...mapActions("product", ["productDetails"]),
   },
   created() {
@@ -464,6 +567,7 @@ export default {
   },
   mounted() {
     this.productDetails(this.$route.params.idProduct);
+    this.productSelected = this.product;
   },
 };
 </script>

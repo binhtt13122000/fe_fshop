@@ -100,6 +100,11 @@ const routes = [
     component: Layout
   },
   {
+    path: '/order',
+    name: 'order',
+    component: Order
+  },
+  {
     path: '/user',
     name: 'user',
     component: User
