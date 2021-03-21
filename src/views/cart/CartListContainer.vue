@@ -11,10 +11,10 @@
               cols="12"
               align-content="center"
               justify="center"
-              v-for="(detail, i) in cartDetail"
+              v-for="(detail, i) in this.cartDetail"
               :key="i"
             >
-              <h1 v-if="i == 0">{{ detail.cartId }}</h1>
+              <h1 v-if="i == 0">{{ detail.cart.cartDescription }}</h1>
             </v-col>
 
             <v-spacer></v-spacer>
@@ -25,8 +25,8 @@
               cols="12"
               align-content="center"
               justify="center"
-              v-for="detail in cartDetail"
-              :key="detail.cartId"
+              v-for="detail in this.cartDetail"
+              :key="detail.cartItemId"
             >
               <!-- <VmCart :detail="detail" v-model="checkbox"></VmCart> -->
               <v-container fluid style="background-color: white">
@@ -91,11 +91,11 @@
                           ><v-icon>mdi-minus</v-icon></v-btn
                         >
                         <input
-                          v-model="quantity"
                           type="number"
                           id="number"
                           :min="1"
                           :max="100"
+                          :value="detail.cartQuantity"
                         />
                         <!-- {{ quantity }} -->
                         <v-btn class="btn-plus" v-on:click="increaseValue()"
@@ -125,21 +125,19 @@
                   <v-col cols="12" sm="6">
                     <v-card class="order" width="600px">
                       <h1>Order summary</h1>
-                      <!-- v-for="(detail, i) in cartDetail"
-              :key="i" -->
-                      <v-row class="order-item" > 
-                        <v-col cols="12">
-                          <!-- <p>
-                            Subtotal(item):<u>đ</u
-                          ><span>{{ detail.cartItemPrice }}</span>
-                          </p> -->
-                          </v-col
-                        >
-                        <v-col cols="12"
-                          ><p>
-                            Shipping free:<u>đ</u><span>9.900</span>
-                          </p></v-col
-                        >
+                      <v-col
+                        cols="12"
+                        align-content="center"
+                        justify="center"
+                        v-for="(detail, i) in this.cartDetail"
+                        :key="i"
+                      >
+                        <p v-if="i == 0">
+                          Subtotal(item):<u>đ</u
+                          ><span>{{ detail.cart.cartTotal }}</span>
+                        </p>
+                      </v-col>
+                      <v-row class="order-item">
                         <v-col cols="12"
                           ><p>
                             Discount:<span>{{ 15 }}%</span>
@@ -159,7 +157,10 @@
                         </p> -->
                         </v-col>
                         <v-col cols="12"
-                          ><v-btn class="order-btn" color="#ffa500"
+                          ><v-btn
+                            class="order-btn"
+                            color="#ffa500"
+                            @click="createOrder()"
                             >Place order</v-btn
                           ></v-col
                         >
@@ -205,6 +206,7 @@ export default {
     isValid: false,
     isAccount: false,
     mainImageSrc: null,
+    idCart: "",
   }),
 
   created() {
@@ -233,6 +235,7 @@ export default {
       return this.user.username;
     },
     ...mapActions("auth", ["getCartDetail"]),
+    ...mapActions("order", ["createOrdersByCart"]),
     increaseValue() {
       return this.quantity++;
     },
@@ -246,14 +249,32 @@ export default {
         return this.quantity--;
       }
     },
+    createOrder() {
+      const credential = {
+        cartId: this.idCart,
+        username: this.user.userName,
+        name: this.user.name,
+        phoneNumber: this.user.phoneNumber,
+        email: this.user.email,
+        country: this.user.country,
+        address: this.user.address,
+      };
+      this.createOrdersByCart(credential);
+      // if (this.status === 200) {
+      //this.dialogSuccess();
+      //} else if (this.status === 400) {
+      // this.dialogError();
+      //}
+    },
   },
 
   mounted() {
-    console.log("tao cart list ne");
-    const response = this.user.userName;
-    if (response.status === 200) {
-      this.getCartDetail(this.$route.params.idCart, response);
-    }
+    const credential = {
+      userName: this.user.userName,
+      idCart: this.$route.params.idCart,
+    };
+    (this.idCart = this.$route.params.idCart), this.getCartDetail(credential);
+    console.log(this.cartDetail);
   },
 };
 </script>

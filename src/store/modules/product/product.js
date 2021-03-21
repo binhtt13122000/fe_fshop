@@ -94,7 +94,6 @@ const mutations = {
         if (index != -1) {
             const ind = products[index].productDetails.findIndex(prod => prod.proItemId === credential.productItemId);
             if (ind != -1) {
-                console.log(products[index].productDetails[ind].proQuantity);
                 if (products[index].productDetails[ind].proQuantity == 0) {
                     if (products[index].status == 0) {
                         products[index].status = 1;
@@ -198,7 +197,6 @@ const actions = {
             const response = await ProductServices.searchProductsByQ(credential.txtSearch, credential.currentPage);
             if (response.status === 200) {
                 await commit(SET_PRODUCTS, response.data.content);
-                console.log(state.products);
                 return await commit(SET_PAGES, response.data)
             }
         } catch (error) {
@@ -211,7 +209,6 @@ const actions = {
             const response = await ProductServices.searchProductsByStatus(credential.status, credential.currentPage);
             if (response.status === 200) {
                 await commit(SET_PRODUCTS, response.data.content);
-                console.log(state.products);
                 return await commit(SET_PAGES, response.data)
             }
         } catch (error) {
@@ -234,7 +231,9 @@ const actions = {
             await commit(CREATE_PRODUCT_DETAILS, response.data);
         }
         throw new Error(response.status);
-    }
+    },
+
+
 };
 
 export default {

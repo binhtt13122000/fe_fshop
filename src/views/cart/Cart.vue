@@ -5,24 +5,24 @@
       <div>
         <v-main>
           <v-container>
-          <v-form>
-            <div id="app">
-              <v-app id="inspire">
-                <v-data-table
-                  :headers="headers"
-                  :items="desserts"
-                  sort-by="calories"
-                  class="elevation-1"
-                >
-                  <template v-slot:top>
-                    <v-toolbar flat>
-                      <v-toolbar-title>My CRUD</v-toolbar-title>
-                      <v-divider class="mx-4" inset vertical></v-divider>
-                      <v-spacer></v-spacer>
-                    </v-toolbar>
-                  </template>
-                  
-                  <!-- <template v-slot:item.actions="{ item }">
+            <v-form>
+              <div id="app">
+                <v-app id="inspire">
+                  <v-data-table
+                    :headers="headers"
+                    :items="desserts"
+                    sort-by="calories"
+                    class="elevation-1"
+                  >
+                    <template v-slot:top>
+                      <v-toolbar flat>
+                        <v-toolbar-title>My CRUD</v-toolbar-title>
+                        <v-divider class="mx-4" inset vertical></v-divider>
+                        <v-spacer></v-spacer>
+                      </v-toolbar>
+                    </template>
+
+                    <!-- <template v-slot:item.actions="{ item }">
                     <v-icon small class="mr-2" @click="editItem(item)">
                       mdi-pencil
                     </v-icon>
@@ -30,10 +30,10 @@
                       mdi-delete
                     </v-icon>
                   </template> -->
-                </v-data-table>
-              </v-app>
-            </div>
-          </v-form>
+                  </v-data-table>
+                </v-app>
+              </div>
+            </v-form>
           </v-container>
         </v-main>
       </div>

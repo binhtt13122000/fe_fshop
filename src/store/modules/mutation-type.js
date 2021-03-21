@@ -15,3 +15,4 @@ export const SET_PAGES = "setPages";
 export const SET_PAGE = "setPage";
 export const BAN_USER = "banUser";
 export const ACTIVE_USER = "activeUser";
+export const ADD_PRODUCT_IN_CART = "addProductInCart";

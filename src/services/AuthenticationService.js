@@ -24,8 +24,8 @@ class AuthenticationService {
         return get(`/users?pageIndex=${index}&pageSize=${pageSize}`, {}, {})
     }
 
-    getCarts(username) {
-        return get("/carts/users/" + username, {}, {});
+    getCarts(username, index = 1, pageSize = 10) {
+        return get(`/carts/users/${username}?pageIndex=${index}&pageSize=${pageSize}`, {}, {});
     }
     // cart
     createNewCart(username, newCarts) {
@@ -35,10 +35,6 @@ class AuthenticationService {
 
     getCartDetails(cardId, username) {
         return get("/carts/" + cardId + "/users/" + username + "/cartDetails", {}, {});
-    }
-
-    addProductInCartDetails(cartId, username, productId, cartSize, cartQuantity) {
-        return post("/carts/" + cartId + "/users/" + username + "/cartDetails?productId=" + productId + "&cartSize=" + cartSize + "&cartQuantity=" + cartQuantity, {}, {}, {});
     }
 
     banAccount(username) {
@@ -55,6 +51,11 @@ class AuthenticationService {
 
     searchAccountByStatus(status, index, pageSize = 5) {
         return get(`/users?status=${status}&pageSize=${pageSize}&pageIndex=${index}`, {}, {});
+    }
+
+    addProductInCartDetail(credential) {
+        return post(`/carts/${credential.cartId}/users/${credential.username}/cartDetails?productId=${credential.productId}&cartSize=${credential.cartSize}
+        &cartQuantity=${credential.cartQuantity}`, {}, {});
     }
 }
 

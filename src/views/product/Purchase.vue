@@ -60,18 +60,6 @@
                         >
                         </v-text-field>
                       </v-col>
-                      <!-- <v-col cols="12" sm="6">
-                        <v-combobox
-                          v-model="gender"
-                          :items="itemGender"
-                          label="Chọn Giới tính*"
-                          outlined
-                          dense
-                          required
-                          background-color="#f4f2f8"
-                        >
-                        </v-combobox>
-                      </v-col> -->
                       <v-col cols="12" sm="6">
                         <v-text-field
                           v-model="email"
@@ -103,6 +91,7 @@
                           persistent-hint
                           :items="cityItem"
                           label="Chọn tỉnh/thành phố*"
+                          v-model="city"
                           outlined
                           background-color="#f4f2f8"
                           dense
@@ -110,18 +99,6 @@
                         >
                         </v-select>
                       </v-col>
-                      <!-- <v-col cols="12" sm="6">
-                        <v-select
-                          persistent-hint
-                          :items="district"
-                          label="Chọn quận/huyện*"
-                          outlined
-                          dense
-                          background-color="#f4f2f8"
-                          required
-                        ></v-select>
-                      </v-col> -->
-
                       <v-col cols="12" sm="6">
                         <v-text-field
                           v-model="address"
@@ -153,23 +130,42 @@
                     <v-row class="order-item" dense>
                       <v-col>
                         <v-row>
-                          <v-col><span>Product:</span></v-col>
-                          <v-col><span>Total</span></v-col>
-                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col><span>Product Name:</span></v-col>
                           <v-col
                             ><span>{{ product.productName }}</span></v-col
                           >
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col>
+                            <v-select
+                              v-model="productDetailSize"
+                              :items="itemsSize"
+                              label="Chọn kích thước:"
+                            ></v-select>
+                          </v-col>
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col><span>Price:</span></v-col>
                           <v-col
                             ><span
-                              ><u>đ</u>{{ product.productPrice }}</span
-                            ></v-col
+                              ><u>đ</u>{{ formatPrice(product.productPrice) }}
+                            </span></v-col
                           >
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col>
+                            <v-text-field
+                              type="number"
+                              :rules="[numberRule]"
+                              v-model="quantity"
+                              label="Số lượng"
+                              append-outer-icon="mdi-information"
+                              @change="quantity = $event"
+                              re
+                            ></v-text-field>
+                          </v-col>
                           <v-col cols="12"><v-divider></v-divider></v-col>
                           <v-col><span>Shipping: </span></v-col>
                           <v-col><span>Free</span></v-col>
                           <v-col cols="12"><v-divider></v-divider></v-col>
                           <v-col><span>Discount:</span></v-col>
-
                           <v-col
                             ><input
                               id="voucher-code"
@@ -230,7 +226,10 @@
                         </v-row>
                       </v-col>
                       <v-col cols="12"
-                        ><v-btn class="order-btn" color="rgb(255, 66, 78)"
+                        ><v-btn
+                          class="order-btn"
+                          color="rgb(255, 66, 78)"
+                          @click="createOrderByProduct()"
                           >Checkout</v-btn
                         >
                         <v-btn class="mx-4" color="primary">Payal</v-btn></v-col
@@ -257,6 +256,10 @@
 import { mapActions, mapGetters } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
+import VueIziToast from "vue-izitoast";
+import "izitoast/dist/css/iziToast.css";
+import Vue from "vue";
+Vue.use(VueIziToast);
 
 export default {
   components: {
@@ -264,6 +267,61 @@ export default {
     "my-header": VmHeader,
   },
   data: () => ({
+    notificationSystem: {
+      options: {
+        show: {
+          theme: "dark",
+          icon: "icon-person",
+          position: "topCenter",
+          progressBarColor: "rgb(0, 255, 184)",
+          onOpening: function () {
+            console.info("callback abriu!");
+          },
+          onClosing: function (closedBy) {
+            console.info("closedBy: " + closedBy);
+          },
+        },
+        success: {
+          position: "topRight",
+        },
+        warning: {
+          position: "topRight",
+        },
+        error: {
+          position: "topRight",
+        },
+        question: {
+          close: false,
+          overlay: true,
+          toastOnce: true,
+          id: "question",
+          zindex: 999,
+          position: "center",
+          buttons: [
+            [
+              "<button><b>YES</b></button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+              true,
+            ],
+            [
+              "<button>NO</button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+            ],
+          ],
+          onClosing: function (instance, toast, closedBy) {
+            console.info("Closing | closedBy: " + closedBy);
+          },
+          onClosed: function (instance, toast, closedBy) {
+            console.info("Closed | closedBy: " + closedBy);
+          },
+        },
+      },
+    },
+
     dialog: false,
     firstname: "",
     lastname: "",
@@ -296,6 +354,13 @@ export default {
       ],
     },
     drawer: null,
+    multiLine: true,
+    snackbar: false,
+    text: `I'm a multi-line snackbar.`,
+    numberRule: (v) => {
+      if (!isNaN(parseFloat(v)) && v > 0) return true;
+      return "Number must be greater than 0!";
+    },
     linkBar: [
       "Name",
       "Nữ",
@@ -375,6 +440,18 @@ export default {
     isValid: false,
     isAccount: false,
     mainImageSrc: null,
+    itemsSize: [
+      { text: "S", value: "S" },
+      { text: "M", value: "M" },
+      { text: "L", value: "L" },
+      { text: "XL", value: "XL" },
+      { text: "2XL", value: "2XL" },
+      { text: "3XL", value: "3XL" },
+      { text: "4XL", value: "4XL" },
+    ],
+    productDetailSize: "",
+    quantity: 0,
+    alert: false,
   }),
 
   created() {
@@ -385,13 +462,52 @@ export default {
 
   computed: {
     ...mapGetters("product", ["product"]),
+    ...mapGetters("auth", ["user"]),
+    ...mapGetters("order", ["status"]),
   },
   methods: {
+    ...mapActions("product", ["productDetails"]),
+    ...mapActions("order", ["createOrders"]),
     onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
-    ...mapActions("product", ["productDetails"]),
+    formatPrice(value) {
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    createOrderByProduct() {
+      const credential = {
+        productId: this.product.productId,
+        productSize: this.productDetailSize,
+        productQuantity: this.quantity,
+        username: this.user.userName,
+        name: `${this.firstname} ${this.lastname}`,
+        phoneNumber: this.phone,
+        email: this.email,
+        country: this.city,
+        address: this.address,
+      };
+      this.createOrders(credential);
+      if (this.status === 200) {
+        this.dialogSuccess();
+      } else if (this.status === 400) {
+        this.dialogError();
+      }
+    },
+    dialogSuccess() {
+      this.$toast.success(
+        "Successfully inserted record!",
+        "OK",
+        this.notificationSystem.options.success
+      );
+    },
+    dialogError() {
+      this.$toast.error(
+        "Something is wrong",
+        "Error",
+        this.notificationSystem.options.error
+      );
+    },
   },
   mounted() {
     this.productDetails(this.$route.params.idProduct);
@@ -532,6 +648,14 @@ export default {
   font-size: 10px;
   color: #fff;
   margin-bottom: 15px;
+}
+
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
 @media only screen and (max-width: 1390px) {

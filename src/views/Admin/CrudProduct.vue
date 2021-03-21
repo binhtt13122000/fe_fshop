@@ -513,6 +513,7 @@
                   <template v-slot:[`item.actions`]="{ item }">
                     <v-icon
                       small
+                      v-if="item.status !== -1"
                       class="mr-2"
                       @click="addProductDetailsDialog(item)"
                     >
@@ -1022,7 +1023,6 @@ export default {
       this.isSearchTableCategory = false;
       this.searchStatus = false;
       this.searchName = true;
-      console.log(this.credential);
       this.searchProductsByQ(this.credential);
       this.pageCount = this.pages.totalPages;
     },
@@ -1054,7 +1054,6 @@ export default {
     ...mapActions("supplier", ["createNewSupplier", "getSuppliers"]),
     ...mapActions("category", ["createNewCategory", "getCategories"]),
     add(index) {
-      console.log(index);
       this.inputs.push({ name: "", quantity: 0, discount: 0 }, index);
     },
     remove(index) {
@@ -1111,7 +1110,6 @@ export default {
     //////////////////////////////////////////////////////////////////////////////////
 
     addProductDetailsDialog(item) {
-      console.log(item);
       this.itemSelected = item;
       this.dialogAddProductDetails = true;
     },
@@ -1155,7 +1153,6 @@ export default {
 
     ////////////////////////////////////////////////////////////////
     deleteProductDetails(item) {
-      console.log(item);
       this.productDetailSelected = item;
       this.dialogDeleteProductDetail = true;
     },
@@ -1254,14 +1251,12 @@ export default {
       this.pageCount = this.pages.totalPages;
     },
     editItem(item) {
-      console.log(item);
       this.itemSelected = item;
       this.dialog = true;
     },
 
     //Dialog delete item
     deleteItem(item) {
-      console.log(item);
       this.itemSelected = item;
       this.dialogDelete = true;
     },

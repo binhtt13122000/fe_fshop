@@ -13,16 +13,6 @@ class ProductService {
         return get("/products/" + id, {}, {});
     }
 
-    // addProduct(newProduct){
-    //     return post();
-    // }
-
-    // updateProduct(updateProduct){
-    //     return put();
-    // }
-
-
-
     searchProductsByQ(txtSearch, index, pageSize = 5) {
         return get(`/products?q=${txtSearch}&pageSize=${pageSize}&pageIndex=${index}`, {}, {});
     }
@@ -38,6 +28,8 @@ class ProductService {
     activeProduct(productId) {
         return patch(`/products/${productId}`, {}, {})
     }
+
+
 }
 
 

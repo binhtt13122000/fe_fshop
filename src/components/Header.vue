@@ -155,6 +155,7 @@
                   <v-btn
                     class="ma-2"
                     color="#404040"
+                    v-if="this.carts.length < 10"
                     dark
                     v-bind="attrs"
                     v-on="on"
@@ -164,7 +165,6 @@
                     <v-icon large>mdi-plus</v-icon></v-btn
                   >
                 </v-col>
-
               </template>
               <v-card class="elevation-12">
                 <v-toolbar color="black" dark flat>
@@ -181,18 +181,11 @@
                 <v-card-text>
                   <v-container>
                     <v-row>
-                      <v-col cols="12" sm="6" md="6">
-                        <v-text-field
-                          label="Your cart name"
-                          v-model="nameCart"
-                          :rules="[(v) => !!v || 'Cart name is required']"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="6">
+                      <v-col cols="24" sm="12" md="12">
                         <v-text-field
                           label="Description of cart"
                           v-model="descriptionCart"
+                          @change="descriptionCart = $event"
                           :rules="[
                             (v) => !!v || 'Description of cart is required',
                           ]"
@@ -212,6 +205,7 @@
                   <v-btn
                     color="#404040"
                     text
+                    v-if="this.carts.length < 10"
                     @click="dialog = false"
                     v-on:click="createCart()"
                   >
@@ -253,7 +247,9 @@
               <v-divider class="my-3"></v-divider>
               <v-btn depressed rounded text> My Account </v-btn>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text to="/loginpage" v-show="isLoggedIn"> Login </v-btn>
+              <v-btn depressed rounded text to="/loginpage" v-show="isLoggedIn">
+                Login
+              </v-btn>
               <v-divider class="my-3"></v-divider>
               <v-btn depressed rounded text v-on:click="logout()">
                 Logout
@@ -284,7 +280,7 @@ export default {
     drawer: null,
     sheet: false,
     isLoggedIn: false,
-    quantityInCart: 2,
+    quantityInCart: 0,
     linkBar: [
       "Nam",
       "Nữ",
@@ -304,7 +300,6 @@ export default {
 
   methods: {
     logout() {
-      console.log("logou ne");
       this.$store.dispatch("auth/logout").then((response) => {
         if (response.status === 200) {
           this.$router.push("/");
@@ -321,15 +316,13 @@ export default {
         idUser = this.userId;
       }
       this.$store.dispatch("auth/createNewCart", {
-        cartDescription: "RUn",
-        cartId: "CART003",
+        cartDescription: this.descriptionCart,
         cartTotal: "0",
         createTime: new Date(),
         status: 1,
         userId: idUser,
       });
-      console.log(this.userId);
-      // console.log(this.nameCart);
+      this.descriptionCart = "";
     },
     onResize() {
       this.isValid = window.innerWidth <= 1040;
@@ -351,8 +344,6 @@ export default {
 
   mounted() {
     if (this.loggedIn() === true) {
-      console.log(this.user.userName);
-      console.log("User avatar: " + this.loggedIn());
       this.getCart(this.user.userName);
     }
   },

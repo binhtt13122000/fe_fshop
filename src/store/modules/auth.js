@@ -4,7 +4,7 @@ import AuthServices from "../../services/AuthenticationService"
 import {
     AUTH_REQUEST, ADD_NEW_CART, SET_USER, SET_USERS, IS_LOGGED_IN, IS_SIGNED_UP,
     SET_CARTS, SET_CART, SET_CART_DETAIL, DELETE_CART_DETAIL, AUTH_ERROR, LOGOUT, REMOVE_FAVORITE, SET_PAGES, SET_PAGE,
-    BAN_USER, ACTIVE_USER
+    BAN_USER, ACTIVE_USER, ADD_PRODUCT_IN_CART
 } from './mutation-type';
 const state = {
     user: {},
@@ -77,6 +77,17 @@ const mutations = {
     },
     [DELETE_CART_DETAIL]: (state) => {
         state.cartDetail = ''
+    },
+    [ADD_PRODUCT_IN_CART]: (state, credential) => {
+        const carts = state.carts;
+        console.log(carts);
+        const index = carts.findIndex(cart => credential.cartId === cart.cartId);
+        if (index != -1) {
+            // const ind = carts[index].findIndex(cartDetail => cartDetail.productId === credential.productId && cartDetail.proQuantity === credential.cartQuantity);
+            // if (ind != -1) {
+            console.log(123)
+            // }
+        }
     },
     [AUTH_ERROR]: (state) => {
         state.status = 'error'
@@ -187,18 +198,6 @@ const actions = {
         }
     },
 
-    // const responseforCart = await AuthServices.getCarts(credential.username);
-    // if (responseforCart.status === 200) {
-    //     console.log(responseforCart);
-    //     console.log("cart respon");
-    //     console.log(responseforCart.data.content);
-    //     await commit("isUserLoggedIn", true);
-    //     return await commit("setCarts", responseforCart.data.content);
-
-    //     // const responseForCartDetail = await AuthServices.getCartDetails()
-    // }
-    // throw new Error(responseforCart.status)
-
     async getCart({ commit }, username) {
         const response = await AuthServices.getCarts(username);
         if (response.status === 200) {
@@ -207,10 +206,11 @@ const actions = {
         }
         throw new Error(response.status)
     },
-    async getCartDetail({ commit }, cardId, username) {
-        const response = await AuthServices.getCartDetails(cardId, username)
+    async getCartDetail({ commit }, credential) {
+        const response = await AuthServices.getCartDetails(credential.idCart, credential.userName)
+        console.log(response);
         if (response.status === 200) {
-            return await commit(SET_CART_DETAIL, response.data.content);
+            return await commit(SET_CART_DETAIL, response.data);
         }
 
         throw new Error(response.status);
@@ -225,6 +225,14 @@ const actions = {
         }
     },
 
+    async addProductInCartDetail({ commit }, credential) {
+        console.log(credential);
+        const response = await AuthServices.addProductInCartDetail(credential);
+        if (response.status === 200) {
+            await commit(ADD_PRODUCT_IN_CART, credential);
+        }
+        throw new Error(response.status);
+    },
 
     register({ commit }, user) {
         return new Promise((resolve, reject) => {
