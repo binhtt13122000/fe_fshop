@@ -127,22 +127,15 @@
                               v-for="(product, i) in product.productDetails"
                               :key="i"
                             >
-                              <label v-if="i == 0">
+                              <label v-if="product.proQuantity != 0">
                                 <input
                                   type="radio"
                                   name="sel_size"
+                                  :error-messages="quantityErrors"
+                                  @input="$v.quantity.$touch()"
+                                  @blur="$v.quantity.$touch()"
                                   :value="product.proSize"
-                                  checked="checked"
-                                />
-                                <span class="radio-size">{{
-                                  product.proSize
-                                }}</span>
-                              </label>
-                              <label v-else>
-                                <input
-                                  type="radio"
-                                  name="sel_size"
-                                  :value="product.proSize"
+                                  v-model="productSize"
                                 />
                                 <span class="radio-size">{{
                                   product.proSize
@@ -166,8 +159,10 @@
                             id="number"
                             :min="1"
                             :max="100"
+                            :error-messages="quantityErrors"
+                            @input="$v.quantity.$touch()"
+                            @blur="$v.quantity.$touch()"
                           />
-                          <!-- {{ quantity }} -->
                           <v-btn class="btn-plus" v-on:click="increaseValue()"
                             ><v-icon>mdi-plus</v-icon></v-btn
                           >
@@ -198,77 +193,6 @@
                     </v-form>
                   </div>
                   <v-spacer></v-spacer>
-                  <v-dialog v-model="dialogCart" max-width="500px">
-                    <v-card>
-                      <v-card-title class="headline blue darken-1"
-                        >Add product to cart:</v-card-title
-                      >
-                      <v-card-actions>
-                        <v-form>
-                          <v-col>
-                            <v-text-field
-                              readonly
-                              :value="productSelected.productName"
-                              label="Product Name:"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col>
-                            <v-select
-                              v-model="productDetailSize"
-                              :items="this.productSelected.productDetails"
-                              label="Chọn kích thước:"
-                            >
-                              <template v-slot:item="{ item }">
-                                {{ item.proSize }}
-                              </template>
-                              <template v-slot:selection="{ item }">
-                                {{ item.proSize }}
-                              </template>
-                            </v-select>
-                          </v-col>
-                          <v-col>
-                            <v-select
-                              v-model="productCart"
-                              :items="carts"
-                              item-text="cartId"
-                              label="Chọn cart:"
-                            >
-                              <template v-slot:item="{ item }">
-                                {{ item.cartDescription }}
-                              </template>
-                              <template v-slot:selection="{ item }">
-                                {{ item.cartDescription }}
-                              </template>
-                            </v-select>
-                          </v-col>
-                          <v-col>
-                            <v-text-field
-                              type="number"
-                              :rules="[numberRule]"
-                              v-model="quantity"
-                              label="Số lượng"
-                              append-outer-icon="mdi-information"
-                              @change="quantity = $event"
-                            ></v-text-field>
-                          </v-col>
-                        </v-form>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                          color="blue darken-1"
-                          text
-                          @click="closeCartDialog()"
-                          >Cancel</v-btn
-                        >
-                        <v-btn
-                          color="blue darken-1"
-                          text
-                          @click="addToCartDialogConfirm()"
-                          >OK</v-btn
-                        >
-                        <v-spacer></v-spacer>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
                   <br />
                   <br />
                   <div class="product-detail-inner">
@@ -439,6 +363,46 @@
               </v-tabs>
             </v-container>
           </div>
+          <v-dialog v-model="dialogCart" max-width="500px">
+            <v-card>
+              <v-card-title class="headline blue darken-1"
+                >Select the cart:</v-card-title
+              >
+              <v-card-actions>
+                <v-form>
+                  <v-col>
+                    <v-select
+                      v-model="productCart"
+                      :items="carts"
+                      :error-messages="productCartErrors"
+                      @click="$v.productCart.$touch()"
+                      @blur="$v.productCart.$touch()"
+                      item-text="cartId"
+                      label="Chọn cart:"
+                    >
+                      <template v-slot:item="{ item }">
+                        {{ item.cartDescription }}
+                      </template>
+                      <template v-slot:selection="{ item }">
+                        {{ item.cartDescription }}
+                      </template>
+                    </v-select>
+                  </v-col>
+                </v-form>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeCartDialog()"
+                  >Cancel</v-btn
+                >
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="addToCartDialogConfirm()"
+                  >OK</v-btn
+                >
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
       </v-main>
 
@@ -454,9 +418,22 @@
 import { mapActions, mapGetters } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
+import { validationMixin } from "vuelidate";
+import { required, between } from "vuelidate/lib/validators";
 export default {
   props: {
     source: String,
+  },
+  mixins: [validationMixin],
+
+  validations: {
+    quantity: {
+      between(value) {
+        return between(1, this.totalQuantity)(value);
+      },
+    },
+    productCart: { required },
+    productSize: { required },
   },
   components: { VmFooter, VmHeader },
   data: () => ({
@@ -465,6 +442,7 @@ export default {
     modelQuantity: "Quantity",
     modelComment: ["Mới nhất"],
     quantity: 0,
+    productSize: "",
     size: 1,
     drawer: null,
     rating: 5,
@@ -507,8 +485,35 @@ export default {
     isAccount: false,
   }),
   computed: {
-    ...mapGetters("auth", ["user", "carts"]),
+    ...mapGetters("auth", ["cart", "carts", "user"]),
     ...mapGetters("product", ["product"]),
+    ...mapGetters("order", ["status", "maxQuantity"]),
+    totalQuantity() {
+      return this.maxQuantity;
+    },
+    quantityErrors() {
+      const errors = [];
+      if (!this.$v.quantity.$dirty) return errors;
+      !this.$v.quantity.between &&
+        errors.push(
+          `Quantity must be between ${this.$v.quantity.$params.between.min} and ${this.$v.quantity.$params.between.max}`
+        );
+      return errors;
+    },
+    productCartErrors() {
+      const errors = [];
+      if (!this.$v.productCart.$dirty) return errors;
+      !this.$v.productCart.required &&
+        errors.push("Select product cart is required");
+      return errors;
+    },
+    productSizeError() {
+      const errors = [];
+      if (!this.$v.productSize.$dirty) return errors;
+      !this.$v.productSize.required &&
+        errors.push("Select product size is required");
+      return errors;
+    },
   },
   methods: {
     increaseValue() {
@@ -537,26 +542,38 @@ export default {
       return this.badgeCart++;
     },
     addToCartDialog(product) {
-      this.dialogCart = true;
-      console.log(product);
-      this.productSelected = product;
+      this.$v.$touch();
+      if (
+        this.quantityErrors.length === 0 &&
+        this.productSizeError.length === 0
+      ) {
+        this.$v.$reset();
+        this.dialogCart = true;
+        this.productSelected = product;
+      }
     },
-
     addToCartDialogConfirm() {
-      const credential = {
-        cartId: this.productCart,
-        username: this.user.userName,
-        productId: this.productSelected.productId,
-        cartSize: this.productDetailSize.proSize,
-        cartQuantity: this.quantity,
-      };
-      console.log(credential);
-      this.addProductInCartDetail(credential);
+      this.$v.$touch();
+      if (
+        this.quantityErrors.length === 0 &&
+        this.$v.productCart.required &&
+        this.productSizeError.length === 0
+      ) {
+        this.$v.$reset();
+        const credential = {
+          cartId: this.productCart,
+          username: this.user.userName,
+          productId: this.productSelected.productId,
+          cartSize: this.productSize,
+          cartQuantity: this.quantity,
+        };
+        this.addProductInCartDetail(credential);
+        this.closeCartDialog();
+      }
     },
 
     closeCartDialog() {
       this.dialogCart = false;
-      this.productSelected = "";
     },
     ...mapActions("auth", ["addProductInCartDetail"]),
     ...mapActions("product", ["productDetails"]),
@@ -568,6 +585,7 @@ export default {
   mounted() {
     this.productDetails(this.$route.params.idProduct);
     this.productSelected = this.product;
+    console.log(this.productSelected);
   },
 };
 </script>

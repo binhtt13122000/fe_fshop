@@ -5,83 +5,8 @@
       <v-container class="container" fluid>
         <section class="container">
           <v-row>
-            <v-col cols="6" md="3" sm="3" class="right-main-item">
-              <h1 class="hidden-md-and-down mb-6 ml-6">Hóa đơn</h1>
-              <v-col cols="12" class="hidden-md-and-down">
-                <v-card>
-                  <v-list-group :value="true">
-                    <template v-slot:activator>
-                        <v-list-item-content
-                            class="font-weight-medium"
-                            align="left"
-                        >
-                            <v-list-item-title style="color: black"
-                            >Trạng thái</v-list-item-title
-                            >
-                        </v-list-item-content>
-                        <v-list>
-                            <v-list-item></v-list-item>
-                        </v-list>
-                    </template>
-                    <v-container>
-                      <v-checkbox
-                        dense
-                        label="Hàng hóa"
-                        hide-details
-                      ></v-checkbox>
-                      <v-checkbox
-                        dense
-                        label="Dịch vụ"
-                        hide-details
-                      ></v-checkbox>
-                      <v-checkbox
-                        dense
-                        label="Khuyến mãi"
-                        hide-details
-                      ></v-checkbox>
-                    </v-container>
-                  </v-list-group>
-                </v-card>
-              </v-col>
-              <v-col cols="12" class="hidden-md-and-down">
-                <v-card>
-                  <v-list-group :value="true">
-                    <template v-slot:activator>
-                      <v-list-item-content
-                        class="font-weight-medium"
-                        align="left"
-                      >
-                        <v-list-item-title style="color: black"
-                          >Trạng thái giao hàng</v-list-item-title
-                        >
-                      </v-list-item-content>
-                      <v-list>
-                        <v-list-item></v-list-item>
-                      </v-list>
-                    </template>
-                    <v-container>
-                      <v-checkbox
-                        dense
-                        label="Hàng hóa"
-                        hide-details
-                      ></v-checkbox>
-                      <v-checkbox
-                        dense
-                        label="Dịch vụ"
-                        hide-details
-                      ></v-checkbox>
-                      <v-checkbox
-                        dense
-                        label="Khuyến mãi"
-                        hide-details
-                      ></v-checkbox>
-                    </v-container>
-                  </v-list-group>
-                </v-card>
-              </v-col>
-            </v-col>
             <!-- left main-->
-            <v-col cols="9" class="left-main-item">
+            <v-col cols="24" class="left-main-item">
               <v-row class="left-main-item">
                 <v-text-field
                   prepend-icon="mdi-magnify"
@@ -110,126 +35,95 @@
               <br />
               <v-row>
                 <v-data-table
-                  v-model="selected"
                   :headers="headers"
                   :items-per-page="10"
-                  :items="desserts"
+                  :items="orders"
                   item-key="name"
                   width="10%"
                   class="elevation-1"
-                  :footer-props="{
-                    showFirstLastPage: true,
-                    firstIcon: 'mdi-arrow-collapse-left',
-                    lastIcon: 'mdi-arrow-collapse-right',
-                    prevIcon: 'mdi-minus',
-                    nextIcon: 'mdi-plus',
-                  }"
+                  hide-default-footer
                 >
+                  <template v-slot:[`item.orderTotal`]="{ item }">
+                    {{ formatPrice(item.orderTotal) }}
+                  </template>
+                  <template v-slot:[`item.status`]="{ item }">
+                    <v-chip :color="getColor(item.status)" dark>
+                      {{ checkStatusOrder(item.status) }}
+                    </v-chip>
+                  </template>
+                  <template v-slot:[`item.createAt`]="{ item }">
+                    {{ formatDate(item.createAt) }}
+                  </template>
+                  <template v-slot:[`item.online`]="{ item }">
+                    <v-chip :color="getColorIsOnline(item.online)" dark>
+                      {{ item.online }}
+                    </v-chip>
+                  </template>
                   <template v-slot:top>
-                    <!-- <v-toolbar>
-                      <v-toolbar-title>Hóa đơn</v-toolbar-title>
-                      <v-divider class="mx-4" inset vertical></v-divider>
-                      <v-spacer></v-spacer> -->
-                    <v-dialog v-model="dialogEdit" width="800px">
-                      <!-- <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                            color="success"
-                            dark
-                            class="mb-2"
-                            v-bind="attrs"
-                            v-on="on"
-                          >
-                            <v-icon>mdi-plus</v-icon>
-                            Chỉnh sửa hóa đơn
-                          </v-btn>
-                        </template> -->
+                    <v-dialog v-model="dialogConfirm" width="800px">
                       <v-card>
                         <v-card-title class="blue darken-1">
-                          {{ title }}
+                          Thông tin chi tiết của đơn hàng:
                         </v-card-title>
-                        <v-tabs v-model="addTab">
-                          <v-tab>Thông tin</v-tab>
-                          <v-tab>Mô tả chi tiết</v-tab>
-                        </v-tabs>
-                        <v-tabs-items v-model="addTab">
-                          <v-tab-item v-for="n in 2" :key="n">
-                            <v-container v-if="n === 1">
-                              <v-row class="mx-2">
-                                <v-col cols="6">
-                                  <v-text-field
-                                    v-model="editedItem.phoneNumber"
-                                    label="Số điện thoại"
-                                    append-outer-icon="mdi-information"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="6">
-                                  <v-text-field
-                                    label="Địa chỉ"
-                                    v-model="editedItem.address"
-                                    append-outer-icon="mdi-information"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="6">
-                                  <v-text-field
-                                    v-model="editedItem.promotionId"
-                                    label="Giảm giá"
-                                    append-outer-icon="mdi-information"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="6">
-                                  <v-text-field
-                                    v-model="editedItem.sellerId"
-                                    label="Người bán"
-                                    append-outer-icon="mdi-information"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="6">
-                                  <v-text-field
-                                    v-model="editedItem.status"
-                                    label="Trạng thái"
-                                    append-outer-icon="mdi-information"
-                                  ></v-text-field>
-                                </v-col>
-                              </v-row>
-                            </v-container>
-                            <v-container v-else>
-                              <v-textarea
-                                label="Mô tả"
-                                auto-grow
-                                outlined
-                                rows="3"
-                                row-height="30"
-                                shaped
-                              ></v-textarea>
-                            </v-container>
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn color="blue darken-1" text @click="close">
-                                Cancel
-                              </v-btn>
-                              <v-btn color="blue darken-1" text @click="save">
-                                Save
-                              </v-btn>
-                            </v-card-actions>
-                          </v-tab-item>
-                        </v-tabs-items>
+                        <v-data-table
+                          :headers="headerOrderDetails"
+                          :items-per-page="10"
+                          :items="orderDetails"
+                          item-key="name"
+                          width="10%"
+                          class="elevation-1"
+                          hide-default-footer
+                        >
+                          <template v-slot:[`item.orderItemPrice`]="{ item }">
+                            {{ formatPrice(item.orderItemPrice) }}
+                          </template>
+                          <template v-slot:[`item.status`]="{ item }">
+                            <v-chip :color="getColor(item.status)" dark>
+                              {{ checkStatusOrderDetails(item.status) }}
+                            </v-chip>
+                          </template>
+                        </v-data-table>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            color="blue darken-1"
+                            text
+                            @click="closeConfirmDialog()"
+                          >
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            color="blue darken-1"
+                            text
+                            @click="approveItemConfirm()"
+                          >
+                            Confirm
+                          </v-btn>
+                        </v-card-actions>
                       </v-card>
                     </v-dialog>
                     <!-- delete -->
-                    <v-dialog v-model="dialogDelete" max-width="500px">
+                    <v-dialog
+                      v-model="dialogDelete"
+                      transition="dialog-top-transition"
+                      max-width="500px"
+                    >
                       <v-card>
                         <v-card-title class="headline blue darken-1"
-                          >Bạn có muốn đơn hàng này không?</v-card-title
+                          >Bạn có muốn xóa đơn hàng này không?</v-card-title
                         >
                         <v-card-actions>
                           <v-spacer></v-spacer>
-                          <v-btn color="blue darken-1" text @click="closeDelete"
+                          <v-btn
+                            color="blue darken-1"
+                            text
+                            @click="closeDeleteDialog()"
                             >Cancel</v-btn
                           >
                           <v-btn
                             color="blue darken-1"
                             text
-                            @click="deleteItemConfirm"
+                            @click="deleteItemConfirm()"
                             >OK</v-btn
                           >
                           <v-spacer></v-spacer>
@@ -240,15 +134,30 @@
                   </template>
                   <!--  icon for each rows of data -->
                   <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon small class="mr-2" @click="editItem(item)"
-                      >mdi-pencil</v-icon
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="confirmItemDialog(item)"
+                      v-if="item.status != -1"
+                      >mdi-checkbox-marked-circle-outline</v-icon
                     >
-                    <v-icon small class="mr-2" @click="deleteItem(item)"
+                    <v-icon
+                      small
+                      class="mr-2"
+                      @click="deleteItemDialog(item)"
+                      v-if="item.status != -1"
                       >mdi-delete</v-icon
                     >
                     <v-icon small class="mr-2">mdi-information-outline</v-icon>
                   </template>
                 </v-data-table>
+                <div class="text-center pt-2">
+                  <v-pagination
+                    v-model="currentPage"
+                    :length="this.pages.totalPages"
+                    v-on:click="currentPage()"
+                  ></v-pagination>
+                </div>
               </v-row>
             </v-col>
           </v-row>
@@ -263,13 +172,15 @@
 <script>
 import VmHeader from "../../components/HeaderAdmin.vue";
 import VmFooter from "../../components/Footer.vue";
+import moment from "moment";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: { VmHeader, VmFooter },
   data: () => ({
     dialogDelete: false,
-    dialogEdit: false,
+    dialogConfirm: false,
     desserts: [],
-    selected: [],
+    itemSelected: {},
     editedIndex: -1,
     editedItem: {
       orderId: "",
@@ -285,24 +196,34 @@ export default {
       isOnline: 1,
       status: 1,
     },
+    currentPage: 1,
+    priceFrom: "",
+    priceTo: "",
+    dateFrom: "",
+    dateTo: "",
     headers: [
       {
-        text: "Mã hóa đơn",
+        text: "Mã đơn hàng",
         align: "start",
         value: "orderId",
       },
       { text: "Mã khách hàng", value: "userId" },
-      { text: "Tên khách hàng", value: "fullName" },
+      { text: "Tên khách hàng", value: "fullname" },
       { text: "Số điện thoại", value: "phoneNumber" },
       { text: "Địa chỉ", value: "address" },
       { text: "Tổng tiền", value: "orderTotal" },
       { text: "Ngày mua", value: "createAt" },
       { text: "Giảm giá", value: "promotionId" },
-      { text: "Giá trị thực", value: "realTotal" },
-      { text: "Người bán", value: "sellerId" },
-      { text: "Bán trực tiếp", value: "isOnline" },
+      { text: "Bán trực tiếp", value: "online" },
       { text: "Trạng thái", value: "status" },
       { text: "Actions", value: "actions", sortable: false },
+    ],
+    headerOrderDetails: [
+      { text: "Mã order detail", align: "start", value: "orderItemId" },
+      { text: "Kích cỡ", align: "start", value: "orderSize" },
+      { text: "Số lượng", align: "start", value: "orderItemQuan" },
+      { text: "Giá", align: "start", value: "orderItemPrice" },
+      { text: "Trạng thái", align: "start", value: "status" },
     ],
   }),
   watch: {
@@ -310,10 +231,27 @@ export default {
       val || this.close();
     },
     dialogDelete(val) {
-      val || this.closeDelete();
+      val || this.closeDeleteDialog();
+    },
+    currentPage() {
+      const credential = {
+        username: this.user.userName,
+        priceFrom: this.priceFrom,
+        priceTo: this.priceTo,
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo,
+        pageIndex: this.currentPage,
+      };
+      this.getOrders(credential);
     },
   },
   methods: {
+    ...mapActions("order", [
+      "getOrders",
+      "removeOrderByOrderId",
+      "confirmOrder",
+      "getOrderDetailByOrderId",
+    ]),
     loadItem() {
       this.desserts = [
         {
@@ -332,38 +270,116 @@ export default {
         },
       ];
     },
+    currentPage() {
+      const credential = {
+        username: this.user.userName,
+        priceFrom: this.priceFrom,
+        priceTo: this.priceTo,
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo,
+        pageIndex: this.currentPage,
+      };
+      this.getOrders(credential);
+    },
+    formatDate(value) {
+      return moment(value).format("HH:mm:ss MM/DD/YYYY");
+    },
+    formatPrice(value) {
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    checkStatusOrder(value) {
+      if (value > 0) return "Đã xác nhận";
+      if (value === -1) return "Đã xóa";
+      if (value === 0) return "Đang chờ";
+    },
+    checkStatusOrderDetails(value) {
+      if (value == 1) return "Active";
+      if (value == 0) return "Delete";
+    },
+    getColor(status) {
+      if (status === 1) return "green";
+      if (status === -1) return "red";
+      return "electric blue";
+    },
+    getColorIsOnline(status) {
+      if (status) return "lime";
+      return "cyan";
+    },
+    // getListOrder() {
+
+    // }
+
     // Close
-    close() {
-      this.dialogEdit = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
-    closeDelete() {
+    // close() {
+    //   this.dialogEdit = false;
+    //   this.$nextTick(() => {
+    //     this.editedItem = Object.assign({}, this.defaultItem);
+    //     this.editedIndex = -1;
+    //   });
+    // },
+    closeDeleteDialog() {
       this.dialogDelete = false;
+      this.itemSelected = {};
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
     },
-    editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialogEdit = true;
-    },
-    deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+    deleteItemDialog(item) {
+      this.itemSelected = item;
       this.dialogDelete = true;
     },
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
-      this.closeDelete();
+      const credential = {
+        orderId: this.itemSelected.orderId,
+        username: this.user.userName,
+      };
+      this.removeOrderByOrderId(credential);
+      this.closeDeleteDialog();
+    },
+
+    closeConfirmDialog() {
+      this.dialogConfirm = false;
+      this.itemSelected = {};
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+    confirmItemDialog(item) {
+      const credential = {
+        username: this.user.userName,
+        orderId: item.orderId,
+      };
+      this.getOrderDetailByOrderId(credential);
+      this.itemSelected = item;
+      this.dialogConfirm = true;
+    },
+    approveItemConfirm() {
+      const credential = {
+        orderId: this.itemSelected.orderId,
+        username: this.user.userName,
+      };
+      this.confirmOrder(credential);
+      this.closeConfirmDialog();
     },
   },
+
+  computed: {
+    ...mapGetters("auth", ["users", "user", "pages"]),
+    ...mapGetters("order", ["orders", "pages", "orderDetails"]),
+  },
+
   created() {
-    this.loadItem();
+    const credential = {
+      username: this.user.userName,
+      priceFrom: this.priceFrom,
+      priceTo: this.priceTo,
+      dateFrom: this.dateFrom,
+      dateTo: this.dateTo,
+      pageIndex: this.currentPage,
+    };
+    this.getOrders(credential);
   },
 };
 </script>

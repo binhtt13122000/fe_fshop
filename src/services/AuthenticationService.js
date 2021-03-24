@@ -57,6 +57,10 @@ class AuthenticationService {
         return post(`/carts/${credential.cartId}/users/${credential.username}/cartDetails?productId=${credential.productId}&cartSize=${credential.cartSize}
         &cartQuantity=${credential.cartQuantity}`, {}, {});
     }
+
+    changeQuantityProductInCartDetail(cartDetailId, productId, productSize, quantity, username) {
+        return put(`/cartDetails/${cartDetailId}/products/${productId}/${productSize}/${quantity}/users/${username}`)
+    }
 }
 
 export default new AuthenticationService();

@@ -87,7 +87,9 @@
                         >
                       </v-col>
                       <v-col class="cart-item-right">
-                        <v-btn class="btn-minus" v-on:click="decreaseValue()"
+                        <v-btn
+                          class="btn-minus"
+                          v-on:click="decreaseValue(detail)"
                           ><v-icon>mdi-minus</v-icon></v-btn
                         >
                         <input
@@ -98,7 +100,9 @@
                           :value="detail.cartQuantity"
                         />
                         <!-- {{ quantity }} -->
-                        <v-btn class="btn-plus" v-on:click="increaseValue()"
+                        <v-btn
+                          class="btn-plus"
+                          v-on:click="increaseValue(detail)"
                           ><v-icon>mdi-plus</v-icon></v-btn
                         >
                       </v-col>
@@ -234,10 +238,20 @@ export default {
     userName() {
       return this.user.username;
     },
-    ...mapActions("auth", ["getCartDetail"]),
+    ...mapActions("auth", [
+      "getCartDetail",
+      "changeQuantityProductInCartDetails",
+    ]),
     ...mapActions("order", ["createOrdersByCart"]),
-    increaseValue() {
-      return this.quantity++;
+    increaseValue(item) {
+      const credential = {
+        username: this.user.userName,
+        cartDetailId: item.cartItemId,
+        productId: item.proId,
+        productSize: item.cartSize,
+        quantity: item.cartQuantity + 1,
+      };
+      this.changeQuantityProductInCartDetails(credential);
     },
     changeQuantity() {
       this.quantity = this.detail.cartQuantity;

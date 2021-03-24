@@ -1,2 +1,9 @@
 export const CREATE_ORDERS = "createOrders";
 export const REMOVE_ORDERS = "removeOrders";
+export const SET_ORDERS = "getOrders";
+export const SET_PAGES = "setPages";
+export const SET_PAGE = "setPage";
+export const DELETE_ORDER = "delteOrder";
+export const CONFIRM_ORDER = "confirmOrder";
+export const GET_ORDER_DETAILS = "getOrderDetails";
+export const SET_MAX_QUANTITY = "setMaxQuantity";

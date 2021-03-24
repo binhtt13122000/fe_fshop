@@ -16,3 +16,4 @@ export const SET_PAGE = "setPage";
 export const BAN_USER = "banUser";
 export const ACTIVE_USER = "activeUser";
 export const ADD_PRODUCT_IN_CART = "addProductInCart";
+export const CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL = "changeQuantityInCartDetail";

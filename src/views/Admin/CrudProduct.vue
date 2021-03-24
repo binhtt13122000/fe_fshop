@@ -47,6 +47,9 @@
                                   label="Tên loại hàng"
                                   :value="productTypeName"
                                   @change="productTypeName = $event"
+                                  :error-messages="proTypeNameErrors"
+                                  @input="$v.productTypeName.$touch()"
+                                  @blur="$v.productTypeName.$touch()"
                                 ></v-text-field>
                               </v-col>
                             </v-container>
@@ -120,6 +123,9 @@
                                   @change="
                                     (supplierName = $event), (currentPage = 1)
                                   "
+                                  :error-messages="supplierNameErrors"
+                                  @input="$v.supplierName.$touch()"
+                                  @blur="$v.supplierName.$touch()"
                                 ></v-text-field>
                               </v-col>
                             </v-container>
@@ -711,9 +717,11 @@
                             type="number"
                             :rules="[numberRule]"
                             label="Số lượng"
+                            :error-messages="quantityErrors"
+                            @input="$v.quantity.$touch()"
+                            @blur="$v.quantity.$touch()"
                             append-outer-icon="mdi-information"
                             @change="quantity = $event"
-                            re
                           ></v-text-field>
                         </v-col>
                       </v-form>
@@ -753,6 +761,10 @@
                           <v-select
                             v-model="productDetailSize"
                             :items="itemsSize"
+                            :error-messages="selectErrors"
+                            @click="$v.productDetailSize.$touch()"
+                            @blur="$v.productDetailSize.$touch()"
+                            required
                             label="Chọn kích thước:"
                           ></v-select>
                         </v-col>
@@ -761,6 +773,9 @@
                             type="number"
                             :rules="[numberRule]"
                             v-model="quantity"
+                            :error-messages="quantityErrors"
+                            @input="$v.quantity.$touch()"
+                            @blur="$v.quantity.$touch()"
                             label="Số lượng"
                             append-outer-icon="mdi-information"
                             @change="quantity = $event"
@@ -799,10 +814,20 @@
 <script>
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/HeaderAdmin.vue";
+import { validationMixin } from "vuelidate";
+import { required, minValue, maxLength } from "vuelidate/lib/validators";
 import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: { VmFooter, VmHeader },
+  mixins: [validationMixin],
+
+  validations: {
+    quantity: { minValue: minValue(1) },
+    productDetailSize: { required },
+    productTypeName: { required, maxLength: maxLength(50) },
+    supplierName: { required, maxLength: maxLength(50) },
+  },
   data: () => ({
     inputs: [
       {
@@ -1035,6 +1060,40 @@ export default {
     title() {
       return this.editedIndex === -1 ? "Thêm sản phẩm" : "Chỉnh sửa sản phẩm";
     },
+    quantityErrors() {
+      const errors = [];
+      if (!this.$v.quantity.$dirty) return errors;
+      !this.$v.quantity.minValue &&
+        errors.push(
+          `Quantity must be greater or equal ${this.$v.quantity.$params.minValue.min} `
+        );
+      return errors;
+    },
+    selectErrors() {
+      const errors = [];
+      if (!this.$v.productDetailSize.$dirty) return errors;
+      !this.$v.productDetailSize.required &&
+        errors.push("Select product size is required");
+      return errors;
+    },
+    proTypeNameErrors() {
+      const errors = [];
+      if (!this.$v.productTypeName.$dirty) return errors;
+      !this.$v.productTypeName.required &&
+        errors.push("Product type name is required");
+      // !this.$v.proTypeName.maxLength &&
+      //   errors.push("Length of product type name must be smaller or equal 50!");
+      return errors;
+    },
+    supplierNameErrors() {
+      const errors = [];
+      if (!this.$v.supplierName.$dirty) return errors;
+      !this.$v.supplierName.required &&
+        errors.push("Supplier name is required");
+      // !this.$v.supplierName.maxLength &&
+      //   errors.push("Length of supplier name must be smaller or equal 50!");
+      return errors;
+    },
   },
   methods: {
     ...mapActions("product", [
@@ -1087,14 +1146,18 @@ export default {
       }
     },
     addQuantityProductDetailsConfirm() {
-      const credential = {
-        productId: this.productDetailSelected.proId,
-        productItemId: this.productDetailSelected.proItemId,
-        productSize: this.productDetailSelected.proSize,
-        quantity: this.quantity,
-      };
-      this.addQuantityProductDetail(credential);
-      this.closeAddQuantityProductDetails();
+      this.$v.$touch();
+      if (this.quantityErrors.length === 0) {
+        this.$v.$reset();
+        const credential = {
+          productId: this.productDetailSelected.proId,
+          productItemId: this.productDetailSelected.proItemId,
+          productSize: this.productDetailSelected.proSize,
+          quantity: this.quantity,
+        };
+        this.addQuantityProductDetail(credential);
+        this.closeAddQuantityProductDetails();
+      }
     },
 
     closeAddQuantityProductDetails() {
@@ -1114,29 +1177,33 @@ export default {
       this.dialogAddProductDetails = true;
     },
     addProductDetailsConfirm() {
-      const credential = {
-        productId: this.itemSelected.productId,
-        proSize: this.productDetailSize,
-        proQuantity: this.quantity,
-      };
-      var productDetailsCheck = null;
-      const index = this.products.findIndex(
-        (products) => products.productId === credential.productId
-      );
-      if (index != -1) {
-        const ind = this.products[index].productDetails.findIndex(
-          (prod) =>
-            prod.proId === credential.productId &&
-            prod.proSize === credential.proSize
+      this.$v.$touch();
+      if (this.quantityErrors.length === 0 && this.selectErrors.length === 0) {
+        this.$v.$reset();
+        const credential = {
+          productId: this.itemSelected.productId,
+          proSize: this.productDetailSize,
+          proQuantity: this.quantity,
+        };
+        var productDetailsCheck = null;
+        const index = this.products.findIndex(
+          (products) => products.productId === credential.productId
         );
-        productDetailsCheck = this.products[index].productDetails[ind];
+        if (index != -1) {
+          const ind = this.products[index].productDetails.findIndex(
+            (prod) =>
+              prod.proId === credential.productId &&
+              prod.proSize === credential.proSize
+          );
+          productDetailsCheck = this.products[index].productDetails[ind];
+        }
+        if (productDetailsCheck != null && productDetailsCheck.status == -1) {
+          this.activeProductDetails(productDetailsCheck);
+        } else {
+          this.createProductDetail(credential);
+        }
+        this.closeAddProductDetailsDialog();
       }
-      if (productDetailsCheck != null && productDetailsCheck.status == -1) {
-        this.activeProductDetails(productDetailsCheck);
-      } else {
-        this.createProductDetail(credential);
-      }
-      this.closeAddProductDetailsDialog();
     },
 
     closeAddProductDetailsDialog() {
@@ -1194,14 +1261,22 @@ export default {
     },
 
     onAddNewCategory() {
-      this.createNewCategory({ proTypeName: this.productTypeName });
-      this.productTypeName = "";
-      this.dialogType = false;
+      this.$v.$touch();
+      if (this.proTypeNameErrors.length === 0) {
+        this.$v.$reset();
+        this.createNewCategory({ proTypeName: this.productTypeName });
+        this.productTypeName = "";
+        this.dialogType = false;
+      }
     },
     onAddNewSupplier() {
-      this.createNewSupplier({ supplierName: this.supplierName });
-      this.supplierName = "";
-      this.dialogSupplier = false;
+      this.$v.$touch();
+      if (this.supplierNameErrors.length === 0) {
+        this.$v.$reset();
+        this.createNewSupplier({ supplierName: this.supplierName });
+        this.supplierName = "";
+        this.dialogSupplier = false;
+      }
     },
     searchProductsWithStatus() {
       this.currentPage = 1;

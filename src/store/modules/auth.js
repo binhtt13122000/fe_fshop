@@ -4,7 +4,7 @@ import AuthServices from "../../services/AuthenticationService"
 import {
     AUTH_REQUEST, ADD_NEW_CART, SET_USER, SET_USERS, IS_LOGGED_IN, IS_SIGNED_UP,
     SET_CARTS, SET_CART, SET_CART_DETAIL, DELETE_CART_DETAIL, AUTH_ERROR, LOGOUT, REMOVE_FAVORITE, SET_PAGES, SET_PAGE,
-    BAN_USER, ACTIVE_USER, ADD_PRODUCT_IN_CART
+    BAN_USER, ACTIVE_USER, ADD_PRODUCT_IN_CART, CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL
 } from './mutation-type';
 const state = {
     user: {},
@@ -118,6 +118,13 @@ const mutations = {
         const users = state.users;
         const index = users.findIndex(user => user.userId === response.userId);
         users[index].status = 1;
+    },
+    [CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL]: (state, credential) => {
+        const cartDetails = state.cartDetail;
+        const index = cartDetails.findIndex(cartDetail => cartDetail.cartItemId === credential.cartDetailId);
+        if (index != -1) {
+            cartDetails[index].cartQuantity = credential.quantity;
+        }
     }
 };
 const actions = {
@@ -250,7 +257,16 @@ const actions = {
                     reject(err)
                 })
         })
-    }
+    },
+
+    async changeQuantityProductInCartDetails({ commit }, credential) {
+        const response = await AuthServices.changeQuantityProductInCartDetail(credential.cartDetailId, credential.productId, credential.productSize,
+            credential.quantity, credential.username);
+        if (response.status === 200) {
+            await commit(CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL, credential);
+        }
+        throw new Error(response.status);
+    },
 
 };
 

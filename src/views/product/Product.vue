@@ -47,7 +47,7 @@
               style="font-family: 'Open Sans', sans-serif; margin-left: 11px"
               class="price"
             >
-              {{ product.productPrice }}<u>đ</u>
+              {{ formatPrice(product.productPrice) }}<u>đ</u>
               <v-spacer></v-spacer>
             </h3>
           </div>
@@ -108,6 +108,11 @@
               <v-select
                 v-model="productDetailSize"
                 :items="this.productSelected.productDetails"
+                single-line
+                :error-messages="selectErrors"
+                @click="$v.productDetailSize.$touch()"
+                @blur="$v.productDetailSize.$touch()"
+                @input="getQuantityBySize()"
                 label="Chọn kích thước:"
               >
                 <template v-slot:item="{ item }">
@@ -122,6 +127,9 @@
               <v-select
                 v-model="productCart"
                 :items="carts"
+                :error-messages="productCartErrors"
+                @click="$v.productCart.$touch()"
+                @blur="$v.productCart.$touch()"
                 item-text="cartId"
                 label="Chọn cart:"
               >
@@ -139,8 +147,11 @@
                 :rules="[numberRule]"
                 v-model="quantity"
                 label="Số lượng"
+                :error-messages="quantityErrors"
                 append-outer-icon="mdi-information"
                 @change="quantity = $event"
+                @input="$v.quantity.$touch()"
+                @blur="$v.quantity.$touch()"
               ></v-text-field>
             </v-col>
           </v-form>
@@ -161,10 +172,22 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { validationMixin } from "vuelidate";
+import { required, between } from "vuelidate/lib/validators";
 export default {
   name: "product",
   props: ["product"],
+  mixins: [validationMixin],
 
+  validations: {
+    quantity: {
+      between(value) {
+        return between(1, this.totalQuantity)(value);
+      },
+    },
+    productDetailSize: { required },
+    productCart: { required },
+  },
   data() {
     return {
       active: true,
@@ -172,6 +195,7 @@ export default {
       rating: 6,
       addToFavourite: "Add to favourite",
       removeToFavourite: "Remove from favourite",
+      max: 0,
       productSelected: {},
       dialogCart: false,
       productDetailSize: "",
@@ -186,6 +210,7 @@ export default {
 
   methods: {
     ...mapActions("auth", ["addProductInCartDetail"]),
+    ...mapActions("order", ["setMaxQuantity"]),
     changeFavourite() {
       if (this.isFavourite == true) {
         this.isFavourite = false;
@@ -195,29 +220,77 @@ export default {
     },
     addToCartDialog(product) {
       this.dialogCart = true;
-      console.log(product);
       this.productSelected = product;
     },
 
     addToCartDialogConfirm() {
-      const credential = {
-        cartId: this.productCart,
-        username: this.user.userName,
-        productId: this.productSelected.productId,
-        cartSize: this.productDetailSize.proSize,
-        cartQuantity: this.quantity,
-      };
-      console.log(credential);
-      this.addProductInCartDetail(credential);
+      this.$v.$touch();
+      if (
+        this.quantityErrors.length === 0 &&
+        this.$v.productCart.required &&
+        this.selectErrors.length === 0
+      ) {
+        this.$v.$reset();
+        const credential = {
+          cartId: this.productCart,
+          username: this.user.userName,
+          productId: this.productSelected.productId,
+          cartSize: this.productDetailSize.proSize,
+          cartQuantity: this.quantity,
+        };
+        this.addProductInCartDetail(credential);
+        this.closeCartDialog();
+      }
     },
 
     closeCartDialog() {
       this.dialogCart = false;
       this.productSelected = "";
     },
+    formatPrice(value) {
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    getQuantityBySize() {
+      const index = this.productSelected.productDetails.findIndex(
+        (product) => product.proSize === this.productDetailSize.proSize
+      );
+      if (index != -1) {
+        const quantity = this.productSelected.productDetails[index].proQuantity;
+        this.setMaxQuantity(quantity);
+      }
+      console.log(this.$v.quantity.$params);
+    },
   },
   computed: {
     ...mapGetters("auth", ["cart", "carts", "user"]),
+    ...mapGetters("order", ["status", "maxQuantity"]),
+    totalQuantity() {
+      console.log(423);
+      return this.maxQuantity;
+    },
+    quantityErrors() {
+      const errors = [];
+      if (!this.$v.quantity.$dirty) return errors;
+      !this.$v.quantity.between &&
+        errors.push(
+          `Quantity must be between ${this.$v.quantity.$params.between.min} and ${this.$v.quantity.$params.between.max}`
+        );
+      return errors;
+    },
+    selectErrors() {
+      const errors = [];
+      if (!this.$v.productDetailSize.$dirty) return errors;
+      !this.$v.productDetailSize.required &&
+        errors.push("Select product size is required");
+      return errors;
+    },
+    productCartErrors() {
+      const errors = [];
+      if (!this.$v.productCart.$dirty) return errors;
+      !this.$v.productCart.required &&
+        errors.push("Select product cart is required");
+      return errors;
+    },
   },
   mounted() {
     // this.$store.state.auth.cart
