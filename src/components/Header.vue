@@ -156,74 +156,70 @@
                     class="ma-2"
                     color="#404040"
                     dark
+                    v-if="carts.length < 10"
                     v-bind="attrs"
                     v-on="on"
+                    @click="dialogCreateCart = true"
                     size="30px"
                     width="200px"
                     ><h3>CART</h3>
                     <v-icon large>mdi-plus</v-icon></v-btn
                   >
                 </v-col>
-
               </template>
-              <v-card class="elevation-12">
-                <v-toolbar color="black" dark flat>
-                  <v-toolbar-title>New Cart</v-toolbar-title>
-                  <v-spacer></v-spacer>
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-btn icon large target="_blank" v-on="on">
-                        <v-icon>mdi-code-tags</v-icon>
-                      </v-btn>
-                    </template>
-                  </v-tooltip>
-                </v-toolbar>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="6">
-                        <v-text-field
-                          label="Your cart name"
-                          v-model="nameCart"
-                          :rules="[(v) => !!v || 'Cart name is required']"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="6">
-                        <v-text-field
-                          label="Description of cart"
-                          v-model="descriptionCart"
-                          :rules="[
-                            (v) => !!v || 'Description of cart is required',
-                          ]"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                  <small>*indicates required field</small>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
+              <v-card class="elevation-12" v-show="dialogCreateCart">
+                <form>
+                  <v-toolbar color="black" dark flat>
+                    <v-toolbar-title>New Cart</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-btn icon large target="_blank" v-on="on">
+                          <v-icon>mdi-code-tags</v-icon>
+                        </v-btn>
+                      </template>
+                    </v-tooltip>
+                  </v-toolbar>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="24" sm="12" md="12">
+                          <v-text-field
+                            label="Description of cart"
+                            v-model="name"
+                            :error-messages="nameErrors"
+                            :counter="20"
+                            @change="name = $event"
+                            @input="$v.name.$touch()"
+                            @blur="$v.name.$touch()"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                    <small>*indicates required field</small>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
 
-                  <v-btn color="#404040" text @click="dialog = false">
-                    Close
-                  </v-btn>
-                  <v-btn
-                    color="#404040"
-                    text
-                    @click="dialog = false"
-                    v-on:click="createCart()"
-                  >
-                    Save
-                  </v-btn>
-                </v-card-actions>
+                    <v-btn color="#404040" text @click="dialog = false">
+                      Close
+                    </v-btn>
+                    <v-btn
+                      color="#404040"
+                      text
+                      v-if="carts.length < 10"
+                      v-on:click="createCart()"
+                    >
+                      Save
+                    </v-btn>
+                  </v-card-actions>
+                </form>
               </v-card>
             </v-dialog>
           </div>
         </v-card>
       </v-menu>
-
       <!-- menu for account -->
       <v-menu
         class="mx-4"
@@ -251,11 +247,28 @@
                 {{ user.email }}
               </p>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text> My Account </v-btn>
+              <v-btn depressed rounded text> Tài khoản của tôi </v-btn>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text to="/loginpage" v-show="isLoggedIn"> Login </v-btn>
+              <v-btn depressed rounded text to="/orderUser" v-show="isLoggedIn">
+                Đơn mua
+              </v-btn>
+              <v-btn
+                depressed
+                rounded
+                text
+                to="/loginpage"
+                v-show="!isLoggedIn"
+              >
+                Đăng nhập
+              </v-btn>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text v-on:click="logout()">
+              <v-btn
+                depressed
+                rounded
+                text
+                v-on:click="logout()"
+                v-show="isLoggedIn"
+              >
                 Logout
               </v-btn>
             </div>
@@ -278,13 +291,24 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
+import { validationMixin } from "vuelidate";
+import { required, maxLength } from "vuelidate/lib/validators";
 export default {
+  mixins: [validationMixin],
+
+  validations: {
+    name: { required, maxLength: maxLength(20) },
+  },
   data: () => ({
     dialog: false,
     drawer: null,
     sheet: false,
     isLoggedIn: false,
-    quantityInCart: 2,
+    quantityInCart: 0,
+    dialogCreateCart: false,
+    snackbar: false,
+    text: "My timeout is set to 2000.",
+    timeout: 2000,
     linkBar: [
       "Nam",
       "Nữ",
@@ -295,8 +319,7 @@ export default {
     ],
     isValid: false,
     isAccount: false,
-    nameCart: "",
-    descriptionCart: "",
+    name: "",
     cartTotal: 0,
     status: 1,
     userId: "",
@@ -304,7 +327,6 @@ export default {
 
   methods: {
     logout() {
-      console.log("logou ne");
       this.$store.dispatch("auth/logout").then((response) => {
         if (response.status === 200) {
           this.$router.push("/");
@@ -315,21 +337,25 @@ export default {
       this.isLoggedIn = this.$store.state.auth.userInfo.isLoggedIn;
       return this.isLoggedIn;
     },
+
     createCart() {
-      var idUser = this.$store.state.auth.user.userId;
-      if (idUser == null) {
-        idUser = this.userId;
+      this.$v.$touch();
+      if (this.nameErrors.length === 0) {
+        this.$v.$reset();
+        var idUser = this.$store.state.auth.user.userId;
+        if (idUser == null) {
+          idUser = this.userId;
+        }
+        this.$store.dispatch("auth/createNewCart", {
+          cartDescription: this.name,
+          cartTotal: "0",
+          createTime: new Date(),
+          status: 1,
+          userId: idUser,
+        });
+        this.descriptionCart = "";
+        this.dialogCreateCart = false;
       }
-      this.$store.dispatch("auth/createNewCart", {
-        cartDescription: "RUn",
-        cartId: "CART003",
-        cartTotal: "0",
-        createTime: new Date(),
-        status: 1,
-        userId: idUser,
-      });
-      console.log(this.userId);
-      // console.log(this.nameCart);
     },
     onResize() {
       this.isValid = window.innerWidth <= 1040;
@@ -343,6 +369,14 @@ export default {
       cartDetail: (state) => state.cartDetail,
     }),
     ...mapGetters("auth", ["carts", "user", "cart", "cartDetail"]),
+    nameErrors() {
+      const errors = [];
+      if (!this.$v.name.$dirty) return errors;
+      !this.$v.name.maxLength &&
+        errors.push("Name must be at most 20 characters long");
+      !this.$v.name.required && errors.push("Name is required.");
+      return errors;
+    },
   },
   created() {
     this.onResize();
@@ -351,8 +385,6 @@ export default {
 
   mounted() {
     if (this.loggedIn() === true) {
-      console.log(this.user.userName);
-      console.log("User avatar: " + this.loggedIn());
       this.getCart(this.user.userName);
     }
   },

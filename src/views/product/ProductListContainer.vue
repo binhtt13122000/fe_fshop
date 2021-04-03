@@ -2,43 +2,43 @@
   <div id="app">
     <v-app id="inspire">
       <!-- <v-app id="inspire"> -->
-        <!-- Navigation bar -->
-        <VmHeader></VmHeader>
-        <!-- V main -->
-        <v-main>
-          <!-- v-breadcrumbs -->
-          <div class="breadCrumbs">
-            <v-breadcrumbs :items="itemBreadCrumbs" large></v-breadcrumbs>
-          </div>
-          <v-container>
-            <table></table>
-          </v-container>
-          <v-container>
-            <v-row dense>
-              <v-col
-                md="4"
-                sm="4"
-                align-content="center"
-                justify="center"
-                v-for="product in products"
-                :key="product.productId"
-              >
-                <VmProduct :product="product"></VmProduct>
-              </v-col>
-            </v-row>
-            <v-pagination
-              v-model="currenPage"
-              v-on:click="currenPage()"
-              :length="lastPage"
-            ></v-pagination>
-            <!-- <Pagination/> -->
-          </v-container>
-        </v-main>
+      <!-- Navigation bar -->
+      <VmHeader></VmHeader>
+      <!-- V main -->
+      <v-main>
+        <!-- v-breadcrumbs -->
+        <div class="breadCrumbs">
+          <v-breadcrumbs :items="itemBreadCrumbs" large></v-breadcrumbs>
+        </div>
+        <v-container>
+          <table></table>
+        </v-container>
+        <v-container>
+          <v-row dense>
+            <v-col
+              md="4"
+              sm="4"
+              align-content="center"
+              justify="center"
+              v-for="product in this.products"
+              :key="product.productId"
+            >
+              <VmProduct :product="product"></VmProduct>
+            </v-col>
+          </v-row>
+          <v-pagination
+            v-model="currenPage"
+            v-on:click="currenPage()"
+            :length="lastPage"
+          ></v-pagination>
+          <!-- <Pagination/> -->
+        </v-container>
+      </v-main>
 
-        <!-- V-footer  ------->
-        <v-divider></v-divider>
-        <VmFooter></VmFooter>
-      </v-app>
+      <!-- V-footer  ------->
+      <v-divider></v-divider>
+      <VmFooter></VmFooter>
+    </v-app>
     <!-- </v-app> -->
   </div>
 </template>
@@ -101,18 +101,18 @@ export default {
     ...mapActions("product", ["getProducts"]),
   },
   computed: {
-    currenPage1: {
+    ...mapGetters("product", ["products", "pages"]),
+    ...mapGetters("auth", ["carts", "user", "cart", "cartDetail"]),
+    currenPage: {
       get() {
-        return this.$store.state.product.pages;
+        return this.pages;
       },
     },
     lastPage: {
       get() {
-        return this.$store.state.product.pages.totalPages;
+        return this.pages.totalPages;
       },
     },
-    ...mapGetters("product", ["products", "pages"]),
-    ...mapGetters("auth", ["carts", "user", "cart", "cartDetail"]),
   },
 
   created() {
@@ -121,8 +121,7 @@ export default {
     // this.$store.mapGetters.product.pages;
     this.getProducts(this.currenPage);
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 

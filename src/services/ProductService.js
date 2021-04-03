@@ -1,29 +1,35 @@
+import { get, remove, patch } from "../utils/apiCaller"
 
-import {get, post, put} from "../utils/apiCaller"
 class ProductService {
     // getProducts(index){
     //     return get("/products?pageIndex="+ index +"&pageSize=9",{},{})
     // }
 
-    getProducts(index, pageSize = 9){
-        return get("/products?pageIndex="+ index +`&pageSize=${pageSize}`,{},{})
+    getProducts(index, pageSize = 9) {
+        return get("/products?pageIndex=" + index + `&pageSize=${pageSize}`, {}, {})
     }
 
-    getProductsByProductId(id){
-        return get("/products/"+id, {}, {});
+    getProductsByProductId(id) {
+        return get("/products/" + id, {}, {});
     }
 
-    addProduct(newProduct){
-        return post();
+    searchProductsByQ(txtSearch, index, pageSize = 5) {
+        return get(`/products?q=${txtSearch}&pageSize=${pageSize}&pageIndex=${index}`, {}, {});
     }
 
-    updateProduct(updateProduct){
-        return put();
+    searchProductsByStatus(status, index, pageSize = 5) {
+        return get(`/products?status=${status}&pageSize=${pageSize}&pageIndex=${index}`, {}, {});
     }
 
-    deleteProduct(id){
-        put();
+    deleteProduct(productId) {
+        return remove(`/products/${productId}`, {}, {})
     }
+
+    activeProduct(productId) {
+        return patch(`/products/${productId}`, {}, {})
+    }
+
+
 }
 
 

@@ -2,318 +2,25 @@
   <div id="app">
     <v-app id="inspire">
       <!-- <v-app id="inspire"> -->
-        <VmHeader></VmHeader>
-        <!-- v-breadcrumbs -->
+      <VmHeader></VmHeader>
+      <!-- v-breadcrumbs -->
 
-        <!-- V main -->
-        <v-main>
-          <div class="breadCrumbs">
-            <v-breadcrumbs :items="itemBreadCrumbs" large></v-breadcrumbs>
-          </div>
-          <div class="section">
-            <div class="att_pro">
-              <v-container>
-                <v-row class="d-flex justify-content-center">
-                  <v-col cols="12" md="8" xs="12" sm="12">
-                    <!-- Create carouel -->
-                    <!-- <div class="md-4 shadow-sm" > -->
-                    <v-carousel
-                      class="section-carousel"
-                      style="width: 100%; height: auto"
-                    >
-                      <v-carousel-item
-                        v-for="(productImage, i) in product.productImages"
-                        :key="i"
-                        :src="productImage.imgUrl"
-                        alt="productImage.imgUrl"
-                        cycle
-                        hide-delimiter-background
-                        show-arrows-on-hover
-                      >
-                      </v-carousel-item>
-                    </v-carousel>
-                    <v-card
-                      v-for="(productImage, i) in product.productImages"
-                      :key="i"
-                      class="img-carouel"
-                    >
-                      <img
-                        id="img-responsive"
-                        class="mx-auto"
-                        width="25%"
-                        :src="productImage.imgUrl"
-                      />
-                    </v-card>
-
-                    <br />
-                    <!-- </div> -->
-                    <v-tabs class="evaluate" background-color="indigo" dark>
-                      <v-tab>Đánh giá</v-tab>
-                      <v-tab-item>
-                        <v-container fluid>
-                          <v-row>
-                            <v-container fluid>
-                              <v-row>
-                                <img
-                                  src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
-                                  alt="avatar"
-                                  width="3%"
-                                  height="3%"
-                                />
-
-                                <v-col>
-                                  <v-form>
-                                    <v-text-field hint="Add your comment">
-                                    </v-text-field>
-                                  </v-form>
-                                </v-col>
-                                <h2
-                                  class="grey--text text--lighten-2 caption mr-2"
-                                >
-                                  ({{ rating }})
-                                </h2>
-                                <v-rating
-                                  v-model="rating"
-                                  background-color="black"
-                                  color="yellow accent-4"
-                                  dense
-                                  half-increments
-                                  hover
-                                  size="20"
-                                ></v-rating>
-                              </v-row>
-                            </v-container>
-                          </v-row>
-                        </v-container>
-                      </v-tab-item>
-                    </v-tabs>
-                  </v-col>
-                  <v-col cols="10" md="4" align="left">
-                    <div class="sumary-inner"></div>
-                    <div
-                      class="size-inner"
-                      style="font-family: 'Open Sans', sans-serif"
-                    >
-                      <h1>{{ product.productName }}</h1>
-                      <!-- <p>{{ product.productDescription }}</p> -->
-                      <v-rating
-                        :value="4.5"
-                        color="amber"
-                        dense
-                        half-increments
-                        readonly
-                        size="16"
-                        ><v-spacer></v-spacer
-                      ></v-rating>
-
-                      <h4 class="price">
-                        <br />
-                        <span>Giá bán:</span>
-                        {{ product.productPrice }}<u>đ</u>
-                        <v-spacer></v-spacer>
-                        <v-spacer></v-spacer>
-                        <v-spacer></v-spacer>
-                      </h4>
-                      <v-divider></v-divider>
-                      <br />
-                      <v-form>
-                        <v-row>
-                          <v-col>
-                            <div class="swatch-picker">
-                              <p style="font-family: 'Open Sans', sans-serif">
-                                Size:
-                              </p>
-
-                              <label>
-                                <input
-                                  type="radio"
-                                  name="sel_size"
-                                  value="S"
-                                  checked="checked"
-                                />
-                                <span class="radio-size">S</span>
-                              </label>
-                              <label>
-                                <input type="radio" name="sel_size" value="M" />
-                                <span class="radio-size">M</span>
-                              </label>
-                              <label>
-                                <input type="radio" name="sel_size" value="L" />
-                                <span class="radio-size">L</span>
-                              </label>
-                              <label>
-                                <input
-                                  type="radio"
-                                  name="sel_size"
-                                  value="XL"
-                                />
-                                <span class="radio-size">XL</span>
-                              </label>
-                              <label>
-                                <input
-                                  type="radio"
-                                  name="sel_size"
-                                  value="XXL"
-                                />
-                                <span class="radio-size">XXL</span>
-                              </label>
-                            </div>
-                          </v-col>
-                        </v-row>
-                        <v-row>
-                          <v-col class="btn-quantity">
-                            <span style="font-family: 'Open Sans', sans-serif"
-                              >Quantity:
-                            </span>
-                            <v-btn
-                              class="btn-minus"
-                              v-on:click="decreaseValue()"
-                              ><v-icon>mdi-minus</v-icon></v-btn
-                            >
-                            <input
-                              v-model="quantity"
-                              type="number"
-                              id="number"
-                              :min="1"
-                              :max="100"
-                            />
-                            <!-- {{ quantity }} -->
-                            <v-btn class="btn-plus" v-on:click="increaseValue()"
-                              ><v-icon>mdi-plus</v-icon></v-btn
-                            >
-                          </v-col>
-                        </v-row>
-                        <v-row>
-                          <v-col>
-                            <v-btn
-                              id="btn-addToCart"
-                              width="100%"
-                              v-on:click="addToCard()"
-                            >
-                              <v-icon>mdi-shopping</v-icon>
-                              Đăng ký mua hàng
-                            </v-btn>
-                          </v-col>
-                          <v-col>
-                            <v-btn width="100%">
-                              <v-icon>mdi-plus</v-icon>
-                              Thêm vào giỏ hàng
-                            </v-btn>
-                          </v-col>
-                        </v-row>
-                        <v-spacer></v-spacer>
-                      </v-form>
-                    </div>
-                    <v-spacer></v-spacer>
-                    <br />
-                    <br />
-                    <div class="product-detail-inner">
-                      <div
-                        class="shipping-rules"
-                        style="background-color: grey lighten-3"
-                      >
-                        <ul>
-                          <li>
-                            <img
-                              class="img-responsive"
-                              src="https://ninomaxx.com.vn/wp-content/themes/basel-child/icon/truck.png"
-                              width="4%"
-                            />
-                            <b> Miễn phí vận chuyển</b>
-                            <p>
-                              Khu vực TP HCM: từ 300.000đ
-                              <br />
-                              Các khu vực khác: từ 500.000đ
-                              <br />
-                              Mua thêm sản phẩm để được freeship nhé khách ơi!
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                      <!-- accordion-->
-                      <div class="accordion">
-                        <v-expansion-panels focusable>
-                          <v-expansion-panel>
-                            <v-expansion-panel-header
-                              >HƯỚNG DẪN SỬ DỤNG</v-expansion-panel-header
-                            >
-                            <v-expansion-panel-content>
-                              <p>
-                                Giặt máy ở nhiệt độ thường. Không sử dụng chất
-                                tẩy. Phơi trong bóng mát. Sấy khô ở nhiệt độ
-                                thấp. Là ở nhiệt độ thấp 110 độ C. Giặt với sản
-                                phẩm cùng màu. Không là lên chi tiết trang trí.
-                              </p>
-                            </v-expansion-panel-content>
-                          </v-expansion-panel>
-                        </v-expansion-panels>
-                        <v-expansion-panels focusable>
-                          <v-expansion-panel>
-                            <v-expansion-panel-header
-                              >CHÍNH SÁCH ĐỔI HÀNG</v-expansion-panel-header
-                            >
-                            <v-expansion-panel-content>
-                              Quy định đổi hàng: 4MenShop hỗ trợ Quý khách đổi
-                              hàng 1 lần trong vòng 15 ngày theo biên lai giao
-                              nhận. Không áp dụng với sản phẩm đã qua sử dụng,
-                              hàng khuyến mãi, bị hư hại do tác nhân bên ngoài
-                              hoặc đã quá thời gian đổi hàng theo quy định. Sản
-                              phẩm cần đổi phải chưa qua sử dụng, còn nguyên tag
-                              giá. Có hóa đơn mua hàng (kèm theo sản phẩm). Có
-                              hóa đơn giao nhận. Sản phẩm mới phải có giá bằng
-                              hoặc cao hơn sản phẩm đổi.
-                            </v-expansion-panel-content>
-                          </v-expansion-panel>
-                        </v-expansion-panels>
-                        <v-expansion-panels focusable>
-                          <v-expansion-panel>
-                            <v-expansion-panel-header
-                              >HƯỚNG DẪN ĐẶT HÀNG</v-expansion-panel-header
-                            >
-                            <v-expansion-panel-content>
-                              Vui lòng chọn sản phẩm mà bạn thích. Sau đó vào
-                              giỏ hảng, chọn thanh toán.
-                            </v-expansion-panel-content>
-                          </v-expansion-panel>
-                        </v-expansion-panels>
-                      </div>
-                      <div class="product-share">
-                        <v-container>
-                          <v-row
-                            id="socialIcon"
-                            class="d-flex align-items-center"
-                          >
-                            <v-col md="12" lg="12" xl="12" class="mx-auto mt-3">
-                              <div class="social-items">
-                                <span>Share:</span>
-                                <a href=""
-                                  ><v-icon size="23">mdi-google</v-icon></a
-                                >
-                                <a href=""
-                                  ><v-icon size="23">mdi-facebook</v-icon></a
-                                >
-                                <a href=""
-                                  ><v-icon size="23">mdi-instagram</v-icon></a
-                                >
-                                <a href=""
-                                  ><v-icon size="23">mdi-twitter</v-icon></a
-                                >
-                              </div>
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                      </div>
-                    </div>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </div>
-            <v-divider></v-divider>
-            <div>
-              <v-container>
-                <h1>SẢN PHẨM TƯƠNG TỰ</h1>
-                <v-carousel style="width: 100%; height: 350px">
-                  <a :href="'/products/' + product.productId">
+      <!-- V main -->
+      <v-main>
+        <div class="breadCrumbs">
+          <v-breadcrumbs :items="itemBreadCrumbs" large></v-breadcrumbs>
+        </div>
+        <div class="section">
+          <div class="att_pro">
+            <v-container>
+              <v-row class="d-flex justify-content-center">
+                <v-col cols="12" md="8" xs="12" sm="12">
+                  <!-- Create carouel -->
+                  <!-- <div class="md-4 shadow-sm" > -->
+                  <v-carousel
+                    class="section-carousel"
+                    style="width: 100%; height: auto"
+                  >
                     <v-carousel-item
                       v-for="(productImage, i) in product.productImages"
                       :key="i"
@@ -324,33 +31,27 @@
                       show-arrows-on-hover
                     >
                     </v-carousel-item>
-                  </a>
-                </v-carousel>
-              </v-container>
-            </div>
-            <!-- Comment container -->
-            <div>
-              <v-container>
-                <v-tabs class="comment" background-color="indigo" dark>
-                  <v-tab>Bình luận</v-tab>
+                  </v-carousel>
+                  <v-card
+                    v-for="(productImage, i) in product.productImages"
+                    :key="i"
+                    class="img-carouel"
+                  >
+                    <img
+                      id="img-responsive"
+                      class="mx-auto"
+                      width="25%"
+                      :src="productImage.imgUrl"
+                    />
+                  </v-card>
 
-                  <v-tab-item>
-                    <v-container fluid>
-                      <v-row>
-                        <v-col>
-                          <!-- <h3>{{comment.length}}</h3> -->
-                          <div class="comment-header" align="right">
-                            <v-combobox
-                              v-model="modelComment"
-                              :items="itemComments"
-                              hide-selected
-                              dense
-                              filled
-                              label="Sắp xếp theo"
-                              style="width: 20%"
-                            ></v-combobox>
-                          </div>
-
+                  <br />
+                  <!-- </div> -->
+                  <v-tabs class="evaluate" background-color="indigo" dark>
+                    <v-tab>Đánh giá</v-tab>
+                    <v-tab-item>
+                      <v-container fluid>
+                        <v-row>
                           <v-container fluid>
                             <v-row>
                               <img
@@ -366,21 +67,348 @@
                                   </v-text-field>
                                 </v-form>
                               </v-col>
+                              <h2
+                                class="grey--text text--lighten-2 caption mr-2"
+                              >
+                                ({{ rating }})
+                              </h2>
+                              <v-rating
+                                v-model="rating"
+                                background-color="black"
+                                color="yellow accent-4"
+                                dense
+                                half-increments
+                                hover
+                                size="20"
+                              ></v-rating>
                             </v-row>
                           </v-container>
+                        </v-row>
+                      </v-container>
+                    </v-tab-item>
+                  </v-tabs>
+                </v-col>
+                <v-col cols="10" md="4" align="left">
+                  <div class="sumary-inner"></div>
+                  <div
+                    class="size-inner"
+                    style="font-family: 'Open Sans', sans-serif"
+                  >
+                    <h1>{{ product.productName }}</h1>
+                    <!-- <p>{{ product.productDescription }}</p> -->
+                    <v-rating
+                      :value="4.5"
+                      color="amber"
+                      dense
+                      half-increments
+                      readonly
+                      size="16"
+                      ><v-spacer></v-spacer
+                    ></v-rating>
+
+                    <h4 class="price">
+                      <br />
+                      <span>Giá bán:</span>
+                      {{ product.productPrice }}<u>đ</u>
+                      <v-spacer></v-spacer>
+                      <v-spacer></v-spacer>
+                      <v-spacer></v-spacer>
+                    </h4>
+                    <v-divider></v-divider>
+                    <br />
+                    <v-form>
+                      <v-row>
+                        <v-col>
+                          <div class="swatch-picker">
+                            <p style="font-family: 'Open Sans', sans-serif">
+                              Size:
+                            </p>
+                            <div
+                              v-for="(product, i) in product.productDetails"
+                              :key="i"
+                            >
+                              <label v-if="product.proQuantity != 0">
+                                <input
+                                  type="radio"
+                                  name="sel_size"
+                                  :error-messages="quantityErrors"
+                                  @input="$v.quantity.$touch()"
+                                  @blur="$v.quantity.$touch()"
+                                  :value="product.proSize"
+                                  v-model="productSize"
+                                />
+                                <span class="radio-size">{{
+                                  product.proSize
+                                }}</span>
+                              </label>
+                            </div>
+                          </div>
                         </v-col>
                       </v-row>
-                    </v-container>
-                  </v-tab-item>
-                </v-tabs>
-              </v-container>
-            </div>
+                      <v-row>
+                        <v-col class="btn-quantity">
+                          <span style="font-family: 'Open Sans', sans-serif"
+                            >Quantity:
+                          </span>
+                          <v-btn class="btn-minus" v-on:click="decreaseValue()"
+                            ><v-icon>mdi-minus</v-icon></v-btn
+                          >
+                          <input
+                            v-model="quantity"
+                            type="number"
+                            id="number"
+                            :min="1"
+                            :max="100"
+                            :error-messages="quantityErrors"
+                            @input="$v.quantity.$touch()"
+                            @blur="$v.quantity.$touch()"
+                          />
+                          <v-btn class="btn-plus" v-on:click="increaseValue()"
+                            ><v-icon>mdi-plus</v-icon></v-btn
+                          >
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col>
+                          <v-btn
+                            width="100%"
+                            :to="'/purchase/' + product.productId"
+                          >
+                            <v-icon>mdi-shopping</v-icon>
+                            Mua hàng ngay
+                          </v-btn>
+                        </v-col>
+                        <v-col>
+                          <v-btn
+                            id="btn-addToCart"
+                            width="100%"
+                            v-on:click="addToCartDialog(product)"
+                          >
+                            <v-icon>mdi-plus</v-icon>
+                            Thêm vào giỏ hàng
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                      <v-spacer></v-spacer>
+                    </v-form>
+                  </div>
+                  <v-spacer></v-spacer>
+                  <br />
+                  <br />
+                  <div class="product-detail-inner">
+                    <div
+                      class="shipping-rules"
+                      style="background-color: grey lighten-3"
+                    >
+                      <ul>
+                        <li>
+                          <img
+                            class="img-responsive"
+                            src="https://ninomaxx.com.vn/wp-content/themes/basel-child/icon/truck.png"
+                            width="4%"
+                          />
+                          <b> Miễn phí vận chuyển</b>
+                          <p>
+                            Khu vực TP HCM: từ 300.000đ
+                            <br />
+                            Các khu vực khác: từ 500.000đ
+                            <br />
+                            Mua thêm sản phẩm để được freeship nhé khách ơi!
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- accordion-->
+                    <div class="accordion">
+                      <v-expansion-panels focusable>
+                        <v-expansion-panel>
+                          <v-expansion-panel-header
+                            >HƯỚNG DẪN SỬ DỤNG</v-expansion-panel-header
+                          >
+                          <v-expansion-panel-content>
+                            <p>
+                              Giặt máy ở nhiệt độ thường. Không sử dụng chất
+                              tẩy. Phơi trong bóng mát. Sấy khô ở nhiệt độ thấp.
+                              Là ở nhiệt độ thấp 110 độ C. Giặt với sản phẩm
+                              cùng màu. Không là lên chi tiết trang trí.
+                            </p>
+                          </v-expansion-panel-content>
+                        </v-expansion-panel>
+                      </v-expansion-panels>
+                      <v-expansion-panels focusable>
+                        <v-expansion-panel>
+                          <v-expansion-panel-header
+                            >CHÍNH SÁCH ĐỔI HÀNG</v-expansion-panel-header
+                          >
+                          <v-expansion-panel-content>
+                            Quy định đổi hàng: 4MenShop hỗ trợ Quý khách đổi
+                            hàng 1 lần trong vòng 15 ngày theo biên lai giao
+                            nhận. Không áp dụng với sản phẩm đã qua sử dụng,
+                            hàng khuyến mãi, bị hư hại do tác nhân bên ngoài
+                            hoặc đã quá thời gian đổi hàng theo quy định. Sản
+                            phẩm cần đổi phải chưa qua sử dụng, còn nguyên tag
+                            giá. Có hóa đơn mua hàng (kèm theo sản phẩm). Có hóa
+                            đơn giao nhận. Sản phẩm mới phải có giá bằng hoặc
+                            cao hơn sản phẩm đổi.
+                          </v-expansion-panel-content>
+                        </v-expansion-panel>
+                      </v-expansion-panels>
+                      <v-expansion-panels focusable>
+                        <v-expansion-panel>
+                          <v-expansion-panel-header
+                            >HƯỚNG DẪN ĐẶT HÀNG</v-expansion-panel-header
+                          >
+                          <v-expansion-panel-content>
+                            Vui lòng chọn sản phẩm mà bạn thích. Sau đó vào giỏ
+                            hảng, chọn thanh toán.
+                          </v-expansion-panel-content>
+                        </v-expansion-panel>
+                      </v-expansion-panels>
+                    </div>
+                    <div class="product-share">
+                      <v-container>
+                        <v-row
+                          id="socialIcon"
+                          class="d-flex align-items-center"
+                        >
+                          <v-col md="12" lg="12" xl="12" class="mx-auto mt-3">
+                            <div class="social-items">
+                              <span>Share:</span>
+                              <a href=""
+                                ><v-icon size="23">mdi-google</v-icon></a
+                              >
+                              <a href=""
+                                ><v-icon size="23">mdi-facebook</v-icon></a
+                              >
+                              <a href=""
+                                ><v-icon size="23">mdi-instagram</v-icon></a
+                              >
+                              <a href=""
+                                ><v-icon size="23">mdi-twitter</v-icon></a
+                              >
+                            </div>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </div>
+                  </div>
+                </v-col>
+              </v-row>
+            </v-container>
           </div>
-        </v-main>
+          <v-divider></v-divider>
+          <div>
+            <v-container>
+              <h1>SẢN PHẨM TƯƠNG TỰ</h1>
+              <v-carousel style="width: 100%; height: 350px">
+                <a :href="'/products/' + product.productId">
+                  <v-carousel-item
+                    v-for="(productImage, i) in product.productImages"
+                    :key="i"
+                    :src="productImage.imgUrl"
+                    alt="productImage.imgUrl"
+                    cycle
+                    hide-delimiter-background
+                    show-arrows-on-hover
+                  >
+                  </v-carousel-item>
+                </a>
+              </v-carousel>
+            </v-container>
+          </div>
+          <!-- Comment container -->
+          <div>
+            <v-container>
+              <v-tabs class="comment" background-color="indigo" dark>
+                <v-tab>Bình luận</v-tab>
 
-        <!-- V-footer  ------->
-        <v-divider></v-divider>
-        <VmFooter></VmFooter>
+                <v-tab-item>
+                  <v-container fluid>
+                    <v-row>
+                      <v-col>
+                        <!-- <h3>{{comment.length}}</h3> -->
+                        <div class="comment-header" align="right">
+                          <v-combobox
+                            v-model="modelComment"
+                            :items="itemComments"
+                            hide-selected
+                            dense
+                            filled
+                            label="Sắp xếp theo"
+                            style="width: 20%"
+                          ></v-combobox>
+                        </div>
+
+                        <v-container fluid>
+                          <v-row>
+                            <img
+                              src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
+                              alt="avatar"
+                              width="3%"
+                              height="3%"
+                            />
+
+                            <v-col>
+                              <v-form>
+                                <v-text-field hint="Add your comment">
+                                </v-text-field>
+                              </v-form>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-tab-item>
+              </v-tabs>
+            </v-container>
+          </div>
+          <v-dialog v-model="dialogCart" max-width="500px">
+            <v-card>
+              <v-card-title class="headline blue darken-1"
+                >Select the cart:</v-card-title
+              >
+              <v-card-actions>
+                <v-form>
+                  <v-col>
+                    <v-select
+                      v-model="productCart"
+                      :items="carts"
+                      :error-messages="productCartErrors"
+                      @click="$v.productCart.$touch()"
+                      @blur="$v.productCart.$touch()"
+                      item-text="cartId"
+                      label="Chọn cart:"
+                    >
+                      <template v-slot:item="{ item }">
+                        {{ item.cartDescription }}
+                      </template>
+                      <template v-slot:selection="{ item }">
+                        {{ item.cartDescription }}
+                      </template>
+                    </v-select>
+                  </v-col>
+                </v-form>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeCartDialog()"
+                  >Cancel</v-btn
+                >
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="addToCartDialogConfirm()"
+                  >OK</v-btn
+                >
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
+      </v-main>
+
+      <!-- V-footer  ------->
+      <v-divider></v-divider>
+      <VmFooter></VmFooter>
       <!-- </v-app> -->
     </v-app>
   </div>
@@ -390,23 +418,45 @@
 import { mapActions, mapGetters } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
+import { validationMixin } from "vuelidate";
+import { required, between } from "vuelidate/lib/validators";
 export default {
   props: {
     source: String,
   },
-  components: {VmFooter, VmHeader},
+  mixins: [validationMixin],
+
+  validations: {
+    quantity: {
+      between(value) {
+        return between(1, this.totalQuantity)(value);
+      },
+    },
+    productCart: { required },
+    productSize: { required },
+  },
+  components: { VmFooter, VmHeader },
   data: () => ({
     modelSize: "Size",
     badgeCart: 1,
     modelQuantity: "Quantity",
     modelComment: ["Mới nhất"],
-    quantity: 1,
+    quantity: 0,
+    productSize: "",
     size: 1,
     drawer: null,
     rating: 5,
     tab: null,
     itemComments: ["Mới nhất", "Cũ"],
     itemTabs: ["Đánh giá", "Bình luận"],
+    productSelected: {},
+    dialogCart: false,
+    productDetailSize: "",
+    productCart: {},
+    numberRule: (v) => {
+      if (!isNaN(parseFloat(v)) && v > 0) return true;
+      return "Number must be greater than 0!";
+    },
     itemBreadCrumbs: [
       {
         text: "Home",
@@ -435,7 +485,35 @@ export default {
     isAccount: false,
   }),
   computed: {
+    ...mapGetters("auth", ["cart", "carts", "user"]),
     ...mapGetters("product", ["product"]),
+    ...mapGetters("order", ["status", "maxQuantity"]),
+    totalQuantity() {
+      return this.maxQuantity;
+    },
+    quantityErrors() {
+      const errors = [];
+      if (!this.$v.quantity.$dirty) return errors;
+      !this.$v.quantity.between &&
+        errors.push(
+          `Quantity must be between ${this.$v.quantity.$params.between.min} and ${this.$v.quantity.$params.between.max}`
+        );
+      return errors;
+    },
+    productCartErrors() {
+      const errors = [];
+      if (!this.$v.productCart.$dirty) return errors;
+      !this.$v.productCart.required &&
+        errors.push("Select product cart is required");
+      return errors;
+    },
+    productSizeError() {
+      const errors = [];
+      if (!this.$v.productSize.$dirty) return errors;
+      !this.$v.productSize.required &&
+        errors.push("Select product size is required");
+      return errors;
+    },
   },
   methods: {
     increaseValue() {
@@ -463,6 +541,41 @@ export default {
     addToCart() {
       return this.badgeCart++;
     },
+    addToCartDialog(product) {
+      this.$v.$touch();
+      if (
+        this.quantityErrors.length === 0 &&
+        this.productSizeError.length === 0
+      ) {
+        this.$v.$reset();
+        this.dialogCart = true;
+        this.productSelected = product;
+      }
+    },
+    addToCartDialogConfirm() {
+      this.$v.$touch();
+      if (
+        this.quantityErrors.length === 0 &&
+        this.$v.productCart.required &&
+        this.productSizeError.length === 0
+      ) {
+        this.$v.$reset();
+        const credential = {
+          cartId: this.productCart,
+          username: this.user.userName,
+          productId: this.productSelected.productId,
+          cartSize: this.productSize,
+          cartQuantity: this.quantity,
+        };
+        this.addProductInCartDetail(credential);
+        this.closeCartDialog();
+      }
+    },
+
+    closeCartDialog() {
+      this.dialogCart = false;
+    },
+    ...mapActions("auth", ["addProductInCartDetail"]),
     ...mapActions("product", ["productDetails"]),
   },
   created() {
@@ -471,6 +584,8 @@ export default {
   },
   mounted() {
     this.productDetails(this.$route.params.idProduct);
+    this.productSelected = this.product;
+    console.log(this.productSelected);
   },
 };
 </script>

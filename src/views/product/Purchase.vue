@@ -44,6 +44,9 @@
                           label="Tên*"
                           background-color="#f4f2f8"
                           required
+                          :error-messages="firstNameErrors"
+                          @input="$v.firstname.$touch()"
+                          @blur="$v.firstname.$touch()"
                         >
                         </v-text-field>
                       </v-col>
@@ -56,22 +59,13 @@
                           dense
                           label="Họ*"
                           required
+                          :error-messages="lastNameErrors"
+                          @input="$v.lastname.$touch()"
+                          @blur="$v.lastname.$touch()"
                           background-color="#f4f2f8"
                         >
                         </v-text-field>
                       </v-col>
-                      <!-- <v-col cols="12" sm="6">
-                        <v-combobox
-                          v-model="gender"
-                          :items="itemGender"
-                          label="Chọn Giới tính*"
-                          outlined
-                          dense
-                          required
-                          background-color="#f4f2f8"
-                        >
-                        </v-combobox>
-                      </v-col> -->
                       <v-col cols="12" sm="6">
                         <v-text-field
                           v-model="email"
@@ -80,6 +74,9 @@
                           outlined
                           dense
                           label="Email"
+                          :error-messages="emailErrors"
+                          @input="$v.email.$touch()"
+                          @blur="$v.email.$touch()"
                           required
                           background-color="#f4f2f8"
                         >
@@ -92,6 +89,9 @@
                           :rules="rules.phoneRules"
                           outlined
                           dense
+                          :error-messages="phoneErrors"
+                          @input="$v.phone.$touch()"
+                          @blur="$v.phone.$touch()"
                           label="Số điện thoại*"
                           background-color="#f4f2f8"
                           required
@@ -103,25 +103,17 @@
                           persistent-hint
                           :items="cityItem"
                           label="Chọn tỉnh/thành phố*"
+                          v-model="city"
                           outlined
+                          :error-messages="selectCityErrors"
+                          @input="$v.city.$touch()"
+                          @blur="$v.city.$touch()"
                           background-color="#f4f2f8"
                           dense
                           required
                         >
                         </v-select>
                       </v-col>
-                      <!-- <v-col cols="12" sm="6">
-                        <v-select
-                          persistent-hint
-                          :items="district"
-                          label="Chọn quận/huyện*"
-                          outlined
-                          dense
-                          background-color="#f4f2f8"
-                          required
-                        ></v-select>
-                      </v-col> -->
-
                       <v-col cols="12" sm="6">
                         <v-text-field
                           v-model="address"
@@ -130,6 +122,9 @@
                           outlined
                           dense
                           label="Địa chỉ*"
+                          :error-messages="addressErrors"
+                          @input="$v.address.$touch()"
+                          @blur="$v.address.$touch()"
                           required
                           background-color="#f4f2f8"
                         >
@@ -153,23 +148,55 @@
                     <v-row class="order-item" dense>
                       <v-col>
                         <v-row>
-                          <v-col><span>Product:</span></v-col>
-                          <v-col><span>Total</span></v-col>
-                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col><span>Product Name:</span></v-col>
                           <v-col
                             ><span>{{ product.productName }}</span></v-col
                           >
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col cols="6">
+                            <v-select
+                              v-model="productDetailSize"
+                              :items="product.productDetails"
+                              :error-messages="selectErrors"
+                              @click="$v.productDetailSize.$touch()"
+                              @blur="$v.productDetailSize.$touch()"
+                              @input="getQuantityBySize()"
+                              label="Chọn kích thước:"
+                            >
+                              <template v-slot:item="{ item }">
+                                {{ item.proSize }}
+                              </template>
+                              <template v-slot:selection="{ item }">
+                                {{ item.proSize }}
+                              </template>
+                            </v-select>
+                          </v-col>
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col><span>Price:</span></v-col>
                           <v-col
                             ><span
-                              ><u>đ</u>{{ product.productPrice }}</span
-                            ></v-col
+                              ><u>đ</u>{{ formatPrice(product.productPrice) }}
+                            </span></v-col
                           >
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col cols="6">
+                            <v-text-field
+                              type="number"
+                              :rules="[numberRule]"
+                              v-model="quantity"
+                              label="Số lượng"
+                              append-outer-icon="mdi-information"
+                              @change="quantity = $event"
+                              :error-messages="quantityErrors"
+                              @input="$v.quantity.$touch()"
+                              @blur="$v.quantity.$touch()"
+                            ></v-text-field>
+                          </v-col>
                           <v-col cols="12"><v-divider></v-divider></v-col>
                           <v-col><span>Shipping: </span></v-col>
                           <v-col><span>Free</span></v-col>
                           <v-col cols="12"><v-divider></v-divider></v-col>
                           <v-col><span>Discount:</span></v-col>
-
                           <v-col
                             ><input
                               id="voucher-code"
@@ -230,7 +257,10 @@
                         </v-row>
                       </v-col>
                       <v-col cols="12"
-                        ><v-btn class="order-btn" color="rgb(255, 66, 78)"
+                        ><v-btn
+                          class="order-btn"
+                          color="rgb(255, 66, 78)"
+                          @click="createOrderByProduct()"
                           >Checkout</v-btn
                         >
                         <v-btn class="mx-4" color="primary">Payal</v-btn></v-col
@@ -254,20 +284,98 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
-
+import VueIziToast from "vue-izitoast";
+import "izitoast/dist/css/iziToast.css";
+import { validationMixin } from "vuelidate";
+import { required, between, email } from "vuelidate/lib/validators";
+import Vue from "vue";
+Vue.use(VueIziToast);
+const isPhone = (value) => /^\+?[0-9]+$/.test(value); //phone valid
 export default {
   components: {
     "my-footer": VmFooter,
     "my-header": VmHeader,
   },
+  mixins: [validationMixin],
+
+  validations: {
+    quantity: {
+      between(value) {
+        return between(1, this.totalQuantity)(value);
+      },
+    },
+    productDetailSize: { required },
+    productCart: { required },
+    firstname: { required },
+    lastname: { required },
+    email: { required, email },
+    phone: { isPhone },
+    city: { required },
+    district: { required },
+    address: { required },
+  },
   data: () => ({
+    notificationSystem: {
+      options: {
+        show: {
+          theme: "dark",
+          icon: "icon-person",
+          position: "topCenter",
+          progressBarColor: "rgb(0, 255, 184)",
+          onOpening: function () {
+            console.info("callback abriu!");
+          },
+          onClosing: function (closedBy) {
+            console.info("closedBy: " + closedBy);
+          },
+        },
+        success: {
+          position: "topRight",
+        },
+        warning: {
+          position: "topRight",
+        },
+        error: {
+          position: "topRight",
+        },
+        question: {
+          close: false,
+          overlay: true,
+          toastOnce: true,
+          id: "question",
+          zindex: 999,
+          position: "center",
+          buttons: [
+            [
+              "<button><b>YES</b></button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+              true,
+            ],
+            [
+              "<button>NO</button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+            ],
+          ],
+          onClosing: function (instance, toast, closedBy) {
+            console.info("Closing | closedBy: " + closedBy);
+          },
+          onClosed: function (instance, toast, closedBy) {
+            console.info("Closed | closedBy: " + closedBy);
+          },
+        },
+      },
+    },
+
     dialog: false,
     firstname: "",
     lastname: "",
-    gender: "",
     email: "",
     phone: "",
     city: "",
@@ -296,6 +404,13 @@ export default {
       ],
     },
     drawer: null,
+    multiLine: true,
+    snackbar: false,
+    text: `I'm a multi-line snackbar.`,
+    numberRule: (v) => {
+      if (!isNaN(parseFloat(v)) && v > 0) return true;
+      return "Number must be greater than 0!";
+    },
     linkBar: [
       "Name",
       "Nữ",
@@ -375,6 +490,9 @@ export default {
     isValid: false,
     isAccount: false,
     mainImageSrc: null,
+    productDetailSize: "",
+    quantity: 0,
+    alert: false,
   }),
 
   created() {
@@ -385,16 +503,144 @@ export default {
 
   computed: {
     ...mapGetters("product", ["product"]),
+    ...mapGetters("auth", ["user"]),
+    ...mapGetters("order", ["status", "maxQuantity"]),
+    totalQuantity() {
+      return this.maxQuantity;
+    },
+    quantityErrors() {
+      const errors = [];
+      if (!this.$v.quantity.$dirty) return errors;
+      !this.$v.quantity.between &&
+        errors.push(
+          `Quantity must be between ${this.$v.quantity.$params.between.min} and ${this.$v.quantity.$params.between.max}`
+        );
+      return errors;
+    },
+    selectErrors() {
+      const errors = [];
+      if (!this.$v.productDetailSize.$dirty) return errors;
+      !this.$v.productDetailSize.required &&
+        errors.push("Select product size is required");
+      return errors;
+    },
+    selectCityErrors() {
+      const errors = [];
+      if (!this.$v.city.$dirty) return errors;
+      !this.$v.city.required && errors.push("Select city is required");
+      return errors;
+    },
+    productCartErrors() {
+      const errors = [];
+      if (!this.$v.productCart.$dirty) return errors;
+      !this.$v.productCart.required &&
+        errors.push("Select product cart is required");
+      return errors;
+    },
+    emailErrors() {
+      const errors = [];
+      if (!this.$v.email.$dirty) return errors;
+      !this.$v.email.required && errors.push("Email is required.");
+      !this.$v.email.email && errors.push("Email is invalid!");
+      return errors;
+    },
+    phoneErrors() {
+      const errors = [];
+      if (!this.$v.phone.$dirty) return errors;
+      !this.$v.phone.isPhone && errors.push("Phone must be valid!");
+      return errors;
+    },
+    firstNameErrors() {
+      const errors = [];
+      if (!this.$v.firstname.$dirty) return errors;
+      !this.$v.firstname.required && errors.push("First Name is required.");
+      return errors;
+    },
+    lastNameErrors() {
+      const errors = [];
+      if (!this.$v.lastname.$dirty) return errors;
+      !this.$v.lastname.required && errors.push("Last Name is required.");
+      return errors;
+    },
+    addressErrors() {
+      const errors = [];
+      if (!this.$v.address.$dirty) return errors;
+      !this.$v.address.required && errors.push("Address is required.");
+      return errors;
+    },
   },
   methods: {
+    ...mapActions("product", ["productDetails"]),
+    ...mapActions("order", ["createOrders"]),
+    ...mapMutations("order", ["setMaxQuantity"]),
     onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
-    ...mapActions("product", ["productDetails"]),
+    formatPrice(value) {
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    async createOrderByProduct() {
+      this.$v.$touch();
+      if (
+        this.quantityErrors.length === 0 &&
+        this.selectErrors.length === 0 &&
+        this.firstNameErrors.length === 0 &&
+        this.lastNameErrors.length === 0 &&
+        this.emailErrors.length === 0 &&
+        this.phoneErrors.length === 0 &&
+        this.addressErrors.length === 0 &&
+        this.selectCityErrors.length === 0
+      ) {
+        this.$v.$reset();
+        const credential = {
+          productId: this.product.productId,
+          productSize: this.productDetailSize.proSize,
+          productQuantity: this.quantity,
+          username: this.user.userName,
+          name: `${this.firstname} ${this.lastname}`,
+          phoneNumber: this.phone,
+          email: this.email,
+          country: this.city,
+          address: this.address,
+        };
+        await this.createOrders(credential);
+        if (this.status === 200) {
+          this.dialogSuccess();
+          this.$router.push("/products");
+        } else if (this.status === 400) {
+          this.dialogError();
+        }
+      }
+    },
+    dialogSuccess() {
+      this.$toast.success(
+        "Order product successfully!",
+        "OK",
+        this.notificationSystem.options.success
+      );
+    },
+    dialogError() {
+      this.$toast.error(
+        "Something is wrong",
+        "Error",
+        this.notificationSystem.options.error
+      );
+    },
+    getQuantityBySize() {
+      console.log(this.product);
+      const index = this.product.productDetails.findIndex(
+        (product) => product.proSize === this.productDetailSize.proSize
+      );
+      if (index != -1) {
+        const quantity = this.product.productDetails[index].proQuantity;
+        this.setMaxQuantity(quantity);
+      }
+    },
   },
   mounted() {
     this.productDetails(this.$route.params.idProduct);
+    console.log(this.product);
   },
 };
 </script>
@@ -532,6 +778,14 @@ export default {
   font-size: 10px;
   color: #fff;
   margin-bottom: 15px;
+}
+
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
 @media only screen and (max-width: 1390px) {

@@ -15,24 +15,34 @@ import Footer from '../components/Footer.vue'
 import HeaderAdmin from '../components/HeaderAdmin.vue'
 import Header from '../components/Header.vue'
 import CrudProduct from '../views/Admin/CrudProduct.vue'
+import User from '../views/Admin/User.vue'
+import Test from '../views/Admin/Test.vue'
+import Order from '../views/Admin/Order.vue'
+import OrderUser from '../views/order/Order.vue'
+
 // import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
-  path: '/home',
-  name: 'home',
-  component: Home
+    path: '/home',
+    name: 'home',
+    component: Home
   },
   {
     path: '/',
     name: 'homepage',
     component: HomePage
-    },
+  },
   {
     path: '/forgotpasswordForm',
     name: 'forgotpasswordForm',
     component: ForgotPasswordForm
+  },
+  {
+    path: '/manage-order',
+    name: 'manage-order',
+    component: Order
   },
   {
     path: '/loginpage',
@@ -90,6 +100,26 @@ const routes = [
     path: '/layout',
     name: 'layout',
     component: Layout
+  },
+  {
+    path: '/order',
+    name: 'order',
+    component: Order
+  },
+  {
+    path: '/orderUser',
+    name: 'order-user',
+    component: OrderUser,
+  }
+  , {
+    path: '/user',
+    name: 'user',
+    component: User
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: Test
   },
   {
     path: '/about',
