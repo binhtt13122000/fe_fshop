@@ -10,8 +10,8 @@ class OrderService {
         return post(`/orders/carts/${cartId}?username=${username}`, {}, credential);
     }
 
-    getOrders(username, priceFrom, priceTo, dateFrom, dateTo, pageIndex, pageSize = 8) {
-        return get(`/orders?username=${username}&dateFrom=${dateFrom}&dateTo=${dateTo}&priceFrom=${priceFrom}&priceTo=${priceTo}&pageIndex=${pageIndex}&pageSize=${pageSize}`);
+    getOrders(username, status, dateFrom, dateTo, pageIndex, pageSize = 8) {
+        return get(`/orders?username=${username}&status=${status}&dateFrom=${dateFrom}&dateTo=${dateTo}&pageIndex=${pageIndex}&pageSize=${pageSize}`);
     }
 
     deleteOrder(username, orderId) {

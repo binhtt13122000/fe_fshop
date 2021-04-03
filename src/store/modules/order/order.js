@@ -133,8 +133,9 @@ const actions = {
 
     async getOrders({ commit }, credential) {
         try {
-            const response = await OrderService.getOrders(credential.username, credential.priceFrom, credential.priceTo, credential.dateFrom,
+            const response = await OrderService.getOrders(credential.username, credential.status, credential.dateFrom,
                 credential.dateTo, credential.pageIndex);
+            console.log(response);
             if (response.status === 200) {
                 await commit(SET_ORDERS, response.data.content);
                 return await commit(SET_PAGES, response.data);
@@ -164,7 +165,7 @@ const actions = {
 
     async getOrderDetailByOrderId({ commit }, credential) {
         try {
-            const response = await OrderService.getOrderDetailsByOrderId(credential.usename, credential.orderId);
+            const response = await OrderService.getOrderDetailsByOrderId(credential.username, credential.orderId);
             if (response.status === 200) {
                 return await commit(GET_ORDER_DETAILS, response.data);
             }

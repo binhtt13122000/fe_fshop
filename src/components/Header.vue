@@ -247,13 +247,28 @@
                 {{ user.email }}
               </p>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text> My Account </v-btn>
+              <v-btn depressed rounded text> Tài khoản của tôi </v-btn>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text to="/loginpage" v-show="isLoggedIn">
-                Login
+              <v-btn depressed rounded text to="/orderUser" v-show="isLoggedIn">
+                Đơn mua
+              </v-btn>
+              <v-btn
+                depressed
+                rounded
+                text
+                to="/loginpage"
+                v-show="!isLoggedIn"
+              >
+                Đăng nhập
               </v-btn>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text v-on:click="logout()">
+              <v-btn
+                depressed
+                rounded
+                text
+                v-on:click="logout()"
+                v-show="isLoggedIn"
+              >
                 Logout
               </v-btn>
             </div>

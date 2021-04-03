@@ -144,6 +144,7 @@
                     <v-icon
                       small
                       class="mr-2"
+                      v-show="item.status !== -1"
                       @click="deleteItemDialog(item)"
                       v-if="item.status != -1"
                       >mdi-delete</v-icon
@@ -236,6 +237,7 @@ export default {
     currentPage() {
       const credential = {
         username: this.user.userName,
+        status: 2,
         priceFrom: this.priceFrom,
         priceTo: this.priceTo,
         dateFrom: this.dateFrom,
@@ -252,27 +254,10 @@ export default {
       "confirmOrder",
       "getOrderDetailByOrderId",
     ]),
-    loadItem() {
-      this.desserts = [
-        {
-          orderId: "1",
-          userId: "1",
-          fullName: "Nhan",
-          phoneNumber: "0889386214",
-          address: "nhanle",
-          orderTotal: 323232,
-          createAt: "23/02/2021",
-          promotionAt: "23/02/2021",
-          realTotal: 32320,
-          sellerId: "22",
-          isOnline: 1,
-          status: 1,
-        },
-      ];
-    },
     currentPage() {
       const credential = {
         username: this.user.userName,
+        status: 2,
         priceFrom: this.priceFrom,
         priceTo: this.priceTo,
         dateFrom: this.dateFrom,
@@ -305,18 +290,6 @@ export default {
       if (status) return "lime";
       return "cyan";
     },
-    // getListOrder() {
-
-    // }
-
-    // Close
-    // close() {
-    //   this.dialogEdit = false;
-    //   this.$nextTick(() => {
-    //     this.editedItem = Object.assign({}, this.defaultItem);
-    //     this.editedIndex = -1;
-    //   });
-    // },
     closeDeleteDialog() {
       this.dialogDelete = false;
       this.itemSelected = {};
@@ -378,6 +351,7 @@ export default {
       dateFrom: this.dateFrom,
       dateTo: this.dateTo,
       pageIndex: this.currentPage,
+      status: 2,
     };
     this.getOrders(credential);
   },

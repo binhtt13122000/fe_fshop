@@ -18,6 +18,8 @@ import CrudProduct from '../views/Admin/CrudProduct.vue'
 import User from '../views/Admin/User.vue'
 import Test from '../views/Admin/Test.vue'
 import Order from '../views/Admin/Order.vue'
+import OrderUser from '../views/order/Order.vue'
+
 // import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
 
@@ -105,6 +107,11 @@ const routes = [
     component: Order
   },
   {
+    path: '/orderUser',
+    name: 'order-user',
+    component: OrderUser,
+  }
+  , {
     path: '/user',
     name: 'user',
     component: User

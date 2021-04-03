@@ -153,7 +153,7 @@
                             ><span>{{ product.productName }}</span></v-col
                           >
                           <v-col cols="12"><v-divider></v-divider></v-col>
-                          <v-col>
+                          <v-col cols="6">
                             <v-select
                               v-model="productDetailSize"
                               :items="product.productDetails"
@@ -179,7 +179,7 @@
                             </span></v-col
                           >
                           <v-col cols="12"><v-divider></v-divider></v-col>
-                          <v-col>
+                          <v-col cols="6">
                             <v-text-field
                               type="number"
                               :rules="[numberRule]"
