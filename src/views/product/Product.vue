@@ -231,11 +231,12 @@ export default {
         this.selectErrors.length === 0
       ) {
         this.$v.$reset();
+        console.log(this.productDetailSize);
         const credential = {
           cartId: this.productCart,
           username: this.user.userName,
           productId: this.productSelected.productId,
-          cartSize: this.productDetailSize.proSize,
+          cartSize: this.productDetailSize.proSize.trim(),
           cartQuantity: this.quantity,
         };
         this.addProductInCartDetail(credential);

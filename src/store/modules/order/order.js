@@ -118,6 +118,7 @@ const actions = {
                 email: credential.email,
                 country: credential.country,
                 address: credential.address,
+                promotionId: credential.promotionId,
             };
             const response = await OrderService.createNewOrderByCart(credential.cartId,
                 credential.username, credentials);
@@ -166,6 +167,7 @@ const actions = {
     async getOrderDetailByOrderId({ commit }, credential) {
         try {
             const response = await OrderService.getOrderDetailsByOrderId(credential.username, credential.orderId);
+            console.log(response);
             if (response.status === 200) {
                 return await commit(GET_ORDER_DETAILS, response.data);
             }

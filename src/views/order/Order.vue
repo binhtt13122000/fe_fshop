@@ -141,6 +141,22 @@
                                       hide-default-footer
                                     >
                                       <template
+                                        v-slot:[`item.product.productImages[0].imgUrl`]="{
+                                          item,
+                                        }"
+                                      >
+                                        <a :href="'/products/' + item.proId">
+                                          <img
+                                            class="img-responsive"
+                                            :src="
+                                              item.product.productImages[0]
+                                                .imgUrl
+                                            "
+                                            width="40%"
+                                          />
+                                        </a>
+                                      </template>
+                                      <template
                                         v-slot:[`item.orderItemPrice`]="{
                                           item,
                                         }"
@@ -266,6 +282,22 @@
                                       hide-default-footer
                                     >
                                       <template
+                                        v-slot:[`item.product.productImages[0].imgUrl`]="{
+                                          item,
+                                        }"
+                                      >
+                                        <a :href="'/products/' + item.proId">
+                                          <img
+                                            class="img-responsive"
+                                            :src="
+                                              item.product.productImages[0]
+                                                .imgUrl
+                                            "
+                                            width="40%"
+                                          />
+                                        </a>
+                                      </template>
+                                      <template
                                         v-slot:[`item.orderItemPrice`]="{
                                           item,
                                         }"
@@ -391,6 +423,22 @@
                                       hide-default-footer
                                     >
                                       <template
+                                        v-slot:[`item.product.productImages[0].imgUrl`]="{
+                                          item,
+                                        }"
+                                      >
+                                        <a :href="'/products/' + item.proId">
+                                          <img
+                                            class="img-responsive"
+                                            :src="
+                                              item.product.productImages[0]
+                                                .imgUrl
+                                            "
+                                            width="40%"
+                                          />
+                                        </a>
+                                      </template>
+                                      <template
                                         v-slot:[`item.orderItemPrice`]="{
                                           item,
                                         }"
@@ -515,6 +563,22 @@
                                       class="elevation-1"
                                       hide-default-footer
                                     >
+                                      <template
+                                        v-slot:[`item.product.productImages[0].imgUrl`]="{
+                                          item,
+                                        }"
+                                      >
+                                        <a :href="'/products/' + item.proId">
+                                          <img
+                                            class="img-responsive"
+                                            :src="
+                                              item.product.productImages[0]
+                                                .imgUrl
+                                            "
+                                            width="40%"
+                                          />
+                                        </a>
+                                      </template>
                                       <template
                                         v-slot:[`item.orderItemPrice`]="{
                                           item,
@@ -624,7 +688,11 @@ export default {
       { text: "Actions", value: "actions", sortable: false },
     ],
     headerOrderDetails: [
-      { text: "Mã order detail", align: "start", value: "orderItemId" },
+      {
+        text: "Hình ảnh",
+        align: "start",
+        value: "product.productImages[0].imgUrl",
+      },
       { text: "Kích cỡ", align: "start", value: "orderSize" },
       { text: "Số lượng", align: "start", value: "orderItemQuan" },
       { text: "Giá", align: "start", value: "orderItemPrice" },
@@ -823,6 +891,7 @@ export default {
       pageIndex: this.nextPage,
     };
     this.getOrders(credential);
+    console.log(this.orderDetails);
   },
 };
 </script>

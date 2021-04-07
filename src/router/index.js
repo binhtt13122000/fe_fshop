@@ -19,6 +19,7 @@ import User from '../views/Admin/User.vue'
 import Test from '../views/Admin/Test.vue'
 import Order from '../views/Admin/Order.vue'
 import OrderUser from '../views/order/Order.vue'
+import Voucher from '../views/voucher/Voucher.vue'
 
 // import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
@@ -80,6 +81,11 @@ const routes = [
     path: '/main-product',
     name: 'main-product',
     component: CrudProduct
+  },
+  {
+    path: '/voucher/:userName',
+    name: 'voucher',
+    component: Voucher,
   },
   {
     path: '/footer',

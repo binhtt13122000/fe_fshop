@@ -18,6 +18,7 @@ const state = {
     cartDetail: [],
     pages: [],
     page: [],
+    totalCart: "",
 };
 const getters = {
     user(state) {
@@ -43,6 +44,12 @@ const getters = {
     },
     page(state) {
         return state.page
+    },
+    totalCart(state) {
+        state.cartDetail.forEach(el => {
+            state.totalCart = el.cart.cartTotal;
+            return state.totalCart;
+        });
     },
 };
 const mutations = {
@@ -74,6 +81,10 @@ const mutations = {
     },
     [SET_CART_DETAIL]: (state, val) => {
         state.cartDetail = val
+        val.forEach(el => {
+            state.totalCart = el.cart.cartTotal;
+            return state.totalCart;
+        });
     },
     [DELETE_CART_DETAIL]: (state) => {
         state.cartDetail = ''
@@ -121,11 +132,20 @@ const mutations = {
     },
     [CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL]: (state, credential) => {
         const cartDetails = state.cartDetail;
+        console.log(cartDetails)
         const index = cartDetails.findIndex(cartDetail => cartDetail.cartItemId === credential.cartDetailId);
         if (index != -1) {
+            const totalBefore = cartDetails[index].cart.cartTotal;
+            const priceBofore = cartDetails[index].cartQuantity * cartDetails[index].cartItemPrice;
             cartDetails[index].cartQuantity = credential.quantity;
+            const priceAfter = cartDetails[index].cartQuantity * cartDetails[index].cartItemPrice;
+            const totalAfter = totalBefore - priceBofore + priceAfter;
+            state.totalCart = totalAfter;
+            cartDetails.forEach(el => {
+                el.cart.cartTotal = totalAfter;
+            })
         }
-    }
+    },
 };
 const actions = {
 
@@ -207,7 +227,6 @@ const actions = {
 
     async getCart({ commit }, username) {
         const response = await AuthServices.getCarts(username);
-        console.log(response);
         if (response.status === 200) {
             await commit(IS_LOGGED_IN, true);
             return await commit(SET_CARTS, response.data.content);
@@ -217,7 +236,6 @@ const actions = {
     async getCartDetail({ commit }, credential) {
         try {
             const response = await AuthServices.getCartDetails(credential.idCart, credential.userName)
-            console.log(response);
             if (response.status === 200) {
                 return await commit(SET_CART_DETAIL, response.data);
             }
@@ -236,10 +254,9 @@ const actions = {
     },
 
     async addProductInCartDetail({ commit }, credential) {
-        console.log(credential);
         const response = await AuthServices.addProductInCartDetail(credential);
         if (response.status === 200) {
-            await commit(ADD_PRODUCT_IN_CART, credential);
+            return await commit(ADD_PRODUCT_IN_CART, credential);
         }
         throw new Error(response.status);
     },
@@ -263,10 +280,11 @@ const actions = {
         const response = await AuthServices.changeQuantityProductInCartDetail(credential.cartDetailId, credential.productId, credential.productSize,
             credential.quantity, credential.username);
         if (response.status === 200) {
-            await commit(CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL, credential);
+            return await commit(CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL, credential);
         }
         throw new Error(response.status);
     },
+
 
 };
 

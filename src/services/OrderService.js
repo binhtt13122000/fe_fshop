@@ -7,7 +7,7 @@ class OrderService {
     }
 
     createNewOrderByCart(cartId, username, credential) {
-        return post(`/orders/carts/${cartId}?username=${username}`, {}, credential);
+        return post(`/orders/carts/${cartId}?username=${username}&promotionId=${credential.promotionId}`, {}, credential);
     }
 
     getOrders(username, status, dateFrom, dateTo, pageIndex, pageSize = 8) {

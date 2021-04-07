@@ -262,6 +262,10 @@
                 Đăng nhập
               </v-btn>
               <v-divider class="my-3"></v-divider>
+              <v-btn depressed rounded text :to="'/voucher/' + user.userName">
+                Mã giảm giá
+              </v-btn>
+              <v-divider class="my-3"></v-divider>
               <v-btn
                 depressed
                 rounded

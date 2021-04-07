@@ -40,7 +40,7 @@
                           v-for="(img, i) in detail.product.productImages"
                           :key="'A' + i"
                         >
-                          <a :href="'/products/' + img.productId">
+                          <a :href="'/products/' + img.proId">
                             <img
                               v-if="i == 0"
                               class="img-responsive"
@@ -129,49 +129,50 @@
                   <v-col cols="12" sm="6">
                     <v-card class="order" width="600px">
                       <h1>Order summary</h1>
-                      <v-col
-                        cols="12"
-                        align-content="center"
-                        justify="center"
-                        v-for="(detail, i) in this.cartDetail"
-                        :key="i"
-                      >
-                        <p v-if="i == 0">
+                      <v-col cols="12" align-content="center" justify="center">
+                        <p>
                           Subtotal(item):<u>đ</u
-                          ><span>{{ detail.cart.cartTotal }}</span>
+                          ><span>{{ formatPrice(Math.round(totalCart)) }}</span>
                         </p>
                       </v-col>
-                      <v-row class="order-item">
-                        <v-col cols="12"
-                          ><p>
-                            Discount:<span>{{ 15 }}%</span>
-                          </p></v-col
-                        >
-                        <v-col cols="12"
-                          ><input
-                            id="voucher-code"
-                            type="text"
-                            placeholder="Enter voucher code"
-                          /><v-btn color="primary">Apply</v-btn></v-col
-                        >
-                        <v-col cols="12">
-                          <!-- <p>
+                      <v-col cols="12"
+                        ><p>
+                          Discount:<span>{{ this.percentDiscount }}%</span>
+                        </p></v-col
+                      >
+                      <v-col cols="12"
+                        ><input
+                          id="voucher-code"
+                          type="text"
+                          placeholder="Enter voucher code"
+                        /><v-btn color="primary" @click="checkPromotion()"
+                          >Apply</v-btn
+                        ></v-col
+                      >
+                      <v-col cols="12">
+                        <p>
                           Total:<u>đ</u
-                          ><span>{{ (detail.product.realPrice * 85) / 100 }}</span>
-                        </p> -->
-                        </v-col>
-                        <v-col cols="12"
-                          ><v-btn
-                            class="order-btn"
-                            color="#ffa500"
-                            @click="createOrder()"
-                            >Place order</v-btn
-                          ></v-col
-                        >
-                      </v-row>
+                          ><span>{{
+                            formatPrice(
+                              Math.round(
+                                totalCart -
+                                  (totalCart * this.percentDiscount) / 100
+                              )
+                            )
+                          }}</span>
+                        </p>
+                      </v-col>
+                      <v-col cols="12"
+                        ><v-btn
+                          class="order-btn"
+                          color="#ffa500"
+                          @click="createOrder()"
+                          >Place order</v-btn
+                        ></v-col
+                      >
                     </v-card>
-                  </v-col> </v-row
-                >f
+                  </v-col>
+                </v-row>
               </v-col>
             </v-container>
           </v-row>
@@ -211,38 +212,53 @@ export default {
     isAccount: false,
     mainImageSrc: null,
     idCart: "",
+    percentDiscount: 0,
+    inputCodePromotion: "",
+    promotion: {},
   }),
 
   created() {
     this.onResize();
-
     window.addEventListener("resize", this.onResize, { passive: true });
-
-    // console.log(
-    //   this.getCartDetail(this.$route.params.idCart)
-    // );
   },
 
   computed: {
-    ...mapState("auth", {
-      user: (state) => state.user,
-      cartDetail: (state) => state.cartDetail,
-    }),
-    ...mapGetters("auth", ["carts", "user", "cart", "cartDetail"]),
+    ...mapGetters("auth", ["carts", "user", "cart", "totalCart", "cartDetail"]),
+    ...mapState("auth", ["totalCart"]),
   },
   methods: {
-    onResize() {
-      this.isValid = window.innerWidth <= 1040;
-      this.isAccount = window.innerWidth <= 900;
-    },
-    userName() {
-      return this.user.username;
-    },
     ...mapActions("auth", [
       "getCartDetail",
       "changeQuantityProductInCartDetails",
     ]),
+    ...mapActions("voucher", ["getVouchers", "getVoucherById"]),
     ...mapActions("order", ["createOrdersByCart"]),
+    onResize() {
+      this.isValid = window.innerWidth <= 1040;
+      this.isAccount = window.innerWidth <= 900;
+    },
+    async checkPromotion() {
+      try {
+        const credential = {
+          username: this.user.userName,
+          voucherId: document.getElementById("voucher-code").value,
+        };
+        const result = await this.getVoucherById(credential);
+        console.log(result);
+        if (result.status === 200) {
+          this.percentDiscount = result.data.promo;
+          this.promotion = result.data;
+        } else {
+          this.percentDiscount = 0;
+        }
+      } catch (err) {
+        this.percentDiscount = 0;
+      }
+    },
+    userName() {
+      return this.user.username;
+    },
+
     increaseValue(item) {
       const credential = {
         username: this.user.userName,
@@ -256,12 +272,19 @@ export default {
     changeQuantity() {
       this.quantity = this.detail.cartQuantity;
     },
-    decreaseValue() {
-      if (this.quantity <= 1) {
-        return (this.quantity = 1);
-      } else {
-        return this.quantity--;
-      }
+    decreaseValue(item) {
+      const credential = {
+        username: this.user.userName,
+        cartDetailId: item.cartItemId,
+        productId: item.proId,
+        productSize: item.cartSize,
+        quantity: item.cartQuantity - 1,
+      };
+      this.changeQuantityProductInCartDetails(credential);
+    },
+    formatPrice(value) {
+      let price = value.toString().replace(".", ",");
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     createOrder() {
       const credential = {
@@ -272,6 +295,7 @@ export default {
         email: this.user.email,
         country: this.user.country,
         address: this.user.address,
+        promotionId: this.promotion.promotionID,
       };
       this.createOrdersByCart(credential);
       // if (this.status === 200) {
@@ -288,7 +312,7 @@ export default {
       idCart: this.$route.params.idCart,
     };
     (this.idCart = this.$route.params.idCart), this.getCartDetail(credential);
-    console.log(this.cartDetail);
+    console.log(this.totalCart);
   },
 };
 </script>

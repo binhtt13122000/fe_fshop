@@ -2,43 +2,43 @@
   <div id="app">
     <v-app id="inspire">
       <!-- <v-app id="inspire"> -->
-        <!-- Navigation bar -->
-        <my-header></my-header>
-        <!-- V main -->
-        <v-main>
-          <v-container class="fill-height" fluid>
-            <v-row align="center" justify="center">
-              <div class="main-image">
-                <img class="img-responsive" :src="mainImageSrc" width="100%" />
-              </div>
+      <!-- Navigation bar -->
+      <my-header></my-header>
+      <!-- V main -->
+      <v-main>
+        <v-container class="fill-height" fluid>
+          <v-row align="center" justify="center">
+            <div class="main-image">
+              <img class="img-responsive" :src="mainImageSrc" width="100%" />
+            </div>
 
-              <div class="image-center-item">
-                <img
-                  class="img-responsive-left"
-                  src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-2.png"
-                  alt="4men"
-                  :image-ratio="16 / 9"
-                  width="50%"
-                />
-                <h2 class="image-center-text-a">POLO</h2>
-                <v-btn class="image-center-btn-a">XEM THÊM</v-btn>
-                <img
-                  class="img-responsive-right"
-                  src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
-                  alt="4men"
-                  :image-ratio="16 / 9"
-                  width="50%"
-                />
-                <h2 class="image-center-text-b">SHIRT</h2>
-                <v-btn class="image-center-btn-b">XEM THÊM</v-btn>
-              </div>
-            </v-row>
-          </v-container>
-        </v-main>
+            <div class="image-center-item">
+              <img
+                class="img-responsive-left"
+                src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-2.png"
+                alt="4men"
+                :image-ratio="16 / 9"
+                width="50%"
+              />
+              <h2 class="image-center-text-a">POLO</h2>
+              <v-btn class="image-center-btn-a">XEM THÊM</v-btn>
+              <img
+                class="img-responsive-right"
+                src="https://ninomaxx.com.vn/wp-content/uploads/2020/10/Artboard-1-1.png"
+                alt="4men"
+                :image-ratio="16 / 9"
+                width="50%"
+              />
+              <h2 class="image-center-text-b">SHIRT</h2>
+              <v-btn class="image-center-btn-b">XEM THÊM</v-btn>
+            </div>
+          </v-row>
+        </v-container>
+      </v-main>
 
-        <!-- Footer -->
-        <!-- <VmFooter/> -->
-        <my-footer></my-footer>
+      <!-- Footer -->
+      <!-- <VmFooter/> -->
+      <my-footer></my-footer>
       <!-- </v-app> -->
     </v-app>
   </div>
@@ -54,7 +54,7 @@ export default {
   },
   components: {
     "my-footer": VmFooter,
-    "my-header": VmHeader
+    "my-header": VmHeader,
   },
   data: () => ({
     drawer: null,
