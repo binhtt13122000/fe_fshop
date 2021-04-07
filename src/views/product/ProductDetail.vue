@@ -347,12 +347,25 @@
                               width="3%"
                               height="3%"
                             />
-
-                            <v-col>
+                            <v-textarea
+                              label="Comment"
+                              auto-grow
+                              outlined
+                              rows="5"
+                              row-height="15"
+                            ></v-textarea>
+                            <v-btn color="success">Send</v-btn>
+                            <v-col v-for="cmt in comments" :key="cmt.commentId">
                               <v-form>
-                                <v-text-field hint="Add your comment">
+                                <span>{{ cmt.commentId }}</span>
+                                <v-text-field
+                                  v-model="addComment"
+                                  hint="Add your comment"
+                                >
+                                  {{ cmt.commentId }}
                                 </v-text-field>
                               </v-form>
+
                             </v-col>
                           </v-row>
                         </v-container>
@@ -363,6 +376,9 @@
               </v-tabs>
             </v-container>
           </div>
+
+
+
           <v-dialog v-model="dialogCart" max-width="500px">
             <v-card>
               <v-card-title class="headline blue darken-1"
@@ -488,6 +504,7 @@ export default {
     ...mapGetters("auth", ["cart", "carts", "user"]),
     ...mapGetters("product", ["product"]),
     ...mapGetters("order", ["status", "maxQuantity"]),
+    ...mapGetters("comment", ["comment", "comments"]),
     totalQuantity() {
       return this.maxQuantity;
     },
@@ -577,6 +594,7 @@ export default {
     },
     ...mapActions("auth", ["addProductInCartDetail"]),
     ...mapActions("product", ["productDetails"]),
+    ...mapActions("comment", ["getCommentById"]),
   },
   created() {
     this.onResize();
@@ -585,7 +603,10 @@ export default {
   mounted() {
     this.productDetails(this.$route.params.idProduct);
     this.productSelected = this.product;
-    console.log(this.productSelected);
+    // console.log(this.productSelected);
+    this.getCommentById(this.$route.params.idProduct);
+    console.log(this.$route.params.idProduct);
+    console.log( this.getCommentById(this.$route.params.idProduct));
   },
 };
 </script>

@@ -11,6 +11,7 @@ import createPersistedState from 'vuex-persistedstate';
 import category from "./modules/category/category";
 import productDetails from "./modules/productCart/productCart";
 import order from "./modules/order/order";
+import comment from "./modules/comment/comment";
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     category,
     order,
     productDetails,
+    comment,
   },
   plugins: [createPersistedState()]
 })
