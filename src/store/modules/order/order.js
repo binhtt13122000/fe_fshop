@@ -99,8 +99,7 @@ const actions = {
                 address: credential.address,
             };
             const response = await OrderService.createNewOrderByProduct(credential.productId, credential.productSize, credential.productQuantity,
-                credential.username, credentials);
-            console.log(response);
+                credential.username, credential.promotionId, credentials);
             if (response.status === 200) {
                 await commit(CREATE_ORDERS, credentials);
                 await commit('setStatus', response.status);
@@ -122,13 +121,15 @@ const actions = {
             };
             const response = await OrderService.createNewOrderByCart(credential.cartId,
                 credential.username, credentials);
-            console.log(response);
             if (response.status === 200) {
+                console.log(response);
                 await commit(REMOVE_ORDERS, credentials);
                 await commit('setStatus', response.status);
+                return response;
             }
         } catch (err) {
             await commit('setStatus', 400);
+            return "";
         }
     },
 
@@ -139,6 +140,7 @@ const actions = {
             console.log(response);
             if (response.status === 200) {
                 await commit(SET_ORDERS, response.data.content);
+                await commit('setStatus', response.status);
                 return await commit(SET_PAGES, response.data);
             }
         } catch (error) {

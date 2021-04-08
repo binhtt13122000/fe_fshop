@@ -715,7 +715,6 @@ export default {
       val || this.closeDeleteDialog();
     },
     nextPage() {
-      console.log(5345);
       var status = 2;
       if (this.select === "Tất cả") {
         status = 2;

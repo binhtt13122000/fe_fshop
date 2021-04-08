@@ -109,7 +109,7 @@
                     <h4 class="price">
                       <br />
                       <span>Giá bán:</span>
-                      {{ product.productPrice }}<u>đ</u>
+                      {{ formatPrice(product.productPrice) }}<u>đ</u>
                       <v-spacer></v-spacer>
                       <v-spacer></v-spacer>
                       <v-spacer></v-spacer>
@@ -123,11 +123,12 @@
                             <p style="font-family: 'Open Sans', sans-serif">
                               Size:
                             </p>
-                            <div
-                              v-for="(product, i) in product.productDetails"
-                              :key="i"
-                            >
-                              <label v-if="product.proQuantity != 0">
+                            <div>
+                              <label
+                                v-for="(product, i) in product.productDetails"
+                                :key="i"
+                                v-show="product.proQuantity != 0"
+                              >
                                 <input
                                   type="radio"
                                   name="sel_size"
@@ -420,6 +421,10 @@ import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
 import { validationMixin } from "vuelidate";
 import { required, between } from "vuelidate/lib/validators";
+import VueIziToast from "vue-izitoast";
+import "izitoast/dist/css/iziToast.css";
+import Vue from "vue";
+Vue.use(VueIziToast);
 export default {
   props: {
     source: String,
@@ -441,10 +446,67 @@ export default {
     badgeCart: 1,
     modelQuantity: "Quantity",
     modelComment: ["Mới nhất"],
+    drawer: null,
+    notificationSystem: {
+      options: {
+        show: {
+          theme: "dark",
+          icon: "icon-person",
+          position: "topCenter",
+          progressBarColor: "rgb(0, 255, 184)",
+          onOpening: function () {
+            console.info("callback abriu!");
+          },
+          onClosing: function (closedBy) {
+            console.info("closedBy: " + closedBy);
+          },
+        },
+        success: {
+          position: "topRight",
+        },
+        warning: {
+          position: "topRight",
+        },
+        error: {
+          position: "topRight",
+        },
+        question: {
+          close: false,
+          overlay: true,
+          toastOnce: true,
+          id: "question",
+          zindex: 999,
+          position: "center",
+          buttons: [
+            [
+              "<button><b>YES</b></button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+              true,
+            ],
+            [
+              "<button>NO</button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+            ],
+          ],
+          onClosing: function (instance, toast, closedBy) {
+            console.info("Closing | closedBy: " + closedBy);
+          },
+          onClosed: function (instance, toast, closedBy) {
+            console.info("Closed | closedBy: " + closedBy);
+          },
+        },
+      },
+    },
+    multiLine: true,
+    snackbar: false,
+    text: `I'm a multi-line snackbar.`,
     quantity: 0,
     productSize: "",
     size: 1,
-    drawer: null,
     rating: 5,
     tab: null,
     itemComments: ["Mới nhất", "Cũ"],
@@ -516,10 +578,15 @@ export default {
     },
   },
   methods: {
+    ...mapActions("auth", ["addProductInCartDetail"]),
+    ...mapActions("product", ["productDetails"]),
     increaseValue() {
       return this.quantity++;
     },
-
+    formatPrice(value) {
+      let price = value.toString().replace(".", ",");
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     decreaseValue() {
       if (this.quantity <= 1) {
         return (this.quantity = 1);
@@ -552,7 +619,7 @@ export default {
         this.productSelected = product;
       }
     },
-    addToCartDialogConfirm() {
+    async addToCartDialogConfirm() {
       this.$v.$touch();
       if (
         this.quantityErrors.length === 0 &&
@@ -567,16 +634,37 @@ export default {
           cartSize: this.productSize,
           cartQuantity: this.quantity,
         };
-        this.addProductInCartDetail(credential);
-        this.closeCartDialog();
+        try {
+          const response = await this.addProductInCartDetail(credential);
+          if (response !== "" && response.status === 200) {
+            this.dialogSuccess();
+            this.closeCartDialog();
+          } else {
+            this.dialogError();
+          }
+        } catch (err) {
+          this.dialogError();
+        }
       }
     },
 
     closeCartDialog() {
       this.dialogCart = false;
     },
-    ...mapActions("auth", ["addProductInCartDetail"]),
-    ...mapActions("product", ["productDetails"]),
+    dialogSuccess() {
+      this.$toast.success(
+        "Add product in cart successfully!",
+        "OK",
+        this.notificationSystem.options.success
+      );
+    },
+    dialogError() {
+      this.$toast.error(
+        "Add product in cart is failed!",
+        "Error",
+        this.notificationSystem.options.error
+      );
+    },
   },
   created() {
     this.onResize();

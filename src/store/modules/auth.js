@@ -16,6 +16,7 @@ const state = {
     cart: [],
     carts: [],
     cartDetail: [],
+    status: null,
     pages: [],
     page: [],
     totalCart: "",
@@ -44,6 +45,9 @@ const getters = {
     },
     page(state) {
         return state.page
+    },
+    status: state => {
+        return state.status;
     },
     totalCart(state) {
         state.cartDetail.forEach(el => {
@@ -145,6 +149,12 @@ const mutations = {
                 el.cart.cartTotal = totalAfter;
             })
         }
+    },
+    setStatus(state, status) {
+        state.status = status;
+    },
+    clearStatus(state) {
+        state.status = null;
     },
 };
 const actions = {
@@ -254,11 +264,17 @@ const actions = {
     },
 
     async addProductInCartDetail({ commit }, credential) {
-        const response = await AuthServices.addProductInCartDetail(credential);
-        if (response.status === 200) {
-            return await commit(ADD_PRODUCT_IN_CART, credential);
+        try {
+            const response = await AuthServices.addProductInCartDetail(credential);
+            if (response.status === 200) {
+                await commit(ADD_PRODUCT_IN_CART, credential);
+                await commit('setStatus', response.status);
+                return response;
+            }
+        } catch (err) {
+            await commit('setStatus', 400);
+            return "";
         }
-        throw new Error(response.status);
     },
 
     register({ commit }, user) {

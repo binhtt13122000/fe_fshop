@@ -153,7 +153,7 @@
                             ><span>{{ product.productName }}</span></v-col
                           >
                           <v-col cols="12"><v-divider></v-divider></v-col>
-                          <v-col cols="6">
+                          <v-col cols="12">
                             <v-select
                               v-model="productDetailSize"
                               :items="product.productDetails"
@@ -179,7 +179,7 @@
                             </span></v-col
                           >
                           <v-col cols="12"><v-divider></v-divider></v-col>
-                          <v-col cols="6">
+                          <v-col cols="12">
                             <v-text-field
                               type="number"
                               :rules="[numberRule]"
@@ -193,23 +193,12 @@
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12"><v-divider></v-divider></v-col>
-                          <v-col><span>Shipping: </span></v-col>
-                          <v-col><span>Free</span></v-col>
-                          <v-col cols="12"><v-divider></v-divider></v-col>
                           <v-col><span>Discount:</span></v-col>
                           <v-col
-                            ><input
-                              id="voucher-code"
-                              type="text"
-                              placeholder="Enter voucher code"
-                          /></v-col>
-
+                            ><span>{{ this.percentDiscount }}%</span></v-col
+                          >
                           <v-col cols="12"><v-divider></v-divider></v-col>
                           <v-col><span>Mã Khuyến mãi:</span></v-col>
-                          <!-- <v-col
-                            ><v-icon>mdi-sale</v-icon
-                            ><a href="">Chọn hoặc nhập mã khuyến mãi</a></v-col
-                          > -->
                           <v-col>
                             <v-dialog
                               v-model="dialog"
@@ -232,11 +221,14 @@
                                 <v-card-text>
                                   <div>
                                     <input
-                                      id="promo-dialog"
+                                      id="voucher-code"
                                       type="text"
                                       placeholder="Nhap mã khuyến mãi"
                                     />
-                                    <v-btn class="mx-3" color="primary"
+                                    <v-btn
+                                      class="mx-3"
+                                      color="primary"
+                                      @click="checkPromotion()"
                                       >Áp dụng</v-btn
                                     >
                                   </div>
@@ -253,6 +245,23 @@
                               </v-card>
                             </v-dialog>
                           </v-col>
+                          <v-col cols="12"><v-divider></v-divider></v-col>
+                          <v-col><span>Total:</span></v-col>
+                          <v-col
+                            ><span
+                              >{{
+                                formatPrice(
+                                  Math.round(
+                                    this.quantity * product.productPrice -
+                                      (this.quantity *
+                                        product.productPrice *
+                                        this.percentDiscount) /
+                                        100
+                                  )
+                                )
+                              }}đ</span
+                            ></v-col
+                          >
                           <v-col cols="12"><v-divider></v-divider></v-col>
                         </v-row>
                       </v-col>
@@ -341,6 +350,7 @@ export default {
         error: {
           position: "topRight",
         },
+        voucherId: "",
         question: {
           close: false,
           overlay: true,
@@ -381,6 +391,9 @@ export default {
     city: "",
     district: "",
     address: "",
+    percentDiscount: 0,
+    inputCodePromotion: "",
+    promotion: "",
     rules: {
       nameRules: [
         (v) => !!v || "First name is required",
@@ -573,12 +586,39 @@ export default {
     ...mapActions("product", ["productDetails"]),
     ...mapActions("order", ["createOrders"]),
     ...mapMutations("order", ["setMaxQuantity"]),
+    ...mapActions("voucher", [
+      "getVouchers",
+      "getVoucherById",
+      "createVoucher",
+    ]),
     onResize() {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
     formatPrice(value) {
       return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    async checkPromotion() {
+      try {
+        const credential = {
+          username: this.user.userName,
+          voucherId: document.getElementById("voucher-code").value,
+        };
+        const result = await this.getVoucherById(credential);
+        if (result.status === 200 && result.data.status == 1) {
+          this.percentDiscount = result.data.promo;
+          this.promotion = result.data;
+          this.dialogVoucherValid();
+        } else {
+          this.percentDiscount = 0;
+          this.promotion = "";
+          this.dialogVoucherInvalid();
+        }
+      } catch (err) {
+        this.percentDiscount = 0;
+        this.promotion = "";
+        this.dialogVoucherInvalid();
+      }
     },
     async createOrderByProduct() {
       this.$v.$touch();
@@ -593,6 +633,12 @@ export default {
         this.selectCityErrors.length === 0
       ) {
         this.$v.$reset();
+        let promotionId = "";
+        if (this.promotion === "") {
+          promotionId = "";
+        } else {
+          promotionId = this.promotion.promotionID;
+        }
         const credential = {
           productId: this.product.productId,
           productSize: this.productDetailSize.proSize,
@@ -603,6 +649,7 @@ export default {
           email: this.email,
           country: this.city,
           address: this.address,
+          promotionId: promotionId,
         };
         await this.createOrders(credential);
         if (this.status === 200) {
@@ -623,6 +670,20 @@ export default {
     dialogError() {
       this.$toast.error(
         "Something is wrong",
+        "Error",
+        this.notificationSystem.options.error
+      );
+    },
+    dialogVoucherValid() {
+      this.$toast.success(
+        "Voucher is valid.",
+        "OK",
+        this.notificationSystem.options.success
+      );
+    },
+    dialogVoucherInvalid() {
+      this.$toast.error(
+        "Voucher is invalid! Check again voucher code!",
         "Error",
         this.notificationSystem.options.error
       );

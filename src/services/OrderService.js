@@ -1,8 +1,8 @@
 import { get, post, put, remove } from "../utils/apiCaller"
 
 class OrderService {
-    createNewOrderByProduct(productId, productSize, productQuantity, username, credential) {
-        return post(`/orders/products/${productId}/${productSize}/${productQuantity}?username=${username}`,
+    createNewOrderByProduct(productId, productSize, productQuantity, username, promotionId, credential) {
+        return post(`/orders/products/${productId}/${productSize}/${productQuantity}?username=${username}&promotionId=${promotionId}`,
             {}, credential);
     }
 

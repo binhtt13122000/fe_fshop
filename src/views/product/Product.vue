@@ -174,6 +174,10 @@
 import { mapActions, mapGetters } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, between } from "vuelidate/lib/validators";
+import VueIziToast from "vue-izitoast";
+import "izitoast/dist/css/iziToast.css";
+import Vue from "vue";
+Vue.use(VueIziToast);
 export default {
   name: "product",
   props: ["product"],
@@ -192,6 +196,64 @@ export default {
     return {
       active: true,
       isFavourite: false,
+      drawer: null,
+      notificationSystem: {
+        options: {
+          show: {
+            theme: "dark",
+            icon: "icon-person",
+            position: "topCenter",
+            progressBarColor: "rgb(0, 255, 184)",
+            onOpening: function () {
+              console.info("callback abriu!");
+            },
+            onClosing: function (closedBy) {
+              console.info("closedBy: " + closedBy);
+            },
+          },
+          success: {
+            position: "topRight",
+          },
+          warning: {
+            position: "topRight",
+          },
+          error: {
+            position: "topRight",
+          },
+          question: {
+            close: false,
+            overlay: true,
+            toastOnce: true,
+            id: "question",
+            zindex: 999,
+            position: "center",
+            buttons: [
+              [
+                "<button><b>YES</b></button>",
+                function (instance, toast) {
+                  instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+                },
+                true,
+              ],
+              [
+                "<button>NO</button>",
+                function (instance, toast) {
+                  instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+                },
+              ],
+            ],
+            onClosing: function (instance, toast, closedBy) {
+              console.info("Closing | closedBy: " + closedBy);
+            },
+            onClosed: function (instance, toast, closedBy) {
+              console.info("Closed | closedBy: " + closedBy);
+            },
+          },
+        },
+      },
+      multiLine: true,
+      snackbar: false,
+      text: `I'm a multi-line snackbar.`,
       rating: 6,
       addToFavourite: "Add to favourite",
       removeToFavourite: "Remove from favourite",
@@ -223,7 +285,7 @@ export default {
       this.productSelected = product;
     },
 
-    addToCartDialogConfirm() {
+    async addToCartDialogConfirm() {
       this.$v.$touch();
       if (
         this.quantityErrors.length === 0 &&
@@ -231,7 +293,6 @@ export default {
         this.selectErrors.length === 0
       ) {
         this.$v.$reset();
-        console.log(this.productDetailSize);
         const credential = {
           cartId: this.productCart,
           username: this.user.userName,
@@ -239,8 +300,17 @@ export default {
           cartSize: this.productDetailSize.proSize.trim(),
           cartQuantity: this.quantity,
         };
-        this.addProductInCartDetail(credential);
-        this.closeCartDialog();
+        try {
+          const response = await this.addProductInCartDetail(credential);
+          if (response !== "" && response.status === 200) {
+            this.dialogSuccess();
+            this.closeCartDialog();
+          } else {
+            this.dialogError();
+          }
+        } catch (err) {
+          this.dialogError();
+        }
       }
     },
 
@@ -260,6 +330,20 @@ export default {
         this.setMaxQuantity(quantity);
       }
       console.log(this.$v.quantity.$params);
+    },
+    dialogSuccess() {
+      this.$toast.success(
+        "Add product in cart successfully!",
+        "OK",
+        this.notificationSystem.options.success
+      );
+    },
+    dialogError() {
+      this.$toast.error(
+        "Add product in cart is failed",
+        "Error",
+        this.notificationSystem.options.error
+      );
     },
   },
   computed: {

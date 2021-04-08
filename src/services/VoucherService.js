@@ -1,8 +1,8 @@
 import { get, post } from "../utils/apiCaller"
 
 class VoucherService {
-    createNewSupplier(credential) {
-        return post(`/suppliers`, {}, credential, {});
+    createVoucher(username, credential) {
+        return post(`/users/${username}/promotions`, {}, credential, {});
     }
 
     getVouchers(username) {

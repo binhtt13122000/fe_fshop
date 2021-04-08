@@ -189,12 +189,73 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
+import VueIziToast from "vue-izitoast";
+import "izitoast/dist/css/iziToast.css";
+import Vue from "vue";
+Vue.use(VueIziToast);
 // import VmCart from "./Cart.vue";
 export default {
   components: { VmFooter, VmHeader },
 
   data: () => ({
     drawer: null,
+    notificationSystem: {
+      options: {
+        show: {
+          theme: "dark",
+          icon: "icon-person",
+          position: "topCenter",
+          progressBarColor: "rgb(0, 255, 184)",
+          onOpening: function () {
+            console.info("callback abriu!");
+          },
+          onClosing: function (closedBy) {
+            console.info("closedBy: " + closedBy);
+          },
+        },
+        success: {
+          position: "topRight",
+        },
+        warning: {
+          position: "topRight",
+        },
+        error: {
+          position: "topRight",
+        },
+        question: {
+          close: false,
+          overlay: true,
+          toastOnce: true,
+          id: "question",
+          zindex: 999,
+          position: "center",
+          buttons: [
+            [
+              "<button><b>YES</b></button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+              true,
+            ],
+            [
+              "<button>NO</button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+            ],
+          ],
+          onClosing: function (instance, toast, closedBy) {
+            console.info("Closing | closedBy: " + closedBy);
+          },
+          onClosed: function (instance, toast, closedBy) {
+            console.info("Closed | closedBy: " + closedBy);
+          },
+        },
+      },
+    },
+    multiLine: true,
+    snackbar: false,
+    text: `I'm a multi-line snackbar.`,
     username: "nhanltse140784",
     checkbox: false,
     linkBar: [
@@ -214,7 +275,7 @@ export default {
     idCart: "",
     percentDiscount: 0,
     inputCodePromotion: "",
-    promotion: {},
+    promotion: "",
   }),
 
   created() {
@@ -231,7 +292,11 @@ export default {
       "getCartDetail",
       "changeQuantityProductInCartDetails",
     ]),
-    ...mapActions("voucher", ["getVouchers", "getVoucherById"]),
+    ...mapActions("voucher", [
+      "getVouchers",
+      "getVoucherById",
+      "createVoucher",
+    ]),
     ...mapActions("order", ["createOrdersByCart"]),
     onResize() {
       this.isValid = window.innerWidth <= 1040;
@@ -244,15 +309,19 @@ export default {
           voucherId: document.getElementById("voucher-code").value,
         };
         const result = await this.getVoucherById(credential);
-        console.log(result);
-        if (result.status === 200) {
+        if (result.status === 200 && result.data.status == 1) {
           this.percentDiscount = result.data.promo;
           this.promotion = result.data;
+          this.dialogVoucherValid();
         } else {
           this.percentDiscount = 0;
+          this.promotion = "";
+          this.dialogVoucherInvalid();
         }
       } catch (err) {
         this.percentDiscount = 0;
+        this.promotion = "";
+        this.dialogVoucherInvalid();
       }
     },
     userName() {
@@ -286,7 +355,13 @@ export default {
       let price = value.toString().replace(".", ",");
       return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    createOrder() {
+    async createOrder() {
+      let promotionId = "";
+      if (this.promotion === "") {
+        promotionId = "";
+      } else {
+        promotionId = this.promotion.promotionID;
+      }
       const credential = {
         cartId: this.idCart,
         username: this.user.userName,
@@ -295,14 +370,51 @@ export default {
         email: this.user.email,
         country: this.user.country,
         address: this.user.address,
-        promotionId: this.promotion.promotionID,
+        promotionId: promotionId,
+        total: Math.round(
+          this.totalCart - (this.totalCart * this.percentDiscount) / 100
+        ),
       };
-      this.createOrdersByCart(credential);
-      // if (this.status === 200) {
-      //this.dialogSuccess();
-      //} else if (this.status === 400) {
-      // this.dialogError();
-      //}
+      try {
+        const response = await this.createOrdersByCart(credential);
+        console.log(response);
+        if (response !== "" && response.status === 200) {
+          this.dialogSuccess();
+          this.$router.push("/products");
+        } else {
+          this.dialogError();
+        }
+      } catch (err) {
+        this.dialogError();
+      }
+    },
+    dialogSuccess() {
+      this.$toast.success(
+        "Order product successfully!",
+        "OK",
+        this.notificationSystem.options.success
+      );
+    },
+    dialogError() {
+      this.$toast.error(
+        "Something is wrong",
+        "Error",
+        this.notificationSystem.options.error
+      );
+    },
+    dialogVoucherValid() {
+      this.$toast.success(
+        "Voucher is valid.",
+        "OK",
+        this.notificationSystem.options.success
+      );
+    },
+    dialogVoucherInvalid() {
+      this.$toast.error(
+        "Voucher is invalid! Check again voucher code!",
+        "Error",
+        this.notificationSystem.options.error
+      );
     },
   },
 

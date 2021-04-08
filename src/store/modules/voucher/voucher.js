@@ -26,15 +26,14 @@ const mutations = {
 };
 
 const actions = {
-    // async createNewSupplier({ commit }, credential) {
-    //     console.log("abc")
-    //     const response = await SupplierService.createNewSupplier(credential);
-    //     if (response.status === 200) {
-    //         await commit(ADD_SUPPLIER, response.data.content);
-    //         return await commit(SET_PAGES, response.data);
-    //     }
-    //     throw new Error(response.status);
-    // },
+    async createVoucher({ commit }, credential) {
+        console.log(1234);
+        const response = await VoucherService.createVoucher(credential.username, credential);
+        if (response.status === 200) {
+            return await commit(ADD_VOUCHER, response.data.content);
+        }
+        throw new Error(response.status);
+    },
     async getVouchers({ commit }, username) {
         try {
             const response = await VoucherService.getVouchers(username);
@@ -47,13 +46,15 @@ const actions = {
         }
     },
     async getVoucherById({ commit }, credential) {
-        console.log(credential);
-        const response = await VoucherService.getVoucherById(credential.username, credential.voucherId)
-        if (response.status === 200) {
-            await commit(SET_PAGES, "");
-            return response;
+        try {
+            const response = await VoucherService.getVoucherById(credential.username, credential.voucherId)
+            if (response.status === 200) {
+                await commit(SET_PAGES, "");
+                return response;
+            }
+        } catch (err) {
+            return "";
         }
-        throw new Error(response);
     },
 };
 
