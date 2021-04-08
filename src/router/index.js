@@ -18,6 +18,7 @@ import CrudProduct from '../views/Admin/CrudProduct.vue'
 import User from '../views/Admin/User.vue'
 import Test from '../views/Admin/Test.vue'
 import Order from '../views/Admin/Order.vue'
+import CommentAdmin from '../views/Admin/Comment.vue'
 import OrderUser from '../views/order/Order.vue'
 
 // import Product from '../views/product/Product.vue'
@@ -95,6 +96,11 @@ const routes = [
     path: '/headerAdmin',
     name: 'headerAdmin',
     component: HeaderAdmin
+  },
+  {
+    path: '/CommentAdmin',
+    name: 'CommentAdmin',
+    component: CommentAdmin
   },
   {
     path: '/layout',

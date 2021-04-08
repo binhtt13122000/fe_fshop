@@ -1,5 +1,5 @@
 import CommentService from "../../../services/CommentService.js";
-import { SET_PAGE, SET_PAGES, REMOVE_COMMENT, DELETE_COMMENT_BY_ADMIN, ADD_COMMENT, GET_COMMENT_BY_PRODUCTID } from './mutation-type'
+import { SET_PAGE, SET_PAGES, SET_COMMENTS, SET_COMMENT, REMOVE_COMMENT, DELETE_COMMENT_BY_ADMIN, ADD_COMMENT, GET_COMMENT_BY_PRODUCTID } from './mutation-type'
 
 const state = {
     comments: [],
@@ -26,6 +26,12 @@ const getters = {
 
 
 const mutations = {
+    [SET_COMMENTS]: (state, val) => {
+        state.comment = val
+    },
+    [SET_COMMENT]: (state, val) => {
+        state.comments = val
+    },
     [SET_PAGES]: (state, val) => {
         state.pages = val
     },
@@ -34,15 +40,13 @@ const mutations = {
         state.page = val
     },
     [ADD_COMMENT]: (state, comment) => {
-        state.products.push(comment)
+        state.comments.push(comment)
     },
 
     [REMOVE_COMMENT]: (state, id) => {
-        const products = [...state.products];
-        const deletedProducts = products.filter(product => {
-            return product.productId !== id;
-        })
-        state.products = deletedProducts;
+        const comments = [...state.comments];
+        const index = comments.findIndex(comment => comment.commentId === id);
+        comments[index].status = -1;
     },
 
     [DELETE_COMMENT_BY_ADMIN]: (state, id) => {
@@ -77,13 +81,28 @@ const actions = {
     //     }
     //     throw new Error(response.status)
     // },
-    async createComment({ commit }, productId, username, newComment) {
-        const response = await CommentService.addComment(productId, username, newComment);
+    async getCommentById({ commit }, productId) {
+        const response = await CommentService.getCommentByProductId(productId);
         if (response.status === 200) {
-            commit(ADD_COMMENT, newComment);
+            return commit(SET_COMMENTS, response.data.content)
         }
         throw new Error(response.status)
     },
+    async createComment({ commit }, creadential) {
+        const response = await CommentService.addComment(creadential.productId, creadential.userName, creadential.newComment);
+            console.log(creadential.newComment);
+        if (response.status === 200) {
+            return commit(ADD_COMMENT, creadential.newComment);
+        }
+        throw new Error(response.status)
+    },
+    async deleteComment({ commit }, creadential){
+        const response = await CommentService.deleteComment(creadential.commentId, creadential.userName);
+        if(response.status === 200){
+            return commit(REMOVE_COMMENT, creadential);
+        }
+        throw new Error(response.status)
+    }
     // async updateComment({commit}, productId, username, newComment){
     //     const response =  await CommentService.addComment(productId, username, newComment);
     //     if(response.status === 200){
@@ -91,16 +110,7 @@ const actions = {
     //     }
     //     throw new Error(response.status)
     // },
-    async getCommentById({ commit }, id) {
-        const response = await CommentService.getCommentByProductId(id);
-        console.log("oke1")
-        console.log(response.data);
-        if (response.status === 200) {
-            commit(GET_COMMENT_BY_PRODUCTID, response.data.content)
-            console.log("oke")
-        }
-        throw new Error(response.status)
-    }
+
 };
 
 export default {
