@@ -206,12 +206,6 @@ export default {
           icon: "icon-person",
           position: "topCenter",
           progressBarColor: "rgb(0, 255, 184)",
-          onOpening: function () {
-            console.info("callback abriu!");
-          },
-          onClosing: function (closedBy) {
-            console.info("closedBy: " + closedBy);
-          },
         },
         success: {
           position: "topRight",
@@ -244,12 +238,6 @@ export default {
               },
             ],
           ],
-          onClosing: function (instance, toast, closedBy) {
-            console.info("Closing | closedBy: " + closedBy);
-          },
-          onClosed: function (instance, toast, closedBy) {
-            console.info("Closed | closedBy: " + closedBy);
-          },
         },
       },
     },
@@ -377,7 +365,6 @@ export default {
       };
       try {
         const response = await this.createOrdersByCart(credential);
-        console.log(response);
         if (response !== "" && response.status === 200) {
           this.dialogSuccess();
           this.$router.push("/products");
@@ -419,12 +406,12 @@ export default {
   },
 
   mounted() {
+    console.log(this.$route.params.idCart);
     const credential = {
       userName: this.user.userName,
       idCart: this.$route.params.idCart,
     };
     (this.idCart = this.$route.params.idCart), this.getCartDetail(credential);
-    console.log(this.totalCart);
   },
 };
 </script>

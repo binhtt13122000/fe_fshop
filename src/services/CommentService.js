@@ -1,18 +1,21 @@
-import {get, post, put, remove} from "../utils/apiCaller"
+import {get, post, put, remove } from "../utils/apiCaller"
 
 class CommentService {
-    getCommentByProductId(id){
-        return get(`/products/${id}/comments`,{},{});
+    getCommentByProductId(credential) {
+        return get(`/products/${credential.productId}/comments?username=${credential.username}`, {}, {});
     }
 
-    addComment(proId, username, newComment){
+    addComment(proId, username, newComment) {
         return post(`/products/${proId}/users/${username}/comments`, {}, newComment, {});
     }
-    updateComment(username, commentId, updateComment){
-        return put("/users/"+ username+"/comments/"+commentId, {}, updateComment, {});
+    addCommentParent(proId, username, newComment, parentId) {
+        return post(`/products/${proId}/users/${username}/comments?parentId=${parentId}`, {}, newComment, {});
     }
-    deleteComment(commentId, username){
-        return remove(`/comments/${commentId}?username=${username}`,{},{});
+    updateComment(username, commentId, updateComment) {
+        return put("/users/" + username + "/comments/" + commentId, {}, updateComment, {});
+    }
+    deleteComment(commentId, username) {
+        return remove(`/comments/${commentId}?username=${username}`, {}, {});
     }
 }
 

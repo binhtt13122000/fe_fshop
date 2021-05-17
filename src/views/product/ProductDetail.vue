@@ -88,14 +88,13 @@
                     </v-tab-item>
                   </v-tabs>
                 </v-col>
-                <v-col cols="10" md="4" align="left">
+                <v-col cols="12" md="4" xs="12" sm="12" align="left">
                   <div class="sumary-inner"></div>
                   <div
                     class="size-inner"
                     style="font-family: 'Open Sans', sans-serif"
                   >
                     <h1>{{ product.productName }}</h1>
-                    <!-- <p>{{ product.productDescription }}</p> -->
                     <v-rating
                       :value="4.5"
                       color="amber"
@@ -110,9 +109,6 @@
                       <br />
                       <span>Giá bán:</span>
                       {{ formatPrice(product.productPrice) }}<u>đ</u>
-                      <v-spacer></v-spacer>
-                      <v-spacer></v-spacer>
-                      <v-spacer></v-spacer>
                     </h4>
                     <v-divider></v-divider>
                     <br />
@@ -324,93 +320,82 @@
                 <v-tab>Bình luận</v-tab>
                 <v-tab-item>
                   <v-container fluid>
-                    <v-row>
-                      <v-card align="center" elevation="2">
-                        <v-form v-for="cmt in comments" :key="cmt.commentId">
-                          <v-row>
-                            <v-col md="2">
+                    <v-form
+                      v-for="(cmt, index) in comments"
+                      :key="cmt.commentId"
+                    >
+                      <v-row v-if="cmt.status !== -1 || !cmt.parentId">
+                        <v-col cols="12" lg="2" md="2" sm="2">
+                          <img
+                            src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
+                            alt="avatar"
+                            width="40px"
+                            height="40px"
+                            class="mx-3"
+                          />
+                          <p class="text-secondary text-center">
+                            {{ diffenceDateTime(cmt.createTime) }}
+                          </p>
+                        </v-col>
+                        <v-col lg="10">
+                          <v-text-field
+                            filled
+                            :value="cmt.content"
+                            :label="cmt.name"
+                            readonly
+                          ></v-text-field>
+                          <div style="text-align: right" class="mb-4">
+                            <!-- <v-btn class="mx-1" @click="openReply(cmt, index)"
+                              ><v-icon>mdi-reply</v-icon>Reply</v-btn
+                            > -->
+                            <v-btn
+                              class="mx-1"
+                              @click="deleteCmt(cmt)"
+                              color="red"
+                              v-if="cmt.userId === user.userId"
+                              ><v-icon>mdi-delete</v-icon>Delete</v-btn
+                            >
+                          </div>
+                          <v-row class="mb-6" v-if="indexSelect === index">
+                            <v-col cols="12" lg="2" md="2" sm="2">
                               <img
                                 src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
                                 alt="avatar"
-                                width="60%"
-                                height="40%"
-                                class="mx-3"
+                                width="50%"
                               />
-                              <p class="text-secondary text-center">
-                                15 Minutes Ago
-                              </p>
                             </v-col>
-                            <v-col md="10">
-                              <v-text-field
-                                filled
-                                :value="cmt.content"
-                                :label="cmt.name"
-                                readonly
-                              ></v-text-field>
-
-                              <div style="text-align: right">
-                                <v-btn
-                                  class="mx-1"
-                                  color="success"
-                                  @click="createCmm()"
-                                  >Send</v-btn
-                                >
-                                <v-btn class="mx-1"
-                                  ><v-icon>mdi-reply</v-icon>Reply</v-btn
-                                >
-                                <v-btn class="mx-1" color="red"
-                                  ><v-icon>mdi-delete</v-icon>Delete</v-btn
-                                >
-                              </div>
-                            </v-col>
-
-                            <v-row v-if="cmt.parentId != null">
-                              <v-col md="2">
-                                <img
-                                  src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
-                                  alt="avatar"
-                                  width="60%"
-                                  height="40%"
-                                  class="mx-3"
-                                />
-                                <p class="text-secondary text-center">
-                                  15 Minutes Ago
-                                </p>
-                              </v-col>
-                              <v-col md="10">
-                                <v-text-field
-                                  filled
-                                  :value="cmt.content"
-                                  :label="cmt.name"
-                                  readonly
-                                ></v-text-field>
-
-                                <div style="text-align: right">
-                                  <v-btn
-                                    class="mx-1"
-                                    color="success"
-                                    @click="createCmm()"
+                            <v-col lg="8" md="8" sm="8">
+                              <v-row>
+                                <v-col lg="10" md="10">
+                                  <v-textarea
+                                    v-model="addComment"
+                                    label="Comment"
+                                    auto-grow
+                                    outlined
+                                    rows="5"
+                                    row-height="10"
+                                  ></v-textarea>
+                                </v-col>
+                                <v-col lg="2" md="2">
+                                  <v-btn color="success" @click="createCmm()"
                                     >Send</v-btn
                                   >
-                                  <v-btn class="mx-1"
-                                    ><v-icon>mdi-reply</v-icon>Reply</v-btn
-                                  >
-                                  <v-btn class="mx-1" color="red"
-                                    ><v-icon>mdi-delete</v-icon>Delete</v-btn
-                                  >
-                                </div>
-                              </v-col>
-                            </v-row>
+                                </v-col>
+                              </v-row>
+                            </v-col>
                           </v-row>
-                        </v-form>
-                      </v-card>
-                      <v-row>
+                        </v-col>
+                      </v-row>
+                    </v-form>
+                    <v-row v-if="!this.cmtSelect">
+                      <v-col cols="12" lg="2" md="2" sm="2">
                         <img
                           src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
                           alt="avatar"
-                          width="10%"
-                          height="%"
+                          width="50%"
                         />
+                      </v-col>
+                      <v-col lg="8" md="8" sm="8">
                         <v-textarea
                           v-model="addComment"
                           label="Comment"
@@ -420,7 +405,7 @@
                           row-height="10"
                         ></v-textarea>
                         <v-btn color="success" @click="createCmm()">Send</v-btn>
-                      </v-row>
+                      </v-col>
                     </v-row>
                   </v-container>
                 </v-tab-item>
@@ -487,6 +472,7 @@ import { validationMixin } from "vuelidate";
 import { required, between } from "vuelidate/lib/validators";
 import VueIziToast from "vue-izitoast";
 import "izitoast/dist/css/iziToast.css";
+import moment from "moment";
 import Vue from "vue";
 Vue.use(VueIziToast);
 export default {
@@ -506,11 +492,14 @@ export default {
   },
   components: { VmFooter, VmHeader },
   data: () => ({
+    indexSelect: -1,
+    cmtSelect: "",
     modelSize: "Size",
     badgeCart: 1,
     modelQuantity: "Quantity",
     modelComment: ["Mới nhất"],
     drawer: null,
+    reply: false,
     notificationSystem: {
       options: {
         show: {
@@ -647,6 +636,31 @@ export default {
   methods: {
     ...mapActions("auth", ["addProductInCartDetail"]),
     ...mapActions("product", ["productDetails"]),
+    openReply(cmtSelect, index) {
+      if (this.reply && this.indexSelect != -1) {
+        this.reply = false;
+        this.indexSelect = -1;
+        this.cmtSelect = "";
+      } else {
+        this.indexSelect = index;
+        this.reply = true;
+        this.cmtSelect = cmtSelect;
+        console.log(this.cmtSelect);
+      }
+    },
+    async deleteCmt(cmt) {
+      const credentials = {
+        commentId: cmt.commentId,
+        userName: this.user.userName,
+      };
+      console.log(credentials);
+      const response = await this.deleteComment(credentials);
+      if (response === 200) {
+        Vue.toasted.show("Delete comment successfully.").goAway(1500);
+      } else {
+        Vue.toasted.show("Delete comment failed!").goAway(1500);
+      }
+    },
     increaseValue() {
       return this.quantity++;
     },
@@ -677,27 +691,28 @@ export default {
     },
     createCmm() {
       // this.$v.$touch();
-      var date = new Date("2021-03-25 12:00:00.Z");
-      var creadential = {
-        productId: this.productSelected.productId,
-        userName: this.user.userName,
-        newComment: {
-          name: this.user.name,
-          phoneNumber: this.user.phoneNumber,
-          content: this.addComment,
-          createTime: date,
-          parenId: 1,
-          status: 1,
+      if (this.addComment) {
+        var date = new Date();
+        var creadential = {
           productId: this.productSelected.productId,
-          userId: this.user.userId,
-          proId: this.productSelected.productId,
-        },
-      };
-      // console.log(this.user.userName);
-      // console.log(creadential);
-      this.createComment(creadential);
-      // this.getCommentById(this.productSelected.productId);
-      this.addComment = "";
+          userName: this.user.userName,
+          newComment: {
+            name: this.user.name,
+            phoneNumber: this.user.phoneNumber,
+            content: this.addComment,
+            createTime: date,
+            parentId: this.cmtSelect ? this.cmtSelect.commentId : null,
+            status: 1,
+            productId: this.productSelected.productId,
+            userId: this.user.userId,
+            proId: this.productSelected.productId,
+          },
+        };
+        this.createComment(creadential);
+        this.addComment = "";
+      } else {
+        Vue.toasted.show("Required input content comment!").goAway(1500);
+      }
     },
     addToCartDialog(product) {
       this.$v.$touch();
@@ -708,6 +723,13 @@ export default {
         this.$v.$reset();
         this.dialogCart = true;
         this.productSelected = product;
+      } else {
+        if (this.quantityErrors.length !== 0) {
+          Vue.toasted.show(this.quantityErrors).goAway(2000);
+        }
+        if (this.productSizeError.length !== 0) {
+          Vue.toasted.show(this.productSizeError).goAway(2000);
+        }
       }
     },
     async addToCartDialogConfirm() {
@@ -756,9 +778,23 @@ export default {
         this.notificationSystem.options.error
       );
     },
+    diffenceDateTime(value) {
+      let start = moment(value);
+      let end = moment(new Date());
+      let duration = moment.duration(end.diff(start));
+      let days = duration.asDays();
+      if (days < 1) {
+        return Math.round(duration.asMinutes()) + " minutes";
+      }
+      return Math.round(days) + " days";
+    },
     ...mapActions("auth", ["addProductInCartDetail"]),
     ...mapActions("product", ["productDetails"]),
-    ...mapActions("comment", ["getCommentById", "createComment"]),
+    ...mapActions("comment", [
+      "getCommentById",
+      "createComment",
+      "deleteComment",
+    ]),
   },
   created() {
     this.onResize();
@@ -767,12 +803,11 @@ export default {
   mounted() {
     this.productDetails(this.$route.params.idProduct);
     this.productSelected = this.product;
-    // console.log(this.productSelected);
-    if (this.$route.params.idProduct == null) {
-      this.getCommentById(this.$route.params.idProduct);
-    } else {
-      console.log("Danh che con me may");
-    }
+    var credential = {
+      productId: this.$route.params.idProduct,
+      username: this.user.userName,
+    };
+    this.getCommentById(credential);
   },
 };
 </script>
@@ -884,7 +919,6 @@ body {
     width: 40px;
     position: relative;
     margin: 0 2px;
-
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -902,7 +936,6 @@ body {
     color: #ffffff;
     text-align: center;
     justify-content: center;
-    //  text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
     position: absolute;
@@ -919,7 +952,6 @@ body {
 
   input:checked + span {
     padding-top: 3px;
-    border: 3px solid rgb(177, 177, 177);
     background-color: rgb(177, 177, 177);
     border: 3px solid rgb(177, 177, 177);
   }

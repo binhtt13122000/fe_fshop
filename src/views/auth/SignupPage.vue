@@ -7,7 +7,7 @@
         color="grey darken-3"
         dark
       >
-        <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
+        <v-toolbar-title class="ml-0 pl-4">
           <img
             class="header-main-logo-js"
             src="https://4menshop.com/logo.png"
@@ -16,6 +16,9 @@
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
+        <v-list-item-action class="right" style="width: 150px">
+          <v-btn to="/loginpage">Sign in</v-btn>
+        </v-list-item-action>
         <v-list-item-action class="left">
           <v-btn to="/"><v-icon>mdi-exit-to-app</v-icon></v-btn>
         </v-list-item-action>
@@ -30,7 +33,7 @@
                 <v-card-text>
                   <v-text-field
                     class="form_group"
-                    label="userName"
+                    label="User Name"
                     v-model="userName"
                     :rules="rules.usernameRules"
                     required
@@ -41,7 +44,7 @@
                   ></v-text-field>
                   <v-text-field
                     class="form_group"
-                    label="name"
+                    label="Full Name"
                     v-model="name"
                     :rules="rules.nameRules"
                     required
@@ -74,6 +77,19 @@
                     prepend-icon="mdi-lock"
                     type="password"
                   ></v-text-field>
+
+                  <v-text-field
+                    class="form_group"
+                    id="password"
+                    label="Confirm Password"
+                    v-model="password"
+                    name="password"
+                    :rules="rules.passwordRules"
+                    required
+                    error-count="5"
+                    prepend-icon="mdi-lock-open"
+                    type="password"
+                  ></v-text-field>
                   <div class="text-xs-center">
                     <v-btn class="" type="submit" color="success"
                       >Register</v-btn
@@ -82,12 +98,11 @@
                 </v-card-text>
               </v-form>
               <br />
-              <br />
               <v-form align="center">
                 <v-spacer></v-spacer>
                 <hr
-                  class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-                  style="width: 300px"
+                  class="black accent-2 mb-4 mt-0 d-inline-block"
+                  style="max-width: 300px; width: 100%"
                 />
                 <br />
                 <a href="" class="googleIcon"
@@ -105,6 +120,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 export default {
   components: { VmFooter },
@@ -151,13 +167,19 @@ export default {
         .then(() => this.$router.push("/"))
         .catch((err) => console.log(err));
     },
+    ...mapGetters("auth", ["user"]),
+  },
+  created() {
+    if (!this.user) {
+      this.$router.push("/products");
+    }
   },
 };
 </script>
 
 <style lang="scss">
 .text-xs-center {
-  text-align: right;
+  text-align: center;
 }
 
 .fa-google {

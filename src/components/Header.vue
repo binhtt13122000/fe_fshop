@@ -118,14 +118,7 @@
         </template>
         <v-card>
           <div>
-            <v-col
-              ><h1>
-                Shopping cart
-                <v-icon class="mb-6" @click="sheet = !sheet"
-                  >mdi-close-circle</v-icon
-                >
-              </h1></v-col
-            >
+            <v-col><h2>Shopping cart</h2></v-col>
             <v-divider></v-divider>
             <v-list-item
               v-for="cart in carts"
@@ -133,7 +126,7 @@
               @click="sheet = false"
             >
               <v-list-item-avatar class="mx-3">
-                <v-avatar size="32px">
+                <v-avatar size="30px">
                   <img
                     src="https://img.icons8.com/plasticine/2x/favorite-cart.png"
                     alt="cart"
@@ -141,7 +134,7 @@
                 </v-avatar>
               </v-list-item-avatar>
               <router-link :to="'/carts/' + cart.cartId" id="cart-item">
-                <v-list-item-title style="font-size: 15px">{{
+                <v-list-item-title style="font-size: 12px">{{
                   cart.cartDescription
                 }}</v-list-item-title>
               </router-link>
@@ -160,10 +153,10 @@
                     v-bind="attrs"
                     v-on="on"
                     @click="dialogCreateCart = true"
-                    size="30px"
+                    size="26px"
                     width="200px"
-                    ><h3>CART</h3>
-                    <v-icon large>mdi-plus</v-icon></v-btn
+                    ><h4>CART</h4>
+                    <v-icon small>mdi-plus</v-icon></v-btn
                   >
                 </v-col>
               </template>
@@ -174,10 +167,11 @@
                     <v-spacer></v-spacer>
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on }">
-                        <v-btn icon large target="_blank" v-on="on">
-                          <v-icon>mdi-code-tags</v-icon>
+                        <v-btn @click="dialog = false" icon large v-on="on">
+                          <v-icon>mdi-close</v-icon>
                         </v-btn>
                       </template>
+                      <span>Close</span>
                     </v-tooltip>
                   </v-toolbar>
                   <v-card-text>
@@ -266,13 +260,7 @@
                 Mã giảm giá
               </v-btn>
               <v-divider class="my-3"></v-divider>
-              <v-btn
-                depressed
-                rounded
-                text
-                v-on:click="logout()"
-                v-show="isLoggedIn"
-              >
+              <v-btn depressed rounded text v-on:click="logoutAccount()">
                 Logout
               </v-btn>
             </div>
@@ -297,6 +285,7 @@
 import { mapGetters, mapActions, mapState } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, maxLength } from "vuelidate/lib/validators";
+import Vue from "vue";
 export default {
   mixins: [validationMixin],
 
@@ -330,15 +319,17 @@ export default {
   }),
 
   methods: {
-    logout() {
-      this.$store.dispatch("auth/logout").then((response) => {
-        if (response.status === 200) {
+    async logoutAccount() {
+      await this.$store.dispatch("auth/logout").then(async (response) => {
+        if (response === 200) {
+          Vue.toasted.show("Logout successfully.").goAway(1500);
           this.$router.push("/");
         }
       });
     },
     loggedIn: function () {
-      this.isLoggedIn = this.$store.state.auth.userInfo.isLoggedIn;
+      console.log(this.user);
+      this.user ? (this.isLoggedIn = true) : (this.isLoggedIn = false);
       return this.isLoggedIn;
     },
 
@@ -363,7 +354,6 @@ export default {
     },
     onResize() {
       this.isValid = window.innerWidth <= 1040;
-      this.isAccount = window.innerWidth <= 900;
     },
     ...mapActions("auth", ["logout", "getCart"]),
   },
@@ -391,6 +381,7 @@ export default {
     if (this.loggedIn() === true) {
       this.getCart(this.user.userName);
     }
+    console.log(this.user);
   },
 };
 </script>

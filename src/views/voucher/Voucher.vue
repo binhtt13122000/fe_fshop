@@ -11,12 +11,13 @@
           <table></table>
         </v-container>
         <v-container>
-          <v-row dense>
+          <v-row class="d-flex justify-content-center">
             <v-col
+              cols="12"
               md="4"
-              sm="4"
-              align-content="center"
-              justify="center"
+              sm="6"
+              xs="12"
+              class="voucher"
               v-for="voucher in this.vouchers"
               :key="voucher.promotionId"
             >
@@ -81,11 +82,13 @@ export default {
   },
 
   created() {
+    if (!this.user) {
+      this.$router.push("/loginpage");
+    }
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
     // this.$store.mapGetters.product.pages;
     this.getVouchers(this.user.userName);
-    console.log(this.vouchers);
   },
   mounted() {},
 };
@@ -116,6 +119,14 @@ export default {
     text-transform: uppercase;
   }
   // main image
+
+  //Voucher
+  .voucher {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10px;
+    flex-grow: 1;
+  }
 
   // footer
 }

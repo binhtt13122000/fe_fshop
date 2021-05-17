@@ -283,7 +283,6 @@ export default {
         }
       } else {
         this.isFileSelected = false;
-        console.log(this.radioShow);
         if (this.radioShow === "all") {
           this.credential = {
             txtSearchAccount: "",
@@ -348,7 +347,6 @@ export default {
     searchUserWithStatus() {
       this.isFileSelected = false;
 
-      console.log(this.radioShow);
       if (this.radioShow === "all") {
         this.currentPage = 1;
         this.credential = {
@@ -479,7 +477,6 @@ export default {
       let xlsxfile = event.target.files ? event.target.files[0] : null;
       readXlsxFile(xlsxfile).then((rows) => {
         this.isFileSelected = true;
-        console.log("rows:");
         rows.forEach((element) => {
           this.user = {
             userId: element[0],
@@ -499,7 +496,6 @@ export default {
           };
           this.listUsers.push(this.user);
         });
-        console.log(this.listUsers.length);
         this.setPages([]);
         this.setUsers(this.listUsers);
         this.listUsers = [];

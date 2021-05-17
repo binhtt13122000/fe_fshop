@@ -2,9 +2,25 @@ import 'es6-promise/auto'
 // import router from '../../router/index.js';
 import AuthServices from "../../services/AuthenticationService"
 import {
-    AUTH_REQUEST, ADD_NEW_CART, SET_USER, SET_USERS, IS_LOGGED_IN, IS_SIGNED_UP,
-    SET_CARTS, SET_CART, SET_CART_DETAIL, DELETE_CART_DETAIL, AUTH_ERROR, LOGOUT, REMOVE_FAVORITE, SET_PAGES, SET_PAGE,
-    BAN_USER, ACTIVE_USER, ADD_PRODUCT_IN_CART, CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL
+    AUTH_REQUEST,
+    ADD_NEW_CART,
+    SET_USER,
+    SET_USERS,
+    IS_LOGGED_IN,
+    IS_SIGNED_UP,
+    SET_CARTS,
+    SET_CART,
+    SET_CART_DETAIL,
+    DELETE_CART_DETAIL,
+    AUTH_ERROR,
+    LOGOUT,
+    REMOVE_FAVORITE,
+    SET_PAGES,
+    SET_PAGE,
+    BAN_USER,
+    ACTIVE_USER,
+    ADD_PRODUCT_IN_CART,
+    CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL,
 } from './mutation-type';
 const state = {
     user: {},
@@ -101,14 +117,17 @@ const mutations = {
             // const ind = carts[index].findIndex(cartDetail => cartDetail.productId === credential.productId && cartDetail.proQuantity === credential.cartQuantity);
             // if (ind != -1) {
             console.log(123)
-            // }
+                // }
         }
     },
     [AUTH_ERROR]: (state) => {
         state.status = 'error'
     },
     [LOGOUT]: (state) => {
-        state.user = ''
+        state.user = '';
+        state.cart = '';
+        state.cartDetail = '';
+        state.carts = '';
     },
     [REMOVE_FAVORITE]: (state, id) => {
         state.products.forEach(el => {
@@ -164,7 +183,8 @@ const actions = {
         const response = await AuthServices.logout(username);
         if (response.status === 200) {
             await commit(IS_LOGGED_IN, true);
-            return await commit(LOGOUT)
+            await commit(LOGOUT);
+            return await response.status
         }
         throw new Error(response.status)
     },
@@ -172,8 +192,10 @@ const actions = {
     async login({ commit }, credential) {
         await AuthServices.login(credential);
         const response = await AuthServices.getUser(credential.username);
+        console.log(response)
         if (response.status === 200) {
-            return await commit(SET_USER, response.data);
+            await commit(SET_USER, response.data);
+            return await response.status;
         }
         throw new Error(response.status);
 
@@ -182,7 +204,8 @@ const actions = {
     async banAccount({ commit }, credential) {
         const response = await AuthServices.banAccount(credential);
         if (response.status === 200) {
-            return await commit(BAN_USER, response.data);
+            await commit(BAN_USER, response.data);
+            return await response.status;
         }
         throw new Error(response.status);
     },
@@ -190,7 +213,8 @@ const actions = {
     async activeAccount({ commit }, credential) {
         const response = await AuthServices.activeAccount(credential);
         if (response.status === 200) {
-            return await commit(ACTIVE_USER, response.data);
+            await commit(ACTIVE_USER, response.data);
+            return await response.status;
         }
         throw new Error(response.status);
     },
@@ -201,7 +225,8 @@ const actions = {
             console.log(response.data)
             if (response.status === 200) {
                 await commit(SET_PAGES, response.data);
-                return await commit(SET_USERS, response.data.content);
+                await commit(SET_USERS, response.data.content);
+                return await response.status;
             }
         } catch (error) {
             await commit(SET_USERS, []);
@@ -214,7 +239,8 @@ const actions = {
             const response = await AuthServices.searchAccountByQ(credentail.txtSearchAccount, credentail.currentPage);
             if (response.status === 200) {
                 await commit(SET_PAGES, response.data);
-                return await commit(SET_USERS, response.data.content);
+                await commit(SET_USERS, response.data.content);
+                return await response.status;
             }
         } catch (error) {
             await commit(SET_USERS, []);
@@ -227,7 +253,8 @@ const actions = {
             const response = await AuthServices.searchAccountByStatus(credentials.status, credentials.currentPage);
             if (response.status === 200) {
                 await commit(SET_PAGES, response.data);
-                return await commit(SET_USERS, response.data.content);
+                await commit(SET_USERS, response.data.content);
+                return await response.status;
             }
         } catch (error) {
             await commit(SET_USERS, []);
@@ -239,7 +266,8 @@ const actions = {
         const response = await AuthServices.getCarts(username);
         if (response.status === 200) {
             await commit(IS_LOGGED_IN, true);
-            return await commit(SET_CARTS, response.data.content);
+            await commit(SET_CARTS, response.data.content);
+            return await response.status;
         }
         throw new Error(response.status)
     },
@@ -247,10 +275,10 @@ const actions = {
         try {
             const response = await AuthServices.getCartDetails(credential.idCart, credential.userName)
             if (response.status === 200) {
-                return await commit(SET_CART_DETAIL, response.data);
+                await commit(SET_CART_DETAIL, response.data);
+                return await response.status;
             }
-        }
-        catch (error) {
+        } catch (error) {
             return await commit(SET_CART_DETAIL, []);
         }
     },
@@ -259,7 +287,8 @@ const actions = {
         const name = state.user.userName
         const response = await AuthServices.createNewCart(name, newCart)
         if (response.status === 200) {
-            return await commit(ADD_NEW_CART, newCart)
+            await commit(ADD_NEW_CART, newCart)
+            return await response.status;
         }
     },
 
@@ -281,10 +310,10 @@ const actions = {
         return new Promise((resolve, reject) => {
             // commit('auth_request')
             AuthServices.register(user).then(resp => {
-                const user = resp.data.user
-                commit(SET_USER, user)
-                resolve(resp)
-            })
+                    const user = resp.data.user
+                    commit(SET_USER, user)
+                    resolve(resp)
+                })
                 .catch(err => {
                     commit(AUTH_ERROR)
                     reject(err)
@@ -311,4 +340,3 @@ export default {
     actions,
     state,
 }
-

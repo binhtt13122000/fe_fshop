@@ -344,9 +344,6 @@
                           <v-btn color="primary" @click="e1 = 2">
                             Continue
                           </v-btn>
-                          <!-- <v-btn color="primary" @click="validate(n)" 
-                            >Continue</v-btn
-                          > -->
                           <v-btn text @click="dialogAdd = false">Cancel</v-btn>
                         </v-stepper-content>
                         <v-stepper-content step="2">
@@ -366,11 +363,6 @@
                               v-for="(input, k) in inputs"
                               :key="k"
                             >
-                              <!-- <input
-                                type="text"
-                                class="form-control"
-                                v-model="input.name"
-                              /> -->
                               <v-row>
                                 <v-col cols="3">
                                   <v-text-field

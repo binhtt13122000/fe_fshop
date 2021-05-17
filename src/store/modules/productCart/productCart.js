@@ -1,5 +1,13 @@
 import ProductCartService from "../../../services/ProductCartService"
-import { SET_PAGE, SET_PAGES, SET_PRODUCT_DETAILS, UPDATE_PRODUCT_DETAILS, ADD_PRODUCT_DETAILS, REMOVE_PRODUCT_DETAILS, ACTIVE_PRODUCT_DETAILS } from './mutation-type'
+import {
+    SET_PAGE,
+    SET_PAGES,
+    SET_PRODUCT_DETAILS,
+    UPDATE_PRODUCT_DETAILS,
+    ADD_PRODUCT_DETAILS,
+    REMOVE_PRODUCT_DETAILS,
+    ACTIVE_PRODUCT_DETAILS,
+} from './mutation-type'
 
 const state = {
     productsDetails: [],
@@ -79,7 +87,8 @@ const mutations = {
         })
         state.productDetails[index] = newProduct;
 
-    }
+    },
+
 
 };
 

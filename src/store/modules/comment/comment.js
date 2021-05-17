@@ -26,10 +26,10 @@ const getters = {
 
 
 const mutations = {
-    [SET_COMMENTS]: (state, val) => {
+    [SET_COMMENT]: (state, val) => {
         state.comment = val
     },
-    [SET_COMMENT]: (state, val) => {
+    [SET_COMMENTS]: (state, val) => {
         state.comments = val
     },
     [SET_PAGES]: (state, val) => {
@@ -39,8 +39,8 @@ const mutations = {
     [SET_PAGE]: (state, val) => {
         state.page = val
     },
-    [ADD_COMMENT]: (state, comment) => {
-        state.comments.push(comment)
+    [ADD_COMMENT]: (state, cmt) => {
+        state.comments.push(cmt);
     },
 
     [REMOVE_COMMENT]: (state, id) => {
@@ -60,46 +60,41 @@ const mutations = {
         state.comments = id
     }
 
-
-    // [UPDATE_PRODUCT]: (state, newProduct) => {
-    //     const products = [...state.products];
-    //     const index = products.findIndex(product => {
-    //         return product.productId === newProduct.productId; 
-    //     })
-    //     state.products[index] = newProduct;
-
-    // }
-
-
 };
 
 const actions = {
-    // async updateProductOfList({commit}, newProduct){
-    //     const response = await CommentService.updateProduct(newProduct);
-    //     if(response.status === 200){
-    //         commit(UPDATE_PRODUCT, newProduct);
-    //     }
-    //     throw new Error(response.status)
-    // },
-    async getCommentById({ commit }, productId) {
-        const response = await CommentService.getCommentByProductId(productId);
+    async getCommentById({ commit }, credential) {
+        const response = await CommentService.getCommentByProductId(credential);
+        console.log(response)
         if (response.status === 200) {
             return commit(SET_COMMENTS, response.data.content)
         }
         throw new Error(response.status)
     },
     async createComment({ commit }, creadential) {
-        const response = await CommentService.addComment(creadential.productId, creadential.userName, creadential.newComment);
-            console.log(creadential.newComment);
-        if (response.status === 200) {
-            return commit(ADD_COMMENT, creadential.newComment);
+        if (creadential.newComment.parentId) {
+            const response = await CommentService.addCommentParent(creadential.productId, creadential.userName, creadential.newComment, creadential.newComment.parentId);
+            console.log(response.data);
+            if (response.status === 200) {
+                return await commit(ADD_COMMENT, response.data);
+            }
+            throw new Error(response.status)
+        } else {
+            const response = await CommentService.addComment(creadential.productId, creadential.userName, creadential.newComment);
+            console.log(456);
+            if (response.status === 200) {
+                return await commit(ADD_COMMENT, response.data);
+            }
+            throw new Error(response.status)
         }
-        throw new Error(response.status)
+
     },
-    async deleteComment({ commit }, creadential){
+    async deleteComment({ commit }, creadential) {
         const response = await CommentService.deleteComment(creadential.commentId, creadential.userName);
-        if(response.status === 200){
-            return commit(REMOVE_COMMENT, creadential);
+        console.log(response)
+        if (response.status === 200) {
+            await commit(REMOVE_COMMENT, creadential.commentId);
+            return response.status;
         }
         throw new Error(response.status)
     }

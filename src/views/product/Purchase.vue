@@ -509,6 +509,9 @@ export default {
   }),
 
   created() {
+    if (!this.user) {
+      this.$router.push("/loginpage");
+    }
     this.onResize();
 
     window.addEventListener("resize", this.onResize, { passive: true });
