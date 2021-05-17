@@ -8,14 +8,13 @@
 </template>
 
  <script>
-
- import Layout from '../views/Layout.vue'
+import Layout from "../views/Layout.vue";
 // import HomePage from '../components/HomePage'
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     // HomePage,
-    Layout, 
-  }
-}
+    Layout,
+  },
+};
 </script>

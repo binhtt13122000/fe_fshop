@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -12,17 +11,19 @@ import category from "./modules/category/category";
 import productDetails from "./modules/productCart/productCart";
 import order from "./modules/order/order";
 import voucher from './modules/voucher/voucher';
+import comment from "./modules/comment/comment";
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: {
-    auth,
-    product,
-    supplier,
-    category,
-    order,
-    productDetails,
-    voucher,
-  },
-  plugins: [createPersistedState()]
+    modules: {
+        auth,
+        product,
+        supplier,
+        category,
+        order,
+        productDetails,
+        voucher,
+        comment,
+    },
+    plugins: [createPersistedState()]
 })

@@ -322,48 +322,112 @@
             <v-container>
               <v-tabs class="comment" background-color="indigo" dark>
                 <v-tab>Bình luận</v-tab>
-
                 <v-tab-item>
                   <v-container fluid>
                     <v-row>
-                      <v-col>
-                        <!-- <h3>{{comment.length}}</h3> -->
-                        <div class="comment-header" align="right">
-                          <v-combobox
-                            v-model="modelComment"
-                            :items="itemComments"
-                            hide-selected
-                            dense
-                            filled
-                            label="Sắp xếp theo"
-                            style="width: 20%"
-                          ></v-combobox>
-                        </div>
-
-                        <v-container fluid>
+                      <v-card align="center" elevation="2">
+                        <v-form v-for="cmt in comments" :key="cmt.commentId">
                           <v-row>
-                            <img
-                              src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
-                              alt="avatar"
-                              width="3%"
-                              height="3%"
-                            />
-
-                            <v-col>
-                              <v-form>
-                                <v-text-field hint="Add your comment">
-                                </v-text-field>
-                              </v-form>
+                            <v-col md="2">
+                              <img
+                                src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
+                                alt="avatar"
+                                width="60%"
+                                height="40%"
+                                class="mx-3"
+                              />
+                              <p class="text-secondary text-center">
+                                15 Minutes Ago
+                              </p>
                             </v-col>
+                            <v-col md="10">
+                              <v-text-field
+                                filled
+                                :value="cmt.content"
+                                :label="cmt.name"
+                                readonly
+                              ></v-text-field>
+
+                              <div style="text-align: right">
+                                <v-btn
+                                  class="mx-1"
+                                  color="success"
+                                  @click="createCmm()"
+                                  >Send</v-btn
+                                >
+                                <v-btn class="mx-1"
+                                  ><v-icon>mdi-reply</v-icon>Reply</v-btn
+                                >
+                                <v-btn class="mx-1" color="red"
+                                  ><v-icon>mdi-delete</v-icon>Delete</v-btn
+                                >
+                              </div>
+                            </v-col>
+
+                            <v-row v-if="cmt.parentId != null">
+                              <v-col md="2">
+                                <img
+                                  src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
+                                  alt="avatar"
+                                  width="60%"
+                                  height="40%"
+                                  class="mx-3"
+                                />
+                                <p class="text-secondary text-center">
+                                  15 Minutes Ago
+                                </p>
+                              </v-col>
+                              <v-col md="10">
+                                <v-text-field
+                                  filled
+                                  :value="cmt.content"
+                                  :label="cmt.name"
+                                  readonly
+                                ></v-text-field>
+
+                                <div style="text-align: right">
+                                  <v-btn
+                                    class="mx-1"
+                                    color="success"
+                                    @click="createCmm()"
+                                    >Send</v-btn
+                                  >
+                                  <v-btn class="mx-1"
+                                    ><v-icon>mdi-reply</v-icon>Reply</v-btn
+                                  >
+                                  <v-btn class="mx-1" color="red"
+                                    ><v-icon>mdi-delete</v-icon>Delete</v-btn
+                                  >
+                                </div>
+                              </v-col>
+                            </v-row>
                           </v-row>
-                        </v-container>
-                      </v-col>
+                        </v-form>
+                      </v-card>
+                      <v-row>
+                        <img
+                          src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
+                          alt="avatar"
+                          width="10%"
+                          height="%"
+                        />
+                        <v-textarea
+                          v-model="addComment"
+                          label="Comment"
+                          auto-grow
+                          outlined
+                          rows="5"
+                          row-height="10"
+                        ></v-textarea>
+                        <v-btn color="success" @click="createCmm()">Send</v-btn>
+                      </v-row>
                     </v-row>
                   </v-container>
                 </v-tab-item>
               </v-tabs>
             </v-container>
           </div>
+
           <v-dialog v-model="dialogCart" max-width="500px">
             <v-card>
               <v-card-title class="headline blue darken-1"
@@ -506,6 +570,7 @@ export default {
     text: `I'm a multi-line snackbar.`,
     quantity: 0,
     productSize: "",
+    addComment: "",
     size: 1,
     rating: 5,
     tab: null,
@@ -515,6 +580,7 @@ export default {
     dialogCart: false,
     productDetailSize: "",
     productCart: {},
+
     numberRule: (v) => {
       if (!isNaN(parseFloat(v)) && v > 0) return true;
       return "Number must be greater than 0!";
@@ -550,6 +616,7 @@ export default {
     ...mapGetters("auth", ["cart", "carts", "user"]),
     ...mapGetters("product", ["product"]),
     ...mapGetters("order", ["status", "maxQuantity"]),
+    ...mapGetters("comment", ["comment", "comments"]),
     totalQuantity() {
       return this.maxQuantity;
     },
@@ -608,6 +675,30 @@ export default {
     addToCart() {
       return this.badgeCart++;
     },
+    createCmm() {
+      // this.$v.$touch();
+      var date = new Date("2021-03-25 12:00:00.Z");
+      var creadential = {
+        productId: this.productSelected.productId,
+        userName: this.user.userName,
+        newComment: {
+          name: this.user.name,
+          phoneNumber: this.user.phoneNumber,
+          content: this.addComment,
+          createTime: date,
+          parenId: 1,
+          status: 1,
+          productId: this.productSelected.productId,
+          userId: this.user.userId,
+          proId: this.productSelected.productId,
+        },
+      };
+      // console.log(this.user.userName);
+      // console.log(creadential);
+      this.createComment(creadential);
+      // this.getCommentById(this.productSelected.productId);
+      this.addComment = "";
+    },
     addToCartDialog(product) {
       this.$v.$touch();
       if (
@@ -665,6 +756,9 @@ export default {
         this.notificationSystem.options.error
       );
     },
+    ...mapActions("auth", ["addProductInCartDetail"]),
+    ...mapActions("product", ["productDetails"]),
+    ...mapActions("comment", ["getCommentById", "createComment"]),
   },
   created() {
     this.onResize();
@@ -673,7 +767,12 @@ export default {
   mounted() {
     this.productDetails(this.$route.params.idProduct);
     this.productSelected = this.product;
-    console.log(this.productSelected);
+    // console.log(this.productSelected);
+    if (this.$route.params.idProduct == null) {
+      this.getCommentById(this.$route.params.idProduct);
+    } else {
+      console.log("Danh che con me may");
+    }
   },
 };
 </script>
