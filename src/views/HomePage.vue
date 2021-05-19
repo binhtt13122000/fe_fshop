@@ -3,7 +3,7 @@
     <v-app id="inspire">
       <!-- <v-app id="inspire"> -->
       <!-- Navigation bar -->
-      <my-header></my-header>
+      <VmHeader></VmHeader>
       <!-- V main -->
       <v-main>
         <v-container class="fill-height" fluid>
@@ -38,7 +38,7 @@
 
       <!-- Footer -->
       <!-- <VmFooter/> -->
-      <my-footer></my-footer>
+      <VmFooter></VmFooter>
       <!-- </v-app> -->
     </v-app>
   </div>
@@ -53,8 +53,8 @@ export default {
     source: String,
   },
   components: {
-    "my-footer": VmFooter,
-    "my-header": VmHeader,
+    VmFooter,
+    VmHeader,
   },
   data: () => ({
     drawer: null,
@@ -73,8 +73,6 @@ export default {
   }),
   mounted() {
     this.onResize();
-    // console.log(this.$vuetify.breakpoint)
-
     window.addEventListener("resize", this.onResize, { passive: true });
   },
   methods: {

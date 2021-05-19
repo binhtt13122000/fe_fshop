@@ -328,7 +328,6 @@ export default {
       });
     },
     loggedIn: function () {
-      console.log(this.user);
       this.user ? (this.isLoggedIn = true) : (this.isLoggedIn = false);
       return this.isLoggedIn;
     },
@@ -381,7 +380,6 @@ export default {
     if (this.loggedIn() === true) {
       this.getCart(this.user.userName);
     }
-    console.log(this.user);
   },
 };
 </script>

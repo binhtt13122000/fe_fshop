@@ -406,7 +406,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.$route.params.idCart);
     const credential = {
       userName: this.user.userName,
       idCart: this.$route.params.idCart,

@@ -93,51 +93,18 @@
                       <v-spacer></v-spacer>
 
                       <v-dialog v-model="dialogDelete" max-width="500px">
-                        <v-card>
-                          <v-card-title class="headline blue darken-1"
-                            >Are you sure you want to block this
-                            user?</v-card-title
-                          >
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              color="blue darken-1"
-                              text
-                              @click="closeDelete"
-                              >Cancel</v-btn
-                            >
-                            <v-btn
-                              color="blue darken-1"
-                              text
-                              @click="deleteItemConfirm"
-                              >OK</v-btn
-                            >
-                            <v-spacer></v-spacer>
-                          </v-card-actions>
-                        </v-card>
+                        <DialogConf
+                          :title="'Are you sure you want to block this user?'"
+                          v-on:cancel="closeDelete"
+                          v-on:accept="deleteItemConfirm"
+                        ></DialogConf>
                       </v-dialog>
                       <v-dialog v-model="dialogActiveAccount" max-width="500px">
-                        <v-card>
-                          <v-card-title class="headline blue darken-1"
-                            >Are you sure you want to active user?</v-card-title
-                          >
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              color="blue darken-1"
-                              text
-                              @click="closeActiveAccount"
-                              >Cancel</v-btn
-                            >
-                            <v-btn
-                              color="blue darken-1"
-                              text
-                              @click="activeAccountConfirm"
-                              >OK</v-btn
-                            >
-                            <v-spacer></v-spacer>
-                          </v-card-actions>
-                        </v-card>
+                        <DialogConf
+                          :title="'Are you sure you want to active user?'"
+                          v-on:cancel="closeActiveAccount"
+                          v-on:accept="activeAccountConfirm"
+                        ></DialogConf>
                       </v-dialog>
                     </v-toolbar>
                   </template>
@@ -204,12 +171,13 @@
 <script>
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/HeaderAdmin.vue";
+import DialogConf from "../../components/DialogConf.vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import moment from "moment";
 import readXlsxFile from "read-excel-file";
 
 export default {
-  components: { VmFooter, VmHeader },
+  components: { VmFooter, VmHeader, DialogConf },
   data: () => ({
     el: 1,
     imgUrlRules: [

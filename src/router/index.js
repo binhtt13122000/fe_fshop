@@ -18,135 +18,128 @@ import CrudProduct from '../views/Admin/CrudProduct.vue'
 import User from '../views/Admin/User.vue'
 import Test from '../views/Admin/Test.vue'
 import Order from '../views/Admin/Order.vue'
-import CommentAdmin from '../views/Admin/Comment.vue'
 import OrderUser from '../views/order/Order.vue'
 import Voucher from '../views/voucher/Voucher.vue'
 
 // import Product from '../views/product/Product.vue'
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/home',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/',
-    name: 'homepage',
-    component: HomePage
-  },
-  {
-    path: '/forgotpasswordForm',
-    name: 'forgotpasswordForm',
-    component: ForgotPasswordForm
-  },
-  {
-    path: '/manage-order',
-    name: 'manage-order',
-    component: Order
-  },
-  {
-    path: '/loginpage',
-    name: 'loginpage',
-    component: LoginPage
-  },
-  {
-    path: '/products',
-    name: 'products',
-    component: ProductListContainer
-  },
-  {
-    path: '/products/:idProduct',
-    component: ProductDetail
-  },
-  {
-    path: '/carts/:idCart',
-    component: CartListContainer
-  },
-  {
-    path: '/cart',
-    name: 'cart',
-    component: Cart
-  },
-  {
-    path: '/purchase/:idProduct',
-    component: Purchase
-  },
-  {
-    path: '/signupPage',
-    name: 'signupPage',
-    component: SignupPage
-  },
-  {
-    path: '/main-product',
-    name: 'main-product',
-    component: CrudProduct
-  },
-  {
-    path: '/voucher/:userName',
-    name: 'voucher',
-    component: Voucher,
-  },
-  {
-    path: '/footer',
-    name: 'footer',
-    component: Footer
-  },
-  {
-    path: '/header',
-    name: 'header',
-    component: Header
-  },
-  {
-    path: '/headerAdmin',
-    name: 'headerAdmin',
-    component: HeaderAdmin
-  },
-  {
-    path: '/CommentAdmin',
-    name: 'CommentAdmin',
-    component: CommentAdmin
-  },
-  {
-    path: '/layout',
-    name: 'layout',
-    component: Layout
-  },
-  {
-    path: '/order',
-    name: 'order',
-    component: Order
-  },
-  {
-    path: '/orderUser',
-    name: 'order-user',
-    component: OrderUser,
-  }
-  , {
-    path: '/user',
-    name: 'user',
-    component: User
-  },
-  {
-    path: '/test',
-    name: 'test',
-    component: Test
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+const routes = [{
+        path: '/home',
+        name: 'home',
+        component: Home
+    },
+    {
+        path: '/',
+        name: 'homepage',
+        component: HomePage
+    },
+    {
+        path: '/forgotpasswordForm',
+        name: 'forgotpasswordForm',
+        component: ForgotPasswordForm
+    },
+    {
+        path: '/manage-order',
+        name: 'manage-order',
+        component: Order
+    },
+    {
+        path: '/loginpage',
+        name: 'loginpage',
+        component: LoginPage
+    },
+    {
+        path: '/products',
+        name: 'products',
+        component: ProductListContainer
+    },
+    {
+        path: '/products/:idProduct',
+        component: ProductDetail
+    },
+    {
+        path: '/carts/:idCart',
+        component: CartListContainer
+    },
+    {
+        path: '/cart',
+        name: 'cart',
+        component: Cart
+    },
+    {
+        path: '/purchase/:idProduct',
+        component: Purchase
+    },
+    {
+        path: '/signupPage',
+        name: 'signupPage',
+        component: SignupPage
+    },
+    {
+        path: '/main-product',
+        name: 'main-product',
+        component: CrudProduct
+    },
+    {
+        path: '/voucher/:userName',
+        name: 'voucher',
+        component: Voucher,
+    },
+    {
+        path: '/footer',
+        name: 'footer',
+        component: Footer
+    },
+    {
+        path: '/header',
+        name: 'header',
+        component: Header
+    },
+    {
+        path: '/headerAdmin',
+        name: 'headerAdmin',
+        component: HeaderAdmin
+    },
+    {
+        path: '/layout',
+        name: 'layout',
+        component: Layout
+    },
+    {
+        path: '/order',
+        name: 'order',
+        component: Order
+    },
+    {
+        path: '/orderUser',
+        name: 'order-user',
+        component: OrderUser,
+    }, {
+        path: '/user',
+        name: 'user',
+        component: User
+    },
+    {
+        path: '/test',
+        name: 'test',
+        component: Test
+    },
+    {
+        path: '/about',
+        name: 'about',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/About.vue')
+    }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 })
 
 export default router

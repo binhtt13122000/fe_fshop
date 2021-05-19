@@ -57,7 +57,6 @@ const mutations = {
             productDetailSelected.status = -1;
             productDetails.push(productDetailSelected);
         }
-        console.log(productDetailSelected);
     },
 
     [ACTIVE_PRODUCT_DETAILS]: (state, productDetailSelected) => {
@@ -66,10 +65,8 @@ const mutations = {
         if (index != -1) {
             if (productDetailSelected.proQuantity > 0) {
                 productDetails[index].status = 1;
-                console.log(123);
             } else {
                 productDetails[index].status = 0;
-                console.log(456);
             }
         } else {
             if (productDetailSelected.proQuantity > 0) {
@@ -95,19 +92,31 @@ const mutations = {
 const actions = {
 
     async deleteProductDetail({ commit }, productDetailSelected) {
-        const response = await ProductCartService.deleteProductDetails(productDetailSelected.proItemId);
-        if (response.status === 200) {
-            return await commit(REMOVE_PRODUCT_DETAILS, productDetailSelected);
+        try {
+            const response = await ProductCartService.deleteProductDetails(productDetailSelected.proItemId);
+            if (response.status === 200) {
+                await commit(REMOVE_PRODUCT_DETAILS, productDetailSelected);
+                return await response.status
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status)
     },
 
     async activeProductDetailFromList({ commit }, productDetailSelected) {
-        const response = await ProductCartService.activeProductDetails(productDetailSelected.proItemId);
-        if (response.status === 200) {
-            return await commit(ACTIVE_PRODUCT_DETAILS, productDetailSelected);
+        try {
+            const response = await ProductCartService.activeProductDetails(productDetailSelected.proItemId);
+            if (response.status === 200) {
+                await commit(ACTIVE_PRODUCT_DETAILS, productDetailSelected);
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status);
     },
 
 };

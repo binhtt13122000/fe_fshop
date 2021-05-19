@@ -27,22 +27,30 @@ const mutations = {
 
 const actions = {
     async createVoucher({ commit }, credential) {
-        console.log(1234);
-        const response = await VoucherService.createVoucher(credential.username, credential);
-        if (response.status === 200) {
-            return await commit(ADD_VOUCHER, response.data.content);
+        try {
+            const response = await VoucherService.createVoucher(credential.username, credential);
+            if (response.status === 200) {
+                await commit(ADD_VOUCHER, response.data.content);
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status);
     },
     async getVouchers({ commit }, username) {
         try {
             const response = await VoucherService.getVouchers(username);
-            console.log(response.data);
             if (response.status === 200) {
                 await commit(SET_VOUCHERS, response.data);
+                return await response.status;
+            } else {
+                return await response.status;
             }
         } catch (error) {
             await commit(SET_VOUCHERS, []);
+            return await error.response.status;
         }
     },
     async getVoucherById({ commit }, credential) {
@@ -50,10 +58,12 @@ const actions = {
             const response = await VoucherService.getVoucherById(credential.username, credential.voucherId)
             if (response.status === 200) {
                 await commit(SET_PAGES, "");
-                return response;
+                return await response.status;
+            } else {
+                return await response.status;
             }
         } catch (err) {
-            return "";
+            return await err.response.status;
         }
     },
 };

@@ -11,9 +11,6 @@
           <v-breadcrumbs :items="itemBreadCrumbs" large></v-breadcrumbs>
         </div>
         <v-container>
-          <table></table>
-        </v-container>
-        <v-container>
           <v-row dense>
             <v-col
               md="4"

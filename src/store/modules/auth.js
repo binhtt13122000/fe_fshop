@@ -84,7 +84,6 @@ const mutations = {
     },
     [SET_USERS]: (state, val) => {
         state.users = val
-        console.log(state.users)
     },
     [IS_LOGGED_IN]: (state, isUserLoggedIn) => {
         state.userInfo.isLoggedIn = isUserLoggedIn;
@@ -111,13 +110,9 @@ const mutations = {
     },
     [ADD_PRODUCT_IN_CART]: (state, credential) => {
         const carts = state.carts;
-        console.log(carts);
         const index = carts.findIndex(cart => credential.cartId === cart.cartId);
         if (index != -1) {
-            // const ind = carts[index].findIndex(cartDetail => cartDetail.productId === credential.productId && cartDetail.proQuantity === credential.cartQuantity);
-            // if (ind != -1) {
             console.log(123)
-                // }
         }
     },
     [AUTH_ERROR]: (state) => {
@@ -155,7 +150,6 @@ const mutations = {
     },
     [CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL]: (state, credential) => {
         const cartDetails = state.cartDetail;
-        console.log(cartDetails)
         const index = cartDetails.findIndex(cartDetail => cartDetail.cartItemId === credential.cartDetailId);
         if (index != -1) {
             const totalBefore = cartDetails[index].cart.cartTotal;
@@ -179,58 +173,79 @@ const mutations = {
 const actions = {
 
     async logout({ commit, state }) {
-        const username = state.user.userName
-        const response = await AuthServices.logout(username);
-        if (response.status === 200) {
-            await commit(IS_LOGGED_IN, true);
-            await commit(LOGOUT);
-            return await response.status
+        try {
+            const username = state.user.userName
+            const response = await AuthServices.logout(username);
+            if (response.status === 200) {
+                await commit(IS_LOGGED_IN, true);
+                await commit(LOGOUT);
+                return await response.status
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status)
     },
 
     async login({ commit }, credential) {
-        await AuthServices.login(credential);
-        const response = await AuthServices.getUser(credential.username);
-        console.log(response)
-        if (response.status === 200) {
-            await commit(SET_USER, response.data);
-            return await response.status;
+        try {
+            await AuthServices.login(credential);
+            const response = await AuthServices.getUser(credential.username);
+            if (response.status === 200) {
+                await commit(SET_USER, response.data);
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status);
 
     },
 
     async banAccount({ commit }, credential) {
-        const response = await AuthServices.banAccount(credential);
-        if (response.status === 200) {
-            await commit(BAN_USER, response.data);
-            return await response.status;
+        try {
+            const response = await AuthServices.banAccount(credential);
+            if (response.status === 200) {
+                await commit(BAN_USER, response.data);
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status);
     },
 
     async activeAccount({ commit }, credential) {
-        const response = await AuthServices.activeAccount(credential);
-        if (response.status === 200) {
-            await commit(ACTIVE_USER, response.data);
-            return await response.status;
+        try {
+            const response = await AuthServices.activeAccount(credential);
+            if (response.status === 200) {
+                await commit(ACTIVE_USER, response.data);
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status);
     },
 
     async getUsers({ commit }, index = 1) {
         try {
             const response = await AuthServices.getUsers(index);
-            console.log(response.data)
             if (response.status === 200) {
                 await commit(SET_PAGES, response.data);
                 await commit(SET_USERS, response.data.content);
+                return await response.status;
+            } else {
                 return await response.status;
             }
         } catch (error) {
             await commit(SET_USERS, []);
             await commit(SET_PAGES, []);
+            return await error.response.status;
         }
     },
 
@@ -241,10 +256,13 @@ const actions = {
                 await commit(SET_PAGES, response.data);
                 await commit(SET_USERS, response.data.content);
                 return await response.status;
+            } else {
+                return await response.status;
             }
         } catch (error) {
             await commit(SET_USERS, []);
             await commit(SET_PAGES, []);
+            return await error.response.status;
         }
 
     },
@@ -255,21 +273,29 @@ const actions = {
                 await commit(SET_PAGES, response.data);
                 await commit(SET_USERS, response.data.content);
                 return await response.status;
+            } else {
+                return await response.status;
             }
         } catch (error) {
             await commit(SET_USERS, []);
             await commit(SET_PAGES, []);
+            return await error.response.status;
         }
     },
 
     async getCart({ commit }, username) {
-        const response = await AuthServices.getCarts(username);
-        if (response.status === 200) {
-            await commit(IS_LOGGED_IN, true);
-            await commit(SET_CARTS, response.data.content);
-            return await response.status;
+        try {
+            const response = await AuthServices.getCarts(username);
+            if (response.status === 200) {
+                await commit(IS_LOGGED_IN, true);
+                await commit(SET_CARTS, response.data.content);
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status)
     },
     async getCartDetail({ commit }, credential) {
         try {
@@ -277,18 +303,27 @@ const actions = {
             if (response.status === 200) {
                 await commit(SET_CART_DETAIL, response.data);
                 return await response.status;
+            } else {
+                return await response.status;
             }
         } catch (error) {
-            return await commit(SET_CART_DETAIL, []);
+            await commit(SET_CART_DETAIL, []);
+            return await error.response.status;
         }
     },
 
     async createNewCart({ commit, state }, newCart) {
-        const name = state.user.userName
-        const response = await AuthServices.createNewCart(name, newCart)
-        if (response.status === 200) {
-            await commit(ADD_NEW_CART, newCart)
-            return await response.status;
+        try {
+            const name = state.user.userName
+            const response = await AuthServices.createNewCart(name, newCart)
+            if (response.status === 200) {
+                await commit(ADD_NEW_CART, newCart)
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
     },
 
@@ -298,11 +333,13 @@ const actions = {
             if (response.status === 200) {
                 await commit(ADD_PRODUCT_IN_CART, credential);
                 await commit('setStatus', response.status);
-                return response;
+                return await response.status;
+            } else {
+                return await response.status;
             }
         } catch (err) {
             await commit('setStatus', 400);
-            return "";
+            return await err.response.status;
         }
     },
 
@@ -322,12 +359,18 @@ const actions = {
     },
 
     async changeQuantityProductInCartDetails({ commit }, credential) {
-        const response = await AuthServices.changeQuantityProductInCartDetail(credential.cartDetailId, credential.productId, credential.productSize,
-            credential.quantity, credential.username);
-        if (response.status === 200) {
-            return await commit(CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL, credential);
+        try {
+            const response = await AuthServices.changeQuantityProductInCartDetail(credential.cartDetailId, credential.productId, credential.productSize,
+                credential.quantity, credential.username);
+            if (response.status === 200) {
+                await commit(CHANGE_QUANTITY_PRODUCT_IN_CART_DETAIL, credential);
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status);
     },
 
 

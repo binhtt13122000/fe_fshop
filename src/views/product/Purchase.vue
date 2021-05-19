@@ -3,7 +3,7 @@
     <v-app id="inspire">
       <!-- <v-app id="inspire"> -->
       <!-- Navigation bar -->
-      <my-header></my-header>
+      <VmHeader></VmHeader>
       <!-- V main -->
       <v-main class="purchase">
         <section class="top-discount-area d-md-flex align-items-center">
@@ -23,7 +23,6 @@
             <h6>CODE: Colorlib</h6>
           </div>
         </section>
-        <br />
         <br />
         <div style="background-color: rgb(255, 247, 245)">
           <v-container fluid align="center" justify-center>
@@ -284,9 +283,9 @@
           </v-container>
         </div>
       </v-main>
+      <!-- V-footer  ------->
       <v-divider></v-divider>
-      <!-- footer -->
-      <my-footer></my-footer>
+      <VmFooter></VmFooter>
       <!-- </v-app> -->
     </v-app>
   </div>
@@ -305,8 +304,8 @@ Vue.use(VueIziToast);
 const isPhone = (value) => /^\+?[0-9]+$/.test(value); //phone valid
 export default {
   components: {
-    "my-footer": VmFooter,
-    "my-header": VmHeader,
+    VmFooter,
+    VmHeader,
   },
   mixins: [validationMixin],
 
@@ -692,7 +691,6 @@ export default {
       );
     },
     getQuantityBySize() {
-      console.log(this.product);
       const index = this.product.productDetails.findIndex(
         (product) => product.proSize === this.productDetailSize.proSize
       );
@@ -704,7 +702,6 @@ export default {
   },
   mounted() {
     this.productDetails(this.$route.params.idProduct);
-    console.log(this.product);
   },
 };
 </script>

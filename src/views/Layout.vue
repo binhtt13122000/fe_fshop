@@ -91,14 +91,6 @@
           <v-btn icon to="/loginpage" class="hidden-xs-and-down">
             <v-icon>mdi-account</v-icon>
           </v-btn>
-          <!-- <v-btn icon large>
-            <v-avatar size="32px" item>
-              <v-img
-                src="https://images.unsplash.com/photo-1608874973277-a34ed4aba3f8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80"
-                alt="Vuetify"
-              ></v-img
-            ></v-avatar>
-          </v-btn> -->
         </v-app-bar>
 
         <v-main>
@@ -171,6 +163,5 @@ export default {
 @media only screen and (max-width: 850px) {
 }
 @media only screen and (max-width: 500px) {
-  
 }
 </style>

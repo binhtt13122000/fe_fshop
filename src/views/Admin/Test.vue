@@ -200,28 +200,6 @@
                   </v-list-group>
                 </v-card>
               </v-col>
-              <!-- <v-col cols="12" class="hidden-md-and-down">
-                <v-card>
-                  <v-list-group :value="true">
-                    <template v-slot:activator>
-                      <v-list-item-content
-                        class="font-weight-medium"
-                        align="left"
-                      >
-                        <v-list-item-title style="color: black"
-                          >Ngày hết hàng</v-list-item-title
-                        >
-                      </v-list-item-content>
-                    </template>
-                    ""
-                    <v-container>
-                      <v-checkbox label="Hàng hóa" hide-details></v-checkbox>
-                      <v-checkbox label="Dịch vụ" hide-details></v-checkbox>
-                      <v-checkbox label="Khuyến mãi" hide-details></v-checkbox>
-                    </v-container>
-                  </v-list-group>
-                </v-card>
-              </v-col> -->
               <v-col cols="12" class="hidden-md-and-down">
                 <v-card>
                   <v-list-group :value="true">
@@ -331,18 +309,6 @@
                     </v-card-title>
                     <v-stepper v-model="e1" alt-labels>
                       <v-stepper-header>
-                        <!-- <v-stepper-step :complete="e1 > 1" :step="1">
-                          Điền thông tin
-                        </v-stepper-step>
-                        <v-stepper-step :complete="e1 > 2" :step="2">
-                          Thêm hình
-                        </v-stepper-step>
-                        <v-stepper-step :complete="e1 > 3" :step="3">
-                          Số lượng & discount
-                        </v-stepper-step>
-                        <v-stepper-step :complete="e1 > 4" :step="4">
-                          Thông tin của sản phẩm
-                        </v-stepper-step> -->
                         <v-stepper-step
                           v-for="(step, n) in steps"
                           :key="n"

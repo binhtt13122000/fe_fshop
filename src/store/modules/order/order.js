@@ -1,6 +1,14 @@
 import OrderService from "../../../services/OrderService"
 import {
-    SET_PAGES, SET_PAGE, SET_ORDERS, CREATE_ORDERS, REMOVE_ORDERS, DELETE_ORDER, CONFIRM_ORDER, GET_ORDER_DETAILS, SET_MAX_QUANTITY
+    SET_PAGES,
+    SET_PAGE,
+    SET_ORDERS,
+    CREATE_ORDERS,
+    REMOVE_ORDERS,
+    DELETE_ORDER,
+    CONFIRM_ORDER,
+    GET_ORDER_DETAILS,
+    SET_MAX_QUANTITY
 } from './mutation-type'
 
 const state = {
@@ -103,9 +111,13 @@ const actions = {
             if (response.status === 200) {
                 await commit(CREATE_ORDERS, credentials);
                 await commit('setStatus', response.status);
+                return await response.status;
+            } else {
+                return await response.status;
             }
         } catch (err) {
             await commit('setStatus', 400);
+            return await err.response.status;
         }
     },
 
@@ -122,14 +134,15 @@ const actions = {
             const response = await OrderService.createNewOrderByCart(credential.cartId,
                 credential.username, credentials);
             if (response.status === 200) {
-                console.log(response);
                 await commit(REMOVE_ORDERS, credentials);
                 await commit('setStatus', response.status);
-                return response;
+                return await response.status;
+            } else {
+                return await response.status;
             }
         } catch (err) {
             await commit('setStatus', 400);
-            return "";
+            return await err.response.status;
         }
     },
 
@@ -137,44 +150,62 @@ const actions = {
         try {
             const response = await OrderService.getOrders(credential.username, credential.status, credential.dateFrom,
                 credential.dateTo, credential.pageIndex);
-            console.log(response);
             if (response.status === 200) {
                 await commit(SET_ORDERS, response.data.content);
                 await commit('setStatus', response.status);
-                return await commit(SET_PAGES, response.data);
+                await commit(SET_PAGES, response.data);
+                return await response.status;
+            } else {
+                return await response.status;
             }
         } catch (error) {
             await commit(SET_ORDERS, []);
             await commit(SET_PAGES, []);
+            return await error.response.status;
         }
     },
 
     async removeOrderByOrderId({ commit }, credential) {
-        const response = await OrderService.deleteOrder(credential.username, credential.orderId);
-        if (response.status === 200) {
-            await commit(DELETE_ORDER, credential);
+        try {
+            const response = await OrderService.deleteOrder(credential.username, credential.orderId);
+            if (response.status === 200) {
+                await commit(DELETE_ORDER, credential);
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status);
     },
 
     async confirmOrder({ commit }, credential) {
-        const response = await OrderService.confirmOrder(credential.username, credential.orderId);
-        if (response.status === 200) {
-            await commit(CONFIRM_ORDER, credential);
-            await commit(GET_ORDER_DETAILS, []);
+        try {
+            const response = await OrderService.confirmOrder(credential.username, credential.orderId);
+            if (response.status === 200) {
+                await commit(CONFIRM_ORDER, credential);
+                await commit(GET_ORDER_DETAILS, []);
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status);
     },
 
     async getOrderDetailByOrderId({ commit }, credential) {
         try {
             const response = await OrderService.getOrderDetailsByOrderId(credential.username, credential.orderId);
-            console.log(response);
             if (response.status === 200) {
-                return await commit(GET_ORDER_DETAILS, response.data);
+                await commit(GET_ORDER_DETAILS, response.data);
+                return await response.status;
+            } else {
+                return await response.status;
             }
         } catch (error) {
             await commit(GET_ORDER_DETAILS, []);
+            return await error.response.status;
         }
     },
     async setMaxQuantity({ commit }, value) {

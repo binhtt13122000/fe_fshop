@@ -6,159 +6,192 @@
         <section class="container">
           <v-row>
             <!-- left main-->
-            <v-col cols="24" class="left-main-item">
+            <v-col cols="12" class="left-main-item">
               <v-row class="left-main-item">
-                <v-text-field
-                  prepend-icon="mdi-magnify"
-                  solo-inverted
-                  hide-details=""
-                  label="Tìm theo mã hóa đơn"
-                  class="hidden-md-and-down mx-3"
+                <v-col
+                  cols="12"
+                  lg="7"
+                  md="12"
+                  sm="12"
+                  xs="12"
+                  class="pl-sm-0 pr-sm-0 pl-xs-0 pr-xs-0"
                 >
-                </v-text-field>
-                <v-menu open-on-hover bottom offset-y rounded>
-                  <template v-slot:activator="{ on, attrs }" v-on="on">
-                    <v-btn color="success" v-bind="attrs" v-on="on">
-                      <v-icon>mdi-plust</v-icon>Thêm mới
-                      <v-icon>mdi-arrow-down-drop-circle-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <v-list></v-list>
-                </v-menu>
-                <v-btn color="success" class="mx-2"
-                  ><v-icon>mdi-application-import</v-icon>Import</v-btn
+                  <v-text-field
+                    prepend-icon="mdi-magnify"
+                    solo-inverted
+                    hide-details=""
+                    label="Tìm theo mã hóa đơn"
+                    class="mx-lg-3 mx-2"
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  lg="5"
+                  md="12"
+                  sm="12"
+                  xs="12"
+                  class="pl-sm-0 pr-sm-0 pl-xs-0 pr-xs-0"
                 >
-                <v-btn color="success"
-                  ><v-icon>mdi-file-move-outline</v-icon>Xuất File</v-btn
-                >
+                  <v-row>
+                    <v-col cols="12" lg="4" md="4" sm="4" xs="12">
+                      <v-menu open-on-hover bottom offset-y rounded>
+                        <template v-slot:activator="{ on, attrs }" v-on="on">
+                          <v-btn
+                            color="success"
+                            v-bind="attrs"
+                            v-on="on"
+                            style="width: 100%"
+                          >
+                            <v-icon>mdi-plust</v-icon>Thêm mới
+                            <v-icon>mdi-arrow-down-drop-circle-outline</v-icon>
+                          </v-btn>
+                        </template>
+                      </v-menu>
+                    </v-col>
+                    <v-col cols="12" lg="4" md="4" sm="4" xs="12">
+                      <v-btn color="success" width="100%"
+                        ><v-icon>mdi-application-import</v-icon>Import</v-btn
+                      >
+                    </v-col>
+                    <v-col cols="12" lg="4" md="4" sm="4" xs="12">
+                      <v-btn color="success" width="100%"
+                        ><v-icon>mdi-file-move-outline</v-icon>Xuất File</v-btn
+                      >
+                    </v-col>
+                  </v-row>
+                </v-col>
               </v-row>
-              <br />
               <v-row>
-                <v-data-table
-                  :headers="headers"
-                  :items-per-page="10"
-                  :items="orders"
-                  item-key="name"
-                  width="10%"
-                  class="elevation-1"
-                  hide-default-footer
-                >
-                  <template v-slot:[`item.orderTotal`]="{ item }">
-                    {{ formatPrice(item.orderTotal) }}
-                  </template>
-                  <template v-slot:[`item.status`]="{ item }">
-                    <v-chip :color="getColor(item.status)" dark>
-                      {{ checkStatusOrder(item.status) }}
-                    </v-chip>
-                  </template>
-                  <template v-slot:[`item.createAt`]="{ item }">
-                    {{ formatDate(item.createAt) }}
-                  </template>
-                  <template v-slot:[`item.online`]="{ item }">
-                    <v-chip :color="getColorIsOnline(item.online)" dark>
-                      {{ item.online }}
-                    </v-chip>
-                  </template>
-                  <template v-slot:top>
-                    <v-dialog v-model="dialogConfirm" width="800px">
-                      <v-card>
-                        <v-card-title class="blue darken-1">
-                          Thông tin chi tiết của đơn hàng:
-                        </v-card-title>
-                        <v-data-table
-                          :headers="headerOrderDetails"
-                          :items-per-page="10"
-                          :items="orderDetails"
-                          item-key="name"
-                          width="10%"
-                          class="elevation-1"
-                          hide-default-footer
-                        >
-                          <template v-slot:[`item.orderItemPrice`]="{ item }">
-                            {{ formatPrice(item.orderItemPrice) }}
-                          </template>
-                          <template v-slot:[`item.status`]="{ item }">
-                            <v-chip :color="getColor(item.status)" dark>
-                              {{ checkStatusOrderDetails(item.status) }}
-                            </v-chip>
-                          </template>
-                        </v-data-table>
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="closeConfirmDialog()"
+                <v-col cols="12">
+                  <v-data-table
+                    :headers="headers"
+                    :items-per-page="10"
+                    :items="orders"
+                    item-key="name"
+                    width="10%"
+                    class="elevation-1"
+                    hide-default-footer
+                  >
+                    <template v-slot:[`item.orderTotal`]="{ item }">
+                      {{ formatPrice(item.orderTotal) }}
+                    </template>
+                    <template v-slot:[`item.status`]="{ item }">
+                      <v-chip :color="getColor(item.status)" dark>
+                        {{ checkStatusOrder(item.status) }}
+                      </v-chip>
+                    </template>
+                    <template v-slot:[`item.createAt`]="{ item }">
+                      {{ formatDate(item.createAt) }}
+                    </template>
+                    <template v-slot:[`item.online`]="{ item }">
+                      <v-chip :color="getColorIsOnline(item.online)" dark>
+                        {{ item.online }}
+                      </v-chip>
+                    </template>
+                    <template v-slot:top>
+                      <v-dialog v-model="dialogConfirm" width="800px">
+                        <v-card>
+                          <v-card-title
+                            class="headline blue lighten-1 pa-2 d-flex justify-center"
                           >
-                            Cancel
-                          </v-btn>
-                          <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="approveItemConfirm()"
+                            Thông tin chi tiết của đơn hàng:
+                          </v-card-title>
+                          <v-data-table
+                            :headers="headerOrderDetails"
+                            :items-per-page="10"
+                            :items="orderDetails"
+                            item-key="name"
+                            width="10%"
+                            class="elevation-1"
+                            hide-default-footer
                           >
-                            Confirm
-                          </v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
-                    <!-- delete -->
-                    <v-dialog
-                      v-model="dialogDelete"
-                      transition="dialog-top-transition"
-                      max-width="500px"
-                    >
-                      <v-card>
-                        <v-card-title class="headline blue darken-1"
-                          >Bạn có muốn xóa đơn hàng này không?</v-card-title
-                        >
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="closeDeleteDialog()"
-                            >Cancel</v-btn
-                          >
-                          <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="deleteItemConfirm()"
-                            >OK</v-btn
-                          >
-                          <v-spacer></v-spacer>
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
-                    <!-- </v-toolbar> -->
-                  </template>
-                  <!--  icon for each rows of data -->
-                  <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon
-                      small
-                      class="mr-2"
-                      @click="confirmItemDialog(item)"
-                      v-if="item.status != -1"
-                      >mdi-checkbox-marked-circle-outline</v-icon
-                    >
-                    <v-icon
-                      small
-                      class="mr-2"
-                      v-show="item.status !== -1"
-                      @click="deleteItemDialog(item)"
-                      v-if="item.status != -1"
-                      >mdi-delete</v-icon
-                    >
-                    <v-icon small class="mr-2">mdi-information-outline</v-icon>
-                  </template>
-                </v-data-table>
-                <div class="text-center pt-2">
-                  <v-pagination
-                    v-model="currentPage"
-                    :length="this.pages.totalPages"
-                    v-on:click="currentPage()"
-                  ></v-pagination>
-                </div>
+                            <template v-slot:[`item.orderItemPrice`]="{ item }">
+                              {{ formatPrice(item.orderItemPrice) }}
+                            </template>
+                            <template v-slot:[`item.status`]="{ item }">
+                              <v-chip :color="getColor(item.status)" dark>
+                                {{ checkStatusOrderDetails(item.status) }}
+                              </v-chip>
+                            </template>
+                            <template
+                              v-slot:[`item.product.productImages[0].imgUrl`]="{
+                                item,
+                              }"
+                            >
+                              <a :href="'/products/' + item.proId">
+                                <img
+                                  class="img-responsive"
+                                  :src="item.product.productImages[0].imgUrl"
+                                  width="40%"
+                                />
+                              </a>
+                            </template>
+                          </v-data-table>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                              color="blue darken-1"
+                              text
+                              @click="closeConfirmDialog()"
+                            >
+                              Cancel
+                            </v-btn>
+                            <v-btn
+                              color="blue darken-1"
+                              text
+                              @click="approveItemConfirm()"
+                            >
+                              Confirm
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+                      <!-- delete -->
+                      <v-dialog
+                        v-model="dialogDelete"
+                        transition="dialog-top-transition"
+                        max-width="550px"
+                        width="100%"
+                      >
+                        <DialogConf
+                          :title="'Bạn có muốn xóa đơn hàng này không?'"
+                          v-on:cancel="closeDeleteDialog"
+                          v-on:accept="deleteItemConfirm"
+                        ></DialogConf>
+                      </v-dialog>
+                      <!-- </v-toolbar> -->
+                    </template>
+                    <!--  icon for each rows of data -->
+                    <template v-slot:[`item.actions`]="{ item }">
+                      <v-icon
+                        small
+                        class="mr-2"
+                        @click="confirmItemDialog(item)"
+                        v-if="item.status != -1"
+                        >mdi-checkbox-marked-circle-outline</v-icon
+                      >
+                      <v-icon
+                        small
+                        class="mr-2"
+                        v-show="item.status !== -1"
+                        @click="deleteItemDialog(item)"
+                        v-if="item.status != -1"
+                        >mdi-delete</v-icon
+                      >
+                      <v-icon small class="mr-2"
+                        >mdi-information-outline</v-icon
+                      >
+                    </template>
+                  </v-data-table>
+                  <div class="text-center pt-2">
+                    <v-pagination
+                      v-model="currentPage"
+                      :length="this.pages.totalPages"
+                      v-on:click="currentPage()"
+                    ></v-pagination>
+                  </div>
+                </v-col>
               </v-row>
             </v-col>
           </v-row>
@@ -173,14 +206,14 @@
 <script>
 import VmHeader from "../../components/HeaderAdmin.vue";
 import VmFooter from "../../components/Footer.vue";
+import DialogConf from "../../components/DialogConf.vue";
 import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
 export default {
-  components: { VmHeader, VmFooter },
+  components: { VmHeader, VmFooter, DialogConf },
   data: () => ({
     dialogDelete: false,
     dialogConfirm: false,
-    desserts: [],
     itemSelected: {},
     editedIndex: -1,
     editedItem: {
@@ -221,6 +254,11 @@ export default {
     ],
     headerOrderDetails: [
       { text: "Mã order detail", align: "start", value: "orderItemId" },
+      {
+        text: "Hình ảnh",
+        align: "start",
+        value: "product.productImages[0].imgUrl",
+      },
       { text: "Kích cỡ", align: "start", value: "orderSize" },
       { text: "Số lượng", align: "start", value: "orderItemQuan" },
       { text: "Giá", align: "start", value: "orderItemPrice" },

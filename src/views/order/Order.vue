@@ -188,7 +188,7 @@
 <script>
 import VmHeader from "../../components/Header.vue";
 import VmFooter from "../../components/Footer.vue";
-import Table from "../../components/Table.vue";
+import Table from "./components/Table.vue";
 import { mapActions, mapGetters } from "vuex";
 import moment from "moment";
 export default {

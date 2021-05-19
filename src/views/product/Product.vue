@@ -329,7 +329,6 @@ export default {
         const quantity = this.productSelected.productDetails[index].proQuantity;
         this.setMaxQuantity(quantity);
       }
-      console.log(this.$v.quantity.$params);
     },
     dialogSuccess() {
       this.$toast.success(
@@ -350,7 +349,6 @@ export default {
     ...mapGetters("auth", ["cart", "carts", "user"]),
     ...mapGetters("order", ["status", "maxQuantity"]),
     totalQuantity() {
-      console.log(423);
       return this.maxQuantity;
     },
     quantityErrors() {
@@ -376,9 +374,6 @@ export default {
         errors.push("Select product cart is required");
       return errors;
     },
-  },
-  mounted() {
-    // this.$store.state.auth.cart
   },
 };
 </script>

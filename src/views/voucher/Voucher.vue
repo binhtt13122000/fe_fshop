@@ -6,10 +6,6 @@
       <VmHeader></VmHeader>
       <!-- V main -->
       <v-main>
-        <!-- v-breadcrumbs -->
-        <v-container>
-          <table></table>
-        </v-container>
         <v-container>
           <v-row class="d-flex justify-content-center">
             <v-col

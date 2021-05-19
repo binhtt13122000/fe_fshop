@@ -64,48 +64,59 @@ const mutations = {
 
 const actions = {
     async getCommentById({ commit }, credential) {
-        const response = await CommentService.getCommentByProductId(credential);
-        console.log(response)
-        if (response.status === 200) {
-            return commit(SET_COMMENTS, response.data.content)
+        try {
+            const response = await CommentService.getCommentByProductId(credential);
+            if (response.status === 200) {
+                await commit(SET_COMMENTS, response.data.content)
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status)
     },
     async createComment({ commit }, creadential) {
         if (creadential.newComment.parentId) {
-            const response = await CommentService.addCommentParent(creadential.productId, creadential.userName, creadential.newComment, creadential.newComment.parentId);
-            console.log(response.data);
-            if (response.status === 200) {
-                return await commit(ADD_COMMENT, response.data);
+            try {
+                const response = await CommentService.addCommentParent(creadential.productId, creadential.userName, creadential.newComment, creadential.newComment.parentId);
+                if (response.status === 200) {
+                    await commit(ADD_COMMENT, response.data);
+                    return await response.status;
+                } else {
+                    return await response.status;
+                }
+            } catch (error) {
+                return await error.response.status;
             }
-            throw new Error(response.status)
         } else {
-            const response = await CommentService.addComment(creadential.productId, creadential.userName, creadential.newComment);
-            console.log(456);
-            if (response.status === 200) {
-                return await commit(ADD_COMMENT, response.data);
+            try {
+                const response = await CommentService.addComment(creadential.productId, creadential.userName, creadential.newComment);
+                if (response.status === 200) {
+                    await commit(ADD_COMMENT, response.data);
+                    return await response.status;
+                } else {
+                    return await response.status;
+                }
+            } catch (error) {
+                return await error.response.status;
             }
-            throw new Error(response.status)
         }
 
     },
     async deleteComment({ commit }, creadential) {
-        const response = await CommentService.deleteComment(creadential.commentId, creadential.userName);
-        console.log(response)
-        if (response.status === 200) {
-            await commit(REMOVE_COMMENT, creadential.commentId);
-            return response.status;
+        try {
+            const response = await CommentService.deleteComment(creadential.commentId, creadential.userName);
+            if (response.status === 200) {
+                await commit(REMOVE_COMMENT, creadential.commentId);
+                return await response.status;
+            } else {
+                return await response.status;
+            }
+        } catch (error) {
+            return await error.response.status;
         }
-        throw new Error(response.status)
     }
-    // async updateComment({commit}, productId, username, newComment){
-    //     const response =  await CommentService.addComment(productId, username, newComment);
-    //     if(response.status === 200){
-    //         commit(UPDATE_COMMENT, newComment);
-    //     }
-    //     throw new Error(response.status)
-    // },
-
 };
 
 export default {

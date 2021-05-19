@@ -320,12 +320,9 @@
                 <v-tab>Bình luận</v-tab>
                 <v-tab-item>
                   <v-container fluid>
-                    <v-form
-                      v-for="(cmt, index) in comments"
-                      :key="cmt.commentId"
-                    >
-                      <v-row v-if="cmt.status !== -1 || !cmt.parentId">
-                        <v-col cols="12" lg="2" md="2" sm="2">
+                    <v-form v-for="cmt in comments" :key="cmt.commentId">
+                      <v-row v-if="cmt.status !== -1">
+                        <v-col cols="12" lg="2" md="2" sm="2" xs="2">
                           <img
                             src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
                             alt="avatar"
@@ -337,65 +334,39 @@
                             {{ diffenceDateTime(cmt.createTime) }}
                           </p>
                         </v-col>
-                        <v-col lg="10">
+                        <v-col lg="10" md="10" sm="10" xs="10">
                           <v-text-field
                             filled
                             :value="cmt.content"
                             :label="cmt.name"
                             readonly
                           ></v-text-field>
-                          <div style="text-align: right" class="mb-4">
-                            <!-- <v-btn class="mx-1" @click="openReply(cmt, index)"
-                              ><v-icon>mdi-reply</v-icon>Reply</v-btn
-                            > -->
-                            <v-btn
-                              class="mx-1"
-                              @click="deleteCmt(cmt)"
-                              color="red"
-                              v-if="cmt.userId === user.userId"
-                              ><v-icon>mdi-delete</v-icon>Delete</v-btn
-                            >
-                          </div>
-                          <v-row class="mb-6" v-if="indexSelect === index">
-                            <v-col cols="12" lg="2" md="2" sm="2">
-                              <img
-                                src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
-                                alt="avatar"
-                                width="50%"
-                              />
-                            </v-col>
-                            <v-col lg="8" md="8" sm="8">
-                              <v-row>
-                                <v-col lg="10" md="10">
-                                  <v-textarea
-                                    v-model="addComment"
-                                    label="Comment"
-                                    auto-grow
-                                    outlined
-                                    rows="5"
-                                    row-height="10"
-                                  ></v-textarea>
-                                </v-col>
-                                <v-col lg="2" md="2">
-                                  <v-btn color="success" @click="createCmm()"
-                                    >Send</v-btn
-                                  >
-                                </v-col>
-                              </v-row>
-                            </v-col>
-                          </v-row>
+                        </v-col>
+                      </v-row>
+                      <v-row
+                        class="flex-lg-row-reverse flex-md-row-reverse flex-sm-row-reverse mb-6"
+                      >
+                        <v-col cols="12" lg="2" md="2" sm="4" xs="12">
+                          <v-btn
+                            class="mx-1"
+                            style="width: 100%"
+                            @click="deleteCmt(cmt)"
+                            color="red"
+                            v-if="cmt.userId === user.userId"
+                            ><v-icon>mdi-delete</v-icon>Delete</v-btn
+                          >
                         </v-col>
                       </v-row>
                     </v-form>
                     <v-row v-if="!this.cmtSelect">
-                      <v-col cols="12" lg="2" md="2" sm="2">
+                      <v-col cols="12" lg="2" md="2" sm="2" xs="2">
                         <img
                           src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
                           alt="avatar"
                           width="50%"
                         />
                       </v-col>
-                      <v-col lg="8" md="8" sm="8">
+                      <v-col lg="8" md="8" sm="8" xs="8">
                         <v-textarea
                           v-model="addComment"
                           label="Comment"
@@ -645,7 +616,6 @@ export default {
         this.indexSelect = index;
         this.reply = true;
         this.cmtSelect = cmtSelect;
-        console.log(this.cmtSelect);
       }
     },
     async deleteCmt(cmt) {
@@ -653,7 +623,6 @@ export default {
         commentId: cmt.commentId,
         userName: this.user.userName,
       };
-      console.log(credentials);
       const response = await this.deleteComment(credentials);
       if (response === 200) {
         Vue.toasted.show("Delete comment successfully.").goAway(1500);
