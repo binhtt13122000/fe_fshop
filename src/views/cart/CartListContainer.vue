@@ -28,9 +28,7 @@
               v-for="detail in this.cartDetail"
               :key="detail.cartItemId"
             >
-              <!-- <VmCart :detail="detail" v-model="checkbox"></VmCart> -->
               <v-container fluid style="background-color: white">
-                <!-- <h1>{{detail.product.productImages}}</h1> -->
                 <v-row>
                   <v-col style="background-color: rgb(255, 247, 245)">
                     <v-row style="background-color: rgb(255, 237, 231)">
@@ -125,7 +123,6 @@
             <v-container>
               <v-col cols="12" style="background-color: #ffffff">
                 <v-row>
-                  <v-col cols="12" sm="6"> </v-col>
                   <v-col cols="12" sm="6">
                     <v-card class="order" width="600px">
                       <h1>Order summary</h1>

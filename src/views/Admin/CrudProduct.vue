@@ -190,45 +190,11 @@
                           >Thêm hàng hóa</v-list-item-title
                         >
                       </v-list-item>
-                      <v-list-item link @click="dialogPromo = !dialogPromo">
-                        <v-list-item-action>
-                          <v-icon>mdi-plus</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-title align="left"
-                          >Thêm khuyến mãi</v-list-item-title
-                        >
-                      </v-list-item>
                     </v-list>
                   </v-menu>
                 </v-col>
 
-                <!-- Dialog them khuyen mai, them san pham -->
-                <v-dialog v-model="dialogPromo" width="500px">
-                  <v-card>
-                    <v-card-title class="blue darken-1">
-                      Thêm khuyến mãi
-                    </v-card-title>
-                    <v-container>
-                      <v-col cols="12">
-                        <v-text-field label="Tên Khuyến mãi"> </v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          label="Promotion(%)"
-                          append-outer-icon="mdi-sale"
-                        >
-                        </v-text-field>
-                      </v-col>
-                    </v-container>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="dialogPromo = false"
-                        >Cancel</v-btn
-                      >
-                      <v-btn text @click="dialogPromo = false">Save</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+                <!-- Dialog them san pham -->
                 <v-dialog v-model="dialogAdd" width="800px">
                   <v-card>
                     <v-card-title class="blue darken-1">
@@ -243,8 +209,8 @@
                           :step="n + 1"
                           :rules="[(value) => !!step.valid]"
                           :color="stepStatus(n + 1)"
-                          >{{ step.name }}</v-stepper-step
-                        >
+                          >{{ step.name }}
+                        </v-stepper-step>
                       </v-stepper-header>
                       <v-stepper-items>
                         <v-stepper-content step="1">
@@ -306,7 +272,7 @@
                               </v-form>
                             </v-container>
                           </v-card>
-                          <v-btn color="primary" @click="e1 = 2">
+                          <v-btn color="primary" @click="nextStep(2)">
                             Continue
                           </v-btn>
                           <v-btn text @click="dialogAdd = false">Cancel</v-btn>
@@ -316,10 +282,10 @@
                             <!-- them hinh o day -->
                           </v-card>
 
-                          <v-btn color="primary" @click="e1 = 3"
+                          <v-btn color="primary" @click="nextStep(3)"
                             >Continue</v-btn
                           >
-                          <v-btn text @click="e1 = 1">Back</v-btn>
+                          <v-btn text @click="nextStep(1)">Back</v-btn>
                         </v-stepper-content>
                         <v-stepper-content step="3">
                           <v-card>
@@ -357,7 +323,7 @@
                                       >mdi-minus-circle</v-icon
                                     >
                                     <v-icon
-                                      @click="add(k)"
+                                      @click="add()"
                                       v-show="k == inputs.length - 1"
                                       >mdi-plus-circle</v-icon
                                     >
@@ -367,16 +333,16 @@
                             </div>
                           </v-card>
 
-                          <v-btn color="primary" @click="e1 = 4"
+                          <v-btn color="primary" @click="nextStep(4)"
                             >Continue</v-btn
                           >
-                          <v-btn text @click="e1 = 2">Back</v-btn>
+                          <v-btn text @click="nextStep(2)">Back</v-btn>
                         </v-stepper-content>
                         <v-stepper-content step="4">
                           <v-card> </v-card>
 
                           <v-btn color="primary">Continue</v-btn>
-                          <v-btn text @click="e1 = 3">Back</v-btn>
+                          <v-btn text @click="nextStep(3)">Back</v-btn>
                         </v-stepper-content>
                       </v-stepper-items>
                     </v-stepper>
@@ -541,22 +507,13 @@
                   </div>
 
                   <!-- Table Category -->
-                  <v-data-table
+                  <TableNoAction
                     :headers="headerCategory"
                     :items="categories"
-                    item-key="category"
-                    hide-default-footer
-                    class="elevation-1"
+                    :itemKey="'category'"
+                    :title="'Loại hàng'"
                     v-show="this.isSearchTableCategory"
-                  >
-                    <template v-slot:top>
-                      <v-toolbar flat>
-                        <v-toolbar-title>Loại hàng</v-toolbar-title>
-                        <v-divider class="mx-4" inset vertical></v-divider>
-                        <v-spacer></v-spacer>
-                      </v-toolbar>
-                    </template>
-                  </v-data-table>
+                  ></TableNoAction>
                   <div class="text-center pt-2">
                     <v-pagination
                       v-show="this.isSearchTableCategory"
@@ -566,23 +523,13 @@
                     ></v-pagination>
                   </div>
                   <!-- Table Supplier -->
-                  <v-data-table
+                  <TableNoAction
                     :headers="headerSupplier"
                     :items="suppliers"
-                    item-key="Supplier"
-                    hide-default-footer
-                    class="elevation-1"
+                    :itemKey="'Supplier'"
+                    :title="'Nhà cung cấp'"
                     v-show="this.isSearchTableSupplier"
-                  >
-                    <template v-slot:top>
-                      <v-toolbar flat>
-                        <v-toolbar-title>Nhà cung cấp</v-toolbar-title>
-                        <v-divider class="mx-4" inset vertical></v-divider>
-                        <v-spacer></v-spacer>
-                      </v-toolbar>
-                    </template>
-                  </v-data-table>
-
+                  ></TableNoAction>
                   <div class="text-center pt-2">
                     <v-pagination
                       v-show="this.isSearchTableSupplier"
@@ -711,11 +658,12 @@ import { validationMixin } from "vuelidate";
 import { required, minValue, maxLength } from "vuelidate/lib/validators";
 import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
+import TableNoAction from "../../components/TableNoAction.vue";
 import DialogConf from "../../components/DialogConf.vue";
 import DialogCreate from "./Components/DialogCreate.vue";
 import Vue from "vue";
 export default {
-  components: { VmFooter, VmHeader, DialogConf, DialogCreate },
+  components: { VmFooter, VmHeader, DialogConf, DialogCreate, TableNoAction },
   mixins: [validationMixin],
 
   validations: {
@@ -751,7 +699,6 @@ export default {
     dialogType: false,
     dialogEdit: false,
     dialog: false,
-    dialogPromo: false,
     dialogAdd: false,
     dialogDelete: false,
     dialogDeleteProductDetail: false,
@@ -1002,8 +949,8 @@ export default {
     ]),
     ...mapActions("supplier", ["addNewSupplier", "getSuppliers"]),
     ...mapActions("category", ["createNewCategory", "getCategories"]),
-    add(index) {
-      this.inputs.push({ name: "", quantity: 0, discount: 0 }, index);
+    add() {
+      this.inputs.push({ name: "", quantity: 0, discount: 0 });
     },
     remove(index) {
       this.inputs.splice(index, 1);
@@ -1013,6 +960,9 @@ export default {
     },
     stepStatus(step) {
       return this.curr > step ? "green" : "blue";
+    },
+    nextStep(index) {
+      this.e1 = index;
     },
     validate(n) {
       this.steps[n].valid = false;

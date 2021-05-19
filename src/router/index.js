@@ -16,7 +16,6 @@ import HeaderAdmin from '../components/HeaderAdmin.vue'
 import Header from '../components/Header.vue'
 import CrudProduct from '../views/Admin/CrudProduct.vue'
 import User from '../views/Admin/User.vue'
-import Test from '../views/Admin/Test.vue'
 import Order from '../views/Admin/Order.vue'
 import OrderUser from '../views/order/Order.vue'
 import Voucher from '../views/voucher/Voucher.vue'
@@ -119,11 +118,6 @@ const routes = [{
         path: '/user',
         name: 'user',
         component: User
-    },
-    {
-        path: '/test',
-        name: 'test',
-        component: Test
     },
     {
         path: '/about',

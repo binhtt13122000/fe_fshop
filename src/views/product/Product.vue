@@ -66,7 +66,6 @@
             </v-row>
           </v-card-text>
         </div>
-
         <v-spacer></v-spacer>
         <v-card-actions>
           <v-row>

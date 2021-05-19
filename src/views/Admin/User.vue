@@ -8,12 +8,9 @@
             <!-- right main 
               ---
             -->
-            <v-col md="3" sm="3" class="right-main-item">
-              <h1 class="hidden-md-and-down mb-6 ml-6" align="left">
-                Người dùng
-              </h1>
-
-              <v-col cols="12" class="hidden-md-and-down">
+            <v-col cols="12" lg="3" md="3" class="right-main-item">
+              <h1 class="mb-6 ml-6" align="left">Người dùng</h1>
+              <v-col cols="12" class="pl-md-0 pr-md-0">
                 <v-card>
                   <v-list-group :value="true">
                     <template v-slot:activator>
@@ -49,114 +46,120 @@
             <!-- left main 
               ---
             -->
-            <v-col width="800px">
-              <v-row class="left-main-item" width="800px">
-                <v-text-field
-                  flat
-                  solo-inverted
-                  hide-details
-                  prepend-inner-icon="mdi-magnify"
-                  label="Theo tên, mã khách hàng"
-                  class="hidden-md-and-down mx-3"
-                  :value="txtSearchAccount"
-                  @change="txtSearchAccount = $event"
-                  @keydown.enter="onEnterClick()"
-                  style="width: 50px"
-                ></v-text-field>
-
-                <!-- <v-btn color="success" class="mx-2"
-                  ><v-icon>mdi-application-import</v-icon>Import</v-btn
-                > -->
-                <input type="file" @change="onFileChange" />
-                <v-btn color="success"
-                  ><v-icon>mdi-file-move-outline</v-icon>Xuất File</v-btn
-                >
+            <v-col lg="9" md="9">
+              <v-row class="left-main-item">
+                <v-col cols="12" lg="6" md="6">
+                  <v-text-field
+                    flat
+                    solo-inverted
+                    hide-details
+                    prepend-inner-icon="mdi-magnify"
+                    label="Theo tên, mã khách hàng"
+                    class="mx-3"
+                    :value="txtSearchAccount"
+                    @change="txtSearchAccount = $event"
+                    @keydown.enter="onEnterClick()"
+                    style="width: 100%"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" lg="3" md="3" sm="6">
+                  <v-file-input
+                    truncate-length="15"
+                    label="File input"
+                    @change="onFileChange"
+                  ></v-file-input>
+                </v-col>
+                <v-col cols="12" lg="3" md="3" sm="6">
+                  <v-btn color="success" width="100%"
+                    ><v-icon>mdi-file-move-outline</v-icon>Xuất File</v-btn
+                  >
+                </v-col>
               </v-row>
-              <br />
               <v-row>
-                <v-data-table
-                  v-model="selected"
-                  :headers="headers"
-                  :items="this.users"
-                  hide-default-footer
-                  :loading="myloadingvariable"
-                  loading-text="Loading... Please wait"
-                  item-key="12"
-                  width="800px"
-                  class="elevation-1"
-                  disable-pagination
-                >
-                  <template v-slot:top>
-                    <v-toolbar>
-                      <v-toolbar-title>Khách hàng</v-toolbar-title>
-                      <v-divider class="mx-4" inset vertical></v-divider>
-                      <v-spacer></v-spacer>
-
-                      <v-dialog v-model="dialogDelete" max-width="500px">
-                        <DialogConf
-                          :title="'Are you sure you want to block this user?'"
-                          v-on:cancel="closeDelete"
-                          v-on:accept="deleteItemConfirm"
-                        ></DialogConf>
-                      </v-dialog>
-                      <v-dialog v-model="dialogActiveAccount" max-width="500px">
-                        <DialogConf
-                          :title="'Are you sure you want to active user?'"
-                          v-on:cancel="closeActiveAccount"
-                          v-on:accept="activeAccountConfirm"
-                        ></DialogConf>
-                      </v-dialog>
-                    </v-toolbar>
-                  </template>
-                  <template v-slot:[`item.birthDate`]="{ item }">
-                    {{ formatDate(item.birthDate) }}
-                  </template>
-                  <template v-slot:[`item.gender`]="{ item }">
-                    {{ checkGender(item.gender) }}
-                  </template>
-                  <template v-slot:[`item.registeredAt`]="{ item }">
-                    {{ formatDate(item.registeredAt) }}
-                  </template>
-                  <template v-slot:[`item.lastLogin`]="{ item }">
-                    {{ diffenceDateTime(item.lastLogin) }}
-                  </template>
-                  <template v-slot:[`item.status`]="{ item }">
-                    <v-chip :color="getColor(item.status)" dark
-                      >{{ checkStatusUser(item.status) }}
-                    </v-chip>
-                  </template>
-                  <template>
-                    <my-component v-if="renderComponent" />
-                  </template>
-                  <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon
-                      v-if="item.status"
-                      small
-                      class="mr-2"
-                      @click="deleteItem(item)"
-                    >
-                      mdi-block-helper
-                    </v-icon>
-                    <v-icon
-                      v-else
-                      small
-                      class="mr-2"
-                      @click="activeAccountDialog(item)"
-                    >
-                      mdi-account-check-outline
-                    </v-icon>
-                    <v-icon small class="mr-2" @click="infoItem(item)"
-                      >mdi-information-outline</v-icon
-                    >
-                  </template>
-                </v-data-table>
-                <div class="text-center pt-2" v-if="!this.isFileSelected">
-                  <v-pagination
-                    v-model="currentPage"
-                    :length="this.pages.totalPages"
-                    v-on:click="currentPage()"
-                  ></v-pagination>
-                </div>
+                <v-col cols="12">
+                  <v-data-table
+                    v-model="selected"
+                    :headers="headers"
+                    :items="this.users"
+                    hide-default-footer
+                    :loading="myloadingvariable"
+                    loading-text="Loading... Please wait"
+                    item-key="12"
+                    width="800px"
+                    class="elevation-1"
+                    disable-pagination
+                  >
+                    <template v-slot:top>
+                      <v-toolbar>
+                        <v-toolbar-title>Khách hàng</v-toolbar-title>
+                        <v-divider class="mx-4" inset vertical></v-divider>
+                        <v-spacer></v-spacer>
+                      </v-toolbar>
+                    </template>
+                    <template v-slot:[`item.birthDate`]="{ item }">
+                      {{ formatDate(item.birthDate) }}
+                    </template>
+                    <template v-slot:[`item.gender`]="{ item }">
+                      {{ checkGender(item.gender) }}
+                    </template>
+                    <template v-slot:[`item.registeredAt`]="{ item }">
+                      {{ formatDate(item.registeredAt) }}
+                    </template>
+                    <template v-slot:[`item.lastLogin`]="{ item }">
+                      {{ diffenceDateTime(item.lastLogin) }}
+                    </template>
+                    <template v-slot:[`item.status`]="{ item }">
+                      <v-chip :color="getColor(item.status)" dark
+                        >{{ checkStatusUser(item.status) }}
+                      </v-chip>
+                    </template>
+                    <template>
+                      <my-component v-if="renderComponent" />
+                    </template>
+                    <template v-slot:[`item.actions`]="{ item }">
+                      <v-icon
+                        v-if="item.status"
+                        small
+                        class="mr-2"
+                        @click="deleteItem(item)"
+                      >
+                        mdi-block-helper
+                      </v-icon>
+                      <v-icon
+                        v-else
+                        small
+                        class="mr-2"
+                        @click="activeAccountDialog(item)"
+                      >
+                        mdi-account-check-outline
+                      </v-icon>
+                      <v-icon small class="mr-2" @click="infoItem(item)"
+                        >mdi-information-outline</v-icon
+                      >
+                    </template>
+                  </v-data-table>
+                  <v-dialog v-model="dialogDelete" max-width="500px">
+                    <DialogConf
+                      :title="'Are you sure you want to block this user?'"
+                      v-on:cancel="closeDelete"
+                      v-on:accept="deleteItemConfirm"
+                    ></DialogConf>
+                  </v-dialog>
+                  <v-dialog v-model="dialogActiveAccount" max-width="500px">
+                    <DialogConf
+                      :title="'Are you sure you want to active user?'"
+                      v-on:cancel="closeActiveAccount"
+                      v-on:accept="activeAccountConfirm"
+                    ></DialogConf>
+                  </v-dialog>
+                  <div class="text-center pt-2" v-if="!this.isFileSelected">
+                    <v-pagination
+                      v-model="currentPage"
+                      :length="this.pages.totalPages"
+                      v-on:click="currentPage()"
+                    ></v-pagination>
+                  </div>
+                </v-col>
               </v-row>
             </v-col>
           </v-row>

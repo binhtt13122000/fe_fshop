@@ -40,9 +40,6 @@ export default {
       this.$emit("accept");
     },
   },
-  created() {
-    console.log(this.type);
-  },
 };
 </script>
 

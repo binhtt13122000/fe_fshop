@@ -141,6 +141,7 @@
                               color="blue darken-1"
                               text
                               @click="approveItemConfirm()"
+                              v-if="confirm"
                             >
                               Confirm
                             </v-btn>
@@ -167,8 +168,8 @@
                       <v-icon
                         small
                         class="mr-2"
-                        @click="confirmItemDialog(item)"
-                        v-if="item.status != -1"
+                        @click="confirmItemDialog(item, true)"
+                        v-if="item.status === 0"
                         >mdi-checkbox-marked-circle-outline</v-icon
                       >
                       <v-icon
@@ -179,7 +180,10 @@
                         v-if="item.status != -1"
                         >mdi-delete</v-icon
                       >
-                      <v-icon small class="mr-2"
+                      <v-icon
+                        small
+                        class="mr-2"
+                        @click="confirmItemDialog(item, false)"
                         >mdi-information-outline</v-icon
                       >
                     </template>
@@ -230,6 +234,7 @@ export default {
       isOnline: 1,
       status: 1,
     },
+    confirm: false,
     currentPage: 1,
     priceFrom: "",
     priceTo: "",
@@ -350,6 +355,7 @@ export default {
     },
 
     closeConfirmDialog() {
+      this.confirm = false;
       this.dialogConfirm = false;
       this.itemSelected = {};
       this.$nextTick(() => {
@@ -357,11 +363,12 @@ export default {
         this.editedIndex = -1;
       });
     },
-    confirmItemDialog(item) {
+    confirmItemDialog(item, status) {
       const credential = {
         username: this.user.userName,
         orderId: item.orderId,
       };
+      this.confirm = status;
       this.getOrderDetailByOrderId(credential);
       this.itemSelected = item;
       this.dialogConfirm = true;
