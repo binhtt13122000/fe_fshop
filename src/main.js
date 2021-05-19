@@ -4,14 +4,15 @@ import 'es6-promise/auto'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
+import Toasted from 'vue-toasted'
 
 
 Vue.config.productionTip = false
-
+Vue.use(Toasted)
 
 new Vue({
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
+    router,
+    store,
+    vuetify,
+    render: h => h(App)
 }).$mount('#app')

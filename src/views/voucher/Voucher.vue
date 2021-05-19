@@ -6,28 +6,20 @@
       <VmHeader></VmHeader>
       <!-- V main -->
       <v-main>
-        <!-- v-breadcrumbs -->
-        <div class="breadCrumbs">
-          <v-breadcrumbs :items="itemBreadCrumbs" large></v-breadcrumbs>
-        </div>
         <v-container>
-          <v-row dense>
+          <v-row class="d-flex justify-content-center">
             <v-col
+              cols="12"
               md="4"
-              sm="4"
-              align-content="center"
-              justify="center"
-              v-for="product in this.products"
-              :key="product.productId"
+              sm="6"
+              xs="12"
+              class="voucher"
+              v-for="voucher in this.vouchers"
+              :key="voucher.promotionId"
             >
-              <VmProduct :product="product"></VmProduct>
+              <VmVoucher :voucher="voucher"></VmVoucher>
             </v-col>
           </v-row>
-          <v-pagination
-            v-model="currenPage"
-            v-on:click="currenPage()"
-            :length="lastPage"
-          ></v-pagination>
           <!-- <Pagination/> -->
         </v-container>
       </v-main>
@@ -44,11 +36,11 @@
 import { mapActions, mapGetters } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
-import VmProduct from "./Product.vue";
+import VmVoucher from "../voucher/VoucherDetail.vue";
 
 // import Pagination from "./Pagination.vue";
 export default {
-  components: { VmProduct, VmFooter, VmHeader },
+  components: { VmVoucher, VmFooter, VmHeader },
   props: ["product"],
   data: () => ({
     sheet: false,
@@ -66,27 +58,10 @@ export default {
     drawerRight: null,
     search: null,
     shoppingCartBadge: 0,
-    linkBar: [
-      "Name",
-      "Nữ",
-      "Bộ sưu tập",
-      "Blog",
-      "khuyến mãi",
-      "Hệ Thống cửa hàng",
-    ],
-    itemBreadCrumbs: [
-      {
-        text: "Home",
-        disabled: false,
-        href: "/",
-      },
-    ],
-    isValid: false,
-    isAccount: false,
   }),
   watch: {
     currenPage() {
-      this.getProducts(this.currenPage);
+      this.getVouchers(this.user.userName);
     },
   },
 
@@ -95,28 +70,21 @@ export default {
       this.isValid = window.innerWidth <= 1040;
       this.isAccount = window.innerWidth <= 900;
     },
-    ...mapActions("product", ["getProducts"]),
+    ...mapActions("voucher", ["getVouchers"]),
   },
   computed: {
-    ...mapGetters("product", ["products", "pages"]),
+    ...mapGetters("voucher", ["vouchers", "pages"]),
     ...mapGetters("auth", ["carts", "user", "cart", "cartDetail"]),
-    currenPage: {
-      get() {
-        return this.pages;
-      },
-    },
-    lastPage: {
-      get() {
-        return this.pages.totalPages;
-      },
-    },
   },
 
   created() {
+    if (!this.user) {
+      this.$router.push("/loginpage");
+    }
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
     // this.$store.mapGetters.product.pages;
-    this.getProducts(this.currenPage);
+    this.getVouchers(this.user.userName);
   },
   mounted() {},
 };
@@ -147,6 +115,14 @@ export default {
     text-transform: uppercase;
   }
   // main image
+
+  //Voucher
+  .voucher {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10px;
+    flex-grow: 1;
+  }
 
   // footer
 }

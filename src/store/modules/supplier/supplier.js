@@ -34,31 +34,40 @@ const mutations = {
     },
 
     [ADD_SUPPLIER]: (state, supplier) => {
-        state.products.push(supplier)
+        state.suppliers.push(supplier)
     },
 
 };
 
 const actions = {
-    async createNewSupplier({ commit }, credential) {
-        console.log("abc")
-        const response = await SupplierService.createNewSupplier(credential);
-        if (response.status === 200) {
-            await commit(ADD_SUPPLIER, response.data.content);
-            return await commit(SET_PAGES, response.data);
+    async addNewSupplier({ commit }, credential) {
+        try {
+            const response = await SupplierService.createNewSupplier(credential);
+            if (response.status === 200) {
+                await commit(ADD_SUPPLIER, response.data);
+                return await response.status
+            } else {
+                return await response.status
+            }
+        } catch (error) {
+            console.log(error);
+            return await error.response.status;
         }
-        throw new Error(response.status);
     },
     async getSuppliers({ commit }, credential) {
         try {
             const response = await SupplierService.getSuppliers(credential.txtSearchSupplier, credential.currentPage);
             if (response.status === 200) {
                 await commit(SET_SUPPLIERS, response.data.content);
-                return await commit(SET_PAGES, response.data);
+                await commit(SET_PAGES, response.data);
+                return await response.status;
+            } else {
+                return await response.status
             }
         } catch (error) {
             await commit(SET_SUPPLIERS, []);
             await commit(SET_PAGES, []);
+            return await error.response.status;
         }
     },
 };

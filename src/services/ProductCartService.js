@@ -1,4 +1,4 @@
-import { get, remove, patch, put, post } from "../utils/apiCaller"
+import {get, remove, patch, put, post } from "../utils/apiCaller"
 
 class ProductService {
 

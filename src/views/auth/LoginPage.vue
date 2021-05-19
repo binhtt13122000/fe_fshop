@@ -7,7 +7,7 @@
         color="grey darken-3"
         dark
       >
-        <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
+        <v-toolbar-title class="ml-0 pl-4">
           <img
             class="header-main-logo-js"
             src="https://4menshop.com/logo.png"
@@ -93,6 +93,7 @@
 
 <script>
 // import Axios from 'axios';
+import Vue from "vue";
 import { mapGetters, mapState } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 export default {
@@ -106,20 +107,21 @@ export default {
     };
   },
   methods: {
-    login() {
-      this.$store.dispatch("auth/login", {
+    async login() {
+      await this.$store.dispatch("auth/login", {
         username: this.username,
         password: this.password,
       });
-      console.log(this.user.roleId);
-      const role = this.user.roleId;
-      if (role === "ROL_3") {
-        this.$router.push("/main-product");
-      } else if (role === "ROL_1") {
-        this.$router.push("/products");
+      if (this.user && this.user.roleId) {
+        Vue.toasted.show("Login successfully.").goAway(1500);
+        const role = this.user.roleId;
+        if (role === "ROL_3") {
+          this.$router.push("/main-product");
+        } else if (role === "ROL_1") {
+          this.$router.push("/products");
+        }
       }
     },
-    // ...mapActions("auth", ["getUser"]),
   },
   computed: {
     ...mapState("auth", {
@@ -128,6 +130,11 @@ export default {
     ...mapGetters("auth", ["user"]),
   },
   mounted() {},
+  created() {
+    if (this.user) {
+      this.$router.push("/products");
+    }
+  },
 };
 </script>
 

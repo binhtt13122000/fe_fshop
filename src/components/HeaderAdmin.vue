@@ -391,7 +391,6 @@ export default {
   methods: {
     ...mapActions("auth", ["logout"]),
     logoutUser() {
-      console.log(1231);
       this.logout();
       this.$router.push({ name: "loginpage" });
     },

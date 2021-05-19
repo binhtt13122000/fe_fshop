@@ -2,7 +2,7 @@
   <v-app class="app">
     <Vm-header></Vm-header>
     <v-main>
-      <v-container class="container" fluid>
+      <v-container class="container" style="margin-top: 16px" fluid>
         <section class="container">
           <v-card>
             <v-toolbar color="blue-grey lighten-5" flat prominent>
@@ -87,120 +87,17 @@
                   <v-card-text>
                     <v-container class="container" fluid>
                       <section class="container">
-                        <v-col cols="24" class="left-main-item">
+                        <v-col cols="12" lg="12" class="left-main-item">
                           <v-row>
-                            <v-data-table
-                              :headers="headers"
-                              :footer-props="footerProps"
-                              :items="orders"
-                              item-key="name1"
-                              width="10%"
-                              class="elevation-1"
-                              hide-default-footer
-                            >
-                              <template v-slot:[`item.orderTotal`]="{ item }">
-                                {{ formatPrice(item.orderTotal) }}
-                              </template>
-                              <template v-slot:[`item.status`]="{ item }">
-                                <v-chip :color="getColor(item.status)" dark>
-                                  {{ checkStatusOrder(item.status) }}
-                                </v-chip>
-                              </template>
-                              <template v-slot:[`item.createAt`]="{ item }">
-                                {{ formatDateCustom(item.createAt) }}
-                              </template>
-                              <template v-slot:[`item.actions`]="{ item }">
-                                <v-icon
-                                  small
-                                  class="mr-2"
-                                  @click="confirmItemDialog(item)"
-                                  >mdi-information-outline</v-icon
-                                >
-                                <v-icon
-                                  small
-                                  class="mr-2"
-                                  v-show="item.status !== -1"
-                                  @click="deleteItemDialog(item)"
-                                  v-if="item.status != -1"
-                                  >mdi-delete</v-icon
-                                >
-                              </template>
-                              <template v-slot:top>
-                                <v-dialog v-model="dialogConfirm" width="800px">
-                                  <v-card>
-                                    <v-card-title class="blue darken-1">
-                                      Thông tin chi tiết của đơn hàng:
-                                    </v-card-title>
-                                    <v-data-table
-                                      :headers="headerOrderDetails"
-                                      :items-per-page="10"
-                                      :items="orderDetails"
-                                      item-key="name"
-                                      width="10%"
-                                      class="elevation-1"
-                                      hide-default-footer
-                                    >
-                                      <template
-                                        v-slot:[`item.orderItemPrice`]="{
-                                          item,
-                                        }"
-                                      >
-                                        {{ formatPrice(item.orderItemPrice) }}
-                                      </template>
-                                      <template
-                                        v-slot:[`item.status`]="{ item }"
-                                      >
-                                        <v-chip
-                                          :color="getColor(item.status)"
-                                          dark
-                                        >
-                                          {{
-                                            checkStatusOrderDetails(item.status)
-                                          }}
-                                        </v-chip>
-                                      </template>
-                                    </v-data-table>
-                                  </v-card>
-                                </v-dialog>
-                                <!-- delete -->
-                                <v-dialog
-                                  v-model="dialogDelete"
-                                  transition="dialog-top-transition"
-                                  max-width="500px"
-                                >
-                                  <v-card>
-                                    <v-card-title class="headline blue darken-1"
-                                      >Bạn có muốn xóa đơn hàng này
-                                      không?</v-card-title
-                                    >
-                                    <v-card-actions>
-                                      <v-spacer></v-spacer>
-                                      <v-btn
-                                        color="blue darken-1"
-                                        text
-                                        @click="closeDeleteDialog()"
-                                        >Cancel</v-btn
-                                      >
-                                      <v-btn
-                                        color="blue darken-1"
-                                        text
-                                        @click="deleteItemConfirm()"
-                                        >OK</v-btn
-                                      >
-                                      <v-spacer></v-spacer>
-                                    </v-card-actions>
-                                  </v-card>
-                                </v-dialog>
-                                <!-- </v-toolbar> -->
-                              </template>
-                            </v-data-table>
-                            <div class="text-center pt-2">
-                              <v-pagination
-                                v-model="nextPage"
-                                :length="this.pages.totalPages"
-                                v-on:click="nextPage()"
-                              ></v-pagination>
-                            </div>
+                            <Table
+                              :headers="this.headers"
+                              :headerOrderDetails="this.headerOrderDetails"
+                              :footerProps="this.footerProps"
+                              :dateFrom="this.dateFrom"
+                              :stat="this.select"
+                              :dateTo="this.dateTo"
+                              :next="this.nextPage"
+                            ></Table>
                           </v-row>
                         </v-col>
                       </section>
@@ -213,121 +110,19 @@
                   <v-card-text>
                     <v-container class="container" fluid>
                       <section class="container">
-                        <v-col cols="24" class="left-main-item">
-                          <v-row>
-                            <v-data-table
-                              :headers="headers"
-                              :items="orders"
-                              item-key="name2"
-                              width="10%"
-                              class="elevation-1"
-                              hide-default-footer
-                            >
-                              <template v-slot:[`item.orderTotal`]="{ item }">
-                                {{ formatPrice(item.orderTotal) }}
-                              </template>
-                              <template v-slot:[`item.status`]="{ item }">
-                                <v-chip :color="getColor(item.status)" dark>
-                                  {{ checkStatusOrder(item.status) }}
-                                </v-chip>
-                              </template>
-                              <template v-slot:[`item.createAt`]="{ item }">
-                                {{ formatDateCustom(item.createAt) }}
-                              </template>
-                              <template v-slot:[`item.actions`]="{ item }">
-                                <v-icon
-                                  small
-                                  class="mr-2"
-                                  @click="confirmItemDialog(item)"
-                                  >mdi-information-outline</v-icon
-                                >
-                                <v-icon
-                                  small
-                                  class="mr-2"
-                                  v-show="item.status !== -1"
-                                  @click="deleteItemDialog(item)"
-                                  v-if="item.status != -1"
-                                  >mdi-delete</v-icon
-                                >
-                              </template>
-                              <template v-slot:top>
-                                <v-dialog v-model="dialogConfirm" width="800px">
-                                  <v-card>
-                                    <v-card-title class="blue darken-1">
-                                      Thông tin chi tiết của đơn hàng:
-                                    </v-card-title>
-                                    <v-data-table
-                                      :headers="headerOrderDetails"
-                                      :items-per-page="10"
-                                      :items="orderDetails"
-                                      item-key="name"
-                                      width="10%"
-                                      class="elevation-1"
-                                      hide-default-footer
-                                    >
-                                      <template
-                                        v-slot:[`item.orderItemPrice`]="{
-                                          item,
-                                        }"
-                                      >
-                                        {{ formatPrice(item.orderItemPrice) }}
-                                      </template>
-                                      <template
-                                        v-slot:[`item.status`]="{ item }"
-                                      >
-                                        <v-chip
-                                          :color="getColor(item.status)"
-                                          dark
-                                        >
-                                          {{
-                                            checkStatusOrderDetails(item.status)
-                                          }}
-                                        </v-chip>
-                                      </template>
-                                    </v-data-table>
-                                  </v-card>
-                                </v-dialog>
-                                <!-- delete -->
-                                <v-dialog
-                                  v-model="dialogDelete"
-                                  transition="dialog-top-transition"
-                                  max-width="500px"
-                                >
-                                  <v-card>
-                                    <v-card-title class="headline blue darken-1"
-                                      >Bạn có muốn xóa đơn hàng này
-                                      không?</v-card-title
-                                    >
-                                    <v-card-actions>
-                                      <v-spacer></v-spacer>
-                                      <v-btn
-                                        color="blue darken-1"
-                                        text
-                                        @click="closeDeleteDialog()"
-                                        >Cancel</v-btn
-                                      >
-                                      <v-btn
-                                        color="blue darken-1"
-                                        text
-                                        @click="deleteItemConfirm()"
-                                        >OK</v-btn
-                                      >
-                                      <v-spacer></v-spacer>
-                                    </v-card-actions>
-                                  </v-card>
-                                </v-dialog>
-                                <!-- </v-toolbar> -->
-                              </template>
-                            </v-data-table>
-                            <div class="text-center pt-2">
-                              <v-pagination
-                                v-model="nextPage"
-                                :length="this.pages.totalPages"
-                                v-on:click="nextPage()"
-                              ></v-pagination>
-                            </div>
-                          </v-row>
-                        </v-col>
+                        <v-row class="d-flex justify-content-center">
+                          <v-col cols="12" lg="12" class="left-main-item">
+                            <Table
+                              :headers="this.headers"
+                              :headerOrderDetails="this.headerOrderDetails"
+                              :footerProps="this.footerProps"
+                              :dateFrom="this.dateFrom"
+                              :stat="this.select"
+                              :dateTo="this.dateTo"
+                              :next="this.nextPage"
+                            ></Table>
+                          </v-col>
+                        </v-row>
                       </section>
                     </v-container>
                   </v-card-text>
@@ -338,121 +133,19 @@
                   <v-card-text>
                     <v-container class="container" fluid>
                       <section class="container">
-                        <v-col cols="24" class="left-main-item">
-                          <v-row>
-                            <v-data-table
-                              :headers="headers"
-                              :items="orders"
-                              item-key="name3"
-                              width="10%"
-                              class="elevation-1"
-                              hide-default-footer
-                            >
-                              <template v-slot:[`item.orderTotal`]="{ item }">
-                                {{ formatPrice(item.orderTotal) }}
-                              </template>
-                              <template v-slot:[`item.status`]="{ item }">
-                                <v-chip :color="getColor(item.status)" dark>
-                                  {{ checkStatusOrder(item.status) }}
-                                </v-chip>
-                              </template>
-                              <template v-slot:[`item.createAt`]="{ item }">
-                                {{ formatDateCustom(item.createAt) }}
-                              </template>
-                              <template v-slot:[`item.actions`]="{ item }">
-                                <v-icon
-                                  small
-                                  class="mr-2"
-                                  @click="confirmItemDialog(item)"
-                                  >mdi-information-outline</v-icon
-                                >
-                                <v-icon
-                                  small
-                                  class="mr-2"
-                                  v-show="item.status !== -1"
-                                  @click="deleteItemDialog(item)"
-                                  v-if="item.status != -1"
-                                  >mdi-delete</v-icon
-                                >
-                              </template>
-                              <template v-slot:top>
-                                <v-dialog v-model="dialogConfirm" width="800px">
-                                  <v-card>
-                                    <v-card-title class="blue darken-1">
-                                      Thông tin chi tiết của đơn hàng:
-                                    </v-card-title>
-                                    <v-data-table
-                                      :headers="headerOrderDetails"
-                                      :items-per-page="10"
-                                      :items="orderDetails"
-                                      item-key="name"
-                                      width="10%"
-                                      class="elevation-1"
-                                      hide-default-footer
-                                    >
-                                      <template
-                                        v-slot:[`item.orderItemPrice`]="{
-                                          item,
-                                        }"
-                                      >
-                                        {{ formatPrice(item.orderItemPrice) }}
-                                      </template>
-                                      <template
-                                        v-slot:[`item.status`]="{ item }"
-                                      >
-                                        <v-chip
-                                          :color="getColor(item.status)"
-                                          dark
-                                        >
-                                          {{
-                                            checkStatusOrderDetails(item.status)
-                                          }}
-                                        </v-chip>
-                                      </template>
-                                    </v-data-table>
-                                  </v-card>
-                                </v-dialog>
-                                <!-- delete -->
-                                <v-dialog
-                                  v-model="dialogDelete"
-                                  transition="dialog-top-transition"
-                                  max-width="500px"
-                                >
-                                  <v-card>
-                                    <v-card-title class="headline blue darken-1"
-                                      >Bạn có muốn xóa đơn hàng này
-                                      không?</v-card-title
-                                    >
-                                    <v-card-actions>
-                                      <v-spacer></v-spacer>
-                                      <v-btn
-                                        color="blue darken-1"
-                                        text
-                                        @click="closeDeleteDialog()"
-                                        >Cancel</v-btn
-                                      >
-                                      <v-btn
-                                        color="blue darken-1"
-                                        text
-                                        @click="deleteItemConfirm()"
-                                        >OK</v-btn
-                                      >
-                                      <v-spacer></v-spacer>
-                                    </v-card-actions>
-                                  </v-card>
-                                </v-dialog>
-                                <!-- </v-toolbar> -->
-                              </template>
-                            </v-data-table>
-                            <div class="text-center pt-2">
-                              <v-pagination
-                                v-model="nextPage"
-                                :length="this.pages.totalPages"
-                                v-on:click="nextPage()"
-                              ></v-pagination>
-                            </div>
-                          </v-row>
-                        </v-col>
+                        <v-row class="d-flex justify-content-center">
+                          <v-col cols="12" lg="12" class="left-main-item">
+                            <Table
+                              :headers="this.headers"
+                              :headerOrderDetails="this.headerOrderDetails"
+                              :footerProps="this.footerProps"
+                              :dateFrom="this.dateFrom"
+                              :stat="this.select"
+                              :dateTo="this.dateTo"
+                              :next="this.nextPage"
+                            ></Table>
+                          </v-col>
+                        </v-row>
                       </section>
                     </v-container>
                   </v-card-text>
@@ -463,121 +156,19 @@
                   <v-card-text>
                     <v-container class="container" fluid>
                       <section class="container">
-                        <v-col cols="24" class="left-main-item">
-                          <v-row>
-                            <v-data-table
-                              :headers="headers"
-                              :items="orders"
-                              item-key="name3"
-                              width="10%"
-                              class="elevation-1"
-                              hide-default-footer
-                            >
-                              <template v-slot:[`item.orderTotal`]="{ item }">
-                                {{ formatPrice(item.orderTotal) }}
-                              </template>
-                              <template v-slot:[`item.status`]="{ item }">
-                                <v-chip :color="getColor(item.status)" dark>
-                                  {{ checkStatusOrder(item.status) }}
-                                </v-chip>
-                              </template>
-                              <template v-slot:[`item.createAt`]="{ item }">
-                                {{ formatDateCustom(item.createAt) }}
-                              </template>
-                              <template v-slot:[`item.actions`]="{ item }">
-                                <v-icon
-                                  small
-                                  class="mr-2"
-                                  @click="confirmItemDialog(item)"
-                                  >mdi-information-outline</v-icon
-                                >
-                                <v-icon
-                                  small
-                                  class="mr-2"
-                                  v-show="item.status !== -1"
-                                  @click="deleteItemDialog(item)"
-                                  v-if="item.status != -1"
-                                  >mdi-delete</v-icon
-                                >
-                              </template>
-                              <template v-slot:top>
-                                <v-dialog v-model="dialogConfirm" width="800px">
-                                  <v-card>
-                                    <v-card-title class="blue darken-1">
-                                      Thông tin chi tiết của đơn hàng:
-                                    </v-card-title>
-                                    <v-data-table
-                                      :headers="headerOrderDetails"
-                                      :items-per-page="10"
-                                      :items="orderDetails"
-                                      item-key="name"
-                                      width="10%"
-                                      class="elevation-1"
-                                      hide-default-footer
-                                    >
-                                      <template
-                                        v-slot:[`item.orderItemPrice`]="{
-                                          item,
-                                        }"
-                                      >
-                                        {{ formatPrice(item.orderItemPrice) }}
-                                      </template>
-                                      <template
-                                        v-slot:[`item.status`]="{ item }"
-                                      >
-                                        <v-chip
-                                          :color="getColor(item.status)"
-                                          dark
-                                        >
-                                          {{
-                                            checkStatusOrderDetails(item.status)
-                                          }}
-                                        </v-chip>
-                                      </template>
-                                    </v-data-table>
-                                  </v-card>
-                                </v-dialog>
-                                <!-- delete -->
-                                <v-dialog
-                                  v-model="dialogDelete"
-                                  transition="dialog-top-transition"
-                                  max-width="500px"
-                                >
-                                  <v-card>
-                                    <v-card-title class="headline blue darken-1"
-                                      >Bạn có muốn xóa đơn hàng này
-                                      không?</v-card-title
-                                    >
-                                    <v-card-actions>
-                                      <v-spacer></v-spacer>
-                                      <v-btn
-                                        color="blue darken-1"
-                                        text
-                                        @click="closeDeleteDialog()"
-                                        >Cancel</v-btn
-                                      >
-                                      <v-btn
-                                        color="blue darken-1"
-                                        text
-                                        @click="deleteItemConfirm()"
-                                        >OK</v-btn
-                                      >
-                                      <v-spacer></v-spacer>
-                                    </v-card-actions>
-                                  </v-card>
-                                </v-dialog>
-                                <!-- </v-toolbar> -->
-                              </template>
-                            </v-data-table>
-                            <div class="text-center pt-2">
-                              <v-pagination
-                                v-model="nextPage"
-                                :length="this.pages.totalPages"
-                                v-on:click="nextPage()"
-                              ></v-pagination>
-                            </div>
-                          </v-row>
-                        </v-col>
+                        <v-row class="d-flex justify-content-center">
+                          <v-col cols="12" lg="12" class="left-main-item">
+                            <Table
+                              :headers="this.headers"
+                              :headerOrderDetails="this.headerOrderDetails"
+                              :footerProps="this.footerProps"
+                              :dateFrom="this.dateFrom"
+                              :dateTo="this.dateTo"
+                              :stat="this.select"
+                              :next="this.nextPage"
+                            ></Table>
+                          </v-col>
+                        </v-row>
                       </section>
                     </v-container>
                   </v-card-text>
@@ -597,14 +188,17 @@
 <script>
 import VmHeader from "../../components/Header.vue";
 import VmFooter from "../../components/Footer.vue";
+import Table from "./components/Table.vue";
 import { mapActions, mapGetters } from "vuex";
 import moment from "moment";
 export default {
-  components: { VmHeader, VmFooter },
+  components: { VmHeader, VmFooter, Table },
   data: () => ({
     footerProps: { "items-per-page-options": [8] },
     dateFrom: "",
     dateTo: "",
+    dateFormattedFrom: "",
+    dateFormattedTo: "",
     menu1: false,
     menu2: false,
     options: {},
@@ -624,7 +218,11 @@ export default {
       { text: "Actions", value: "actions", sortable: false },
     ],
     headerOrderDetails: [
-      { text: "Mã order detail", align: "start", value: "orderItemId" },
+      {
+        text: "Hình ảnh",
+        align: "start",
+        value: "product.productImages[0].imgUrl",
+      },
       { text: "Kích cỡ", align: "start", value: "orderSize" },
       { text: "Số lượng", align: "start", value: "orderItemQuan" },
       { text: "Giá", align: "start", value: "orderItemPrice" },
@@ -633,40 +231,11 @@ export default {
     nextPage: 1,
     dialogDelete: false,
     dialogConfirm: false,
-    dateFormattedFrom: "",
-    dateFormattedTo: "",
     tabs: null,
     items: ["Tất cả", "Chờ xác nhận", "Đã hủy", "Đã xác nhận"],
     select: "",
   }),
   watch: {
-    dialogEdit(val) {
-      val || this.close();
-    },
-    dialogDelete(val) {
-      val || this.closeDeleteDialog();
-    },
-    nextPage() {
-      console.log(5345);
-      var status = 2;
-      if (this.select === "Tất cả") {
-        status = 2;
-      } else if (this.select === "Chờ xác nhận") {
-        status = 0;
-      } else if (this.select === "Đã hủy") {
-        status = -1;
-      } else if (this.select === "Đã xác nhận") {
-        status = 1;
-      }
-      const credential = {
-        username: this.user.userName,
-        status: status,
-        dateFrom: this.formatDate(this.dateFrom),
-        dateTo: this.formatDate(this.dateTo),
-        pageIndex: this.nextPage,
-      };
-      this.getOrders(credential);
-    },
     dateFrom() {
       this.dateFormattedFrom = this.formatDate(this.dateFrom);
     },
@@ -675,48 +244,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions("order", [
-      "getOrders",
-      "removeOrderByOrderId",
-      "confirmOrder",
-      "getOrderDetailByOrderId",
-    ]),
-    formatDateCustom(value) {
-      return moment(value).format("HH:mm:ss MM/DD/YYYY");
-    },
-    formatPrice(value) {
-      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    },
-    formatDate(date) {
-      if (!date) return "";
-
-      const [year, month, day] = date.split("-");
-      return `${month}/${day}/${year}`;
-    },
-    parseDate(date) {
-      if (!date) return null;
-
-      const [month, day, year] = date.split("/");
-      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-    },
-    checkStatusOrder(value) {
-      if (value > 0) return "Đã xác nhận";
-      if (value === -1) return "Đã xóa";
-      if (value === 0) return "Đang chờ";
-    },
-    checkStatusOrderDetails(value) {
-      if (value == 1) return "Active";
-      if (value == 0) return "Delete";
-    },
-    getColor(status) {
-      if (status === 1) return "green";
-      if (status === -1) return "red";
-      return "electric blue";
-    },
-    getColorIsOnline(status) {
-      if (status) return "lime";
-      return "cyan";
-    },
     getOrderByUsername(item) {
       var status = 2;
       if (item === "Tất cả") {
@@ -739,71 +266,29 @@ export default {
       };
       this.getOrders(credential);
     },
-    closeDeleteDialog() {
-      this.dialogDelete = false;
-      this.itemSelected = {};
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
+    formatDateCustom(value) {
+      return moment(value).format("HH:mm:ss MM/DD/YYYY");
     },
-    deleteItemDialog(item) {
-      this.itemSelected = item;
-      this.dialogDelete = true;
+    formatPrice(value) {
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    deleteItemConfirm() {
-      const credential = {
-        orderId: this.itemSelected.orderId,
-        username: this.user.userName,
-      };
-      this.removeOrderByOrderId(credential);
-      this.closeDeleteDialog();
+    formatDate(date) {
+      if (!date) return "";
+
+      const [year, month, day] = date.split("-");
+      return `${month}/${day}/${year}`;
     },
-    closeConfirmDialog() {
-      this.dialogConfirm = false;
-      this.itemSelected = {};
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
+    parseDate(date) {
+      if (!date) return null;
+      const [month, day, year] = date.split("/");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
-    confirmItemDialog(item) {
-      const credential = {
-        username: this.user.userName,
-        orderId: item.orderId,
-      };
-      this.getOrderDetailByOrderId(credential);
-      this.itemSelected = item;
-      this.dialogConfirm = true;
-    },
-    approveItemConfirm() {
-      const credential = {
-        orderId: this.itemSelected.orderId,
-        username: this.user.userName,
-      };
-      this.confirmOrder(credential);
-      this.closeConfirmDialog();
-    },
-    nextPage() {
-      var status = 2;
-      if (this.select === "Tất cả") {
-        status = 2;
-      } else if (this.select === "Chờ xác nhận") {
-        status = 0;
-      } else if (this.select === "Đã hủy") {
-        status = -1;
-      } else if (this.select === "Đã xác nhận") {
-        status = 1;
-      }
-      const credential = {
-        username: this.user.userName,
-        status: status,
-        dateFrom: this.formatDate(this.dateFrom),
-        dateTo: this.formatDate(this.dateTo),
-        pageIndex: this.nextPage,
-      };
-      this.getOrders(credential);
-    },
+    ...mapActions("order", [
+      "getOrders",
+      "removeOrderByOrderId",
+      "confirmOrder",
+      "getOrderDetailByOrderId",
+    ]),
   },
 
   computed: {
@@ -815,6 +300,9 @@ export default {
   },
 
   created() {
+    if (!this.user) {
+      this.$router.push("/loginpage");
+    }
     const credential = {
       username: this.user.userName,
       status: 2,

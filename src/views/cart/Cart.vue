@@ -8,29 +8,12 @@
             <v-form>
               <div id="app">
                 <v-app id="inspire">
-                  <v-data-table
+                  <TableNoAction
                     :headers="headers"
                     :items="desserts"
-                    sort-by="calories"
-                    class="elevation-1"
-                  >
-                    <template v-slot:top>
-                      <v-toolbar flat>
-                        <v-toolbar-title>My CRUD</v-toolbar-title>
-                        <v-divider class="mx-4" inset vertical></v-divider>
-                        <v-spacer></v-spacer>
-                      </v-toolbar>
-                    </template>
-
-                    <!-- <template v-slot:item.actions="{ item }">
-                    <v-icon small class="mr-2" @click="editItem(item)">
-                      mdi-pencil
-                    </v-icon>
-                    <v-icon small @click="deleteItem(item)">
-                      mdi-delete
-                    </v-icon>
-                  </template> -->
-                  </v-data-table>
+                    :itemKey="'Cart'"
+                    :title="'My CRUD'"
+                  ></TableNoAction>
                 </v-app>
               </div>
             </v-form>
@@ -45,10 +28,11 @@
 <script>
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
+import TableNoAction from "../../components/TableNoAction.vue";
 export default {
   name: "detail",
   props: ["detail"],
-  components: { VmFooter, VmHeader },
+  components: { VmFooter, VmHeader, TableNoAction },
   data: () => ({
     dialog: false,
     dialogDelete: false,
@@ -95,10 +79,6 @@ export default {
         return this.quantity--;
       }
     },
-  },
-  mounted() {
-    console.log("t ben cart me");
-    console.log(this.detail);
   },
 };
 </script>
