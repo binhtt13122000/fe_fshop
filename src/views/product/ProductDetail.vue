@@ -88,14 +88,13 @@
                     </v-tab-item>
                   </v-tabs>
                 </v-col>
-                <v-col cols="10" md="4" align="left">
+                <v-col cols="12" md="4" xs="12" sm="12" align="left">
                   <div class="sumary-inner"></div>
                   <div
                     class="size-inner"
                     style="font-family: 'Open Sans', sans-serif"
                   >
                     <h1>{{ product.productName }}</h1>
-                    <!-- <p>{{ product.productDescription }}</p> -->
                     <v-rating
                       :value="4.5"
                       color="amber"
@@ -109,10 +108,7 @@
                     <h4 class="price">
                       <br />
                       <span>Giá bán:</span>
-                      {{ product.productPrice }}<u>đ</u>
-                      <v-spacer></v-spacer>
-                      <v-spacer></v-spacer>
-                      <v-spacer></v-spacer>
+                      {{ formatPrice(product.productPrice) }}<u>đ</u>
                     </h4>
                     <v-divider></v-divider>
                     <br />
@@ -123,11 +119,12 @@
                             <p style="font-family: 'Open Sans', sans-serif">
                               Size:
                             </p>
-                            <div
-                              v-for="(product, i) in product.productDetails"
-                              :key="i"
-                            >
-                              <label v-if="product.proQuantity != 0">
+                            <div>
+                              <label
+                                v-for="(product, i) in product.productDetails"
+                                :key="i"
+                                v-show="product.proQuantity != 0"
+                              >
                                 <input
                                   type="radio"
                                   name="sel_size"
@@ -321,41 +318,64 @@
             <v-container>
               <v-tabs class="comment" background-color="indigo" dark>
                 <v-tab>Bình luận</v-tab>
-
                 <v-tab-item>
                   <v-container fluid>
-                    <v-row>
-                      <v-col>
-                        <!-- <h3>{{comment.length}}</h3> -->
-                        <div class="comment-header" align="right">
-                          <v-combobox
-                            v-model="modelComment"
-                            :items="itemComments"
-                            hide-selected
-                            dense
+                    <v-form v-for="cmt in comments" :key="cmt.commentId">
+                      <v-row v-if="cmt.status !== -1">
+                        <v-col cols="12" lg="2" md="2" sm="2" xs="2">
+                          <img
+                            src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
+                            alt="avatar"
+                            width="40px"
+                            height="40px"
+                            class="mx-3"
+                          />
+                          <p class="text-secondary text-center">
+                            {{ diffenceDateTime(cmt.createTime) }}
+                          </p>
+                        </v-col>
+                        <v-col lg="10" md="10" sm="10" xs="10">
+                          <v-text-field
                             filled
-                            label="Sắp xếp theo"
-                            style="width: 20%"
-                          ></v-combobox>
-                        </div>
-
-                        <v-container fluid>
-                          <v-row>
-                            <img
-                              src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
-                              alt="avatar"
-                              width="3%"
-                              height="3%"
-                            />
-
-                            <v-col>
-                              <v-form>
-                                <v-text-field hint="Add your comment">
-                                </v-text-field>
-                              </v-form>
-                            </v-col>
-                          </v-row>
-                        </v-container>
+                            :value="cmt.content"
+                            :label="cmt.name"
+                            readonly
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row
+                        class="flex-lg-row-reverse flex-md-row-reverse flex-sm-row-reverse mb-6"
+                      >
+                        <v-col cols="12" lg="2" md="2" sm="4" xs="12">
+                          <v-btn
+                            class="mx-1"
+                            style="width: 100%"
+                            @click="deleteCmt(cmt)"
+                            color="red"
+                            v-if="cmt.userId === user.userId"
+                            ><v-icon>mdi-delete</v-icon>Delete</v-btn
+                          >
+                        </v-col>
+                      </v-row>
+                    </v-form>
+                    <v-row v-if="!this.cmtSelect">
+                      <v-col cols="12" lg="2" md="2" sm="2" xs="2">
+                        <img
+                          src="https://i.pinimg.com/originals/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg"
+                          alt="avatar"
+                          width="50%"
+                        />
+                      </v-col>
+                      <v-col lg="8" md="8" sm="8" xs="8">
+                        <v-textarea
+                          v-model="addComment"
+                          label="Comment"
+                          auto-grow
+                          outlined
+                          rows="5"
+                          row-height="10"
+                        ></v-textarea>
+                        <v-btn color="success" @click="createCmm()">Send</v-btn>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -363,6 +383,7 @@
               </v-tabs>
             </v-container>
           </div>
+
           <v-dialog v-model="dialogCart" max-width="500px">
             <v-card>
               <v-card-title class="headline blue darken-1"
@@ -420,6 +441,11 @@ import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
 import { validationMixin } from "vuelidate";
 import { required, between } from "vuelidate/lib/validators";
+import VueIziToast from "vue-izitoast";
+import "izitoast/dist/css/iziToast.css";
+import moment from "moment";
+import Vue from "vue";
+Vue.use(VueIziToast);
 export default {
   props: {
     source: String,
@@ -437,14 +463,75 @@ export default {
   },
   components: { VmFooter, VmHeader },
   data: () => ({
+    indexSelect: -1,
+    cmtSelect: "",
     modelSize: "Size",
     badgeCart: 1,
     modelQuantity: "Quantity",
     modelComment: ["Mới nhất"],
+    drawer: null,
+    reply: false,
+    notificationSystem: {
+      options: {
+        show: {
+          theme: "dark",
+          icon: "icon-person",
+          position: "topCenter",
+          progressBarColor: "rgb(0, 255, 184)",
+          onOpening: function () {
+            console.info("callback abriu!");
+          },
+          onClosing: function (closedBy) {
+            console.info("closedBy: " + closedBy);
+          },
+        },
+        success: {
+          position: "topRight",
+        },
+        warning: {
+          position: "topRight",
+        },
+        error: {
+          position: "topRight",
+        },
+        question: {
+          close: false,
+          overlay: true,
+          toastOnce: true,
+          id: "question",
+          zindex: 999,
+          position: "center",
+          buttons: [
+            [
+              "<button><b>YES</b></button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+              true,
+            ],
+            [
+              "<button>NO</button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+            ],
+          ],
+          onClosing: function (instance, toast, closedBy) {
+            console.info("Closing | closedBy: " + closedBy);
+          },
+          onClosed: function (instance, toast, closedBy) {
+            console.info("Closed | closedBy: " + closedBy);
+          },
+        },
+      },
+    },
+    multiLine: true,
+    snackbar: false,
+    text: `I'm a multi-line snackbar.`,
     quantity: 0,
     productSize: "",
+    addComment: "",
     size: 1,
-    drawer: null,
     rating: 5,
     tab: null,
     itemComments: ["Mới nhất", "Cũ"],
@@ -453,6 +540,7 @@ export default {
     dialogCart: false,
     productDetailSize: "",
     productCart: {},
+
     numberRule: (v) => {
       if (!isNaN(parseFloat(v)) && v > 0) return true;
       return "Number must be greater than 0!";
@@ -488,6 +576,7 @@ export default {
     ...mapGetters("auth", ["cart", "carts", "user"]),
     ...mapGetters("product", ["product"]),
     ...mapGetters("order", ["status", "maxQuantity"]),
+    ...mapGetters("comment", ["comment", "comments"]),
     totalQuantity() {
       return this.maxQuantity;
     },
@@ -516,10 +605,38 @@ export default {
     },
   },
   methods: {
+    ...mapActions("auth", ["addProductInCartDetail"]),
+    ...mapActions("product", ["productDetails"]),
+    openReply(cmtSelect, index) {
+      if (this.reply && this.indexSelect != -1) {
+        this.reply = false;
+        this.indexSelect = -1;
+        this.cmtSelect = "";
+      } else {
+        this.indexSelect = index;
+        this.reply = true;
+        this.cmtSelect = cmtSelect;
+      }
+    },
+    async deleteCmt(cmt) {
+      const credentials = {
+        commentId: cmt.commentId,
+        userName: this.user.userName,
+      };
+      const response = await this.deleteComment(credentials);
+      if (response === 200) {
+        Vue.toasted.show("Delete comment successfully.").goAway(1500);
+      } else {
+        Vue.toasted.show("Delete comment failed!").goAway(1500);
+      }
+    },
     increaseValue() {
       return this.quantity++;
     },
-
+    formatPrice(value) {
+      let price = value.toString().replace(".", ",");
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     decreaseValue() {
       if (this.quantity <= 1) {
         return (this.quantity = 1);
@@ -541,6 +658,31 @@ export default {
     addToCart() {
       return this.badgeCart++;
     },
+    createCmm() {
+      // this.$v.$touch();
+      if (this.addComment) {
+        var date = new Date();
+        var creadential = {
+          productId: this.productSelected.productId,
+          userName: this.user.userName,
+          newComment: {
+            name: this.user.name,
+            phoneNumber: this.user.phoneNumber,
+            content: this.addComment,
+            createTime: date,
+            parentId: this.cmtSelect ? this.cmtSelect.commentId : null,
+            status: 1,
+            productId: this.productSelected.productId,
+            userId: this.user.userId,
+            proId: this.productSelected.productId,
+          },
+        };
+        this.createComment(creadential);
+        this.addComment = "";
+      } else {
+        Vue.toasted.show("Required input content comment!").goAway(1500);
+      }
+    },
     addToCartDialog(product) {
       this.$v.$touch();
       if (
@@ -550,9 +692,16 @@ export default {
         this.$v.$reset();
         this.dialogCart = true;
         this.productSelected = product;
+      } else {
+        if (this.quantityErrors.length !== 0) {
+          Vue.toasted.show(this.quantityErrors).goAway(2000);
+        }
+        if (this.productSizeError.length !== 0) {
+          Vue.toasted.show(this.productSizeError).goAway(2000);
+        }
       }
     },
-    addToCartDialogConfirm() {
+    async addToCartDialogConfirm() {
       this.$v.$touch();
       if (
         this.quantityErrors.length === 0 &&
@@ -567,16 +716,54 @@ export default {
           cartSize: this.productSize,
           cartQuantity: this.quantity,
         };
-        this.addProductInCartDetail(credential);
-        this.closeCartDialog();
+        try {
+          const response = await this.addProductInCartDetail(credential);
+          if (response !== "" && response.status === 200) {
+            this.dialogSuccess();
+            this.closeCartDialog();
+          } else {
+            this.dialogError();
+          }
+        } catch (err) {
+          this.dialogError();
+        }
       }
     },
 
     closeCartDialog() {
       this.dialogCart = false;
     },
+    dialogSuccess() {
+      this.$toast.success(
+        "Add product in cart successfully!",
+        "OK",
+        this.notificationSystem.options.success
+      );
+    },
+    dialogError() {
+      this.$toast.error(
+        "Add product in cart is failed!",
+        "Error",
+        this.notificationSystem.options.error
+      );
+    },
+    diffenceDateTime(value) {
+      let start = moment(value);
+      let end = moment(new Date());
+      let duration = moment.duration(end.diff(start));
+      let days = duration.asDays();
+      if (days < 1) {
+        return Math.round(duration.asMinutes()) + " minutes";
+      }
+      return Math.round(days) + " days";
+    },
     ...mapActions("auth", ["addProductInCartDetail"]),
     ...mapActions("product", ["productDetails"]),
+    ...mapActions("comment", [
+      "getCommentById",
+      "createComment",
+      "deleteComment",
+    ]),
   },
   created() {
     this.onResize();
@@ -585,7 +772,11 @@ export default {
   mounted() {
     this.productDetails(this.$route.params.idProduct);
     this.productSelected = this.product;
-    console.log(this.productSelected);
+    var credential = {
+      productId: this.$route.params.idProduct,
+      username: this.user.userName,
+    };
+    this.getCommentById(credential);
   },
 };
 </script>
@@ -697,7 +888,6 @@ body {
     width: 40px;
     position: relative;
     margin: 0 2px;
-
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -715,7 +905,6 @@ body {
     color: #ffffff;
     text-align: center;
     justify-content: center;
-    //  text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
     position: absolute;
@@ -732,7 +921,6 @@ body {
 
   input:checked + span {
     padding-top: 3px;
-    border: 3px solid rgb(177, 177, 177);
     background-color: rgb(177, 177, 177);
     border: 3px solid rgb(177, 177, 177);
   }

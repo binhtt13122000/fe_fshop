@@ -11,13 +11,15 @@
               <v-list-item-content>
                 <v-list-item-title>
                   <v-icon>mdi-phone</v-icon>
-                  HOTLINE:028 3526 7061
+                  <a href="tel:02835267061" class="foo-telephone"
+                    >HOTLINE:028 3526 7061</a
+                  >
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <hr
-              class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-              style="width: 300px"
+              class="black accent-2 mb-4 mt-0 d-inline-block mx-padding"
+              style="max-width: 300px; width: 100%"
             />
             <v-list-item link>
               <v-list-item-content>
@@ -28,8 +30,8 @@
               </v-list-item-content>
             </v-list-item>
             <hr
-              class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-              style="width: 300px"
+              class="black accent-2 mb-4 mt-0 d-inline-block mx-padding"
+              style="max-width: 300px; width: 100%"
             />
             <v-list-item link>
               <v-list-item-content>
@@ -40,8 +42,8 @@
               </v-list-item-content>
             </v-list-item>
             <hr
-              class="black accent-2 mb-4 mt-0 d-inline-block mx-auto"
-              style="width: 300px"
+              class="black accent-2 mb-4 mt-0 d-inline-block mx-padding"
+              style="max-width: 300px; width: 100%"
             />
           </v-list>
         </div>
@@ -49,7 +51,7 @@
               <v-col  class="mx-auto mt-2"> -->
         <div class="mx-auto mt-2">
           <h4 class="font-weight-bold">THƯƠNG HIỆU</h4>
-          <ul class="foo-thuong-hieu">
+          <ul class="foo-thuong-hieu" style="text-align: center; padding: 0">
             <li><a href="">Giới thiệu</a></li>
             <li><a href="">Tuyển dụng</a></li>
             <li><a href="">Liên hệ</a></li>
@@ -59,7 +61,7 @@
               <v-col class="mx-auto mt-2"> -->
         <div class="mx-auto mt-2">
           <h4 class="font-weight-bold">TIN TỨC</h4>
-          <ul class="foo-tin-tuc">
+          <ul class="foo-tin-tuc" style="text-align: center; padding: 0">
             <li><a href="">Bộ sưu tập</a></li>
             <li><a href="">Tư vấn thời trang</a></li>
             <li><a href="">Tin tức thời trang</a></li>
@@ -71,7 +73,7 @@
               <v-col class="mx-auto mt-2"> -->
         <div class="mx-auto mt-2">
           <h4 class="font-weight-bold">HỖ TRỢ</h4>
-          <ul class="foo-ho-tro">
+          <ul class="foo-ho-tro" style="text-align: center; padding: 0">
             <li><a href="">Khách hàng thân thiết</a></li>
             <li><a href="">Hướng dẫn mua hàng</a></li>
             <li><a href="">Hướng dẫn thanh toán</a></li>
@@ -101,10 +103,10 @@
       <v-row id="socialIcon" class="d-flex align-items-center">
         <v-col md="12" lg="12" xl="12" class="mx-auto mt-3">
           <div class="social-items" align="center" justify="center">
-            <a href=""><v-icon size="50">mdi-google</v-icon></a>
-            <a href=""><v-icon size="50">mdi-facebook</v-icon></a>
-            <a href=""><v-icon size="50">mdi-instagram</v-icon></a>
-            <a href=""><v-icon size="50">mdi-twitter</v-icon></a>
+            <a href=""><v-icon size="40">mdi-google</v-icon></a>
+            <a href=""><v-icon size="40">mdi-facebook</v-icon></a>
+            <a href=""><v-icon size="40">mdi-instagram</v-icon></a>
+            <a href=""><v-icon size="40">mdi-twitter</v-icon></a>
           </div>
         </v-col>
       </v-row>
@@ -114,7 +116,10 @@
       <div class="footer-copyright text-center py-3">
         <v-container fluid>
           &copy; CÔNG TY CỔ PHẦN TMDV - TVTK THỜI TRANG VIỆT:
-          <a href="https://www.4menshop.com" style="color: red">
+          <a
+            href="https://www.4menshop.com"
+            style="color: red; text-decoration: none"
+          >
             4menshop.com
           </a>
         </v-container>
@@ -147,25 +152,32 @@ export default {};
       color: #ff0000;
     }
   }
+  .foo-telephone {
+    text-decoration: none;
+  }
 }
 
-#footer-center .mx-auto {
-  display: inline-table;
+#footer-center .mx-padding {
   align-items: center;
-  padding: 5px;
+  padding: 4px;
 }
 
 #socialIcon {
   a {
     text-decoration: none;
     padding: 0px 15px 0px 15px;
+    display: inline-block;
+  }
+  .social-items a:hover {
+    opacity: 0.6;
   }
 }
 
 @media only screen and (max-width: 600px) {
-  #footer-center .mx-auto {
+  #footer-center .mx-padding {
     display: block;
     text-align: center;
+    padding: 2px;
   }
 }
 </style>

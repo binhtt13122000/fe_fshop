@@ -8,11 +8,9 @@
             <!-- right main 
               ---
             -->
-            <v-col md="3" sm="3" class="right-main-item">
-              <h1 class="hidden-md-and-down mb-6 ml-6" align="left">
-                Hàng hóa
-              </h1>
-              <v-col cols="12" class="hidden-md-and-down">
+            <v-col cols="12" lg="3" md="3" sm="3" class="right-main-item">
+              <h1 class="mb-3 pl-lg-3" align="left">Hàng hóa</h1>
+              <v-col class="pa-0 mb-2" cols="12">
                 <v-card>
                   <v-list-group :value="true">
                     <template v-slot:activator>
@@ -37,35 +35,15 @@
                           ><v-icon>mdi-plus-circle-outline</v-icon></v-btn
                         >
                         <v-dialog v-model="dialogType" width="300px">
-                          <v-card>
-                            <v-card-title class="blue darken-1">
-                              Thêm loại hàng
-                            </v-card-title>
-                            <v-container>
-                              <v-col cols="12">
-                                <v-text-field
-                                  label="Tên loại hàng"
-                                  :value="productTypeName"
-                                  @change="productTypeName = $event"
-                                  :error-messages="proTypeNameErrors"
-                                  @input="$v.productTypeName.$touch()"
-                                  @blur="$v.productTypeName.$touch()"
-                                ></v-text-field>
-                              </v-col>
-                            </v-container>
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn
-                                text
-                                color="primary"
-                                @click="dialogType = false"
-                                >Cancel</v-btn
-                              >
-                              <v-btn text @click="onAddNewCategory()"
-                                >Save</v-btn
-                              >
-                            </v-card-actions>
-                          </v-card>
+                          <DialogCreate
+                            :type="'text'"
+                            :title="'Thêm loại hàng'"
+                            :label="'Tên loại hàng'"
+                            v-model="productTypeName"
+                            :errorMessage="proTypeNameErrors"
+                            v-on:cancel="closeDialogNewCategory"
+                            v-on:accept="onAddNewCategory"
+                          ></DialogCreate>
                         </v-dialog>
                       </v-list-item-action>
                     </v-list-item>
@@ -86,7 +64,7 @@
                   </v-list-group>
                 </v-card>
               </v-col>
-              <v-col cols="12" class="hidden-md-and-down">
+              <v-col class="pa-0 mb-2" cols="12">
                 <v-card>
                   <v-list-group :value="true">
                     <template v-slot:activator>
@@ -110,38 +88,16 @@
                         <v-btn icon @click="dialogSupplier = !dialogSupplier"
                           ><v-icon>mdi-plus-circle-outline</v-icon></v-btn
                         >
-                        <v-dialog v-model="dialogSupplier" width="300px">
-                          <v-card>
-                            <v-card-title class="blue darken-1">
-                              Thêm nhà sản xuất
-                            </v-card-title>
-                            <v-container>
-                              <v-col cols="12">
-                                <v-text-field
-                                  label="Tên nhà sản xuất"
-                                  :value="supplierName"
-                                  @change="
-                                    (supplierName = $event), (currentPage = 1)
-                                  "
-                                  :error-messages="supplierNameErrors"
-                                  @input="$v.supplierName.$touch()"
-                                  @blur="$v.supplierName.$touch()"
-                                ></v-text-field>
-                              </v-col>
-                            </v-container>
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn
-                                text
-                                color="primary"
-                                @click="dialogSupplier = false"
-                                >Cancel</v-btn
-                              >
-                              <v-btn text @click="onAddNewSupplier()"
-                                >Save</v-btn
-                              >
-                            </v-card-actions>
-                          </v-card>
+                        <v-dialog v-model="dialogSupplier" width="350px">
+                          <DialogCreate
+                            :type="'text'"
+                            :title="'Thêm nhà sản xuất'"
+                            :label="'Tên nhà sản xuất'"
+                            v-model="supplierName"
+                            :errorMessage="supplierNameErrors"
+                            v-on:cancel="closeDialogNewSupplier"
+                            v-on:accept="onAddNewSupplier"
+                          ></DialogCreate>
                         </v-dialog>
                       </v-list-item-action>
                     </v-list-item>
@@ -158,8 +114,7 @@
                   </v-list-group>
                 </v-card>
               </v-col>
-              <v-col cols="12" class="hidden-md-and-down"> </v-col>
-              <v-col cols="12" class="hidden-md-and-down">
+              <v-col class="pa-0 mb-2" cols="12">
                 <v-card>
                   <v-list-group :value="true">
                     <template v-slot:activator>
@@ -195,75 +150,51 @@
             <!-- left main 
               ---
             -->
-            <v-col>
+            <v-col lg="9" md="9" sm="9" class="mt-3 mb-3">
               <v-row class="left-main-item">
-                <v-text-field
-                  flat
-                  solo-inverted
-                  hide-details
-                  prepend-inner-icon="mdi-magnify"
-                  :value="txtSearchProduct"
-                  @change="txtSearchProduct = $event"
-                  @keydown.enter="onEnterClickSearchProduct()"
-                  label="Theo tên, mã hàng, tên loại hàng"
-                  class="hidden-md-and-down mx-3"
-                  style="width: 50px"
-                ></v-text-field>
-                <v-menu open-on-hover bottom offset-y rounded>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="success" v-bind="attrs" v-on="on">
-                      <v-icon>mdi-plus</v-icon>Thêm mới
-                      <v-icon>mdi-arrow-down-drop-circle-outline</v-icon>
-                    </v-btn>
-                  </template>
-
-                  <v-list>
-                    <v-list-item link @click="dialogAdd = !dialogAdd">
-                      <v-list-item-action>
-                        <v-icon>mdi-plus</v-icon>
-                      </v-list-item-action>
-                      <v-list-item-title align="left"
-                        >Thêm hàng hóa</v-list-item-title
+                <v-col cols="12" lg="9" md="9" sm="9" class="pl-0 pr-3">
+                  <v-text-field
+                    flat
+                    solo-inverted
+                    hide-details
+                    prepend-inner-icon="mdi-magnify"
+                    :value="txtSearchProduct"
+                    @change="txtSearchProduct = $event"
+                    @keydown.enter="onEnterClickSearchProduct()"
+                    label="Theo tên, mã hàng, tên loại hàng"
+                    class="mr-3 mb-3"
+                    style="width: 100%"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" lg="3" md="3" sm="3" class="pl-0 pr-0 mb-3">
+                  <v-menu open-on-hover bottom offset-y rounded>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        color="success"
+                        v-bind="attrs"
+                        v-on="on"
+                        min-width="64px"
+                        width="100%"
                       >
-                    </v-list-item>
-                    <v-list-item link @click="dialogPromo = !dialogPromo">
-                      <v-list-item-action>
-                        <v-icon>mdi-plus</v-icon>
-                      </v-list-item-action>
-                      <v-list-item-title align="left"
-                        >Thêm khuyến mãi</v-list-item-title
-                      >
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
+                        <v-icon>mdi-plus</v-icon>Thêm mới
+                        <v-icon>mdi-arrow-down-drop-circle-outline</v-icon>
+                      </v-btn>
+                    </template>
 
-                <!-- Dialog them khuyen mai, them san pham -->
-                <v-dialog v-model="dialogPromo" width="500px">
-                  <v-card>
-                    <v-card-title class="blue darken-1">
-                      Thêm khuyến mãi
-                    </v-card-title>
-                    <v-container>
-                      <v-col cols="12">
-                        <v-text-field label="Tên Khuyến mãi"> </v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          label="Promotion(%)"
-                          append-outer-icon="mdi-sale"
+                    <v-list>
+                      <v-list-item link @click="dialogAdd = !dialogAdd">
+                        <v-list-item-action>
+                          <v-icon>mdi-plus</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-title align="left"
+                          >Thêm hàng hóa</v-list-item-title
                         >
-                        </v-text-field>
-                      </v-col>
-                    </v-container>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="dialogPromo = false"
-                        >Cancel</v-btn
-                      >
-                      <v-btn text @click="dialogPromo = false">Save</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
+                </v-col>
+
+                <!-- Dialog them san pham -->
                 <v-dialog v-model="dialogAdd" width="800px">
                   <v-card>
                     <v-card-title class="blue darken-1">
@@ -278,8 +209,8 @@
                           :step="n + 1"
                           :rules="[(value) => !!step.valid]"
                           :color="stepStatus(n + 1)"
-                          >{{ step.name }}</v-stepper-step
-                        >
+                          >{{ step.name }}
+                        </v-stepper-step>
                       </v-stepper-header>
                       <v-stepper-items>
                         <v-stepper-content step="1">
@@ -341,12 +272,9 @@
                               </v-form>
                             </v-container>
                           </v-card>
-                          <v-btn color="primary" @click="e1 = 2">
+                          <v-btn color="primary" @click="nextStep(2)">
                             Continue
                           </v-btn>
-                          <!-- <v-btn color="primary" @click="validate(n)" 
-                            >Continue</v-btn
-                          > -->
                           <v-btn text @click="dialogAdd = false">Cancel</v-btn>
                         </v-stepper-content>
                         <v-stepper-content step="2">
@@ -354,10 +282,10 @@
                             <!-- them hinh o day -->
                           </v-card>
 
-                          <v-btn color="primary" @click="e1 = 3"
+                          <v-btn color="primary" @click="nextStep(3)"
                             >Continue</v-btn
                           >
-                          <v-btn text @click="e1 = 1">Back</v-btn>
+                          <v-btn text @click="nextStep(1)">Back</v-btn>
                         </v-stepper-content>
                         <v-stepper-content step="3">
                           <v-card>
@@ -366,11 +294,6 @@
                               v-for="(input, k) in inputs"
                               :key="k"
                             >
-                              <!-- <input
-                                type="text"
-                                class="form-control"
-                                v-model="input.name"
-                              /> -->
                               <v-row>
                                 <v-col cols="3">
                                   <v-text-field
@@ -400,7 +323,7 @@
                                       >mdi-minus-circle</v-icon
                                     >
                                     <v-icon
-                                      @click="add(k)"
+                                      @click="add()"
                                       v-show="k == inputs.length - 1"
                                       >mdi-plus-circle</v-icon
                                     >
@@ -410,16 +333,16 @@
                             </div>
                           </v-card>
 
-                          <v-btn color="primary" @click="e1 = 4"
+                          <v-btn color="primary" @click="nextStep(4)"
                             >Continue</v-btn
                           >
-                          <v-btn text @click="e1 = 2">Back</v-btn>
+                          <v-btn text @click="nextStep(2)">Back</v-btn>
                         </v-stepper-content>
                         <v-stepper-content step="4">
                           <v-card> </v-card>
 
                           <v-btn color="primary">Continue</v-btn>
-                          <v-btn text @click="e1 = 3">Back</v-btn>
+                          <v-btn text @click="nextStep(3)">Back</v-btn>
                         </v-stepper-content>
                       </v-stepper-items>
                     </v-stepper>
@@ -428,378 +351,295 @@
               </v-row>
               <br />
               <v-row>
-                <v-data-table
-                  v-model="selected"
-                  :headers="headers"
-                  :items="this.products"
-                  item-key="name"
-                  show-expand
-                  :single-expand="true"
-                  class="elevation-1"
-                  hide-default-footer
-                  v-show="this.isSearchTableProduct"
-                >
-                  <template v-slot:top>
-                    <v-toolbar flat>
-                      <v-toolbar-title>Sản phẩm</v-toolbar-title>
-
-                      <v-divider class="mx-4" inset vertical></v-divider>
-                      <v-spacer></v-spacer>
-                      <!-- delete -->
-                      <v-dialog v-model="dialogDelete" max-width="500px">
-                        <v-card>
-                          <v-card-title class="headline blue darken-1"
-                            >Are you sure you want to delete
-                            product?</v-card-title
-                          >
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              color="blue darken-1"
-                              text
-                              @click="closeDelete"
-                              >Cancel</v-btn
-                            >
-                            <v-btn
-                              color="blue darken-1"
-                              text
-                              @click="deleteItemConfirm"
-                              >OK</v-btn
-                            >
-                            <v-spacer></v-spacer>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                      <v-dialog v-model="dialogActive" max-width="500px">
-                        <v-card>
-                          <v-card-title class="headline blue darken-1"
-                            >Are you sure you want to active
-                            product?</v-card-title
-                          >
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              color="blue darken-1"
-                              text
-                              @click="closeDialogActive"
-                              >Cancel</v-btn
-                            >
-                            <v-btn
-                              color="blue darken-1"
-                              text
-                              @click="activeItemConfirm"
-                              >OK</v-btn
-                            >
-                            <v-spacer></v-spacer>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </v-toolbar>
-                  </template>
-                  <template v-slot:[`item.categoryName`]="{ item }">
-                    {{ item.category.proTypeName }}
-                  </template>
-                  <template v-slot:[`item.supplierName`]="{ item }">
-                    {{ item.supplier.supplierName }}
-                  </template>
-                  <template v-slot:[`item.productPrice`]="{ item }">
-                    {{ formatPrice(item.productPrice) }}
-                  </template>
-                  <template v-slot:[`item.realPrice`]="{ item }">
-                    {{ formatPrice(item.realPrice) }}
-                  </template>
-                  <template v-slot:[`item.status`]="{ item }">
-                    <v-chip :color="getColor(item.status)" dark>
-                      {{ checkStatusProduct(item.status) }}
-                    </v-chip>
-                  </template>
-                  <template v-slot:[`item.createAt`]="{ item }">
-                    {{ formatDate(item.createAt) }}
-                  </template>
-                  <template v-slot:[`item.actions`]="{ item }">
-                    <v-icon
-                      small
-                      v-if="item.status !== -1"
-                      class="mr-2"
-                      @click="addProductDetailsDialog(item)"
-                    >
-                      mdi-pencil
-                    </v-icon>
-                    <v-icon
-                      small
-                      v-if="item.status !== -1"
-                      class="mr-2"
-                      @click="deleteItem(item)"
-                    >
-                      mdi-delete
-                    </v-icon>
-                    <v-icon
-                      small
-                      v-if="item.status === -1"
-                      class="mr-2"
-                      @click="activeItem(item)"
-                    >
-                      mdi-account-check-outline
-                    </v-icon>
-                  </template>
-                  <template v-slot:expanded-item="{ headers, item }">
-                    <td :colspan="headers.length">
-                      <v-data-table
-                        :headers="headersProductDetails"
-                        :items="item.productDetails"
-                        item-key="name"
-                        hide-default-footer
-                        class="elevation-1"
-                      >
-                        <template v-slot:top>
-                          <v-toolbar flat>
-                            <v-toolbar-title>Sản phẩm</v-toolbar-title>
-
-                            <v-divider class="mx-4" inset vertical></v-divider>
-                            <v-spacer></v-spacer>
-                          </v-toolbar>
-                        </template>
-
-                        <template v-slot:[`item.status`]="{ item }">
-                          <v-chip :color="getColor(item.status)" dark>
-                            {{ checkStatusProduct(item.status) }}
-                          </v-chip>
-                        </template>
-                        <template v-slot:[`item.actions`]="{ item }">
-                          <v-icon
-                            small
-                            class="mr-2"
-                            @click="addQuantityProductDetailsDialog(item)"
-                          >
-                            mdi-pencil
-                          </v-icon>
-                          <v-icon
-                            small
-                            v-if="item.status !== -1"
-                            class="mr-2"
-                            @click="deleteProductDetails(item)"
-                          >
-                            mdi-delete
-                          </v-icon>
-                          <v-icon
-                            small
-                            v-if="item.status === -1"
-                            class="mr-2"
-                            @click="activeProductDetails(item)"
-                          >
-                            mdi-account-check-outline
-                          </v-icon>
-                        </template>
-                      </v-data-table>
-                    </td>
-                  </template>
-                </v-data-table>
-                <div class="text-center pt-2">
-                  <v-pagination
+                <v-col cols="12" class="pa-0">
+                  <v-data-table
+                    v-model="selected"
+                    :headers="headers"
+                    :items="this.products"
+                    item-key="productId"
+                    show-expand
+                    single-expand
+                    single-select
+                    class="elevation-1"
+                    hide-default-footer
                     v-show="this.isSearchTableProduct"
-                    v-model="currentPage"
-                    :length="this.pages.totalPages"
-                    v-on:click="currentPage()"
-                  ></v-pagination>
-                </div>
+                  >
+                    <template v-slot:top>
+                      <v-toolbar flat>
+                        <v-toolbar-title>Sản phẩm</v-toolbar-title>
 
-                <!-- Table Category -->
-                <v-data-table
-                  :headers="headerCategory"
-                  :items="categories"
-                  item-key="category"
-                  hide-default-footer
-                  class="elevation-1"
-                  v-show="this.isSearchTableCategory"
-                >
-                  <template v-slot:top>
-                    <v-toolbar flat>
-                      <v-toolbar-title>Loại hàng</v-toolbar-title>
-                      <v-divider class="mx-4" inset vertical></v-divider>
-                      <v-spacer></v-spacer>
-                    </v-toolbar>
-                  </template>
-                </v-data-table>
-                <div class="text-center pt-2">
-                  <v-pagination
+                        <v-divider class="mx-4" inset vertical></v-divider>
+                        <v-spacer></v-spacer>
+                        <!-- delete -->
+                        <v-dialog
+                          v-model="dialogDelete"
+                          max-width="550px"
+                          width="100%"
+                        >
+                          <DialogConf
+                            :title="'Are you sure you want to delete product?'"
+                            v-on:cancel="closeDelete"
+                            v-on:accept="deleteItemConfirm"
+                          ></DialogConf>
+                        </v-dialog>
+                        <v-dialog
+                          v-model="dialogActive"
+                          max-width="550px"
+                          width="100%"
+                        >
+                          <DialogConf
+                            :title="'Are you sure you want to active product?'"
+                            v-on:cancel="closeDialogActive"
+                            v-on:accept="activeItemConfirm"
+                          ></DialogConf>
+                        </v-dialog>
+                      </v-toolbar>
+                    </template>
+                    <template v-slot:[`item.categoryName`]="{ item }">
+                      {{ item.category.proTypeName }}
+                    </template>
+                    <template v-slot:[`item.supplierName`]="{ item }">
+                      {{ item.supplier.supplierName }}
+                    </template>
+                    <template v-slot:[`item.productPrice`]="{ item }">
+                      {{ formatPrice(item.productPrice) }}
+                    </template>
+                    <template v-slot:[`item.realPrice`]="{ item }">
+                      {{ formatPrice(item.realPrice) }}
+                    </template>
+                    <template v-slot:[`item.status`]="{ item }">
+                      <v-chip :color="getColor(item.status)" dark>
+                        {{ checkStatusProduct(item.status) }}
+                      </v-chip>
+                    </template>
+                    <template v-slot:[`item.createAt`]="{ item }">
+                      {{ formatDate(item.createAt) }}
+                    </template>
+                    <template v-slot:[`item.actions`]="{ item }">
+                      <v-icon
+                        small
+                        v-if="item.status !== -1"
+                        class="mr-2"
+                        @click="addProductDetailsDialog(item)"
+                      >
+                        mdi-pencil
+                      </v-icon>
+                      <v-icon
+                        small
+                        v-if="item.status !== -1"
+                        class="mr-2"
+                        @click="deleteItem(item)"
+                      >
+                        mdi-delete
+                      </v-icon>
+                      <v-icon
+                        small
+                        v-if="item.status === -1"
+                        class="mr-2"
+                        @click="activeItem(item)"
+                      >
+                        mdi-account-check-outline
+                      </v-icon>
+                    </template>
+                    <template v-slot:expanded-item="{ headers, item }">
+                      <td :colspan="headers.length">
+                        <v-data-table
+                          :headers="headersProductDetails"
+                          :items="item.productDetails"
+                          :item-key="item.proItemId"
+                          hide-default-footer
+                          class="elevation-1"
+                        >
+                          <template v-slot:top>
+                            <v-toolbar flat>
+                              <v-toolbar-title>Sản phẩm</v-toolbar-title>
+
+                              <v-divider
+                                class="mx-4"
+                                inset
+                                vertical
+                              ></v-divider>
+                              <v-spacer></v-spacer>
+                            </v-toolbar>
+                          </template>
+
+                          <template v-slot:[`item.status`]="{ item }">
+                            <v-chip :color="getColor(item.status)" dark>
+                              {{ checkStatusProduct(item.status) }}
+                            </v-chip>
+                          </template>
+                          <template v-slot:[`item.actions`]="{ item }">
+                            <v-icon
+                              small
+                              class="mr-2"
+                              @click="addQuantityProductDetailsDialog(item)"
+                            >
+                              mdi-pencil
+                            </v-icon>
+                            <v-icon
+                              small
+                              v-if="item.status !== -1"
+                              class="mr-2"
+                              @click="deleteProductDetails(item)"
+                            >
+                              mdi-delete
+                            </v-icon>
+                            <v-icon
+                              small
+                              v-if="item.status === -1"
+                              class="mr-2"
+                              @click="activeProductDetails(item)"
+                            >
+                              mdi-account-check-outline
+                            </v-icon>
+                          </template>
+                        </v-data-table>
+                      </td>
+                    </template>
+                  </v-data-table>
+                  <div class="text-center pt-2">
+                    <v-pagination
+                      v-show="this.isSearchTableProduct"
+                      v-model="currentPage"
+                      :length="this.pages.totalPages"
+                      v-on:click="currentPage()"
+                    ></v-pagination>
+                  </div>
+
+                  <!-- Table Category -->
+                  <TableNoAction
+                    :headers="headerCategory"
+                    :items="categories"
+                    :itemKey="'category'"
+                    :title="'Loại hàng'"
                     v-show="this.isSearchTableCategory"
-                    v-model="currentPage"
-                    :length="this.pagesCategory.totalPages"
-                    v-on:click="currentPage()"
-                  ></v-pagination>
-                </div>
-                <!-- Table Supplier -->
-                <v-data-table
-                  :headers="headerSupplier"
-                  :items="suppliers"
-                  item-key="suppliers"
-                  hide-default-footer
-                  class="elevation-1"
-                  v-show="this.isSearchTableSupplier"
-                >
-                  <template v-slot:top>
-                    <v-toolbar flat>
-                      <v-toolbar-title>Nhà cung cấp</v-toolbar-title>
-                      <v-divider class="mx-4" inset vertical></v-divider>
-                      <v-spacer></v-spacer>
-                    </v-toolbar>
-                  </template>
-                </v-data-table>
-
-                <div class="text-center pt-2">
-                  <v-pagination
+                  ></TableNoAction>
+                  <div class="text-center pt-2">
+                    <v-pagination
+                      v-show="this.isSearchTableCategory"
+                      v-model="currentPage"
+                      :length="this.pagesCategory.totalPages"
+                      v-on:click="currentPage()"
+                    ></v-pagination>
+                  </div>
+                  <!-- Table Supplier -->
+                  <TableNoAction
+                    :headers="headerSupplier"
+                    :items="suppliers"
+                    :itemKey="'Supplier'"
+                    :title="'Nhà cung cấp'"
                     v-show="this.isSearchTableSupplier"
-                    v-model="currentPage"
-                    :length="this.pagesSupplier.totalPages"
-                    v-on:click="currentPage()"
-                  ></v-pagination>
-                </div>
-                <v-dialog v-model="dialogDeleteProductDetail" max-width="500px">
-                  <v-card>
-                    <v-card-title class="headline blue darken-1"
-                      >Are you sure you want to delete product
-                      detail?</v-card-title
-                    >
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="closeDeleteProductDetails()"
-                        >Cancel</v-btn
-                      >
-                      <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="deleteProductDetailsConfirm()"
-                        >OK</v-btn
-                      >
-                      <v-spacer></v-spacer>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-                <v-dialog v-model="dialogActiveProductDetail" max-width="500px">
-                  <v-card>
-                    <v-card-title class="headline blue darken-1"
-                      >Are you sure you want to active product
-                      detail?</v-card-title
-                    >
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="closeActiveProductDetails()"
-                        >Cancel</v-btn
-                      >
-                      <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="activeProductDetailsConfirm()"
-                        >OK</v-btn
-                      >
-                      <v-spacer></v-spacer>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-                <v-dialog
-                  v-model="dialogAddQuantityProductDetails"
-                  max-width="500px"
-                >
-                  <v-card>
-                    <v-card-title class="headline blue darken-1"
-                      >Add quantity:</v-card-title
-                    >
-                    <v-card-actions>
-                      <v-form>
-                        <v-col cols="12">
-                          <v-text-field
-                            type="number"
-                            :rules="[numberRule]"
-                            label="Số lượng"
-                            :error-messages="quantityErrors"
-                            @input="$v.quantity.$touch()"
-                            @blur="$v.quantity.$touch()"
-                            append-outer-icon="mdi-information"
-                            @change="quantity = $event"
-                          ></v-text-field>
-                        </v-col>
-                      </v-form>
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="closeAddQuantityProductDetails()"
-                        >Cancel</v-btn
-                      >
-                      <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="addQuantityProductDetailsConfirm()"
-                        >OK</v-btn
-                      >
-                      <v-spacer></v-spacer>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+                  ></TableNoAction>
+                  <div class="text-center pt-2">
+                    <v-pagination
+                      v-show="this.isSearchTableSupplier"
+                      v-model="currentPage"
+                      :length="this.pagesSupplier.totalPages"
+                      v-on:click="currentPage()"
+                    ></v-pagination>
+                  </div>
+                  <v-dialog
+                    v-model="dialogDeleteProductDetail"
+                    max-width="550px"
+                    width="100%"
+                  >
+                    <DialogConf
+                      :title="'Are you sure you want to delete product detail?'"
+                      v-on:cancel="closeDeleteProductDetails"
+                      v-on:accept="deleteProductDetailsConfirm"
+                    ></DialogConf>
+                  </v-dialog>
+                  <v-dialog
+                    v-model="dialogActiveProductDetail"
+                    max-width="550px"
+                    width="100%"
+                  >
+                    <DialogConf
+                      :title="'Are you sure you want to active product detail?'"
+                      v-on:cancel="closeActiveProductDetails"
+                      v-on:accept="activeProductDetailsConfirm"
+                    ></DialogConf>
+                  </v-dialog>
+                  <v-dialog
+                    v-model="dialogAddQuantityProductDetails"
+                    max-width="550px"
+                    width="100%"
+                  >
+                    <DialogCreate
+                      :type="'number'"
+                      :title="'Add quantity:'"
+                      :label="'Số lượng'"
+                      :rules="[numberRule]"
+                      v-model="quantity"
+                      :errorMessage="quantityErrors"
+                      v-on:cancel="closeAddQuantityProductDetails"
+                      v-on:accept="addQuantityProductDetailsConfirm"
+                    ></DialogCreate>
+                  </v-dialog>
 
-                <v-dialog v-model="dialogAddProductDetails" max-width="500px">
-                  <v-card>
-                    <v-card-title class="headline blue darken-1"
-                      >Create new product details:</v-card-title
-                    >
-                    <v-card-actions>
-                      <v-form>
-                        <v-col>
-                          <v-text-field
-                            readonly
-                            :value="itemSelected.productId"
-                            label="Product Id"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col>
-                          <v-select
-                            v-model="productDetailSize"
-                            :items="itemsSize"
-                            :error-messages="selectErrors"
-                            @click="$v.productDetailSize.$touch()"
-                            @blur="$v.productDetailSize.$touch()"
-                            required
-                            label="Chọn kích thước:"
-                          ></v-select>
-                        </v-col>
-                        <v-col>
-                          <v-text-field
-                            type="number"
-                            :rules="[numberRule]"
-                            v-model="quantity"
-                            :error-messages="quantityErrors"
-                            @input="$v.quantity.$touch()"
-                            @blur="$v.quantity.$touch()"
-                            label="Số lượng"
-                            append-outer-icon="mdi-information"
-                            @change="quantity = $event"
-                            re
-                          ></v-text-field>
-                        </v-col>
-                      </v-form>
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="closeAddProductDetailsDialog()"
-                        >Cancel</v-btn
+                  <v-dialog
+                    v-model="dialogAddProductDetails"
+                    max-width="550px"
+                    width="100%"
+                  >
+                    <v-card>
+                      <v-card-title
+                        class="headline blue lighten-1 pa-2 d-flex justify-center"
+                        >Create new product details:</v-card-title
                       >
-                      <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="addProductDetailsConfirm()"
-                        >OK</v-btn
-                      >
-                      <v-spacer></v-spacer>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+                      <v-card-actions>
+                        <v-form>
+                          <v-col>
+                            <v-text-field
+                              readonly
+                              :value="itemSelected.productId"
+                              label="Product Id"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col>
+                            <v-select
+                              v-model="productDetailSize"
+                              :items="itemsSize"
+                              :error-messages="selectErrors"
+                              @click="$v.productDetailSize.$touch()"
+                              @blur="$v.productDetailSize.$touch()"
+                              required
+                              label="Chọn kích thước:"
+                            ></v-select>
+                          </v-col>
+                          <v-col>
+                            <v-text-field
+                              type="number"
+                              :rules="[numberRule]"
+                              v-model="quantity"
+                              :error-messages="quantityErrors"
+                              @input="$v.quantity.$touch()"
+                              @blur="$v.quantity.$touch()"
+                              label="Số lượng"
+                              append-outer-icon="mdi-information"
+                              @change="quantity = $event"
+                              re
+                            ></v-text-field>
+                          </v-col>
+                        </v-form>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="closeAddProductDetailsDialog()"
+                          >Cancel</v-btn
+                        >
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="addProductDetailsConfirm()"
+                          >OK</v-btn
+                        >
+                        <v-spacer></v-spacer>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-col>
               </v-row>
             </v-col>
           </v-row>
@@ -818,8 +658,12 @@ import { validationMixin } from "vuelidate";
 import { required, minValue, maxLength } from "vuelidate/lib/validators";
 import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
+import TableNoAction from "../../components/TableNoAction.vue";
+import DialogConf from "../../components/DialogConf.vue";
+import DialogCreate from "./Components/DialogCreate.vue";
+import Vue from "vue";
 export default {
-  components: { VmFooter, VmHeader },
+  components: { VmFooter, VmHeader, DialogConf, DialogCreate, TableNoAction },
   mixins: [validationMixin],
 
   validations: {
@@ -855,7 +699,6 @@ export default {
     dialogType: false,
     dialogEdit: false,
     dialog: false,
-    dialogPromo: false,
     dialogAdd: false,
     dialogDelete: false,
     dialogDeleteProductDetail: false,
@@ -941,8 +784,6 @@ export default {
       { text: "3XL", value: "3XL" },
       { text: "4XL", value: "4XL" },
     ],
-    expanded: [],
-    singleExpand: true,
     steps: [
       {
         name: "Điền thông tin",
@@ -1081,8 +922,6 @@ export default {
       if (!this.$v.productTypeName.$dirty) return errors;
       !this.$v.productTypeName.required &&
         errors.push("Product type name is required");
-      // !this.$v.proTypeName.maxLength &&
-      //   errors.push("Length of product type name must be smaller or equal 50!");
       return errors;
     },
     supplierNameErrors() {
@@ -1090,8 +929,6 @@ export default {
       if (!this.$v.supplierName.$dirty) return errors;
       !this.$v.supplierName.required &&
         errors.push("Supplier name is required");
-      // !this.$v.supplierName.maxLength &&
-      //   errors.push("Length of supplier name must be smaller or equal 50!");
       return errors;
     },
   },
@@ -1110,10 +947,10 @@ export default {
       "addQuantityProductDetail",
       "createProductDetail",
     ]),
-    ...mapActions("supplier", ["createNewSupplier", "getSuppliers"]),
+    ...mapActions("supplier", ["addNewSupplier", "getSuppliers"]),
     ...mapActions("category", ["createNewCategory", "getCategories"]),
-    add(index) {
-      this.inputs.push({ name: "", quantity: 0, discount: 0 }, index);
+    add() {
+      this.inputs.push({ name: "", quantity: 0, discount: 0 });
     },
     remove(index) {
       this.inputs.splice(index, 1);
@@ -1123,6 +960,9 @@ export default {
     },
     stepStatus(step) {
       return this.curr > step ? "green" : "blue";
+    },
+    nextStep(index) {
+      this.e1 = index;
     },
     validate(n) {
       this.steps[n].valid = false;
@@ -1145,7 +985,7 @@ export default {
         this.dialogAddQuantityProductDetails = true;
       }
     },
-    addQuantityProductDetailsConfirm() {
+    async addQuantityProductDetailsConfirm() {
       this.$v.$touch();
       if (this.quantityErrors.length === 0) {
         this.$v.$reset();
@@ -1155,8 +995,15 @@ export default {
           productSize: this.productDetailSelected.proSize,
           quantity: this.quantity,
         };
-        this.addQuantityProductDetail(credential);
-        this.closeAddQuantityProductDetails();
+        const response = await this.addQuantityProductDetail(credential);
+        if (response === 200) {
+          Vue.toasted
+            .show("Add quantity product detail successfully")
+            .goAway(1500);
+          this.closeAddQuantityProductDetails();
+        } else {
+          Vue.toasted.show("Add quantity product detail failed!").goAway(1500);
+        }
       }
     },
 
@@ -1176,7 +1023,7 @@ export default {
       this.itemSelected = item;
       this.dialogAddProductDetails = true;
     },
-    addProductDetailsConfirm() {
+    async addProductDetailsConfirm() {
       this.$v.$touch();
       if (this.quantityErrors.length === 0 && this.selectErrors.length === 0) {
         this.$v.$reset();
@@ -1200,9 +1047,14 @@ export default {
         if (productDetailsCheck != null && productDetailsCheck.status == -1) {
           this.activeProductDetails(productDetailsCheck);
         } else {
-          this.createProductDetail(credential);
+          const response = await this.createProductDetail(credential);
+          if (response === 200) {
+            Vue.toasted("Add product detail successfully").goAway(1500);
+            this.closeAddProductDetailsDialog();
+          } else {
+            Vue.toasted.show("Add product detail failed!").goAway(1500);
+          }
         }
-        this.closeAddProductDetailsDialog();
       }
     },
 
@@ -1224,9 +1076,16 @@ export default {
       this.dialogDeleteProductDetail = true;
     },
 
-    deleteProductDetailsConfirm() {
-      this.deleteProductDetail(this.productDetailSelected);
-      this.closeDeleteProductDetails();
+    async deleteProductDetailsConfirm() {
+      const response = await this.deleteProductDetail(
+        this.productDetailSelected
+      );
+      if (response === 200) {
+        Vue.toasted.show("Delete product detail successfully").goAway(1500);
+        this.closeDeleteProductDetails();
+      } else {
+        Vue.toasted.show("Delete product detail failed!").goAway(1500);
+      }
     },
 
     closeDeleteProductDetails() {
@@ -1244,10 +1103,16 @@ export default {
       this.dialogActiveProductDetail = true;
     },
 
-    activeProductDetailsConfirm() {
-      this.activeProductDetailFromList(this.productDetailSelected);
-      this.closeActiveProductDetails();
-      return true;
+    async activeProductDetailsConfirm() {
+      const response = await this.activeProductDetailFromList(
+        this.productDetailSelected
+      );
+      if (response === 200) {
+        Vue.toasted.show("Active product successfully").goAway(1500);
+        this.closeActiveProductDetails();
+      } else {
+        Vue.toasted.show("Active product failed!").goAway(1500);
+      }
     },
 
     closeActiveProductDetails() {
@@ -1259,23 +1124,47 @@ export default {
         this.renderComponent = true;
       });
     },
-
-    onAddNewCategory() {
+    closeDialogNewCategory() {
+      this.dialogType = false;
+      this.productTypeName = "";
+      this.$v.$reset();
+    },
+    async onAddNewCategory() {
       this.$v.$touch();
       if (this.proTypeNameErrors.length === 0) {
         this.$v.$reset();
-        this.createNewCategory({ proTypeName: this.productTypeName });
-        this.productTypeName = "";
-        this.dialogType = false;
+        const response = await this.createNewCategory({
+          proTypeName: this.productTypeName,
+        });
+        if (response === 200) {
+          Vue.toasted.show("Create new category successfully.").goAway(1500);
+          this.productTypeName = "";
+          this.dialogType = false;
+        } else {
+          Vue.toasted.show("Create new category failed!").goAway(1500);
+        }
       }
     },
-    onAddNewSupplier() {
+    closeDialogNewSupplier() {
+      this.supplierName = "";
+      this.dialogSupplier = false;
+      this.$v.$reset();
+    },
+    async onAddNewSupplier() {
       this.$v.$touch();
       if (this.supplierNameErrors.length === 0) {
         this.$v.$reset();
-        this.createNewSupplier({ supplierName: this.supplierName });
-        this.supplierName = "";
-        this.dialogSupplier = false;
+        const response = await this.addNewSupplier({
+          supplierName: this.supplierName,
+        });
+        console.log(response);
+        if (response === 200) {
+          Vue.toasted.show("Create new supplier successfully").goAway(1500);
+          this.supplierName = "";
+          this.dialogSupplier = false;
+        } else {
+          Vue.toasted.show("Create new supplier failed!").goAway(1500);
+        }
       }
     },
     searchProductsWithStatus() {
@@ -1336,9 +1225,16 @@ export default {
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
-      this.deleteProductFromList(this.itemSelected.productId);
-      this.closeDelete();
+    async deleteItemConfirm() {
+      const response = await this.deleteProductFromList(
+        this.itemSelected.productId
+      );
+      if (response === 200) {
+        Vue.toasted.show("Delete item successfully").goAway(1500);
+        this.closeDelete();
+      } else {
+        Vue.toasted.show("Delete item failed!").goAway(1500);
+      }
     },
 
     closeDelete() {
@@ -1358,9 +1254,16 @@ export default {
       this.dialogActive = true;
     },
 
-    activeItemConfirm() {
-      this.activeProductFromList(this.itemSelected.productId);
-      this.closeDialogActive();
+    async activeItemConfirm() {
+      const response = await this.activeProductFromList(
+        this.itemSelected.productId
+      );
+      if (response === 200) {
+        Vue.toasted.show("Active item successfully").goAway(1500);
+        this.closeDialogActive();
+      } else {
+        Vue.toasted.show("Active item failed!").goAway(1500);
+      }
     },
 
     closeDialogActive() {

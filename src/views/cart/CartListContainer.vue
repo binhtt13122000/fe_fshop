@@ -28,9 +28,7 @@
               v-for="detail in this.cartDetail"
               :key="detail.cartItemId"
             >
-              <!-- <VmCart :detail="detail" v-model="checkbox"></VmCart> -->
               <v-container fluid style="background-color: white">
-                <!-- <h1>{{detail.product.productImages}}</h1> -->
                 <v-row>
                   <v-col style="background-color: rgb(255, 247, 245)">
                     <v-row style="background-color: rgb(255, 237, 231)">
@@ -40,7 +38,7 @@
                           v-for="(img, i) in detail.product.productImages"
                           :key="'A' + i"
                         >
-                          <a :href="'/products/' + img.productId">
+                          <a :href="'/products/' + img.proId">
                             <img
                               v-if="i == 0"
                               class="img-responsive"
@@ -125,53 +123,53 @@
             <v-container>
               <v-col cols="12" style="background-color: #ffffff">
                 <v-row>
-                  <v-col cols="12" sm="6"> </v-col>
                   <v-col cols="12" sm="6">
                     <v-card class="order" width="600px">
                       <h1>Order summary</h1>
-                      <v-col
-                        cols="12"
-                        align-content="center"
-                        justify="center"
-                        v-for="(detail, i) in this.cartDetail"
-                        :key="i"
-                      >
-                        <p v-if="i == 0">
+                      <v-col cols="12" align-content="center" justify="center">
+                        <p>
                           Subtotal(item):<u>đ</u
-                          ><span>{{ detail.cart.cartTotal }}</span>
+                          ><span>{{ formatPrice(Math.round(totalCart)) }}</span>
                         </p>
                       </v-col>
-                      <v-row class="order-item">
-                        <v-col cols="12"
-                          ><p>
-                            Discount:<span>{{ 15 }}%</span>
-                          </p></v-col
-                        >
-                        <v-col cols="12"
-                          ><input
-                            id="voucher-code"
-                            type="text"
-                            placeholder="Enter voucher code"
-                          /><v-btn color="primary">Apply</v-btn></v-col
-                        >
-                        <v-col cols="12">
-                          <!-- <p>
+                      <v-col cols="12"
+                        ><p>
+                          Discount:<span>{{ this.percentDiscount }}%</span>
+                        </p></v-col
+                      >
+                      <v-col cols="12"
+                        ><input
+                          id="voucher-code"
+                          type="text"
+                          placeholder="Enter voucher code"
+                        /><v-btn color="primary" @click="checkPromotion()"
+                          >Apply</v-btn
+                        ></v-col
+                      >
+                      <v-col cols="12">
+                        <p>
                           Total:<u>đ</u
-                          ><span>{{ (detail.product.realPrice * 85) / 100 }}</span>
-                        </p> -->
-                        </v-col>
-                        <v-col cols="12"
-                          ><v-btn
-                            class="order-btn"
-                            color="#ffa500"
-                            @click="createOrder()"
-                            >Place order</v-btn
-                          ></v-col
-                        >
-                      </v-row>
+                          ><span>{{
+                            formatPrice(
+                              Math.round(
+                                totalCart -
+                                  (totalCart * this.percentDiscount) / 100
+                              )
+                            )
+                          }}</span>
+                        </p>
+                      </v-col>
+                      <v-col cols="12"
+                        ><v-btn
+                          class="order-btn"
+                          color="#ffa500"
+                          @click="createOrder()"
+                          >Place order</v-btn
+                        ></v-col
+                      >
                     </v-card>
-                  </v-col> </v-row
-                >f
+                  </v-col>
+                </v-row>
               </v-col>
             </v-container>
           </v-row>
@@ -188,12 +186,61 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 import VmFooter from "../../components/Footer.vue";
 import VmHeader from "../../components/Header.vue";
+import VueIziToast from "vue-izitoast";
+import "izitoast/dist/css/iziToast.css";
+import Vue from "vue";
+Vue.use(VueIziToast);
 // import VmCart from "./Cart.vue";
 export default {
   components: { VmFooter, VmHeader },
 
   data: () => ({
     drawer: null,
+    notificationSystem: {
+      options: {
+        show: {
+          theme: "dark",
+          icon: "icon-person",
+          position: "topCenter",
+          progressBarColor: "rgb(0, 255, 184)",
+        },
+        success: {
+          position: "topRight",
+        },
+        warning: {
+          position: "topRight",
+        },
+        error: {
+          position: "topRight",
+        },
+        question: {
+          close: false,
+          overlay: true,
+          toastOnce: true,
+          id: "question",
+          zindex: 999,
+          position: "center",
+          buttons: [
+            [
+              "<button><b>YES</b></button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+              true,
+            ],
+            [
+              "<button>NO</button>",
+              function (instance, toast) {
+                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              },
+            ],
+          ],
+        },
+      },
+    },
+    multiLine: true,
+    snackbar: false,
+    text: `I'm a multi-line snackbar.`,
     username: "nhanltse140784",
     checkbox: false,
     linkBar: [
@@ -211,38 +258,61 @@ export default {
     isAccount: false,
     mainImageSrc: null,
     idCart: "",
+    percentDiscount: 0,
+    inputCodePromotion: "",
+    promotion: "",
   }),
 
   created() {
     this.onResize();
-
     window.addEventListener("resize", this.onResize, { passive: true });
-
-    // console.log(
-    //   this.getCartDetail(this.$route.params.idCart)
-    // );
   },
 
   computed: {
-    ...mapState("auth", {
-      user: (state) => state.user,
-      cartDetail: (state) => state.cartDetail,
-    }),
-    ...mapGetters("auth", ["carts", "user", "cart", "cartDetail"]),
+    ...mapGetters("auth", ["carts", "user", "cart", "totalCart", "cartDetail"]),
+    ...mapState("auth", ["totalCart"]),
   },
   methods: {
-    onResize() {
-      this.isValid = window.innerWidth <= 1040;
-      this.isAccount = window.innerWidth <= 900;
-    },
-    userName() {
-      return this.user.username;
-    },
     ...mapActions("auth", [
       "getCartDetail",
       "changeQuantityProductInCartDetails",
     ]),
+    ...mapActions("voucher", [
+      "getVouchers",
+      "getVoucherById",
+      "createVoucher",
+    ]),
     ...mapActions("order", ["createOrdersByCart"]),
+    onResize() {
+      this.isValid = window.innerWidth <= 1040;
+      this.isAccount = window.innerWidth <= 900;
+    },
+    async checkPromotion() {
+      try {
+        const credential = {
+          username: this.user.userName,
+          voucherId: document.getElementById("voucher-code").value,
+        };
+        const result = await this.getVoucherById(credential);
+        if (result.status === 200 && result.data.status == 1) {
+          this.percentDiscount = result.data.promo;
+          this.promotion = result.data;
+          this.dialogVoucherValid();
+        } else {
+          this.percentDiscount = 0;
+          this.promotion = "";
+          this.dialogVoucherInvalid();
+        }
+      } catch (err) {
+        this.percentDiscount = 0;
+        this.promotion = "";
+        this.dialogVoucherInvalid();
+      }
+    },
+    userName() {
+      return this.user.username;
+    },
+
     increaseValue(item) {
       const credential = {
         username: this.user.userName,
@@ -256,14 +326,27 @@ export default {
     changeQuantity() {
       this.quantity = this.detail.cartQuantity;
     },
-    decreaseValue() {
-      if (this.quantity <= 1) {
-        return (this.quantity = 1);
-      } else {
-        return this.quantity--;
-      }
+    decreaseValue(item) {
+      const credential = {
+        username: this.user.userName,
+        cartDetailId: item.cartItemId,
+        productId: item.proId,
+        productSize: item.cartSize,
+        quantity: item.cartQuantity - 1,
+      };
+      this.changeQuantityProductInCartDetails(credential);
     },
-    createOrder() {
+    formatPrice(value) {
+      let price = value.toString().replace(".", ",");
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    async createOrder() {
+      let promotionId = "";
+      if (this.promotion === "") {
+        promotionId = "";
+      } else {
+        promotionId = this.promotion.promotionID;
+      }
       const credential = {
         cartId: this.idCart,
         username: this.user.userName,
@@ -272,13 +355,50 @@ export default {
         email: this.user.email,
         country: this.user.country,
         address: this.user.address,
+        promotionId: promotionId,
+        total: Math.round(
+          this.totalCart - (this.totalCart * this.percentDiscount) / 100
+        ),
       };
-      this.createOrdersByCart(credential);
-      // if (this.status === 200) {
-      //this.dialogSuccess();
-      //} else if (this.status === 400) {
-      // this.dialogError();
-      //}
+      try {
+        const response = await this.createOrdersByCart(credential);
+        if (response !== "" && response.status === 200) {
+          this.dialogSuccess();
+          this.$router.push("/products");
+        } else {
+          this.dialogError();
+        }
+      } catch (err) {
+        this.dialogError();
+      }
+    },
+    dialogSuccess() {
+      this.$toast.success(
+        "Order product successfully!",
+        "OK",
+        this.notificationSystem.options.success
+      );
+    },
+    dialogError() {
+      this.$toast.error(
+        "Something is wrong",
+        "Error",
+        this.notificationSystem.options.error
+      );
+    },
+    dialogVoucherValid() {
+      this.$toast.success(
+        "Voucher is valid.",
+        "OK",
+        this.notificationSystem.options.success
+      );
+    },
+    dialogVoucherInvalid() {
+      this.$toast.error(
+        "Voucher is invalid! Check again voucher code!",
+        "Error",
+        this.notificationSystem.options.error
+      );
     },
   },
 
@@ -288,7 +408,6 @@ export default {
       idCart: this.$route.params.idCart,
     };
     (this.idCart = this.$route.params.idCart), this.getCartDetail(credential);
-    console.log(this.cartDetail);
   },
 };
 </script>

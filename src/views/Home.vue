@@ -2,20 +2,16 @@
   <div class="home">
     <div class="vue-template">
       <Layout></Layout>
-      <!-- <HomePage></HomePage> -->
     </div>
   </div>
 </template>
 
  <script>
-
- import Layout from '../views/Layout.vue'
-// import HomePage from '../components/HomePage'
+import Layout from "../views/Layout.vue";
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    // HomePage,
-    Layout, 
-  }
-}
+    Layout,
+  },
+};
 </script>
