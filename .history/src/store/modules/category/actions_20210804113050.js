@@ -1,4 +1,4 @@
-import { SET_PAGES, SET_CATEGORIES, ADD_CATEGORY } from './mutation-type'
+import { SET_PAGE, SET_PAGES, SET_CATEGORIES, ADD_CATEGORY } from './mutation-type'
 import CategoryService from '../../../services/CategoryService.js'
 
 export default {

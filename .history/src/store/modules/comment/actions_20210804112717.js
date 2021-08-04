@@ -1,6 +1,3 @@
-import { SET_COMMENTS, REMOVE_COMMENT, ADD_COMMENT } from './mutation-type'
-import CommentService from "../../../services/CommentService.js";
-
 export default {
     async getCommentById({ commit }, credential) {
         try {

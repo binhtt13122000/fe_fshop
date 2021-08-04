@@ -1,4 +1,3 @@
-import { SET_PAGE, SET_PAGES, SET_COMMENTS, SET_COMMENT, REMOVE_COMMENT, DELETE_COMMENT_BY_ADMIN, ADD_COMMENT, GET_COMMENT_BY_PRODUCTID } from './mutation-type'
 export default {
     [SET_COMMENT]: (state, val) => {
         state.comment = val
