@@ -7,7 +7,7 @@ import auth from "./modules/auth"
 import product from "./modules/product/product"
 import supplier from "./modules/supplier/supplier"
 import createPersistedState from 'vuex-persistedstate';
-import category from "./modules/category/index";
+import category from "./modules/category/category";
 import productDetails from "./modules/productCart/productCart";
 import order from "./modules/order/order";
 import voucher from './modules/voucher/voucher';

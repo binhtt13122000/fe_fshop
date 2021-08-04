@@ -356,7 +356,7 @@
                     v-model="selected"
                     :headers="headers"
                     :items="this.products"
-                    item-key="productId"
+                    item-key="name"
                     show-expand
                     single-expand
                     single-select
