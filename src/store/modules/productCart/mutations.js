@@ -1,4 +1,3 @@
-import ProductCartService from "../../../services/ProductCartService"
 import {
     SET_PAGE,
     SET_PAGES,
@@ -8,31 +7,7 @@ import {
     REMOVE_PRODUCT_DETAILS,
     ACTIVE_PRODUCT_DETAILS,
 } from './mutation-type'
-
-const state = {
-    productsDetails: [],
-    productDetails: [],
-    pages: [],
-    page: [],
-};
-
-const getters = {
-    productsDetails(state) {
-        return state.productDetails
-    },
-    productDetails(state) {
-        return state.productDetails
-    },
-    pages(state) {
-        return state.pages
-    },
-    page(state) {
-        return state.page
-    },
-};
-
-
-const mutations = {
+export default {
     [SET_PRODUCT_DETAILS]: (state, val) => {
         state.productDetails = val
     },
@@ -88,43 +63,3 @@ const mutations = {
 
 
 };
-
-const actions = {
-
-    async deleteProductDetail({ commit }, productDetailSelected) {
-        try {
-            const response = await ProductCartService.deleteProductDetails(productDetailSelected.proItemId);
-            if (response.status === 200) {
-                await commit(REMOVE_PRODUCT_DETAILS, productDetailSelected);
-                return await response.status
-            } else {
-                return await response.status;
-            }
-        } catch (error) {
-            return await error.response.status;
-        }
-    },
-
-    async activeProductDetailFromList({ commit }, productDetailSelected) {
-        try {
-            const response = await ProductCartService.activeProductDetails(productDetailSelected.proItemId);
-            if (response.status === 200) {
-                await commit(ACTIVE_PRODUCT_DETAILS, productDetailSelected);
-                return await response.status;
-            } else {
-                return await response.status;
-            }
-        } catch (error) {
-            return await error.response.status;
-        }
-    },
-
-};
-
-export default {
-    namespaced: true, // giup nhan biet dispatch, phan biet den store nao
-    state,
-    getters,
-    mutations,
-    actions
-}
